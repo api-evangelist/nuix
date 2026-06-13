@@ -1,0 +1,73 @@
+name: Nuix Plans and Pricing
+description: Nuix offers enterprise licensing for its investigative analytics and
+  intelligence platform. Pricing is not publicly listed and is provided via custom
+  quote based on deployment scale, product modules, and organizational requirements.
+  Access to the REST APIs requires a valid Nuix license with the appropriate license
+  type selected at client initialization.
+url: https://www.nuix.com/nuix-developer-program
+created: '2026-06-13'
+modified: '2026-06-13'
+plans:
+  - name: Enterprise Workstation
+    description: Full-featured forensic analysis and eDiscovery platform for enterprise
+      teams. Includes access to the Nuix Core Engine REST API with the enterprise-workstation
+      license type. Pricing requires a custom quote from Nuix sales.
+    label: enterprise-workstation
+    price: Custom
+    contact:
+      - FN: Nuix Sales
+        url: https://www.nuix.com/contact-us
+    features:
+      - Full Nuix Core Engine REST API access
+      - Case creation and management
+      - Evidence ingestion (files, mail stores, cloud sources)
+      - Search and entity extraction
+      - OCR processing
+      - Production set management
+      - User scripting support
+  - name: Law Enforcement Desktop
+    description: Purpose-built plan for law enforcement investigators. Provides access
+      to the Core Engine REST API with the law-enforcement-desktop license type.
+      Pricing requires a custom quote.
+    label: law-enforcement-desktop
+    price: Custom
+    contact:
+      - FN: Nuix Sales
+        url: https://www.nuix.com/contact-us
+    features:
+      - Core Engine REST API with law enforcement license
+      - Digital forensic workflows
+      - Case management
+      - Evidence processing
+  - name: Web Reviewer
+    description: Provides access for web-based document review workflows. Uses the
+      web-reviewer license type when initializing REST API clients.
+    label: web-reviewer
+    price: Custom
+    contact:
+      - FN: Nuix Sales
+        url: https://www.nuix.com/contact-us
+    features:
+      - Document review workflows
+      - Search and tagging
+      - Production set exports
+  - name: Workflow
+    description: Automation-focused plan for integrating Nuix into third-party systems
+      and orchestration pipelines via the REST API. Uses the workflow license type.
+    label: workflow
+    price: Custom
+    contact:
+      - FN: Nuix Sales
+        url: https://www.nuix.com/contact-us
+    features:
+      - Workflow automation via REST API
+      - Third-party system integration
+      - Asynchronous job orchestration
+      - Remote worker management
+notes:
+  - Nuix does not publish public pricing; all plans require contacting Nuix sales for
+    a custom quote.
+  - Developer access and SDK documentation are available through the Nuix Developer
+    Program at nuix.com/nuix-developer-program.
+  - License type is specified at REST API client initialization and determines which
+    capabilities are available per session.

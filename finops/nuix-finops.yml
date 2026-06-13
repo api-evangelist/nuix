@@ -1,0 +1,59 @@
+name: Nuix FinOps
+description: Financial operations guidance for Nuix API and platform usage. Nuix
+  operates on an enterprise licensing model with custom pricing. Cost management
+  focuses on license seat optimization, worker allocation efficiency, and aligning
+  product modules to actual usage needs rather than managing per-call API costs.
+url: https://www.nuix.com/nuix-developer-program
+created: '2026-06-13'
+modified: '2026-06-13'
+model: Enterprise License
+billing: Annual subscription with custom pricing negotiated per organization
+visibility: Private (pricing not publicly disclosed)
+cost_drivers:
+  - name: License Seats
+    description: The number of concurrent user or API client sessions is the primary
+      cost driver. Each license type (enterprise-workstation, law-enforcement-desktop,
+      web-reviewer, workflow) carries its own seat allocation.
+    optimization: Release client sessions promptly after use by calling Close() to
+      free license seats. Avoid leaving idle sessions open.
+  - name: Worker Allocation
+    description: Workers are the processing units consumed during evidence ingestion,
+      OCR, and other compute-intensive tasks. More workers increases throughput but
+      consumes more license capacity.
+    optimization: Tune worker count per job to balance throughput and license utilization.
+      Use NewRandomClient for lower-priority automation jobs to avoid reserving named
+      license seats.
+  - name: Product Modules
+    description: Nuix bundles multiple products (Core Engine, Discover, ECC, Adaptive
+      Security, Investigate, Workstation) with separate licensing. Only license modules
+      that are actively used.
+    optimization: Audit which product modules are in use and negotiate licensing to
+      match actual deployment scope.
+  - name: On-Premises Infrastructure
+    description: Self-hosted Nuix deployments require servers with sufficient CPU,
+      RAM, and storage for processing workloads. Infrastructure costs are additive
+      to license fees.
+    optimization: Right-size server infrastructure based on typical case volumes and
+      processing SLAs. Containerized deployments (Docker) can improve resource utilization.
+  - name: SaaS vs On-Premises
+    description: Nuix Discover is available as a SaaS product, shifting infrastructure
+      costs to an operational model. Core Engine is typically deployed on-premises
+      or in private cloud.
+    optimization: Evaluate SaaS deployment for Discover workloads to reduce infrastructure
+      overhead and leverage managed scaling.
+recommendations:
+  - Release API client sessions immediately after use to prevent license seat exhaustion.
+  - Use workflow license type for automated integration pipelines to avoid consuming
+    enterprise-workstation seats for non-interactive tasks.
+  - Monitor the Nuix SaaS status page (status.nuix.com) for planned maintenance windows
+    to schedule large batch jobs during low-impact periods.
+  - Engage the Nuix Developer Program for access to pre-built scripts and community
+    solutions that can reduce custom development costs.
+  - Negotiate multi-year enterprise agreements to secure volume pricing across license
+    types.
+notes:
+  - Nuix does not offer a free tier or trial API access; a valid enterprise license
+    is required to use any Nuix REST API.
+  - No public per-call or consumption-based pricing exists; all costs are wrapped
+    in the enterprise license agreement.
+  - Contact Nuix sales at nuix.com/contact-us for pricing discussions.

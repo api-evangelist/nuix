@@ -1,0 +1,108 @@
+aid: nuix
+name: Nuix
+description: Nuix is an investigative analytics and intelligence platform providing
+  REST APIs for processing unstructured data, managing forensic cases, running entity
+  extraction, conducting digital investigations, and supporting eDiscovery and compliance
+  workflows across legal, security, and law enforcement domains.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/apis.yml
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
+type: Index
+tags:
+  - Forensics
+  - eDiscovery
+  - Investigations
+  - Compliance
+  - Data Processing
+  - Legal Technology
+  - Intelligence
+apis:
+  - aid: nuix:nuix-core-engine-rest-api
+    name: Nuix Core Engine REST API
+    description: Primary RESTful service for processing unstructured data, managing
+      forensic cases, ingesting evidence, running search queries, performing OCR and
+      entity extraction, and orchestrating asynchronous processing jobs within Nuix
+      Core Engine.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://developer.nuix.com/latest/
+    baseURL: https://localhost:4444
+    tags:
+      - Case Management
+      - Data Processing
+      - Search
+      - Forensics
+      - Evidence Ingestion
+    properties:
+      - type: Documentation
+        url: https://developer.nuix.com/latest/
+      - type: OpenAPI
+        url: https://nuix.github.io/REST-API-Docs/swagger-ui.html
+    contact:
+      - FN: Nuix Developer Program
+        url: https://www.nuix.com/nuix-developer-program
+  - aid: nuix:nuix-discover-connect-api
+    name: Nuix Discover Connect API
+    description: GraphQL-based API for querying and managing discovery data within
+      Nuix Discover, supporting queries and mutations for document review, production
+      sets, and legal analytics workflows.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
+    baseURL: https://discover.nuix.com/api
+    tags:
+      - GraphQL
+      - eDiscovery
+      - Document Review
+      - Legal
+    properties:
+      - type: Documentation
+        url: https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
+    contact:
+      - FN: Nuix Support
+        url: https://nuix.service-now.com/support
+  - aid: nuix:nuix-ecc-rest-api
+    name: Nuix Enterprise Collection Center REST API
+    description: REST API for managing endpoint evidence collection operations within
+      Nuix Enterprise Collection Center, enabling remote collection, configuration,
+      and task orchestration across enterprise endpoints.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+    baseURL: https://ecc.nuix.com/api
+    tags:
+      - Endpoint Collection
+      - Security
+      - Forensics
+      - Enterprise
+    properties:
+      - type: Documentation
+        url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+    contact:
+      - FN: Nuix Support
+        url: https://nuix.service-now.com/support
+common:
+  - type: Portal
+    url: https://developer.nuix.com/
+  - type: Documentation
+    url: https://developer.nuix.com/latest/
+  - type: GitHub
+    url: https://github.com/nuix
+  - type: Blog
+    url: https://www.nuix.com/blog
+  - type: Status
+    url: https://status.nuix.com/
+  - type: Support
+    url: https://nuix.service-now.com/support
+  - type: TermsOfService
+    url: https://www.nuix.com/legal/eula
+  - type: PrivacyPolicy
+    url: https://www.nuix.com/privacy-policy
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/plans/nuix-plans-pricing.yml
+  - type: RateLimits
+    url: https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/rate-limits/nuix-rate-limits.yml
+  - type: FinOps
+    url: https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/finops/nuix-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

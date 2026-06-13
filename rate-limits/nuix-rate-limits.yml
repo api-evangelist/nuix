@@ -1,0 +1,55 @@
+name: Nuix API Rate Limits
+description: Nuix does not publish explicit public rate limits for its REST APIs.
+  The Core Engine REST API is deployed as a self-hosted service (on-premises or private
+  cloud) and throttling behavior is governed by the server configuration, available
+  worker counts, and license parameters rather than by a centrally enforced rate limit
+  tier. Concurrency is bounded by the number of licensed workers acquired at client
+  initialization.
+url: https://developer.nuix.com/latest/
+created: '2026-06-13'
+modified: '2026-06-13'
+limits:
+  - name: Concurrent Workers
+    description: Each REST API client session is initialized with a specified number
+      of workers. The total workers available is bounded by the active Nuix license.
+      Exceeding available workers results in a license acquisition failure.
+    scope: Per Client Session
+    unit: Workers
+    enforced: true
+    notes: Worker count is specified via the `workers` parameter when calling NewClient.
+      Unused workers must be released by calling Close() on the client before program
+      exit.
+  - name: Concurrent Client Sessions
+    description: The number of simultaneous client sessions is constrained by available
+      license seats for the selected license type (enterprise-workstation, law-enforcement-desktop,
+      web-reviewer, workflow).
+    scope: Per License
+    unit: Sessions
+    enforced: true
+    notes: Each license type has a finite seat count determined by the enterprise
+      agreement. Sessions that are not properly closed may hold license seats until
+      timeout.
+  - name: Processing Jobs
+    description: Asynchronous processing jobs (evidence ingestion, OCR, tagging,
+      production exports) run as Functions on the server. Concurrent job limits depend
+      on server hardware capacity and worker allocation, not a published API limit.
+    scope: Per Server
+    unit: Jobs
+    enforced: false
+    notes: Jobs can be paused, resumed, or cancelled via the REST API. Status is
+      polled via the functions queue endpoint.
+  - name: Search Pagination
+    description: Search results from the Core Engine REST API are paginated. The
+      caller specifies startIndex and numberOfRecordsRequested in each search request.
+      No documented maximum page size is published.
+    scope: Per Request
+    unit: Records
+    enforced: false
+    notes: Large result sets should use pagination to avoid memory pressure on the
+      server.
+notes:
+  - Nuix REST APIs are self-hosted; rate limits are not imposed by a SaaS gateway
+    but by server capacity and license constraints.
+  - For Nuix Discover SaaS deployments, service availability is tracked at status.nuix.com.
+  - Contact Nuix support for guidance on tuning concurrency and worker allocation
+    for high-volume deployments.

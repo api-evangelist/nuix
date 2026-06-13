@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-group.json",
+  "title": "Group",
+  "description": "Schema for Group in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "id of the group"
+    },
+    "name": {
+      "type": "string",
+      "description": "name of the group"
+    },
+    "description": {
+      "type": "string",
+      "description": "description of the group"
+    },
+    "deleted": {
+      "type": "boolean",
+      "description": "true if the group has been deleted"
+    }
+  }
+}

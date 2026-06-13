@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-parallelprocessingsettings.json",
+  "title": "ParallelProcessingSettings",
+  "description": "Schema for ParallelProcessingSettings in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "workerCount": {
+      "type": "integer",
+      "description": "Number of worker processes to use. This defaults to number of CPU cores on the machine. This value is also limited by settings in the current licence / session.",
+      "format": "int32"
+    },
+    "workerMemory": {
+      "type": "integer",
+      "description": "Maximum amount of memory to allocate to each worker process in megabytes. The provided value must be >= 768. Default is calculated based on the number of workers and available machine memory.",
+      "format": "int32"
+    },
+    "workerTemp": {
+      "type": "string",
+      "description": "Base directory that workers will use to store temporary files generated during process. Can be a string file path, File, Path or URI. The default is a directory under the case directory."
+    },
+    "embedBroker": {
+      "type": "boolean",
+      "description": "If true, the JMS broker will be run within the current process,otherwise it will be run in a new process. Default is true.",
+      "default": true
+    },
+    "brokerMemory": {
+      "type": "integer",
+      "description": "Amount of memory to allocate to the JMS broker when it is run in a separate process. The provided value must be &gt;= 768. Default is 4096.",
+      "format": "int32",
+      "default": 4096
+    },
+    "workerBrokerAddress": {
+      "type": "string",
+      "description": "Worker broker address in the format host:port. "
+    },
+    "useRemoteWorkers": {
+      "description": "True to use remote workers when possible, false otherwise.",
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

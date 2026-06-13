@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-computerjobs.json",
+  "title": "ComputerJobs",
+  "description": "Schema for ComputerJobs in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "computerName": {
+      "type": "string",
+      "description": "name of the computer where the job is running"
+    },
+    "computerId": {
+      "type": "string",
+      "description": "UUID of the computer"
+    },
+    "jobs": {
+      "type": "array",
+      "description": "List of tasks being run",
+      "items": {
+        "$ref": "#/components/schemas/JobCreated"
+      }
+    }
+  }
+}

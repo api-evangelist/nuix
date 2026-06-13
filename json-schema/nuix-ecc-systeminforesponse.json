@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-systeminforesponse.json",
+  "title": "systemInfoResponse",
+  "description": "Schema for systemInfoResponse in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "eccVersion": {
+      "type": "string",
+      "description": "The ECC version number of the ECC Server"
+    },
+    "osName": {
+      "type": "string",
+      "description": "The name of the OS of the ECC Server"
+    },
+    "osVersion": {
+      "type": "string",
+      "description": "The version of the OS of the ECC Server"
+    },
+    "osBitness": {
+      "type": "string",
+      "description": "The bitness of the OS of the ECC Server, e.g. `64-bit`"
+    },
+    "memoryGB": {
+      "type": "string",
+      "description": "The total physical memory of the ECC Server"
+    },
+    "NIC": {
+      "type": "array",
+      "description": "array of network adapters on the ECC Server",
+      "items": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "description": "The network adapter system name, e.g. `eth3`"
+          },
+          "Display-Name": {
+            "type": "string",
+            "description": "The network adapter display name, e.g. `Realtek USB GbE Family Controller`"
+          },
+          "IP-Address": {
+            "type": "string",
+            "description": "The IPv4 address assigned to this network adapter"
+          }
+        }
+      }
+    },
+    "Volumes": {
+      "type": "array",
+      "description": "array of volumes on the ECC Server",
+      "items": {
+        "type": "object",
+        "properties": {
+          "Type": {
+            "type": "string",
+            "description": "The filesystem of this volume, e.g. `NTFS`"
+          },
+          "Free-Space": {
+            "type": "string",
+            "description": "The total free space on this volume"
+          }
+        }
+      }
+    }
+  }
+}

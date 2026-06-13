@@ -1,0 +1,8 @@
+{
+  "value": {
+    "target": {
+      "ipsFile": "/mnt/centera/ipsFile",
+      "clipsFile": "/mnt/centera/clipsFile"
+    }
+  }
+}

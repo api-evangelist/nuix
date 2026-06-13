@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-itemsetbatchresponse.json",
+  "title": "ItemSetBatchResponse",
+  "description": "Schema for ItemSetBatchResponse in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "batchName": {
+      "type": "string",
+      "description": "Defaults to date in format yy/MM/dd kk:mm:ss z"
+    },
+    "createdOn": {
+      "type": "integer",
+      "description": "The created date for the batch",
+      "format": "int64"
+    }
+  }
+}

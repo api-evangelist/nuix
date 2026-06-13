@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-custommetadataresponse.json",
+  "title": "CustomMetadataResponse",
+  "description": "Schema for CustomMetadataResponse in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "fieldName": {
+      "type": "string",
+      "description": "The name of the custom metadata field"
+    },
+    "value": {
+      "type": "object",
+      "description": "The value of the custom metadata field"
+    },
+    "type": {
+      "type": "string",
+      "description": "The data type of the field"
+    },
+    "mode": {
+      "type": "string",
+      "description": "The custom metadata mode"
+    },
+    "template": {
+      "type": "string",
+      "description": "The name of the custom metadata template that applies to the given custom metadata field"
+    },
+    "fieldTemplate": {
+      "$ref": "#/components/schemas/CustomMetadataFieldResponse"
+    }
+  }
+}

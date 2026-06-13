@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-wordcountsresponse.json",
+  "title": "WordCountsResponse",
+  "description": "Schema for WordCountsResponse in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "word": {
+      "type": "string",
+      "description": "The word / term"
+    },
+    "count": {
+      "type": "integer",
+      "description": "The frequency of the word / term",
+      "format": "int64"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-populatestoresrequest.json",
+  "title": "PopulateStoresRequest",
+  "description": "Schema for PopulateStoresRequest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "itemGuids": {
+      "type": "array",
+      "description": "list of item GUIDs",
+      "items": {
+        "type": "string"
+      }
+    },
+    "imagingProfileName": {
+      "type": "string",
+      "description": "Optional value, if not then default value is Default."
+    },
+    "overwriteExisting": {
+      "type": "boolean",
+      "description": "If true, the items will be overwritten. Default is false."
+    },
+    "populateBinaryStores": {
+      "type": "boolean",
+      "description": "If true, the binary store will be regenerated.  If populateBinaryStores is false, then populatePrintedImageStores must be true."
+    },
+    "populatePrintedImageStores": {
+      "type": "boolean",
+      "description": "If true, the printed store will be regenerated.  If populatePrintedImageStores is false, then populateBinaryStores must be true."
+    },
+    "parallelProcessingSettings": {
+      "$ref": "#/components/schemas/ParallelProcessingSettings"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-directoryaccess.json",
+  "title": "DirectoryAccess",
+  "description": "Schema for DirectoryAccess in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "path": {
+      "type": "string",
+      "description": "The path to the directory."
+    },
+    "readPermission": {
+      "type": "boolean",
+      "description": "A boolean indicating whether the directory has read permission."
+    },
+    "requiresRead": {
+      "type": "boolean",
+      "description": "A boolean indicating whether the directory requires read permission."
+    },
+    "writePermission": {
+      "type": "boolean",
+      "description": "A boolean indicating whether the directory has write permission."
+    },
+    "requiresWrite": {
+      "type": "boolean",
+      "description": "A boolean indicating whether the directory requires write permission."
+    },
+    "executePermission": {
+      "type": "boolean",
+      "description": "A boolean indicating whether the directory has execute permission."
+    },
+    "requiresExecute": {
+      "type": "boolean",
+      "description": "A boolean indicating whether the directory requires execute permission."
+    },
+    "ok": {
+      "type": "boolean",
+      "description": "Boolean indicating the overall directory health."
+    }
+  }
+}

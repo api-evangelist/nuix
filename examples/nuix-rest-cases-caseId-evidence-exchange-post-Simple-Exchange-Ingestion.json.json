@@ -1,0 +1,13 @@
+{
+  "value": {
+    "target": {
+      "mailboxRetrieval": [
+        "mailbox"
+      ],
+      "uri": "https://outlook.office365.com/ews/exchange.asmx",
+      "username": "yourusername",
+      "password": "yourpassword",
+      "impersonating": false
+    }
+  }
+}

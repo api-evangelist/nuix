@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-casedigest.json",
+  "title": "CaseDigest",
+  "description": "Schema for CaseDigest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "caseId": {
+      "type": "string",
+      "description": "The case's unique identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "The case name"
+    },
+    "path": {
+      "type": "string",
+      "description": "The path to the case"
+    },
+    "description": {
+      "type": "string",
+      "description": "The case description"
+    },
+    "investigator": {
+      "type": "string",
+      "description": "The investigator for this case"
+    },
+    "creationDate": {
+      "type": "integer",
+      "description": "The date/time this case was created, in milliseconds since epoch",
+      "format": "int64"
+    },
+    "compound": {
+      "type": "boolean",
+      "description": "Whether this case is Simple or Compound"
+    },
+    "elastic": {
+      "type": "boolean",
+      "description": "Whether this is an Elastic case"
+    },
+    "binaryStoreLocation": {
+      "type": "string",
+      "description": "The binary store location for this case, if applicable"
+    },
+    "indexId": {
+      "type": "string",
+      "description": "The index id"
+    },
+    "productName": {
+      "type": "string",
+      "description": "The name of the product that created / opened this case"
+    },
+    "version": {
+      "type": "string",
+      "description": "The version of Nuix that most recently opened this case"
+    },
+    "isOpen": {
+      "type": "boolean",
+      "description": "Whether or not this case is currently open, which means something in REST is working with this case"
+    },
+    "childCases": {
+      "type": "array",
+      "description": "The child cases of this case, when applicable.  If the child case is known to this REST instance then the value will be the child case's GUID.  Otherwise it will be the absolute path to the child case",
+      "items": {
+        "type": "string"
+      }
+    },
+    "url": {
+      "type": "string",
+      "description": "The URL of the REST instance that contains this case"
+    },
+    "serverId": {
+      "type": "string",
+      "description": "The Server ID of the REST instance that contains this case"
+    }
+  }
+}

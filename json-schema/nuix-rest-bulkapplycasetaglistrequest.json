@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-bulkapplycasetaglistrequest.json",
+  "title": "BulkApplyCaseTagListRequest",
+  "description": "Schema for BulkApplyCaseTagListRequest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "tagList": {
+      "type": "array",
+      "description": "List of tags used during the operation.  The tag list is optional for a `RENAME` operation.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "renameMap": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object"
+      },
+      "description": "A map of tags where the key is the current tag name and the value is the new tag name."
+    },
+    "operationType": {
+      "type": "string",
+      "description": "The operation to perform on the tag.",
+      "enum": [
+        "ADD",
+        "DELETE",
+        "RENAME"
+      ]
+    }
+  }
+}

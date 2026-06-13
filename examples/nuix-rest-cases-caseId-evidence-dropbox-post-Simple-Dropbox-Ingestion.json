@@ -1,0 +1,9 @@
+{
+  "value": {
+    "target": {
+      "authCode": "DROPBOXAUTHCODE",
+      "team": true,
+      "accessToken": "DROPBOXACCESSTOKEN"
+    }
+  }
+}

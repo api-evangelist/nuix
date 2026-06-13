@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-computer.json",
+  "title": "Computer",
+  "description": "Schema for Computer in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "name of the computer"
+    },
+    "fullName": {
+      "type": "string",
+      "description": "name of the computer including domain"
+    },
+    "description": {
+      "type": "string",
+      "description": "description of the computer",
+      "nullable": true
+    },
+    "UUID": {
+      "type": "string",
+      "description": "GUID uniquely identifying this computer, used in all other api functions"
+    },
+    "presence": {
+      "type": "string",
+      "description": "One of `ONLINE`, `NEARLINE` or `OFFLINE`",
+      "enum": [
+        "ONLINE",
+        "NEARLINE",
+        "OFFLINE"
+      ]
+    },
+    "purpose": {
+      "type": "string",
+      "description": "One of `Client` or `Admin Console`",
+      "enum": [
+        "Client",
+        "Admin Console"
+      ]
+    },
+    "staging": {
+      "type": "boolean",
+      "description": "Set to `true` if the computer is a staging computer"
+    },
+    "pairingState": {
+      "type": "string",
+      "description": "One of `Paired`, `Awaiting`, or `Denied`",
+      "enum": [
+        "Paired",
+        "Awaiting",
+        "Denied"
+      ]
+    },
+    "firstContact": {
+      "type": "string",
+      "description": "date/time of first contact in the format `yyyy-mm-ddThh:mm:ss`"
+    },
+    "lastContact": {
+      "type": "string",
+      "description": "date/time of last contact in the format `yyyy-mm-ddThh:mm:ss`"
+    },
+    "osName": {
+      "type": "string",
+      "description": "name of the OS"
+    },
+    "lastUser": {
+      "type": "string",
+      "description": "last logged in username"
+    },
+    "searchEnabled": {
+      "type": "boolean",
+      "description": "Set to `true` if Advanced Search is enabled on this computer"
+    }
+  }
+}

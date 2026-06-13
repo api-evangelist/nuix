@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-nuixtaskrequest.json",
+  "title": "NuixTaskRequest",
+  "description": "Schema for NuixTaskRequest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "caseId": {
+      "type": "string",
+      "description": "caseId"
+    },
+    "processedBy": {
+      "type": "string",
+      "description": "The name of the server processing the task."
+    },
+    "url": {
+      "type": "string",
+      "writeOnly": true,
+      "description": "The URL of the server."
+    },
+    "body": {
+      "type": "string",
+      "writeOnly": true,
+      "description": "The body of the task."
+    },
+    "status": {
+      "type": "string",
+      "description": "The task status.",
+      "enum": [
+        "NOT_STARTED",
+        "IN_PROGRESS",
+        "COMPLETE",
+        "CANCELLED",
+        "ERROR",
+        "UNKNOWN"
+      ]
+    },
+    "sequence": {
+      "$ref": "#/components/schemas/Sequence",
+      "description": "The sequence assigned by the cluster to the task."
+    },
+    "finishTime": {
+      "type": "integer",
+      "description": "Time the task finished.",
+      "format": "int64"
+    },
+    "startTime": {
+      "type": "integer",
+      "description": "Time the task started.",
+      "format": "int64"
+    }
+  }
+}

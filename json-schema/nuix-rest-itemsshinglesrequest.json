@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-itemsshinglesrequest.json",
+  "title": "ItemsShinglesRequest",
+  "description": "Schema for ItemsShinglesRequest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "string",
+      "description": "Query items that should be included.  If a query is not supplied it defaults to an empty string, which returns all items."
+    },
+    "deduplication": {
+      "type": "string",
+      "description": "deduplication.  Default is 'none'.",
+      "default": "none",
+      "enum": [
+        "md5",
+        "per custodian",
+        "none"
+      ]
+    },
+    "maxItems": {
+      "type": "integer",
+      "description": "maxItems.  Default is 1000 items.",
+      "default": 1000,
+      "format": "int32"
+    },
+    "maxShingleResponse": {
+      "type": "integer",
+      "description": "The maximum number of shingles to return.  Default is 100 shingles.",
+      "default": 100,
+      "format": "int32"
+    }
+  }
+}

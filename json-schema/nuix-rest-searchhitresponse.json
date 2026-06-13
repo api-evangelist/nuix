@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-searchhitresponse.json",
+  "title": "SearchHitResponse",
+  "description": "Schema for SearchHitResponse in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "terms": {
+      "uniqueItems": true,
+      "type": "array",
+      "description": "Set of matching terms",
+      "items": {
+        "type": "string"
+      }
+    },
+    "text": {
+      "uniqueItems": true,
+      "type": "array",
+      "description": "Set of search hits matching the text content",
+      "items": {
+        "$ref": "#/components/schemas/SearchHit"
+      }
+    },
+    "properties": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object"
+      },
+      "description": "Map containing the set of search hits by property name.  Objects are map[string, array[SearchHit]"
+    }
+  }
+}

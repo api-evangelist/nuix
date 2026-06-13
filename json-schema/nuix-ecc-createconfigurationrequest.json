@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-createconfigurationrequest.json",
+  "title": "createConfigurationRequest",
+  "description": "Schema for createConfigurationRequest in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "baseConfigId": {
+      "type": "integer",
+      "description": "Id of an existing Collection Configuration to use as the basis for a new Collection Configuration, or -1 to create a new Collection Configuration from scratch"
+    },
+    "newConfigName": {
+      "type": "string",
+      "description": "New Collection Configuration name"
+    },
+    "description": {
+      "type": "string",
+      "description": "New Collection Configuration description"
+    },
+    "category": {
+      "type": "string",
+      "description": "Optional. A Category associated with this Collection Configuration (a GET call can filter by Category)"
+    },
+    "tasks": {
+      "type": "array",
+      "description": "Array of new tasks to add to the new collection configuration.  At least one task must be specified.",
+      "items": {
+        "$ref": "#/components/schemas/TaskToCreate"
+      }
+    }
+  }
+}

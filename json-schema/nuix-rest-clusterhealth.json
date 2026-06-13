@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-clusterhealth.json",
+  "title": "ClusterHealth",
+  "description": "Schema for ClusterHealth in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "hasConsumer": {
+      "type": "boolean",
+      "description": "Boolean indicating whether the cluster has a consumer present."
+    },
+    "hasProducer": {
+      "type": "boolean",
+      "description": "Boolean indicating whether the cluster has a producer present."
+    },
+    "ok": {
+      "type": "boolean",
+      "description": "Boolean indicating the overall cluster health."
+    },
+    "nodes": {
+      "type": "array",
+      "description": "A list of nodes and their cluster health.",
+      "items": {
+        "$ref": "#/components/schemas/NodeHealth"
+      }
+    }
+  }
+}

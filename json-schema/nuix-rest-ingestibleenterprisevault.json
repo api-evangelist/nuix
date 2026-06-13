@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-ingestibleenterprisevault.json",
+  "title": "IngestibleEnterpriseVault",
+  "description": "Schema for IngestibleEnterpriseVault in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "computer": {
+      "type": "string",
+      "description": "The hostname or IP address of the target server."
+    },
+    "from": {
+      "type": "string",
+      "description": "This optional parameter limits the evidence to a date range beginning from the specified date/time. It must be accompanied by the 'to' parameter. Accepted date formats are RFC-3339 or a simple date format (yyyy-MM-dd) which will use the default timezone of the server.",
+      "format": "date-time"
+    },
+    "to": {
+      "type": "string",
+      "description": "This optional parameter limits the evidence to a date range ending at the specified date/time. It must be accompanied by the 'from' parameter.  Accepted date formats are RFC-3339 or a simple date format (yyyy-MM-dd) which will use the default timezone of the server.",
+      "format": "date-time"
+    },
+    "vault": {
+      "type": "string",
+      "description": "This optional parameter limits the evidence to the specified Enterprise Vault vault."
+    },
+    "archive": {
+      "type": "string",
+      "description": "This optional parameter limits the evidence to the specified Enterprise Vault archive."
+    },
+    "custodian": {
+      "type": "string",
+      "description": "This optional parameter limits the evidence to the specified custodian or author."
+    },
+    "keywords": {
+      "type": "string",
+      "description": "This optional parameter limits the evidence to results matching Enterprise Vault's query using the words in this string. Subject and message/document content are searched by Enterprise Vault and it will match any word in the string unless specified differently in the flag parameter."
+    },
+    "flag": {
+      "type": "string",
+      "description": "This optional parameter specifies how keywords are combined and treated for keyword-based queries. It must be accompanied by the 'keywords' parameter but will default to any if it is omitted. A value from any, all, allnear, phrase, begins, beginany, exact, exactany, ends, endsany."
+    }
+  }
+}

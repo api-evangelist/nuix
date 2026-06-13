@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-caseresponse.json",
+  "title": "CaseResponse",
+  "description": "Schema for CaseResponse in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "caseId": {
+      "type": "string",
+      "description": "The case's unique identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "The case name"
+    },
+    "path": {
+      "type": "string",
+      "description": "The path to the case"
+    },
+    "description": {
+      "type": "string",
+      "description": "The case description"
+    },
+    "investigator": {
+      "type": "string",
+      "description": "The investigator for this case"
+    },
+    "creationDate": {
+      "type": "integer",
+      "description": "The date/time this case was created, in milliseconds since epoch",
+      "format": "int64"
+    },
+    "compound": {
+      "type": "boolean",
+      "description": "Whether this case is Simple or Compound"
+    },
+    "elastic": {
+      "type": "boolean",
+      "description": "Whether this is an Elastic case"
+    },
+    "binaryStoreLocation": {
+      "type": "string",
+      "description": "The binary store location for this case, if applicable"
+    },
+    "indexId": {
+      "type": "string",
+      "description": "The index id"
+    },
+    "caseSize": {
+      "type": "integer",
+      "description": "The size of the case on disk, in bytes",
+      "format": "int64"
+    },
+    "casePathParent": {
+      "type": "string",
+      "description": "Path to the parent directory of the case"
+    },
+    "caseInvestigationTimeZone": {
+      "type": "string",
+      "description": "The investigation time zone, e.g. America/New_York"
+    },
+    "hasExclusions": {
+      "type": "boolean",
+      "description": "True if the case has exclusions"
+    },
+    "hasNuixSystemTags": {
+      "type": "boolean",
+      "description": "True if the case has Nuix system tags"
+    },
+    "hasProductionSets": {
+      "type": "boolean",
+      "description": "True if the case has production sets"
+    },
+    "hasCalculatedAuditSize": {
+      "type": "boolean",
+      "description": "True if the case has a calculated audit size"
+    },
+    "caseName": {
+      "type": "string",
+      "description": "Deprecated; use 'name' instead"
+    },
+    "casePath": {
+      "type": "string",
+      "description": "Deprecated; use 'path' instead"
+    },
+    "caseDescription": {
+      "type": "string",
+      "description": "Deprecated; use 'description' instead"
+    },
+    "caseCreationDate": {
+      "type": "integer",
+      "description": "Deprecated; use 'creationDate' instead"
+    },
+    "caseInvestigator": {
+      "type": "string",
+      "description": "Deprecated; use 'investigator' instead"
+    }
+  }
+}

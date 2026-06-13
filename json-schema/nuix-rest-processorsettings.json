@@ -1,0 +1,286 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-processorsettings.json",
+  "title": "ProcessorSettings",
+  "description": "Schema for ProcessorSettings in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "processText": {
+      "type": "boolean",
+      "description": "If true, stores and indexes the text of data items.  Default is true.",
+      "default": true
+    },
+    "traversalScope": {
+      "type": "string",
+      "description": "Selects the traversal scope for ingestion.\n* `full_traversal` - Processes all items and their descendants during processing except where specific MIME type settings apply.\n* `loose_files` - Processes loose files but not their contents.\n* `loose_files_and_forensic_images` - Processes loose files and forensic images but not their contents. This can be used to 'explode' forensic\n  images without processing all the files inside. Note: `identifyPhysicalFiles` must be set to true to explode forensic images.\n",
+      "enum": [
+        "full_traversal",
+        "loose_files",
+        "loose_files_and_forensic_images"
+      ]
+    },
+    "processLooseFileContents": {
+      "type": "boolean",
+      "description": "If true, the contents of loose files will be extracted and processed. If false metadata about loose files will be extracted but their contents will not be processed. Default is true. Deprecated in Nuix 7.0, eplaced with traversalScope.",
+      "deprecated": true,
+      "default": true
+    },
+    "processForensicImages": {
+      "type": "boolean",
+      "description": "If true, the contents of forensic images will be exposed. If false metadata about forensic images will be extracted but their contents will not be processed. This settings can be used in combination with processLooseFileContents to explode forensic images but not process their contents. Default is true. Deprecated in Nuix 7.0, replaced with traversalScope.",
+      "deprecated": true,
+      "default": true
+    },
+    "analysisLanguage": {
+      "type": "string",
+      "description": "Specifies the language to use for text analysis when indexing. A supported language code.  Example codes are: \"en\" - English, \"ja\" - Japanese. Default is \"en\".",
+      "default": "en"
+    },
+    "stopWords": {
+      "type": "boolean",
+      "description": "If true, removes English stop words (\"a\", \"and\", \"the\", etc.) from the text index. If false, no stop words are removed. Default is false.",
+      "default": false
+    },
+    "stemming": {
+      "type": "boolean",
+      "description": "If true, stems words using English rules before indexing (e.g. \"fishing\" -> \"fish\".). If false, no stemming is performed. Default is false.",
+      "default": false
+    },
+    "enableExactQueries": {
+      "type": "boolean",
+      "description": "If true, enables search using \"exact\" queries.  Default is false.",
+      "default": false
+    },
+    "extractNamedEntities": {
+      "type": "boolean",
+      "description": "If true, extract named entities from the text of a document.  Default is false. NOTE: This is deprecated and will be removed in future release.  Deprecated in Nuix 6.0.",
+      "deprecated": true,
+      "default": false
+    },
+    "extractNamedEntitiesFromText": {
+      "type": "boolean",
+      "description": "If true, extracts named entities from the text of a document.  Default is false",
+      "default": false
+    },
+    "extractNamedEntitiesFromProperties": {
+      "type": "boolean",
+      "description": "If true, extracts named entities from the properties of a document.  Default is false",
+      "default": false
+    },
+    "extractNamedEntitiesFromTextStripped": {
+      "type": "boolean",
+      "description": "If true, extracts named entities from the text of text-stripped items, if and only if 'extractNamedEntitesFromText' is true. The 'extractNamedEntitiesFromProperties' setting is independent of this property.  Default is false",
+      "default": false
+    },
+    "extractNamedEntitiesFromTextCommunications": {
+      "type": "boolean",
+      "description": "If true, extract named entities from the communication metadata of a document.  Default is false.",
+      "default": false
+    },
+    "extractShingles": {
+      "type": "boolean",
+      "description": "If true, extract shingles from item text. Enabling this setting enables near deduplication.  Default is true.",
+      "default": true
+    },
+    "processTextSummaries": {
+      "type": "boolean",
+      "description": "If true, process item text and summarise.  Default is true.",
+      "default": true
+    },
+    "calculateSSDeepFuzzyHash": {
+      "type": "boolean",
+      "description": "If true, calculate SSDeep fuzzy hash values for item. Default is false.",
+      "default": false
+    },
+    "calculatePhotoDNARobustHash": {
+      "type": "boolean",
+      "description": "If true, calculate PhotoDNA robust hash values for image items.",
+      "default": false
+    },
+    "detectFaces": {
+      "type": "boolean",
+      "description": "If true, detect faces in photographic items. Default is false.",
+      "default": false
+    },
+    "classifyImagesWithDeepLearning": {
+      "type": "boolean",
+      "description": "If true, classify images using Deep Learning. Requires additional following settings: imageClassificationModelUrl. Default is false.",
+      "default": false
+    },
+    "imageClassificationModelUrl": {
+      "type": "string",
+      "description": "URL pointing to Deep Learning model - can be a local file too, but in URL format (file://path/to/model)."
+    },
+    "extractFromSlackSpace": {
+      "type": "boolean",
+      "description": "If true, extract deleted data from mailbox file formats and slack space from the end of file records in file system disk images.  Default is false.",
+      "default": false
+    },
+    "carveFileSystemUnallocatedSpace": {
+      "type": "boolean",
+      "description": "If true, carve data out of file system unallocated space for disk images.  Default is false.",
+      "default": false
+    },
+    "carveUnidentifiedData": {
+      "type": "boolean",
+      "description": "If true, carve data out of unidentified data items.  Default is false.",
+      "default": false
+    },
+    "carvingBlockSize": {
+      "type": "integer",
+      "description": "If null, the block size of the file system is used. Otherwise the given block size is used. File identification is attempted at start of each block, so the smaller the value the longer processing will take. Avoid values smaller than 512 bytes except in specific cases. Default is null.",
+      "format": "int32"
+    },
+    "recoverDeletedFiles": {
+      "type": "boolean",
+      "description": "If true, recover deleted file records from disk images.  Default is true.",
+      "default": true
+    },
+    "extractEndOfFileSlackSpace": {
+      "type": "boolean",
+      "description": "If true, extract the slack space from the end of file records in disk images.  Default is false.",
+      "default": false
+    },
+    "smartProcessRegistry": {
+      "type": "boolean",
+      "description": "If true, only process sections of the Registry that have decoders of have been explicitly selected. Default is false",
+      "default": false
+    },
+    "identifyPhysicalFiles": {
+      "type": "boolean",
+      "description": "If false, only file system metadata is extracted for physical files on disk.  Default is true.",
+      "default": true
+    },
+    "createThumbnails": {
+      "type": "boolean",
+      "description": "If true, create and store thumbnails of image data items.  Default is true.",
+      "default": true
+    },
+    "skinToneAnalysis": {
+      "type": "boolean",
+      "description": "If true, perform analysis on images to detect skintones.  Default is false.",
+      "default": false
+    },
+    "calculateAuditedSize": {
+      "type": "boolean",
+      "description": "If true, calculates audited size.  Default is false.",
+      "default": false
+    },
+    "storeBinary": {
+      "type": "boolean",
+      "description": "If true, store the binary of data items.  Default is false.",
+      "default": false
+    },
+    "maxStoredBinarySize": {
+      "type": "integer",
+      "description": "Specifies the maximum size of binary which will be stored into the binary store, in bytes. Default is 250000000 (250 MB).",
+      "default": 250000000,
+      "format": "int32"
+    },
+    "maxDigestSize": {
+      "type": "integer",
+      "description": "Specifies the maximum size of binary which will be digested, in bytes. Default is 250000000 (250 MB).",
+      "default": 250000000,
+      "format": "int64"
+    },
+    "digests": {
+      "type": "array",
+      "description": "A list of digests to calculate.  Valid values \"MD5\", \"SHA-1\" or \"SHA-256\".  Default is [ \"MD5\" ].",
+      "default": [
+        "MD5"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "addBccToEmailDigests": {
+      "type": "boolean",
+      "description": "If true, adds the Bcc field when computing email digests. Using the Bcc field in email digests may prevent the sender and recipients digests from matching. This is because only the sender will have the Bcc field if it is present. Default is false.",
+      "default": false
+    },
+    "addCommunicationDateToEmailDigests": {
+      "type": "boolean",
+      "description": "If true, adds the communication date when computing email digests. Using the communication date in the email digests may prevent the sender and recipients digests from matching. This is because the sender and recipients communication date / times can be slightly different for the same email. Default is false.",
+      "default": false
+    },
+    "reuseEvidenceStores": {
+      "type": "boolean",
+      "description": "If true, existing evidence stores are used to add any additional data into.  Default is false.",
+      "default": false
+    },
+    "processFamilyFields": {
+      "type": "boolean",
+      "description": "If true, top-level items will contain search fields containing text from their family.  Default is false.",
+      "default": false
+    },
+    "hideEmbeddedImmaterialData": {
+      "type": "boolean",
+      "description": "If true, hides embedded immaterial data items such as embedded images in documents.  Default is false.",
+      "default": false
+    },
+    "reportProcessingStatus": {
+      "type": "string",
+      "description": "If \"physical_files\", then the total evidence physical file size is calculated before processing starts. If \"none\", then no up-front calculation is performed. Non-file data will always be treated as \"none\". Default is none.",
+      "default": "none"
+    },
+    "enableCustomProcessing": {
+      "type": "array",
+      "description": "Which aspects of the data to expose in the callback from whenItemProcessed(ItemProcessedCallback). They are accessible from ProcessedItem.getProperties(), ProcessedItem.getTextFile() and ProcessedItem.getBinaryFile() respectively. All other processing options will be skipped when this option is enabled.",
+      "items": {
+        "type": "string",
+        "enum": [
+          "properties",
+          "binary",
+          "text"
+        ]
+      }
+    },
+    "workerItemCallback": {
+      "type": "string",
+      "description": "A string prefixed with \"java:\" followed by the name of a class with a no argument constructor which implements Consumer<WorkerItem>, or the name of a scripting engine followed by a colon character follow by the script to execute. Example scripting engine names include \"ruby\", \"python\" and \"ecmascript\".  For scripting languages, this string is the actual script code."
+    },
+    "workerItemCallbacks": {
+      "type": "array",
+      "description": "A list of strings specifying worker scripts. See workerItemCallback for script details. Scripts are processed in list order.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "performOcr": {
+      "type": "boolean",
+      "description": "If true, performs the OCR on the items based on the selected OCR profile.  Default is false.",
+      "default": false
+    },
+    "ocrProfileName": {
+      "type": "string",
+      "description": "This must be set to an OCR profile name that exists.",
+      "default": "Default"
+    },
+    "createPrintedImage": {
+      "type": "boolean",
+      "description": "If true, creates a printed image for items based on an imaging profile.  Default is false.",
+      "default": false
+    },
+    "imagingProfileName": {
+      "type": "string",
+      "description": "If createPrintedImage is set to true, this specifies the name of the imaging profile to use during processing. This must be set to the name of an existing imaging profile that can be reached within the current context.",
+      "default": "Processing Default"
+    },
+    "exportMetadata": {
+      "type": "boolean",
+      "description": "If true, exports an item's metadata using a given metadata export profile.  Default is false.",
+      "default": false
+    },
+    "metadataExportProfileName": {
+      "type": "string",
+      "description": "If exportMetadata is set to true, this specifies the name of the metadata export profile to use during processing. This must be set to the name of a metadata export profile that can be reached within the current context."
+    },
+    "namedEntities": {
+      "type": "array",
+      "description": "Passes in the list of named entities to be used in processing. If null, the default named entity settings are used.",
+      "items": {
+        "$ref": "#/components/schemas/NamedEntity"
+      }
+    }
+  }
+}

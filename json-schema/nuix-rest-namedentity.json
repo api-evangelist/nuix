@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-namedentity.json",
+  "title": "NamedEntity",
+  "description": "Schema for NamedEntity in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "regularExpression": {
+      "type": "string",
+      "description": "Gets the regular expression used by the entity."
+    },
+    "name": {
+      "type": "string",
+      "description": "Gets the name of the entity."
+    }
+  }
+}

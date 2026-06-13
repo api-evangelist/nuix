@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-ingestiblecenteracluster.json",
+  "title": "IngestibleCenteraCluster",
+  "description": "Schema for IngestibleCenteraCluster in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "ipsFile": {
+      "type": "string",
+      "description": "Location of a file containing IP addresses separated by new-line characters. Both File and String instances are supported."
+    },
+    "clipsFile": {
+      "type": "string",
+      "description": "Location of a file containing Centera Clip IDs separated by new-line characters. Both File and String instances are supported."
+    }
+  }
+}

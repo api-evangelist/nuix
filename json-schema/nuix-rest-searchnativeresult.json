@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-searchnativeresult.json",
+  "title": "SearchNativeResult",
+  "description": "Schema for SearchNativeResult in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "request": {
+      "$ref": "#/components/schemas/SearchNativeRequest"
+    },
+    "startedOn": {
+      "type": "integer",
+      "description": "Date the search started represented in milliseconds since the epoch."
+    },
+    "completedOn": {
+      "type": "integer",
+      "description": "Date the search completed represented in milliseconds since the epoch."
+    },
+    "elapsedTimeForSearch": {
+      "type": "integer",
+      "description": "Elapsed time to perform search.",
+      "format": "int64"
+    },
+    "elapsedTimeForSort": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Elapsed time to perform the sort."
+    },
+    "elapsedTimeForMarshal": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Elapsed time to perform the JSON marshalling."
+    },
+    "elapsedTimeForDeduplicate": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Elapsed time to deduplicate items."
+    },
+    "elapsedTotal": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Total elapsed time."
+    },
+    "metadataItems": {
+      "type": "array",
+      "description": "The list of metadata item fields.",
+      "items": {
+        "type": "string"
+      },
+      "deprecated": true
+    },
+    "localizedMetadataItems": {
+      "description": "The list of localized metadata item fields.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "deprecated": true
+    },
+    "metadataItemDetails": {
+      "type": "array",
+      "description": "The list of metadata item details.",
+      "items": {
+        "$ref": "#/components/schemas/MetadataItemDetails"
+      }
+    },
+    "resultList": {
+      "type": "array",
+      "description": "Results of the search",
+      "items": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object"
+        }
+      }
+    },
+    "count": {
+      "type": "integer",
+      "description": "Count of items in results",
+      "format": "int32"
+    },
+    "deduplicatedCount": {
+      "type": "integer",
+      "description": "Count of deduplicated items",
+      "format": "int32"
+    }
+  }
+}

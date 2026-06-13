@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-createcasesubsetrequest.json",
+  "title": "CreateCaseSubsetRequest",
+  "description": "Schema for CreateCaseSubsetRequest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "string",
+      "description": "Query items that should be included in the subset. If a query is not supplied it defaults to an empty string, which returns all items."
+    },
+    "location": {
+      "type": "string",
+      "description": "Where the subset case should be created.  e.g. inventory0, inventory1",
+      "default": "inventory0"
+    },
+    "evidenceStoreCount": {
+      "type": "integer",
+      "description": "Specifies the maximum number of evidence stores to create.  Default is 1",
+      "format": "int32",
+      "default": 1
+    },
+    "includeFamilies": {
+      "type": "boolean",
+      "description": "Include item families in export.  Default is false",
+      "default": false
+    },
+    "copyTags": {
+      "type": "boolean",
+      "description": "Copy tags from the source case to the destination case.  Default is false",
+      "default": false
+    },
+    "copyComments": {
+      "type": "boolean",
+      "description": "Copy comments from the source case to the destination case.  Default is false",
+      "default": false
+    },
+    "copyCustodians": {
+      "type": "boolean",
+      "description": "Copy custodians from the source case to the destination case.  Default is false",
+      "default": false
+    },
+    "copyItemSets": {
+      "type": "boolean",
+      "description": "Copy item sets from the source case to the destination case.  Default is false",
+      "default": false
+    },
+    "copyClassifiers": {
+      "type": "boolean",
+      "description": "Copy classifiers from the source case to the destination case.  Default is false",
+      "default": false
+    },
+    "copyMarkupSets": {
+      "type": "boolean",
+      "description": "Copy markup sets from the source case to the destination case.  Default is false",
+      "default": false
+    },
+    "copyProductionSets": {
+      "type": "boolean",
+      "description": "Copy production sets from the source case to the destination case.  Default is false",
+      "default": false
+    },
+    "copyClusters": {
+      "type": "boolean",
+      "description": "Copy clusters from the source case to the destination case.  Default is false",
+      "default": false
+    },
+    "copyCustomMetadata": {
+      "type": "boolean",
+      "description": "Copy custom metadata from the source case to the destination case.  Default is false",
+      "default": false
+    },
+    "caseMetadata": {
+      "$ref": "#/components/schemas/CaseSubsetMetadata"
+    },
+    "processingSettings": {
+      "$ref": "#/components/schemas/CaseSubsetProcessingSettings"
+    }
+  }
+}

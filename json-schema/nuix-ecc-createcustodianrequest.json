@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-createcustodianrequest.json",
+  "title": "createCustodianRequest",
+  "description": "Schema for createCustodianRequest in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "custodianName": {
+      "type": "string",
+      "description": "name of the custodian to be created"
+    },
+    "description": {
+      "type": "string",
+      "description": "optional, description of the custodian to be created"
+    },
+    "groups": {
+      "type": "array",
+      "description": "optional, array of ids(s) of group(s) this custodian will be added to",
+      "items": {
+        "type": "object",
+        "properties": {
+          "groupId": {
+            "type": "string",
+            "description": "id of the group to add this custodian to"
+          }
+        }
+      }
+    }
+  }
+}

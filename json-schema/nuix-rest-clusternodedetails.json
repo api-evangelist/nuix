@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-clusternodedetails.json",
+  "title": "ClusterNodeDetails",
+  "description": "Schema for ClusterNodeDetails in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "guid": {
+      "type": "string",
+      "description": "The unique identifier for the node.  This is generated based upon the serverId."
+    },
+    "serverId": {
+      "type": "string",
+      "description": "The id of the node."
+    },
+    "publicURL": {
+      "type": "string",
+      "description": "The public URL of the node."
+    },
+    "contextPath": {
+      "type": "string",
+      "description": "server context path"
+    },
+    "name": {
+      "type": "string",
+      "description": "The friendly name of the node."
+    },
+    "maxWorkers": {
+      "type": "integer",
+      "description": "The max number of workers of the node."
+    },
+    "availableWorkers": {
+      "type": "integer",
+      "description": "The number of workers available on the node."
+    },
+    "busyWorkers": {
+      "type": "integer",
+      "description": "The number of workers in use on the node."
+    },
+    "tags": {
+      "type": "array",
+      "description": "An array of tags applied to the node.  This can be used for node filtering when processing in a cluster.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "roles": {
+      "type": "array",
+      "description": "A list of cluster roles the node has been assigned.",
+      "items": {
+        "type": "string",
+        "enum": [
+          "PRODUCER",
+          "CONSUMER"
+        ]
+      }
+    },
+    "restVersion": {
+      "type": "string",
+      "description": "The customer version of the node."
+    },
+    "osInfo": {
+      "$ref": "#/components/schemas/OperatingSystemDigest"
+    },
+    "engineVersion": {
+      "type": "string",
+      "description": "The engine version of the node."
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-custommetadatarequest.json",
+  "title": "CustomMetadataRequest",
+  "description": "Schema for CustomMetadataRequest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "fieldName": {
+      "type": "string",
+      "description": "The name of the custom metadata field"
+    },
+    "value": {
+      "type": "object",
+      "description": "The value of the custom metadata field"
+    },
+    "type": {
+      "type": "string",
+      "description": "The data type of the field",
+      "enum": [
+        "integer",
+        "float",
+        "date-time",
+        "text",
+        "boolean",
+        "binary"
+      ]
+    },
+    "mode": {
+      "type": "string",
+      "description": "The custom metadata mode",
+      "enum": [
+        "user",
+        "api"
+      ]
+    },
+    "params": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object"
+      },
+      "description": "Any parameters required to parse the value field.  params must contain a key \"mimeType\" with value being the MIME type of the binary data being stored. The value must be a valid MIME type name known to Nuix."
+    }
+  },
+  "required": [
+    "fieldName",
+    "value",
+    "type"
+  ]
+}

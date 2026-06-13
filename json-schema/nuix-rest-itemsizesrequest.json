@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-itemsizesrequest.json",
+  "title": "ItemSizesRequest",
+  "description": "Schema for ItemSizesRequest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "queryList": {
+      "type": "array",
+      "description": "The set of queries which will be executed.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "deduplication": {
+      "type": "string",
+      "description": "The deduplication to apply over each query. Defaults to 'none'",
+      "default": "none",
+      "enum": [
+        "none",
+        "md5"
+      ]
+    },
+    "sizeType": {
+      "type": "string",
+      "description": "The size type to calculate.",
+      "enum": [
+        "FILE_SIZE",
+        "AUDIT_SIZE"
+      ]
+    }
+  }
+}

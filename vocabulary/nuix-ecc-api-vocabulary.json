@@ -1,0 +1,380 @@
+{
+  "name": "Nuix ECC REST API Vocabulary",
+  "description": "Terms and concepts used in the Nuix Enterprise Collection Center REST API",
+  "source": "https://developer.nuix.com/latest/reference/eccapireference.html",
+  "tags": [
+    "Case",
+    "Computer",
+    "Computer Configuration",
+    "Collection Configuration",
+    "Group",
+    "Custodian",
+    "Target",
+    "Collection and Survey",
+    "Other Tasks",
+    "Job",
+    "Log",
+    "Utility"
+  ],
+  "schemas": [
+    "Extension",
+    "Evidence",
+    "FileType",
+    "DateCriteria",
+    "FolderSpec",
+    "Keyword",
+    "Hash",
+    "JobCreated",
+    "TargetInputs",
+    "Case",
+    "Computer",
+    "ComputerConf",
+    "Custodian",
+    "Group",
+    "Target",
+    "LogEntry",
+    "ComputerJobs",
+    "CollectionDetail",
+    "Task",
+    "TaskToCreate",
+    "TaskCreated",
+    "Configuration",
+    "jobDetail",
+    "jobListDetail",
+    "listComputerRequest",
+    "listJobRequest",
+    "jobActionRequest",
+    "launchCaseCollectionRequest",
+    "launchCaseCollectionByConfigurationRequest",
+    "launchCaseCollectionByTargetRequest",
+    "launchCaseCollectionByPathRequest",
+    "createConfigurationRequest",
+    "createCaseRequest",
+    "modifyCaseRequest",
+    "createGroupRequest",
+    "createCustodianRequest",
+    "createTargetRequest",
+    "modifyGroupRequest",
+    "createConfigurationResponse",
+    "licenseResponse",
+    "listTargetsResponse",
+    "listComputerConfResponse",
+    "listCustodianResponse",
+    "listConfigurationsResponse",
+    "listCaseCollectionResponse",
+    "listCasesResponse",
+    "listGroupsResponse",
+    "launchCaseCollectionByConfigurationResponse",
+    "launchCaseCollectionResponse",
+    "standardResponse",
+    "systemInfoResponse"
+  ],
+  "operations": [
+    {
+      "operationId": "listCasesAll",
+      "summary": "Lists all cases",
+      "tags": [
+        "Case"
+      ],
+      "path": "/v2/cases",
+      "method": "GET"
+    },
+    {
+      "operationId": "createCase",
+      "summary": "Create a new case",
+      "tags": [
+        "Case"
+      ],
+      "path": "/v2/cases",
+      "method": "POST"
+    },
+    {
+      "operationId": "listCases",
+      "summary": "Lists the specified case",
+      "tags": [
+        "Case"
+      ],
+      "path": "/v2/cases/{caseId}",
+      "method": "GET"
+    },
+    {
+      "operationId": "modifyCase",
+      "summary": "Rename a case and-or change case status",
+      "tags": [
+        "Case"
+      ],
+      "path": "/v2/cases/{id}",
+      "method": "PUT"
+    },
+    {
+      "operationId": "deleteCase",
+      "summary": "Delete a case",
+      "tags": [
+        "Case"
+      ],
+      "path": "/v2/cases/{id}",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "listComputersByFilter",
+      "summary": "Lists computers (endpoints) with ECC installed",
+      "tags": [
+        "Computer"
+      ],
+      "path": "/v2/computers",
+      "method": "POST"
+    },
+    {
+      "operationId": "listComputerConfigsAll",
+      "summary": "Returns all Computer Configurations.",
+      "tags": [
+        "Computer Configuration"
+      ],
+      "path": "/v2/compConfigurations",
+      "method": "GET"
+    },
+    {
+      "operationId": "listComputerConfigsOne",
+      "summary": "Returns the specified Computer Configuration.",
+      "tags": [
+        "Computer Configuration"
+      ],
+      "path": "/v2/compConfigurations/{confid}",
+      "method": "GET"
+    },
+    {
+      "operationId": "listConfigurations",
+      "summary": "Lists all Collection Configurations",
+      "tags": [
+        "Collection Configuration"
+      ],
+      "path": "/v2/configurations",
+      "method": "GET"
+    },
+    {
+      "operationId": "createConfiguration",
+      "summary": "Creates a new Collection Configuration based on an existing Collection Configuration",
+      "tags": [
+        "Collection Configuration"
+      ],
+      "path": "/v2/configurations",
+      "method": "POST"
+    },
+    {
+      "operationId": "deleteConfiguration",
+      "summary": "Delete the Configuration",
+      "tags": [
+        "Collection Configuration"
+      ],
+      "path": "/v2/configurations/{id}",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "listLogByJob",
+      "summary": "Returns the log entries (errors and warnings) associated with the specified job",
+      "tags": [
+        "Log"
+      ],
+      "path": "/v2/logs",
+      "method": "GET"
+    },
+    {
+      "operationId": "jobDetails",
+      "summary": "Display details of the specified job",
+      "tags": [
+        "Job"
+      ],
+      "path": "/v2/jobs/{id}",
+      "method": "GET"
+    },
+    {
+      "operationId": "listJobsByFilter",
+      "summary": "Lists all jobs that match the specified filter",
+      "tags": [
+        "Job"
+      ],
+      "path": "/v2/jobs",
+      "method": "POST"
+    },
+    {
+      "operationId": "jobAction",
+      "summary": "Modifies the state of the specified job",
+      "tags": [
+        "Job"
+      ],
+      "path": "/v2/jobAction/{id}",
+      "method": "POST"
+    },
+    {
+      "operationId": "listGroupsAll",
+      "summary": "Lists all Groups",
+      "tags": [
+        "Group"
+      ],
+      "path": "/v2/groups",
+      "method": "GET"
+    },
+    {
+      "operationId": "createGroup",
+      "summary": "Create a new group",
+      "tags": [
+        "Group"
+      ],
+      "path": "/v2/group",
+      "method": "POST"
+    },
+    {
+      "operationId": "modifyGroup",
+      "summary": "Modify a group",
+      "tags": [
+        "Group"
+      ],
+      "path": "/v2/group",
+      "method": "PUT"
+    },
+    {
+      "operationId": "deleteGroup",
+      "summary": "Delete a group",
+      "tags": [
+        "Group"
+      ],
+      "path": "/v2/group",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "listCustodians",
+      "summary": "Lists Custodian/s",
+      "tags": [
+        "Custodian"
+      ],
+      "path": "/v2/custodians",
+      "method": "GET"
+    },
+    {
+      "operationId": "createCustodian",
+      "summary": "Create a new Custodian",
+      "tags": [
+        "Custodian"
+      ],
+      "path": "/v2/custodians",
+      "method": "POST"
+    },
+    {
+      "operationId": "deleteCustodian",
+      "summary": "Delete a Custodian",
+      "tags": [
+        "Custodian"
+      ],
+      "path": "/v2/custodians",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "listTargets",
+      "summary": "Lists all target/s",
+      "tags": [
+        "Target"
+      ],
+      "path": "/v2/targets",
+      "method": "GET"
+    },
+    {
+      "operationId": "listTarget",
+      "summary": "Get information about the target specified by id",
+      "tags": [
+        "Target"
+      ],
+      "path": "/v2/targets/{id}",
+      "method": "GET"
+    },
+    {
+      "operationId": "deleteTarget",
+      "summary": "Delete a Target",
+      "tags": [
+        "Target"
+      ],
+      "path": "/v2/targets/{id}",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "createTarget",
+      "summary": "Add a new target",
+      "tags": [
+        "Target"
+      ],
+      "path": "/v2/target",
+      "method": "POST"
+    },
+    {
+      "operationId": "listCaseCollection",
+      "summary": "Lists all collections for the specified case",
+      "tags": [
+        "Collection and Survey"
+      ],
+      "path": "/v2/collections",
+      "method": "GET"
+    },
+    {
+      "operationId": "launchCaseCollection",
+      "summary": "Launch a new collection by Custodian",
+      "tags": [
+        "Collection and Survey"
+      ],
+      "path": "/v2/collections",
+      "method": "POST"
+    },
+    {
+      "operationId": "launchCollectionsByPath",
+      "summary": "Launch a new collection explicitly defining folders and files with no custodian.",
+      "tags": [
+        "Collection and Survey"
+      ],
+      "path": "/v2/collectionsByPath",
+      "method": "POST"
+    },
+    {
+      "operationId": "launchCollectionsByTarget",
+      "summary": "Launch a new collection specifying only target and collection configuration",
+      "tags": [
+        "Collection and Survey"
+      ],
+      "path": "/v2/collectionsByTarget",
+      "method": "POST"
+    },
+    {
+      "operationId": "launchCollectionsByConfiguration",
+      "summary": "Launch a new collection for a specific computer and Collection Configuration",
+      "tags": [
+        "Collection and Survey"
+      ],
+      "path": "/v2/collectionsByConfiguration",
+      "method": "POST"
+    },
+    {
+      "operationId": "eccInstalled",
+      "summary": "Verify whether ECC Client or ECC Admin Console is installed on the specified computer.",
+      "tags": [
+        "Utility"
+      ],
+      "path": "/v2/eccInstalled",
+      "method": "GET"
+    },
+    {
+      "operationId": "getServerLicense",
+      "summary": "Get ECC Server license information",
+      "tags": [
+        "Utility"
+      ],
+      "path": "/v2/license",
+      "method": "GET"
+    },
+    {
+      "operationId": "getServerInfo",
+      "summary": "Get ECC Server system information",
+      "tags": [
+        "Utility"
+      ],
+      "path": "/v2/systemInfo",
+      "method": "GET"
+    }
+  ]
+}

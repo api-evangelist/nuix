@@ -1,0 +1,208 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-imagingoptions.json",
+  "title": "ImagingOptions",
+  "description": "Schema for ImagingOptions in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "imageExcelSpreadsheets": {
+      "type": "boolean",
+      "default": false,
+      "deprecated": true,
+      "description": "Specifies whether to image Excel spreadsheets, instead of generating a slip sheet. Defaults to false. This is replaced with Imaging Profiles since Nuix 7.2."
+    },
+    "slipSheetContainers": {
+      "type": "boolean",
+      "default": false,
+      "deprecated": true,
+      "description": "Deprecated - same as exportDescendantContainers in BatchExporter.setTraversalOptions(Map) since Nuix 7.2. Defaults to false"
+    },
+    "excelExportingEngine": {
+      "type": "string",
+      "enum": [
+        "INTERNAL",
+        "MS_OFFICE"
+      ],
+      "description": "Excel Exporting Engine:\n  * `MS_OFFICE` - Exports Excel documents using Microsoft.\n  * `INTERNAL` - Exports Excel documents using the built in exporter.\n"
+    },
+    "excelPrintHiddenRows": {
+      "type": "boolean",
+      "description": "Optionally unhide all Excel rows.  Defaults to null which uses the settings present in the document"
+    },
+    "excelPrintHiddenColumns": {
+      "type": "boolean",
+      "description": "Optionally unhide all Excel columns. Defaults to null which uses the settings present in the document"
+    },
+    "excelPrintHiddenWorksheets": {
+      "type": "string",
+      "default": "SHEET_VERY_HIDDEN",
+      "enum": [
+        "SHEET_HIDDEN",
+        "SHEET_VERY_HIDDEN",
+        "PRINT_IN_PLACE",
+        "PRINT_NO_COMMENTS",
+        "PRINT_SHEETEND"
+      ],
+      "description": "Excel Print Hidden Worksheets:\n  * `SHEET_HIDDEN` - Show hidden worksheets.\n  * `SHEET_VERY_HIDDEN` - Show hidden and very hidden worksheets.\n"
+    },
+    "excelPrintComments": {
+      "type": "string",
+      "enum": [
+        "PRINT_IN_PLACE",
+        "PRINT_NO_COMMENTS",
+        "PRINT_SHEETEND"
+      ],
+      "description": "Print Comments:\n  * `PRINT_IN_PLACE` - Print in original location.\n  * `PRINT_NO_COMMENTS` - Do not print.\n  * `PRINT_SHEETEND` - Print as end notes.\n"
+    },
+    "excelPrintNotes": {
+      "type": "boolean",
+      "description": "Optionally set for Excel cell notes to be printed as end notes with the sheet. Defaults to null which uses the settings present in the document."
+    },
+    "excelPaperSize": {
+      "type": "string",
+      "description": "Excel Paper Size:\n  * `PAPER_10x14` - 10 in. x 14 in.\n  * `PAPER_11x17` - 11 in. x 17 in.\n  * `PAPER_A3` - A3 (297 mm x 420 mm)\n  * `PAPER_A4` - A4 (210 mm x 297 mm)\n  * `PAPER_A4Small` - A4 Small (210 mm x 297 mm)\n  * `PAPER_A5` - A5 (148 mm x 210 mm)\n  * `PAPER_B4` - B4 (250 mm x 354 mm)\n  * `PAPER_B5` - A5 (148 mm x 210 mm)\n  * `PAPER_Csheet` - C size sheet\n  * `PAPER_Dsheet` - D size sheet\n  * `PAPER_Envelope10` - Envelope 10 (4-1/8 in. x 9-1/2 in.)\n  * `PAPER_Envelope11` - Envelope 11 (4-1/2 in. x 10-3/8 in.)\n  * `PAPER_Envelope12` - Envelope 12 (4-1/2 in. x 11 in.)\n  * `PAPER_Envelope14` - Envelope 14 (5 in. x 11-1/2 in.)\n  * `PAPER_Envelope9` - Envelope 9 (3-7/8 in. x 8-7/8 in.)\n  * `PAPER_EnvelopeB4` - Envelope B4 (250 mm x 353 mm)\n  * `PAPER_EnvelopeB5` - Envelope B5 (176 mm x 250 mm)\n  * `PAPER_EnvelopeB6` - Envelope B6 (176 mm x 125 mm)\n  * `PAPER_EnvelopeC3` - Envelope C3 (324 mm x 458 mm)\n  * `PAPER_EnvelopeC4` - Envelope C4 (229 mm x 324 mm)\n  * `PAPER_EnvelopeC5` - Envelope C5 (162 mm x 229 mm)\n  * `PAPER_EnvelopeC6` - Envelope C6 (114 mm x 162 mm)\n  * `PAPER_EnvelopeC65` - Envelope C65 (114 mm x 229 mm)\n  * `PAPER_EnvelopeDL` - Envelope DL (110 mm x 220 mm)\n  * `PAPER_EnvelopeItaly` - Envelope (110 mm x 230 mm)\n  * `PAPER_EnvelopeMonarch` - Envelope Monarch (3-7/8 in. x 7-1/2 in.)\n  * `PAPER_EnvelopePersonal` - Envelope (3-5/8 in. x 6-1/2 in.)\n  * `PAPER_Esheet` - E size sheet\n  * `PAPER_Executive` - Executive (7-1/2 in. x 10-1/2 in.)\n  * `PAPER_FanfoldLegalGerman` - German Legal Fanfold (8-1/2 in. x 13 in.)\n  * `PAPER_FanfoldStdGerman` - German Legal Fanfold (8-1/2 in. x 13 in.)\n  * `PAPER_FanfoldUS` - U.S. Standard Fanfold (14-7/8 in. x 11 in.)\n  * `PAPER_Folio` - Folio (8-1/2 in. x 13 in.)\n  * `PAPER_Ledger` - Ledger (17 in. x 11 in.)\n  * `PAPER_Legal` - Legal (8-1/2 in. x 14 in.)\n  * `PAPER_Letter` - Letter (8-1/2 in. x 11 in.)\n  * `PAPER_LetterSmall` - Letter Small (8-1/2 in. x 11 in.)\n  * `PAPER_Note` - Note (8-1/2 in. x 11 in.)\n  * `PAPER_Quarto` - Quarto (215 mm x 275 mm)\n  * `PAPER_Statement` - Statement (5-1/2 in. x 8-1/2 in.)\n  * `PAPER_Tabloid` - Tabloid (11 in. x 17 in.)\n",
+      "enum": [
+        "PAPER_10x14",
+        "PAPER_11x17",
+        "PAPER_A3",
+        "PAPER_A4",
+        "PAPER_A4Small",
+        "PAPER_A5",
+        "PAPER_B4",
+        "PAPER_B5",
+        "PAPER_Csheet",
+        "PAPER_Dsheet",
+        "PAPER_Envelope10",
+        "PAPER_Envelope11",
+        "PAPER_Envelope12",
+        "PAPER_Envelope14",
+        "PAPER_Envelope9",
+        "PAPER_EnvelopeB4",
+        "PAPER_EnvelopeB5",
+        "PAPER_EnvelopeB6",
+        "PAPER_EnvelopeC3",
+        "PAPER_EnvelopeC4",
+        "PAPER_EnvelopeC5",
+        "PAPER_EnvelopeC6",
+        "PAPER_EnvelopeC65",
+        "PAPER_EnvelopeDL",
+        "PAPER_EnvelopeItaly",
+        "PAPER_EnvelopeMonarch",
+        "PAPER_EnvelopePersonal",
+        "PAPER_Esheet",
+        "PAPER_Executive",
+        "PAPER_FanfoldLegalGerman",
+        "PAPER_FanfoldStdGerman",
+        "PAPER_FanfoldUS",
+        "PAPER_Folio",
+        "PAPER_Ledger",
+        "PAPER_Legal",
+        "PAPER_Letter",
+        "PAPER_LetterSmall",
+        "PAPER_Note",
+        "PAPER_Quarto",
+        "PAPER_Statement",
+        "PAPER_Tabloid"
+      ]
+    },
+    "excelPageOrientation": {
+      "type": "string",
+      "enum": [
+        "PORTRAIT",
+        "LANDSCAPE"
+      ],
+      "description": "Excel Page Orientation\n  * `PORTRAIT` - Portrait mode\n  * `LANDSCAPE` - Landscape mode\n"
+    },
+    "excelPageZoom": {
+      "type": "string",
+      "enum": [
+        "PERCENT_10",
+        "PERCENT_25",
+        "PERCENT_50",
+        "PERCENT_75",
+        "PERCENT_100",
+        "PERCENT_125",
+        "PERCENT_150",
+        "PERCENT_200",
+        "PERCENT_400"
+      ],
+      "description": "Excel Page Zoom:\n  * `PERCENT_10` - 10%\n  * `PERCENT_25` - 25%\n  * `PERCENT_50` - 50%\n  * `PERCENT_75` - 75%\n  * `PERCENT_100` - 100%\n  * `PERCENT_125` - 125%\n  * `PERCENT_150` - 150%\n  * `PERCENT_200` - 200%\n  * `PERCENT_400` - 400%\n"
+    },
+    "excelFitToPagesTall": {
+      "type": "integer",
+      "description": "Optionally set for Excel the number of pages tall the worksheet will be scaled to when it's printed. Defaults to null which uses the settings present in the document",
+      "format": "int32"
+    },
+    "excelFitToPagesWide": {
+      "type": "integer",
+      "description": "Optionally set for Excel the number of pages wide the worksheet will be scaled to when it's printed. Defaults to null which uses the settings present in the document",
+      "format": "int32"
+    },
+    "excelWorksheetPrintArea": {
+      "type": "string",
+      "description": "Optionally set Excel print area for every worksheet.  Empty string for entire worksheet or standard excel range string (e.g., $A$1:$J$10). Defaults to empty string"
+    },
+    "excelPageNumberLimit": {
+      "type": "integer",
+      "description": "Optionally set the page number limit for Excel. The value must be a positive number. Defaults to null which uses the settings present in the document",
+      "format": "int32"
+    },
+    "excelPrintGridlines": {
+      "type": "boolean",
+      "default": true,
+      "description": "Optionally force Excel gridlines to be always shown or hidden. Defaults to true"
+    },
+    "excelPrintHeadings": {
+      "type": "boolean",
+      "default": true,
+      "description": "Optionally force Excel headers to be hidden or shown. Defaults to true"
+    },
+    "wordExportingEngine": {
+      "type": "string",
+      "default": "INTERNAL",
+      "enum": [
+        "MS_OFFICE",
+        "INTERNAL"
+      ],
+      "description": "Word Exporting Engine:\n  * `MS_OFFICE` - Export Word documents using Microsoft Office\n  * `INTERNAL` - Export Word documents using built in exporter\n"
+    },
+    "wordShowMarkup": {
+      "type": "boolean",
+      "description": "Optionally force Word to show markup (such as track-changes) or hide it. Defaults to null which uses the settings present in the document"
+    },
+    "wordShowHiddenText": {
+      "type": "boolean",
+      "description": "Optionally force PowerPoint to show markup (such as track-changes or hidden text) or hide it. Defaults to null which uses the settings present in the document"
+    },
+    "powerpointExportEngine": {
+      "type": "string",
+      "default": "INTERNAL",
+      "enum": [
+        "MS_OFFICE",
+        "INTERNAL"
+      ],
+      "description": "Powerpoint Exporting Engine:\n  * `MS_OFFICE` - Export Powerpoint documents using Microsoft Office\n  * `INTERNAL` - Export Powerpoint documents using built in exporter\n"
+    },
+    "powerPointPrintOutputType": {
+      "type": "string",
+      "default": "PRINT_OUTPUT_SLIDES",
+      "enum": [
+        "PRINT_OUTPUT_BUILD_SLIDES",
+        "PRINT_OUTPUT_FOUR_SLIDE_HANDOUTS",
+        "PRINT_OUTPUT_NINE_SLIDE_HANDOUTS",
+        "PRINT_OUTPUT_NOTES_PAGES",
+        "PRINT_OUTPUT_ONE_SLIDE_HANDOUTS",
+        "PRINT_OUTPUT_OUTLINE",
+        "PRINT_OUTPUT_SIX_SLIDE_HANDOUTS",
+        "PRINT_OUTPUT_SLIDES",
+        "PRINT_OUTPUT_THREE_SLIDE_HANDOUTS",
+        "PRINT_OUTPUT_TWO_SLIDE_HANDOUTS"
+      ],
+      "description": "Powerpoint Print Output Type:\n  * `PRINT_OUTPUT_BUILD_SLIDES` - Build Slides\n  * `PRINT_OUTPUT_FOUR_SLIDE_HANDOUTS` - Four Slide Handouts\n  * `PRINT_OUTPUT_NINE_SLIDE_HANDOUTS` - Nine Slide Handouts\n  * `PRINT_OUTPUT_NOTES_PAGES` - Notes Pages\n  * `PRINT_OUTPUT_ONE_SLIDE_HANDOUTS` - Single Slide Handouts\n  * `PRINT_OUTPUT_OUTLINE` - Outline\n  * `PRINT_OUTPUT_SIX_SLIDE_HANDOUTS` - Six Slide Handouts\n  * `PRINT_OUTPUT_SLIDES` - Slides\n  * `PRINT_OUTPUT_THREE_SLIDE_HANDOUTS` - Three Slide Handouts\n  * `PRINT_OUTPUT_TWO_SLIDE_HANDOUTS` - Two Slide Handouts\n"
+    },
+    "slipSheetMetadataProfile": {
+      "type": "string",
+      "description": "Optionally insert values from a metadata profile into generated slip-sheets. Defaults to null which uses the settings present in the document"
+    }
+  }
+}

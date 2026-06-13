@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-ingestibleslack.json",
+  "title": "IngestibleSlack",
+  "description": "Schema for IngestibleSlack in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "tempAuthCode": {
+      "type": "string",
+      "description": "The temporary authorization code obtained from Slack's OAuth flow. Not required if storedCredentialName is provided."
+    },
+    "storedCredentialName": {
+      "type": "string",
+      "description": "The name of the slack credentials stored in credentials store. Not required if tempAuthCode is provided."
+    },
+    "from": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Sets the start date on the location. The start date and end date are both required, and if retrievals(Collection) includes USERS_CALENDARS or TEAMS_CALENDARS, then the date range cannot exceed five years.  Accepted date formats are RFC-3339 or a simple date format (yyyy-MM-dd) which will use the default timezone of the server."
+    },
+    "to": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Sets the end date on the location. The start date and end date are both required, and if retrievals(Collection) includes USERS_CALENDARS or TEAMS_CALENDARS, then the date range cannot exceed five years.  Accepted date formats are RFC-3339 or a simple date format (yyyy-MM-dd) which will use the default timezone of the server."
+    },
+    "userIds": {
+      "type": "array",
+      "description": "The Set of user IDs to filter Slack messages and files from.",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

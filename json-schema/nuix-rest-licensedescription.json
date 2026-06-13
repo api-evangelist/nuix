@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-licensedescription.json",
+  "title": "LicenseDescription",
+  "description": "Schema for LicenseDescription in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "source": {
+      "type": "string",
+      "description": "Gets a string value identifying information about the source of the license."
+    },
+    "type": {
+      "type": "string",
+      "description": "Gets a string value identifying the type of license source."
+    },
+    "location": {
+      "type": "string",
+      "description": "Gets the location of the license."
+    },
+    "shortname": {
+      "type": "string",
+      "description": "Gets the short name of this license type."
+    },
+    "count": {
+      "type": "integer",
+      "format": "int32",
+      "description": "Gets the number of licenses of this type which are currently available."
+    },
+    "configuredCount": {
+      "type": "integer",
+      "format": "int32",
+      "description": "Gets the total number of licenses of this type regardless of the state."
+    },
+    "description": {
+      "type": "string",
+      "description": "Gets a longer description of this license type."
+    },
+    "workers": {
+      "type": "integer",
+      "format": "int32",
+      "description": "Gets the number of workers available for use with licenses of this type."
+    },
+    "configuredWorkers": {
+      "type": "integer",
+      "format": "int32",
+      "description": "Gets the total number of workers for the licenses of this type regardless of state."
+    },
+    "canChooseWorkers": {
+      "type": "boolean",
+      "description": "Tests if the client gets a choice over the number of workers."
+    },
+    "audited": {
+      "type": "boolean",
+      "description": "Tests if the licence is audited in any fashion."
+    },
+    "auditThreshold": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Gets the threshold for auditing in bytes."
+    },
+    "expiry": {
+      "type": "string",
+      "format": "integer",
+      "description": "Gets the expiry date of the license represented in milliseconds since the epoch."
+    },
+    "features": {
+      "type": "array",
+      "description": "A list of all enabled license features.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "legalHoldHoldCountLimit": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Gets the Legal Hold \"hold count limit\" from a license."
+    },
+    "concurrentUserLimit": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Retrieves the concurrent user limit from a license."
+    }
+  }
+}

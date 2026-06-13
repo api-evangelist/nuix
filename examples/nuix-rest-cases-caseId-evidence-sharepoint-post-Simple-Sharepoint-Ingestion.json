@@ -1,0 +1,10 @@
+{
+  "value": {
+    "target": {
+      "domain": "mydomain.sharepoint.com",
+      "username": "myuser",
+      "password": "mypassword",
+      "uri": "domain.sharepoint.com/sites/mypage"
+    }
+  }
+}

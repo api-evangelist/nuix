@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-evidencecontainer.json",
+  "title": "EvidenceContainer",
+  "description": "Schema for EvidenceContainer in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Sets the name for the evidence container that is created during ingestion."
+    },
+    "customMetadata": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Sets a map of custom metadata for the evidence container."
+    },
+    "encoding": {
+      "type": "string",
+      "description": "Sets the encoding for the evidence container. If the encoding is not set the default system encoding will be used."
+    },
+    "custodian": {
+      "type": "string",
+      "description": "Sets the name of the initial custodian for the data."
+    },
+    "timeZone": {
+      "type": "string",
+      "description": "Sets the time zone for the evidence container. If the time zone is not set the system's default time zone will be used."
+    },
+    "description": {
+      "type": "string",
+      "description": "Sets the description for the evidence container."
+    },
+    "locale": {
+      "type": "string",
+      "description": "Sets the locale for the evidence container. Some file types and named entities require a locale for them to be ingested accurately. If not set then the system's default locale will be used. Format is that required by IETF BCP 47 (e.g. 'en-US')."
+    }
+  }
+}

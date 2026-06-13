@@ -1,0 +1,16 @@
+{
+  "value": {
+    "query": "",
+    "fieldList": [
+      "name",
+      "guid",
+      "date",
+      "fileSize",
+      "isBinaryAvailable",
+      "kind",
+      "fileType",
+      "pathNames"
+    ],
+    "useCache": false
+  }
+}

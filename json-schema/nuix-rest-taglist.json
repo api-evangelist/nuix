@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-taglist.json",
+  "title": "TagList",
+  "description": "Schema for TagList in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "tagList": {
+      "type": "array",
+      "description": "List of tags used during the operation",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "tagList"
+  ]
+}

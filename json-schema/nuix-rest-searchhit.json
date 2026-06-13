@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-searchhit.json",
+  "title": "SearchHit",
+  "description": "Schema for SearchHit in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "term": {
+      "type": "string",
+      "description": "Search hit term."
+    },
+    "count": {
+      "type": "integer",
+      "description": "The number of occurrances for this term",
+      "format": "int32"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "value": {
+    "target": {
+      "tenantId": "tenantId",
+      "clientId": "clientId",
+      "clientSecret": "clientSecret",
+      "from": "2021-01-01",
+      "to": "2021-04-30",
+      "username": "username",
+      "password": "password",
+      "userPrincipalNames": [
+        "userprincipal@domain.com"
+      ],
+      "retrievals": [
+        "USERS_CONTACTS"
+      ]
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-timezonerequest.json",
+  "title": "TimezoneRequest",
+  "description": "Schema for TimezoneRequest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "timezone": {
+      "type": "string",
+      "description": "A valid Joda timezone ID."
+    }
+  },
+  "required": [
+    "timezone"
+  ]
+}

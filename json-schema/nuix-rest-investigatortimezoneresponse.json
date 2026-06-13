@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-investigatortimezoneresponse.json",
+  "title": "InvestigatorTimeZoneResponse",
+  "description": "Schema for InvestigatorTimeZoneResponse in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "timeZone": {
+      "type": "string",
+      "description": "Gets the time zone ID for the case's investigation time zone. You can find a list of valid timezones at: http://www.joda.org/joda-time/timezones.html"
+    }
+  }
+}

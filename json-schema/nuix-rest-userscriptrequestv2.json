@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-userscriptrequestv2.json",
+  "title": "UserScriptRequestV2",
+  "description": "Schema for UserScriptRequestV2 in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "fileName": {
+      "type": "string",
+      "description": "The path location of a script file, relative to the 'userScriptsLocation' property. If this field has a value, it will be used and has priority over the \"script\" field.  The \"fileName\" field or \"script\" field is required for this request."
+    },
+    "script": {
+      "type": "string",
+      "description": "A script to execute as a literal string.  If the \"filename\" property has a value, this field will be ignored and the script will be run from the provided file location instead. The \"script\" field or \"filename\" field is required for this request."
+    },
+    "language": {
+      "type": "string",
+      "description": "Language that the script is written in.",
+      "enum": [
+        "RUBY",
+        "JAVASCRIPT",
+        "PYTHON"
+      ]
+    },
+    "name": {
+      "type": "string",
+      "description": "Sets the name of the script."
+    },
+    "description": {
+      "type": "string",
+      "description": "A brief description of what the script does."
+    },
+    "relativeOutputDirectory": {
+      "type": "string",
+      "description": "The script output directory relative to the case path.  Output is only written if the `writeOutputToFileSystem` property is true."
+    },
+    "customArguments": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object"
+      },
+      "description": "Used to map any arguments the user wants to add and reference later in the script."
+    },
+    "writeOutputToFileSystem": {
+      "description": "True to writes the script output to the file system, false otherwise.",
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

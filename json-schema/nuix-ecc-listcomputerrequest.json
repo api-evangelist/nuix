@@ -1,0 +1,103 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-listcomputerrequest.json",
+  "title": "listComputerRequest",
+  "description": "Schema for listComputerRequest in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "limit": {
+      "type": "integer",
+      "description": "optional, maximum number of computers to be included in the response"
+    },
+    "computerId": {
+      "type": "string",
+      "description": "optional, GUID value that identifies a specific computer.\n\nIf provided, only that computer is included in the response"
+    },
+    "sortBy": {
+      "type": "string",
+      "description": "optional, field name to sort result",
+      "enum": [
+        "ID",
+        "Name",
+        "Description",
+        "ConfigID",
+        "Purpose",
+        "Presence",
+        "PairingState",
+        "Staging",
+        "TimeZoneID",
+        "TimeZoneOffset",
+        "FirstContactTime",
+        "LastContactTime",
+        "UUID",
+        "OSName",
+        "SearchEnabled",
+        "ClientParameters",
+        "ClientPublicKey",
+        "Config",
+        "ConfigName",
+        "FullName",
+        "History",
+        "LastUser",
+        "OSName",
+        "PeerIP",
+        "ServerParameters",
+        "ServerPrivateKey",
+        "ServerPublicKey"
+      ]
+    },
+    "ascending": {
+      "type": "boolean",
+      "description": "optional, `true` to sort results in ascending order, `false` for descending.\n\nIf omitted, sort is ascending"
+    },
+    "where": {
+      "type": "string",
+      "description": "optional, SQL WHERE clause (minus the word WHERE) used to construct more complex filtering.\n\nIf `where` is specified or present then the `filters` field is ignored."
+    },
+    "filters": {
+      "type": "array",
+      "description": "An optional array of field/value pairs to filter by.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "field name",
+            "enum": [
+              "ID",
+              "Name",
+              "Description",
+              "ConfigID",
+              "Purpose",
+              "Presence",
+              "PairingState",
+              "Staging",
+              "TimeZoneID",
+              "TimeZoneOffset",
+              "FirstContactTime",
+              "LastContactTime",
+              "UUID",
+              "OSName",
+              "SearchEnabled",
+              "ClientParameters",
+              "ClientPublicKey",
+              "Config",
+              "ConfigName",
+              "FullName",
+              "History",
+              "LastUser",
+              "OSName",
+              "PeerIP",
+              "ServerParameters",
+              "ServerPrivateKey",
+              "ServerPublicKey"
+            ]
+          },
+          "value": {
+            "description": "Comparison is case-sensitive.  See the list of filtering and sorting fields, above, for field types and descriptions."
+          }
+        }
+      }
+    }
+  }
+}

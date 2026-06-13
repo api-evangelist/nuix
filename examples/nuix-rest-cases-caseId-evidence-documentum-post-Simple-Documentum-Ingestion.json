@@ -1,0 +1,13 @@
+{
+  "value": {
+    "target": {
+      "username": "myuser",
+      "password": "mypassword",
+      "domain": "domain",
+      "port": 1489,
+      "query": "query",
+      "server": "server",
+      "docBase": "docBaseRepository"
+    }
+  }
+}

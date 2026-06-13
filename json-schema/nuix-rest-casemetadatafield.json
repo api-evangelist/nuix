@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-casemetadatafield.json",
+  "title": "CaseMetadataField",
+  "description": "Schema for CaseMetadataField in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The metadata field name"
+    },
+    "type": {
+      "type": "string",
+      "description": "The metadata field type. Will be one of:<br/>SPECIAL: Metadata defined by the application such as GUID, Name, etc.<br/>PROPERTY: Regular metadata which was stored within an item.<br/>DERIVED: Metadata identifier using an arbitrary expression.<br/>EVIDENCE: Metadata assigned at the evidence level at load time.<br/>SCRIPTED: Metadata using an arbitrary scripted expression.<br/>CUSTOM: User-defined custom metadata."
+    }
+  }
+}

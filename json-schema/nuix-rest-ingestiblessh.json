@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-ingestiblessh.json",
+  "title": "IngestibleSSH",
+  "description": "Schema for IngestibleSSH in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "username": {
+      "type": "string",
+      "description": "The username needed to access the server account."
+    },
+    "password": {
+      "type": "string",
+      "description": "The password needed to access the server account."
+    },
+    "computer": {
+      "type": "string",
+      "description": "The hostname or IP address of the target server."
+    },
+    "sudoPassword": {
+      "type": "string",
+      "description": "The password needed to access protected files when using SSH key based authentication."
+    },
+    "keyFolder": {
+      "type": "string",
+      "description": "Points to a folder on the local system which holds the SSH authentication key pairs."
+    },
+    "portNumber": {
+      "type": "integer",
+      "description": "The port number to connect on.",
+      "format": "int32"
+    },
+    "hostFingerprint": {
+      "type": "string",
+      "description": "The expected host fingerprint for the host being connected to. If this value is not set then any host fingerpint will be allowed, leaving the possibility of a man in the middle attack on the connection."
+    },
+    "remoteFolder": {
+      "type": "string",
+      "description": "This optional parameter limits the evidence to items underneath this starting folder."
+    },
+    "accessingRemoteDisks": {
+      "type": "boolean",
+      "description": "When set to true remote disks (e.g. '/dev/sda1') will be exposed as evidence instead of the remote system's file system structure."
+    },
+    "initialLocation": {
+      "type": "string",
+      "description": "Sets the location to use local disks with initial location."
+    }
+  }
+}

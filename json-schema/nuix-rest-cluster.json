@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-cluster.json",
+  "title": "Cluster",
+  "description": "Schema for Cluster in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "nodes": {
+      "type": "array",
+      "description": "List of nodes in the cluster.  There should be at least one node in the list.",
+      "items": {
+        "$ref": "#/components/schemas/ClusterNode"
+      }
+    }
+  }
+}

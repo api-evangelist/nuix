@@ -1,0 +1,115 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-asyncfunctionstatusobject.json",
+  "title": "AsyncFunctionStatusObject",
+  "description": "Schema for AsyncFunctionStatusObject in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "done": {
+      "type": "boolean",
+      "description": "True if the task is done.  False otherwise."
+    },
+    "cancelled": {
+      "type": "boolean",
+      "description": "True if the task is cancelled.  False otherwise."
+    },
+    "result": {
+      "type": "object",
+      "description": "The result of the task."
+    },
+    "token": {
+      "type": "string",
+      "description": "The user token for the task."
+    },
+    "functionKey": {
+      "type": "string",
+      "description": "The function key to use when querying status."
+    },
+    "progress": {
+      "type": "number",
+      "description": "Progress of the Async function"
+    },
+    "total": {
+      "type": "number",
+      "description": "The total."
+    },
+    "percentComplete": {
+      "type": "number",
+      "description": "The percent complete."
+    },
+    "updatedOn": {
+      "type": "integer",
+      "description": "Date at which the Async function was last updated represented in milliseconds since the epoch."
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the Async function."
+    },
+    "statusId": {
+      "type": "string",
+      "description": "A status ID if available."
+    },
+    "requestTime": {
+      "type": "integer",
+      "description": "Date at which the Async function request was made represented in milliseconds since the epoch."
+    },
+    "startTime": {
+      "type": "integer",
+      "description": "Date at which the Async function request was started represented in milliseconds since the epoch."
+    },
+    "finishTime": {
+      "type": "integer",
+      "description": "Date at which the Async function request was finished represented in milliseconds since the epoch."
+    },
+    "caseId": {
+      "type": "string",
+      "description": "Case identification token"
+    },
+    "caseName": {
+      "type": "string",
+      "description": "Name of the case on which the Async function was performed."
+    },
+    "hasSuccessfullyCompleted": {
+      "type": "boolean",
+      "description": "Indicated whether the Async function has successfully completed."
+    },
+    "friendlyName": {
+      "type": "string",
+      "description": "Friendly name for the Async function."
+    },
+    "caseLocation": {
+      "type": "string",
+      "description": "Location of the case on which the Async function was performed."
+    },
+    "requestor": {
+      "type": "string",
+      "description": "Username for user who requested the Async function."
+    },
+    "licenseShortName": {
+      "type": "string",
+      "description": "The license used when executing the Async fucntion."
+    },
+    "action": {
+      "type": "string",
+      "description": "Action if available."
+    },
+    "options": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object"
+      },
+      "description": "Options used during the execution of the Async function."
+    },
+    "participatingInCaseFunctionQueue": {
+      "type": "boolean",
+      "description": "True if participating in the case function queue.  False otherwise."
+    },
+    "processedBy": {
+      "type": "string",
+      "description": "The server ID that processed the task."
+    },
+    "error": {
+      "$ref": "#/components/schemas/ClusteredRestErrorResponse"
+    }
+  }
+}

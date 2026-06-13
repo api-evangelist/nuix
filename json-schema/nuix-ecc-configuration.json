@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-configuration.json",
+  "title": "Configuration",
+  "description": "Schema for Configuration in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "id of the collection configuration"
+    },
+    "name": {
+      "type": "string",
+      "description": "name of the collection configuration"
+    },
+    "description": {
+      "type": "string",
+      "description": "description of the collection configuration",
+      "nullable": true
+    },
+    "template": {
+      "type": "string",
+      "description": "name of the Template used by the collection configuration",
+      "nullable": true
+    },
+    "category": {
+      "type": "string",
+      "description": "name of the Category (optional value attached to a collection configuration)",
+      "nullable": true
+    },
+    "targets": {
+      "type": "array",
+      "description": "array of Target IDs used in this collection configuration",
+      "items": {
+        "type": "integer",
+        "description": "Target ID"
+      },
+      "nullable": true
+    },
+    "computers": {
+      "type": "array",
+      "description": "array of Computer GUIDs used in this collection configuration",
+      "items": {
+        "type": "string",
+        "description": "computer GUID"
+      },
+      "nullable": true
+    },
+    "hasInputs": {
+      "type": "boolean",
+      "description": "true if any input paths exist within the targets or computers specified in this collection configuration"
+    },
+    "tasks": {
+      "type": "array",
+      "description": "array of Tasks used in this collection configuration",
+      "items": {
+        "$ref": "#/components/schemas/Task"
+      }
+    }
+  }
+}

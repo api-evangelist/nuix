@@ -1,0 +1,8 @@
+{
+  "value": {
+    "target": {
+      "computer": "MyEnterpriseVaultServer",
+      "vault": "MyVaultId"
+    }
+  }
+}

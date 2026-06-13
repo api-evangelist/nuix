@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-itemsetresponse.json",
+  "title": "ItemSetResponse",
+  "description": "Schema for ItemSetResponse in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "guid": {
+      "type": "string",
+      "description": "The item set guid"
+    },
+    "name": {
+      "type": "string",
+      "description": "name"
+    },
+    "description": {
+      "type": "string",
+      "description": "description"
+    },
+    "batches": {
+      "type": "array",
+      "description": "A list of batches for the item set",
+      "items": {
+        "$ref": "#/components/schemas/ItemSetBatchResponse"
+      }
+    }
+  }
+}

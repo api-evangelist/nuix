@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-mimetypespecificprocessingsettings.json",
+  "title": "MimeTypeSpecificProcessingSettings",
+  "description": "Schema for MimeTypeSpecificProcessingSettings in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": "boolean",
+      "description": "Controls whether items matching this MIME type, and their embedded descendants, will be processed.  Default is true"
+    },
+    "processEmbedded": {
+      "type": "boolean",
+      "description": "Controls whether embedded descendants matching this MIME type will be processed.  Default is true"
+    },
+    "processText": {
+      "type": "boolean",
+      "description": "Controls whether items matching this MIME type will have their text processed.  This setting takes precedence over 'textStrip' if both are set to true.  Set this and 'textStrip' to false in order to skip text processing.  Default is true"
+    },
+    "textStrip": {
+      "type": "boolean",
+      "description": "Controls whether items matching this MIME type will have their binary data text stripped.  Set this and 'processText' to false in order to skip text processing.  Default is false"
+    },
+    "processNamedEntities": {
+      "type": "boolean",
+      "description": "Controls whether items matching this MIME type will have their named entities processed. This setting only takes effect if either 'extractNamedEntitiesFromText' or 'extractNamedEntitiesFromProperties' is enabled in 'ProcessorSettings'. Default is true"
+    },
+    "processImages": {
+      "type": "boolean",
+      "description": "Controls whether items matching this MIME type will have their image data processed. This setting only takes effect if 'createThumbnails' is enabled in 'ProcessorSettings'.  Default is true"
+    },
+    "storeBinary": {
+      "type": "boolean",
+      "description": "Controls whether items matching this MIME type will have their binary data stored.  This setting only takes effect if 'storeBinary' is enabled in 'ProcessorSettings'.  Default is true"
+    }
+  }
+}

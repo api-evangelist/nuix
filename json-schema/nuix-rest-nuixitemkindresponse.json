@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-nuixitemkindresponse.json",
+  "title": "NuixItemKindResponse",
+  "description": "Schema for NuixItemKindResponse in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the item kind."
+    },
+    "localisedName": {
+      "type": "string",
+      "description": "The localized name of the item kind."
+    }
+  }
+}

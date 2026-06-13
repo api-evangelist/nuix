@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-systempropertyrequest.json",
+  "title": "SystemPropertyRequest",
+  "description": "Schema for SystemPropertyRequest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "value": {
+      "type": "string",
+      "description": "The value of the system property."
+    }
+  },
+  "required": [
+    "value"
+  ]
+}

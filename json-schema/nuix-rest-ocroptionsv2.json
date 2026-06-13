@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-ocroptionsv2.json",
+  "title": "OcrOptionsV2",
+  "description": "Schema for OcrOptionsV2 in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "regeneratePdfs": {
+      "type": "boolean",
+      "default": false,
+      "description": "Specifies whether to regenerate PDFs before they are sent to the OCR processor. Defaults to false"
+    },
+    "updatePdf": {
+      "type": "boolean",
+      "default": true,
+      "description": "Specifies whether to update PDFs in the print store with the PDF created by the OCR processor. Defaults to true"
+    },
+    "updateText": {
+      "type": "boolean",
+      "default": true,
+      "description": "Specifies whether to update the item's text with the text extrated with the OCR processor. Defaults to true"
+    },
+    "textModification": {
+      "type": "string",
+      "default": "append",
+      "enum": [
+        "append",
+        "overwrite"
+      ],
+      "description": "Specifies whether to append or overwrite new text to the item's existing text. Ignored if 'updateText' is set to false. Defaults to append."
+    },
+    "quality": {
+      "type": "string",
+      "enum": [
+        "default",
+        "document_archiving_accuracy",
+        "document_archiving_speed,",
+        "book_archiving_accuracy",
+        "book_archiving_speed",
+        "document_conversion_accuracy",
+        "document_conversion_speed",
+        "text_extraction_accuracy",
+        "text_extraction_speed",
+        "field_level_recognition",
+        "fast",
+        "mid_range",
+        "high_quality"
+      ],
+      "description": "OCR Quality:\n  * `default` - will use default values which usually produce a good result in a reasonable time.\n  * `document_archiving_accuracy` - Is suitable for creating an electronic archive (e.g. PDF). Enables detection\n    of maximum text on an image, including text embedded into the image. Full synthesis of the logical structure\n    of a document is not performed.\n  * `document_archiving_speed` - Has an emphasis on speed rather than accuracy.  See document_archiving_accuracy.\n  * `book_archiving_accuracy` - Is suitable for creating an electronic library (e.g. PDF). Enables detection\n    of font styles and full synthesis of the logical structure of a document.\n  * `book_archiving_speed` - Has an emphasis on speed rather than accuracy.  See book_archiving_accuracy.\n  * `document_conversion_accuracy` - Is suitable for converting documents into an editable format (e.g. RTF,\n    DOCX). Enables detection of font styles and full synthesis of the logical structure of a document.\n  * `document_conversion_speed` - Has an emphasis on speed rather than accuracy.  See document_conversion_accuracy.\n  * `text_extraction_accuracy` - Is suitable for extracting text from a document. Enables detection of all text on an image,\n    including small text areas of low quality (pictures and tables are not detected). Full synthesis of the logical\n    structure of a document is not performed.\n  * `text_extraction_speed` - Has an emphasis on speed rather than accuracy.  See text_extraction_accuracy.\n  * `field_level_recognition` - Is suitable for recognizing short text fragments\n  * `fast` - Deprecated.  See default.\n  * `mid_range` - Deprecated.  See document_archiving_speed\n  * `high_quality` - Deprecated.  See document_archiving_accuracy\n"
+    },
+    "rotation": {
+      "type": "string",
+      "enum": [
+        "auto",
+        "no_rotation",
+        "left",
+        "right",
+        "upside_down"
+      ],
+      "default": "auto",
+      "description": "Specifies the page rotation to use on the images. This will\nrotate the images before processing.\n* `left` Indicates the top of the image is on the left side of the document i.e. it is rotated 90 degrees counter-clockwise.\n* `right` - Indicates the top of the image is on the right side of the document i.e. it is rotate 90 degrees clockwise.\n* `upside_down` - Indicates the document should be rotate 180 degrees before processing.\n"
+    },
+    "deskew": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to deskew text. This will attempt to correct images where text is not level with the page. Defaults to true"
+    },
+    "clearOcrCache": {
+      "type": "boolean",
+      "default": true,
+      "description": "Specifies whether to clear OCR cache. By default the OCR cache will be deleted upon completion. The default location for this cache is under the case directory. See also 'outputDirectory' for customising the location of this cache. Defaults to true"
+    },
+    "outputDirectory": {
+      "type": "string",
+      "description": "Specifies the output directory. Defaults to the temporary directory"
+    },
+    "languages": {
+      "type": "array",
+      "description": "Specifies the languages to use during recognition. Defaults to English",
+      "items": {
+        "$ref": "#/components/schemas/Languages"
+      }
+    },
+    "timeout": {
+      "type": "integer",
+      "default": 90,
+      "description": "The timeout duration in minutes for processing an item. Must be greater than 1 minute. Defaults to 90",
+      "format": "int32"
+    },
+    "updateDuplicates": {
+      "type": "boolean",
+      "default": false,
+      "description": "Update all duplicate items in the case. Defaults to false"
+    },
+    "ocrProfileName": {
+      "type": "string",
+      "description": "The OCR profile name."
+    }
+  }
+}

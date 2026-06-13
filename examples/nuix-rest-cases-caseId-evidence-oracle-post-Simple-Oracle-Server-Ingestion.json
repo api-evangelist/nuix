@@ -1,0 +1,11 @@
+{
+  "value": {
+    "target": {
+      "driverType": "thin",
+      "password": "mypassword",
+      "username": "myusername",
+      "database": "host:port",
+      "role": "SYSDBA"
+    }
+  }
+}

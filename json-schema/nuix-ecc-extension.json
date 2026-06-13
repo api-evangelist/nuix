@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-extension.json",
+  "title": "Extension",
+  "description": "Describes a File Extension",
+  "type": "object",
+  "properties": {
+    "extension": {
+      "type": "string",
+      "description": "file type extension (do not include the preceding dot)"
+    },
+    "collectAll": {
+      "type": "boolean",
+      "description": "If `true`, collect this file type regardless of keyword search"
+    }
+  }
+}

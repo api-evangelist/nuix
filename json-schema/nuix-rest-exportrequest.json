@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-exportrequest.json",
+  "title": "ExportRequest",
+  "description": "Schema for ExportRequest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The folder ID.  A folder with this ID will be created under the export path"
+    },
+    "productionSets": {
+      "type": "array",
+      "description": "The production set GUIDs to export",
+      "items": {
+        "type": "string"
+      }
+    },
+    "productTypes": {
+      "type": "array",
+      "description": "The list of product types.  Defaults to [ \"native\" ].",
+      "items": {
+        "type": "string",
+        "enum": [
+          "native",
+          "text",
+          "pdf",
+          "tiff",
+          "xhtml_report",
+          "thumbnail"
+        ]
+      },
+      "default": [
+        "native"
+      ]
+    },
+    "loadFileTypes": {
+      "type": "array",
+      "description": "The load file types to add to the export.  By default, no load file types are selected",
+      "items": {
+        "type": "string",
+        "enum": [
+          "concordance",
+          "summation",
+          "discovery_radar",
+          "documatrix",
+          "edrm_xml",
+          "ipro",
+          "ringtail",
+          "xhtml_summary_report",
+          "csv_summary_report"
+        ]
+      }
+    },
+    "queries": {
+      "type": "array",
+      "description": "The list of queries to export.  Only applicable for ITEM exports",
+      "items": {
+        "type": "string"
+      }
+    },
+    "exportType": {
+      "type": "string",
+      "description": "Defaults to ITEM",
+      "enum": [
+        "item",
+        "legal"
+      ],
+      "default": "item"
+    },
+    "path": {
+      "type": "string",
+      "description": "Root export path folder"
+    },
+    "exportOptions": {
+      "$ref": "#/components/schemas/ExportOptions"
+    },
+    "parallelProcessingSettings": {
+      "$ref": "#/components/schemas/ParallelProcessingSettings"
+    }
+  },
+  "required": [
+    "path"
+  ]
+}

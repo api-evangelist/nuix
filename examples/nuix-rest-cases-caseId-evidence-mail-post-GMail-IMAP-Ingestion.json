@@ -1,0 +1,11 @@
+{
+  "value": {
+    "target": {
+      "protocol": "imap",
+      "host": "imap.gmail.com",
+      "port": 993,
+      "username": "myuser",
+      "password": "mypassword"
+    }
+  }
+}

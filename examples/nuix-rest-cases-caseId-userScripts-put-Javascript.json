@@ -1,0 +1,9 @@
+{
+  "value": {
+    "async": false,
+    "description": "Javascript User Script",
+    "name": "Javascript User Script",
+    "script": "response.setStatus(200)\nresponse.setBody({\"result\":\"hello world\"})",
+    "language": "JAVASCRIPT"
+  }
+}

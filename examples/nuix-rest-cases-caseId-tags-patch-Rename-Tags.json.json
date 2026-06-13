@@ -1,0 +1,11 @@
+{
+  "value": {
+    "operationType": "RENAME",
+    "tagList": [
+      "MyFirstCaseTag"
+    ],
+    "renameMap": {
+      "MyFirstCaseTag": "MyNewCaseTag"
+    }
+  }
+}

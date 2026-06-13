@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-genericitemguidresponse.json",
+  "title": "GenericItemGuidResponse",
+  "description": "Schema for GenericItemGuidResponse in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "itemGuids": {
+      "type": "array",
+      "description": "complete list of item GUIDs",
+      "items": {
+        "type": "string"
+      }
+    },
+    "successfulItemGuids": {
+      "type": "array",
+      "description": "list of item GUIDs successfuly completed the operation",
+      "items": {
+        "type": "string"
+      }
+    },
+    "failedItemGuids": {
+      "type": "array",
+      "description": "list of item GUIDs failed the to complete the operation",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

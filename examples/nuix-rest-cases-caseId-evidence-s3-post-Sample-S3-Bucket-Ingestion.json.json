@@ -1,0 +1,10 @@
+{
+  "value": {
+    "target": {
+      "access": "AWSACCESSKEY",
+      "bucket": "my.aws.bucket/bucketFolder",
+      "endpoint": "",
+      "secret": "AWSSECRETACCESSKEY"
+    }
+  }
+}

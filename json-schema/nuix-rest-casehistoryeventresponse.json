@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-casehistoryeventresponse.json",
+  "title": "CaseHistoryEventResponse",
+  "description": "Schema for CaseHistoryEventResponse in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "cancelled": {
+      "type": "boolean",
+      "description": "Tests if the action was cancelled."
+    },
+    "details": {
+      "type": "object",
+      "description": "Gets the details of the event.",
+      "additionalProperties": {
+        "type": "object"
+      }
+    },
+    "startDate": {
+      "type": "integer",
+      "description": "Gets the start date (and time.) represented in milliseconds since the epoch."
+    },
+    "endDate": {
+      "type": "integer",
+      "description": "Gets the end date (and time.) represented in milliseconds since the epoch."
+    },
+    "failed": {
+      "type": "boolean",
+      "description": "Tests if the action failed."
+    },
+    "succeeded": {
+      "type": "boolean",
+      "description": "Tests if the action succeeded."
+    },
+    "unknown": {
+      "type": "boolean",
+      "description": "Tests if the action was unknown."
+    },
+    "type": {
+      "type": "string",
+      "description": "Gets the type string for this event."
+    },
+    "username": {
+      "type": "string",
+      "description": "Gets the user who performed the action."
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-productionsetrequest.json",
+  "title": "ProductionSetRequest",
+  "description": "Schema for ProductionSetRequest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the production set."
+    },
+    "description": {
+      "type": "string",
+      "description": "A description for the production set."
+    },
+    "prefix": {
+      "type": "string",
+      "description": "Prefix used for document numbering."
+    },
+    "startingNumber": {
+      "type": "string",
+      "description": "The first number used for document numbering."
+    },
+    "query": {
+      "type": "string",
+      "description": "Query items that should be included. If a query is not supplied it defaults to an empty string, which returns all items."
+    },
+    "includeFamilies": {
+      "type": "boolean",
+      "description": "If true, includes family items for the collection of items returned by the query. Default is false.",
+      "default": false
+    },
+    "markupSets": {
+      "type": "array",
+      "description": "Sets the given markup sets to be used during the export.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "applyRedactions": {
+      "type": "boolean",
+      "description": "If true, applies redactions in the markup sets. Default is true.",
+      "default": true
+    },
+    "applyHighlights": {
+      "type": "boolean",
+      "description": "If true, applies highlights in the markup sets. Default is true.",
+      "default": true
+    },
+    "generatePdfStores": {
+      "type": "boolean",
+      "description": "Generates print previews for the selected items in this production set. Default is false.",
+      "default": false
+    },
+    "pdfStoresQuery": {
+      "type": "string",
+      "description": "Query that identifies which production set items should have print previews generated. If a query is not supplied it defaults to an empty string, which returns all items."
+    },
+    "parallelProcessingSettings": {
+      "$ref": "#/components/schemas/ParallelProcessingSettings"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

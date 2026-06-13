@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-bulkexclusionrequest.json",
+  "title": "BulkExclusionRequest",
+  "description": "Schema for BulkExclusionRequest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "string",
+      "description": "Query items that should be included. If a query is not supplied it defaults to an empty string, which returns all items."
+    },
+    "deduplication": {
+      "type": "string",
+      "description": "Deduplication content.  Defaults to no deduplication.",
+      "enum": [
+        "md5",
+        "per custodian",
+        "none"
+      ]
+    },
+    "relationType": {
+      "type": "string",
+      "description": "The relation to apply to the found items. For performance reasons, the family option is run against the top-level items.  Defaults to no relation.",
+      "enum": [
+        "family",
+        "topTypes",
+        "descendants"
+      ]
+    },
+    "includeFamily": {
+      "type": "boolean",
+      "description": "Includes families of items for results of provided query. Defaults to false.",
+      "default": false
+    },
+    "familyQuery": {
+      "type": "string",
+      "description": "An optional query used to select family items.  Will not be used if includeFamily is true.  To exclude family items entirely, set includeFamily to false and either omit this entry or set its value to null."
+    },
+    "includeDuplicates": {
+      "type": "boolean",
+      "description": "Includes duplicates of items for results of provided query. Defaults to false.",
+      "default": false
+    },
+    "duplicatesQuery": {
+      "type": "string",
+      "description": "An optional query used to select duplicate items.  Will not be used if includeDuplicates is true.  To exclude duplicate items entirely, set includeDuplicates to false and either omit this entry or set its value to null."
+    },
+    "includeNearDuplicates": {
+      "type": "boolean",
+      "description": "Includes near duplicates of items for results of provided query. Defaults to false.",
+      "default": false
+    },
+    "nearDuplicatesQuery": {
+      "type": "string",
+      "description": "An optional query used to select near duplicate items.  Will not be used if includeNearDuplicates is true.  To exclude near duplicate items entirely, set includeNearDuplicates to false and either omit this entry or set its value to null."
+    },
+    "nearDuplicatesThreshold": {
+      "type": "number",
+      "description": "The threshold used to calculate near duplicates.  Defaults to 0.5.",
+      "format": "float",
+      "default": 0.5
+    },
+    "threadsQuery": {
+      "type": "string",
+      "description": "An optional query used to select thread items.  To exclude thread items entirely, either omit this entry or set its value to null."
+    },
+    "reason": {
+      "type": "string",
+      "description": "The reason for the exclusion."
+    },
+    "excludeDescendants": {
+      "type": "boolean",
+      "description": "Whether or not to also exclude descendants.",
+      "default": false
+    }
+  },
+  "required": [
+    "reason"
+  ]
+}

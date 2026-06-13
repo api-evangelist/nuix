@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-casemodification.json",
+  "title": "CaseModification",
+  "description": "Schema for CaseModification in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "method": {
+      "type": "string",
+      "description": "The method of case modification.  Current this is only MIGRATE.",
+      "enum": [
+        "MIGRATE"
+      ]
+    }
+  }
+}

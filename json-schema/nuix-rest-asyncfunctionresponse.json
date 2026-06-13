@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-asyncfunctionresponse.json",
+  "title": "AsyncFunctionResponse",
+  "description": "Schema for AsyncFunctionResponse in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "functionKey": {
+      "type": "string",
+      "description": "The function key to use when querying status."
+    },
+    "location": {
+      "type": "string",
+      "description": "The location URL for querying status.  (http://nuix-restful-service:8080/svc/v1/asyncFunctions/{functionKey})"
+    }
+  }
+}

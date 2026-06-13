@@ -1,0 +1,8 @@
+{
+  "value": {
+    "name": "MyProductionSet",
+    "description": "This is a production set",
+    "query": "kind:document",
+    "includeFamilies": false
+  }
+}

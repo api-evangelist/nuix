@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-countrequest.json",
+  "title": "CountRequest",
+  "description": "Schema for CountRequest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "string",
+      "description": "Identifies what items should be returned. If a query is not supplied it defaults to an empty string, which returns all items."
+    }
+  }
+}

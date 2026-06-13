@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-casedeleteresponse.json",
+  "title": "CaseDeleteResponse",
+  "description": "Schema for CaseDeleteResponse in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "caseId": {
+      "type": "string",
+      "description": "caseId"
+    },
+    "success": {
+      "type": "boolean",
+      "description": "success"
+    },
+    "errorMessage": {
+      "type": "string",
+      "description": "Error message if the delete operation failed"
+    },
+    "childCases": {
+      "description": "The list of child cases deleted if the deleted case was a compound case",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/CaseDeleteResponse"
+      }
+    }
+  }
+}

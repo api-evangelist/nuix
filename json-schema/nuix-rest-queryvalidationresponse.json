@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-queryvalidationresponse.json",
+  "title": "QueryValidationResponse",
+  "description": "Schema for QueryValidationResponse in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "valid": {
+      "type": "boolean",
+      "description": "valid"
+    },
+    "query": {
+      "type": "string",
+      "description": "query"
+    },
+    "exception": {
+      "type": "string",
+      "description": "exception"
+    }
+  }
+}

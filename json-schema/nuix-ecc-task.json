@@ -1,0 +1,154 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-task.json",
+  "title": "Task",
+  "description": "Schema for Task in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "taskNum": {
+      "type": "integer",
+      "description": "0-based index of tasks (jobs) to be run in this collection configuration"
+    },
+    "label": {
+      "type": "string",
+      "description": "user-defined label for this job.\n\nCan be used as search criteria for jobs"
+    },
+    "impersonation": {
+      "type": "string",
+      "description": "The enumeration value `None` or `Logged on User`",
+      "enum": [
+        "None",
+        "Logged on User"
+      ]
+    },
+    "taskType": {
+      "type": "string",
+      "description": "The type of task.  One of `Collect`, `Relocate`, `Deploy` or `Launch`.\nThis value will determine which fields follow.",
+      "enum": [
+        "Collect",
+        "Relocate",
+        "Deploy",
+        "Launch"
+      ]
+    },
+    "Evidence": {
+      "$ref": "#/components/schemas/Evidence"
+    },
+    "FileType": {
+      "$ref": "#/components/schemas/FileType"
+    },
+    "DateRange": {
+      "type": "object",
+      "properties": {
+        "dates": {
+          "type": "array",
+          "description": "array of one or more date criteria",
+          "items": {
+            "$ref": "#/components/schemas/DateCriteria"
+          }
+        }
+      }
+    },
+    "AdvancedSearch": {
+      "type": "object",
+      "properties": {
+        "keywords": {
+          "type": "array",
+          "description": "array of keywords",
+          "items": {
+            "$ref": "#/components/schemas/Keyword"
+          }
+        }
+      }
+    },
+    "Hash": {
+      "type": "object",
+      "properties": {
+        "hashType": {
+          "type": "string",
+          "description": "always `MD5`",
+          "enum": [
+            "MD5"
+          ]
+        },
+        "hashes": {
+          "type": "array",
+          "description": "array of hash values used to identify files to be collected",
+          "items": {
+            "$ref": "#/components/schemas/Hash"
+          }
+        }
+      }
+    },
+    "Volatile": {
+      "type": "object",
+      "description": "Describes a volatile configuration",
+      "properties": {
+        "collectVolatile": {
+          "type": "boolean",
+          "description": "Whether to collect volatile information,  When `false` the remaining fields are ignored"
+        },
+        "collectHandles": {
+          "type": "boolean",
+          "description": "Whether to collect handles as part of the collection (collectVolatile must be `true`)"
+        },
+        "collectionScreenShots": {
+          "type": "boolean",
+          "description": "Whether to capture screen shots of all windows (requires impersonation, collectVolatile must be `true`)"
+        },
+        "screenShotFormat": {
+          "type": "string",
+          "description": "The graphic file format to save screen shot images.  One of `PNG` or `JPG` (collectScreenShots must be `true`)",
+          "enum": [
+            "PNG",
+            "JPG"
+          ]
+        }
+      }
+    },
+    "RAM": {
+      "type": "object",
+      "description": "Describes RAM collection",
+      "properties": {
+        "collectRAM": {
+          "type": "boolean",
+          "description": "When `true` saves a bit-for-bit image of the RAM"
+        }
+      }
+    },
+    "SmartMover": {
+      "type": "object",
+      "description": "For a `Deploy` or `Relocate` task.  Specifies the copying or moving of files from one ECC Client to another",
+      "properties": {
+        "destinationFolder": {
+          "type": "string",
+          "description": "folder on the destination computer where evidence is to be copied"
+        },
+        "destComputerName": {
+          "type": "string",
+          "description": "name of the destination computer"
+        },
+        "destComputerId": {
+          "type": "string",
+          "description": "GUID of the destination computer"
+        },
+        "moveOrCopy": {
+          "type": "string",
+          "description": "`Move` or `Copy`.\n\nEither setting will copy files to the destination computer.  `Move` will delete evidence from the source after the copy is complete.",
+          "enum": [
+            "Move",
+            "Copy"
+          ]
+        },
+        "relocateData": {
+          "type": "boolean",
+          "description": "When `true` relocate the evidence (data files)"
+        },
+        "relocateLogs": {
+          "type": "boolean",
+          "description": "When `true` relocate the collection logs"
+        }
+      }
+    }
+  }
+}

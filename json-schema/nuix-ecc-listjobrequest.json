@@ -1,0 +1,110 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-listjobrequest.json",
+  "title": "listJobRequest",
+  "description": "Schema for listJobRequest in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "limit": {
+      "type": "integer",
+      "description": "optional, maximum number of jobs to be included in the response."
+    },
+    "jobId": {
+      "type": "integer",
+      "description": "optional, id of a specific job to retrieve.\n\nIf provided, other parameters are ignored, as only the specified job is included in the response."
+    },
+    "sortBy": {
+      "type": "string",
+      "description": "optional, field name to sort result (see list of field names in the description of this command).",
+      "enum": [
+        "ID",
+        "CollectionID",
+        "CustodianID",
+        "TargetID",
+        "ComputerID",
+        "TaskName",
+        "TaskNumber",
+        "Label",
+        "TotalTasks",
+        "ProgramName",
+        "Destination",
+        "DestinationType",
+        "CaseName",
+        "CollectionName",
+        "CustodianName",
+        "TargetName",
+        "ComputerName",
+        "Status",
+        "Priority",
+        "Stage",
+        "SubmitTime",
+        "BeginTime",
+        "EndTime",
+        "NumFilesToCollect",
+        "NumFilesCollected",
+        "BytesToCollect",
+        "BytesCollected",
+        "NumWarninings",
+        "NumErrors",
+        "ReportingTime",
+        "PausedMinutes"
+      ]
+    },
+    "ascending": {
+      "type": "boolean",
+      "description": "optional, `true` to sort results in ascending order, `false` for descending.\n\nIf omitted, sort is ascending"
+    },
+    "filters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the field to filter by.  See the list of field names in the description of this command.",
+            "enum": [
+              "ID",
+              "CollectionID",
+              "CustodianID",
+              "TargetID",
+              "ComputerID",
+              "TaskName",
+              "TaskNumber",
+              "Label",
+              "TotalTasks",
+              "ProgramName",
+              "Destination",
+              "DestinationType",
+              "CaseName",
+              "CollectionName",
+              "CustodianName",
+              "TargetName",
+              "ComputerName",
+              "Status",
+              "Priority",
+              "Stage",
+              "SubmitTime",
+              "BeginTime",
+              "EndTime",
+              "NumFilesToCollect",
+              "NumFilesCollected",
+              "BytesToCollect",
+              "BytesCollected",
+              "NumWarninings",
+              "NumErrors",
+              "ReportingTime",
+              "PausedMinutes"
+            ]
+          },
+          "value": {
+            "description": "The value of the specified field to filter by.  The type can vary depending on the field (see the field list in this command's description).  String comparisons are case-sensitive."
+          }
+        }
+      }
+    },
+    "where": {
+      "type": "string",
+      "description": "optional, SQL WHERE clause (minus the word WHERE) used to construct more complex filtering.\n\nIf `where` is specified or present then the `filters` field is ignored."
+    }
+  }
+}

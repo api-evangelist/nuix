@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-ingestiblefile.json",
+  "title": "IngestibleFile",
+  "description": "Schema for IngestibleFile in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "path": {
+      "type": "string",
+      "description": "Absolute path to the directory or file to be ingested."
+    }
+  },
+  "required": [
+    "path"
+  ]
+}

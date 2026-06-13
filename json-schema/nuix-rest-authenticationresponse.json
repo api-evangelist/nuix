@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-authenticationresponse.json",
+  "title": "AuthenticationResponse",
+  "description": "Schema for AuthenticationResponse in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "username": {
+      "type": "string",
+      "description": "The successfully authenticated username."
+    },
+    "authToken": {
+      "type": "string",
+      "description": "The authentication token to be submitted in the header of all subsequent requests to the REST service.  The token should be included in the `Authorization` header prefixed by `Bearer` and for a limited time will be accepted in the `nuix-auth-token` header field.\n"
+    },
+    "licenseShortName": {
+      "type": "string",
+      "description": "The short name of the requested license."
+    },
+    "clusterSystemLicenseShortName": {
+      "type": "string",
+      "description": "The short name of the license acquired by the producer node when REST is configured for clustering ONLY. This license will be used for non-worker based operations and syncronous operations as defined by the `cluster.license` property and will ONLY be used when clustering is enabled."
+    },
+    "workerCount": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The total number of workers available to the user.  This number may differ from the workers granted when operating in cluster mode."
+    },
+    "workersGranted": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The number of workers granted by the engine."
+    }
+  }
+}

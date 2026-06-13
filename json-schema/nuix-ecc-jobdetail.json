@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-jobdetail.json",
+  "title": "jobDetail",
+  "description": "Schema for jobDetail in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "id of the job"
+    },
+    "taskType": {
+      "type": "string",
+      "description": "type of the task, one of `Collect`, `Relocate`, `Deploy` or `Launch`"
+    },
+    "status": {
+      "type": "string",
+      "description": "current status of the job (see values below)"
+    },
+    "warnings": {
+      "type": "integer",
+      "description": "current number of warnings"
+    },
+    "errors": {
+      "type": "integer",
+      "description": "current number of errors"
+    },
+    "bytesCollected": {
+      "type": "integer",
+      "description": "bytes currently collected"
+    },
+    "bytesToCollect": {
+      "type": "integer",
+      "description": "total bytes to collect in the job"
+    },
+    "filesCollected": {
+      "type": "integer",
+      "description": "files currently collected"
+    },
+    "filesToCollect": {
+      "type": "integer",
+      "description": "total files to collect in the job"
+    },
+    "collectionName": {
+      "type": "string",
+      "description": "name of the collection this job is running in"
+    },
+    "collectionId": {
+      "type": "integer",
+      "description": "id of the collection this job is running in"
+    },
+    "custodianName": {
+      "type": "string",
+      "description": "name of the custodian associated with this collection, if any"
+    },
+    "custodianId": {
+      "type": "integer",
+      "description": "id of the custodian associated with this collection, if any"
+    },
+    "targetName": {
+      "type": "string",
+      "description": "name of the target this job is collecting from"
+    },
+    "targetId": {
+      "type": "integer",
+      "description": "id of the target this job is collecting from"
+    },
+    "destination": {
+      "type": "string",
+      "description": "destination path for this job"
+    },
+    "startTime": {
+      "type": "string",
+      "description": "date/time of the start of this job"
+    },
+    "endTime": {
+      "type": "string",
+      "description": "date/time of the end of this job"
+    }
+  }
+}

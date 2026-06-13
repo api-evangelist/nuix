@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-ingestibleoracleserver.json",
+  "title": "IngestibleOracleServer",
+  "description": "Schema for IngestibleOracleServer in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "username": {
+      "type": "string",
+      "description": "The username needed to access the server account."
+    },
+    "password": {
+      "type": "string",
+      "description": "The password needed to access the server account."
+    },
+    "database": {
+      "type": "string",
+      "description": "The hostname or IP address of the database server."
+    },
+    "query": {
+      "type": "string",
+      "description": "This optional parameter specifies the SQL query used to filter the content."
+    },
+    "driverType": {
+      "type": "string",
+      "description": "This parameter specifies the driver type. See www.oracle.com",
+      "enum": [
+        "thin",
+        "oci",
+        "kprb"
+      ]
+    },
+    "role": {
+      "type": "string",
+      "description": "A string representation of the role to login as, such as SYSDBA or SYSOPER. For normal logins, this should be blank."
+    },
+    "maxRowsPerTable": {
+      "type": "integer",
+      "description": "The maximum number of rows to return from each table or query. This parameter is optional. It can save time when processing tables or query results with very many rows. The selection of which rows will be returned should be considered arbitrary.",
+      "format": "int32"
+    }
+  }
+}

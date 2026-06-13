@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-ingestiblesharepoint.json",
+  "title": "IngestibleSharepoint",
+  "description": "Schema for IngestibleSharepoint in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "domain": {
+      "type": "string",
+      "description": "This optional parameter defines the Windows networking domain of the server account."
+    },
+    "username": {
+      "type": "string",
+      "description": "The username needed to access the server account."
+    },
+    "password": {
+      "type": "string",
+      "description": "The password needed to access the server account."
+    },
+    "uri": {
+      "type": "string",
+      "description": "Protocol, host, port and path can all be specified. For SharePoint the address is the site address.  It can be omitted to use auto-discovery based on site address."
+    }
+  }
+}

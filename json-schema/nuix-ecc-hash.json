@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-hash.json",
+  "title": "Hash",
+  "description": "Schema for Hash in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "hashValue": {
+      "type": "string",
+      "description": "32-character MD5 hash value"
+    },
+    "fileSize": {
+      "type": "number",
+      "description": "Optional file size.\n\nIf provided, will be used to match before calculating hash"
+    },
+    "microHash": {
+      "type": "string",
+      "description": "Optional MD5 hash value of the first 64 KB of a file.\n\nUsed to match before calculating a full hash"
+    }
+  }
+}

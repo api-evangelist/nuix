@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-thirdpartydependencyresponse.json",
+  "title": "ThirdPartyDependencyResponse",
+  "description": "Schema for ThirdPartyDependencyResponse in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "description": {
+      "description": "Gets the localised description of this prerequisite in the system's current locale.",
+      "type": "string"
+    },
+    "version": {
+      "description": "The version of the application.",
+      "type": "string"
+    },
+    "message": {
+      "description": "Gets the status of this prerequisite.",
+      "type": "string"
+    },
+    "comment": {
+      "description": "Gets the comment.",
+      "type": "string"
+    },
+    "attentionRequired": {
+      "description": "Tests whether the user's attention is required.",
+      "type": "boolean"
+    }
+  }
+}

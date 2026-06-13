@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-configurationchangeresponse.json",
+  "title": "ConfigurationChangeResponse",
+  "description": "Schema for ConfigurationChangeResponse in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string",
+      "description": "A message describing the result of the operation."
+    },
+    "status": {
+      "type": "string",
+      "description": "The status result of the operation.",
+      "enum": [
+        "PERSISTENT",
+        "TRANSIENT",
+        "FAILED"
+      ]
+    }
+  }
+}

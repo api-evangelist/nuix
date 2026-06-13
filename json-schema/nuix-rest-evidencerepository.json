@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-evidencerepository.json",
+  "title": "EvidenceRepository",
+  "description": "Schema for EvidenceRepository in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "path": {
+      "type": "string",
+      "description": "The path of the evidence repository folder. Each folder or file immediately inside this path will become a new evidence container."
+    },
+    "custodianLevel": {
+      "type": "integer",
+      "description": "If custodian names are present in the repository, this is a positive integer of the number of folder levels nesting inside the repository where custodians are defined. For example custodianLevel = 1 indicates that each folder immediately inside the repository folder is a custodian name, while custodianLevel = 2 indicates that each folder nested two levels inside the repository folder is a custodian name. If the repository does not contain custodian names then this parameter can be either omitted or set to -1.",
+      "default": -1,
+      "format": "int32"
+    },
+    "evidenceContainerNaming": {
+      "type": "string",
+      "enum": [
+        "content",
+        "numbered"
+      ],
+      "default": "content",
+      "description": "If \"content\" then evidence containers created from folders or files in the evidence repository will take their name from those folders and files (this was the only behaviour prior to Nuix 6.2), if \"numbered\" then evidence containers will be given sequentially numbered names instead."
+    },
+    "evidenceContainerNamingPrefix": {
+      "type": "string",
+      "description": "If not null then all evidence containers created will have the given prefix appended to the beginning of their name. For example to obtain Nuix's default evidence naming scheme of \"Evidence 1\", \"Evidence 2\", \"Evidence 3\", etc you would use evidenceContainerNamingPrefix=\"Evidence \",evidenceContainerNaming=\"numbered\" (note the trailing space in the prefix string)."
+    },
+    "timeZone": {
+      "type": "string",
+      "description": "Sets the repository time zone."
+    },
+    "charset": {
+      "type": "string",
+      "description": "Sets the repository character set."
+    },
+    "language": {
+      "type": "string",
+      "description": "Sets the repository language."
+    },
+    "countryCode": {
+      "type": "string",
+      "description": "Sets the repository country code."
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-ingestibletwitter.json",
+  "title": "IngestibleTwitter",
+  "description": "Schema for IngestibleTwitter in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "accessToken": {
+      "type": "string",
+      "description": "The access token of your twitter app. You can create a new app at https://apps.twitter.com and generate this if you don't have one already."
+    },
+    "accessTokenSecret": {
+      "type": "string",
+      "description": "The access token secret of your twitter app. You can create a new app at https://apps.twitter.com and generate this if you don't have one already."
+    },
+    "consumerKey": {
+      "type": "string",
+      "description": "The consumer key (API key) of your twitter app. You can create a new app at https://apps.twitter.com and generate this if you don't have one already."
+    },
+    "consumerSecret": {
+      "type": "string",
+      "description": "The consumer secret (API secret) of your twitter app. You can create a new app at https://apps.twitter.com and generate this if you don't have one already."
+    }
+  }
+}

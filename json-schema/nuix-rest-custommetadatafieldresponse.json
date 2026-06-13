@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-custommetadatafieldresponse.json",
+  "title": "CustomMetadataFieldResponse",
+  "description": "Schema for CustomMetadataFieldResponse in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "fieldName": {
+      "type": "string",
+      "description": "fieldName"
+    },
+    "options": {
+      "type": "array",
+      "description": "The allowable option values",
+      "items": {
+        "type": "object"
+      }
+    },
+    "type": {
+      "type": "string",
+      "description": "type"
+    },
+    "mode": {
+      "type": "string",
+      "description": "mode"
+    },
+    "defaultValue": {
+      "type": "object",
+      "description": "The default value"
+    },
+    "isNullAllowed": {
+      "type": "boolean",
+      "description": "true if a null value is allowed, false otherwise"
+    }
+  }
+}

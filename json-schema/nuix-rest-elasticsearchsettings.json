@@ -1,0 +1,157 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-elasticsearchsettings.json",
+  "title": "ElasticSearchSettings",
+  "description": "Schema for ElasticSearchSettings in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "additionalSettings": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Additional ElasticSearch settings to include. This is a flattened map (e.g. 'index.refresh_interval'). This is an advanced feature and should only be used by those familiar with ElasticSearch. Values that can be directly specified elsewhere in this request will be ignored if they are provided in this map. See ElasticSearch documentation for more info. This field is deprecated. Additional settings can now be passed in under ElasticSearchSettings within the same level of the other settings.",
+      "deprecated": true
+    },
+    "cluster.name": {
+      "type": "string",
+      "description": "Name of the cluster to join. See ElasticSearch documentation for more info."
+    },
+    "index.number_of_shards": {
+      "type": "integer",
+      "description": "Number of shards to allocate for the index. Must be greater than zero. Cannot be changed after creating the index. See ElasticSearch documentation for more info.",
+      "format": "int32"
+    },
+    "index.number_of_replicas": {
+      "type": "integer",
+      "description": "Number of replicas to use. Must be a positive number. This can be modified after creation, but only through ElasticSearch APIs. See ElasticSearch documentation for more info.",
+      "format": "int32"
+    },
+    "index.refresh_interval": {
+      "type": "string",
+      "description": "Refresh interval to use. Defaults to '60s'. See ElasticSearch documentation for more info."
+    },
+    "nuix.index.auto_close": {
+      "type": "boolean",
+      "description": "Should closing the case via Nuix close the index in ElasticSearch? Defaults to 'false'."
+    },
+    "nuix.http.hosts": {
+      "type": "array",
+      "description": "List of hosts (host:port) to communicate with the Elasticsearch cluster.  If not provided nuix.transport.hosts will be used.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "nuix.transport.hosts": {
+      "type": "array",
+      "description": "List of hosts (host:port) to communicate with the cluster. This is a round-robin, load-balanced list. Other nodes may be discovered in the cluster. If this and 'discovery.zen.ping.unicast.hosts' are not provided it defaults to localhost.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "xpack.security.user": {
+      "type": "string",
+      "description": "The X-pack user name for transport level credentials. Note the password is not included here as Elastic documentation recommends. Instead it is securely stored in a separate field xpack.security.password."
+    },
+    "xpack.security.password": {
+      "type": "string",
+      "description": "The X-Pack password for the user."
+    },
+    "xpack.security.transport.ssl.enabled": {
+      "type": "boolean",
+      "description": "Set this to true to enable SSL connections to nodes running X-pack."
+    },
+    "xpack.security.transport.ssl.truststore.path": {
+      "type": "string",
+      "description": "The path for the keystore that contains the certificates to trust. It must be either a Java keystore (jks) or a PKCS#12 file."
+    },
+    "xpack.security.transport.ssl.truststore.type": {
+      "type": "string",
+      "description": "Set this to PKCS12 to indicate that the truststore is a PKCS#12 file or jks for a Java keystore file."
+    },
+    "xpack.security.transport.ssl.keystore.path": {
+      "type": "string",
+      "description": "The path for the keystore file that contains a private key and certificate. It must be either a Java keystore (jks) or a PKCS#12 file."
+    },
+    "xpack.security.transport.ssl.keystore.type": {
+      "type": "string",
+      "description": "The format of the keystore file. It must be either jks or PKCS12. If the keystore path ends in \".p12\", \".pfx\", or \".pkcs12\", this setting defaults to PKCS12. Otherwise, it defaults to jks."
+    },
+    "xpack.security.transport.ssl.verification_mode": {
+      "type": "string",
+      "description": "Controls the verification of certificates.  Valid values are full, certificate, and none."
+    },
+    "xpack.security.http.ssl.enabled": {
+      "type": "boolean",
+      "description": "Used to enable or disable TLS/SSL on the HTTP networking layer, which Elasticsearch uses to communicate with other clients. The default is false."
+    },
+    "xpack.security.http.ssl.key": {
+      "type": "string",
+      "description": "The path to the SSL key file for this client's identity in PEM format if HTTP client authentication is required. It must be signed by the cluster's trusted CA."
+    },
+    "xpack.security.http.ssl.key_passphrase": {
+      "type": "string",
+      "description": "The passphrase that is used to decrypt the private key. Since the key might not be encrypted, this value is optional."
+    },
+    "xpack.security.http.ssl.keystore.key_password": {
+      "type": "string",
+      "description": "The password for the key in the keystore. The default is the keystore password"
+    },
+    "xpack.security.http.ssl.keystore.path": {
+      "type": "string",
+      "description": "The path for the keystore file that contains a private key and certificate. It must be either a Java keystore (jks) or a PKCS#12 file."
+    },
+    "xpack.security.http.ssl.keystore.type": {
+      "type": "string",
+      "description": "The format of the keystore file. It must be either jks or PKCS12. If the keystore path ends in \".p12\", \".pfx\", or \".pkcs12\", this setting defaults to PKCS12. Otherwise, it defaults to jks."
+    },
+    "xpack.security.http.ssl.keystore.password": {
+      "type": "string",
+      "description": "The password for the keystore."
+    },
+    "xpack.security.http.ssl.truststore.path": {
+      "type": "string",
+      "description": "The path for the keystore that contains the certificates to trust. It must be either a Java keystore (jks) or a PKCS#12 file."
+    },
+    "xpack.security.http.ssl.truststore.type": {
+      "type": "string",
+      "description": "Set this to PKCS12 to indicate that the truststore is a PKCS#12 file or jks for a Java keystore file."
+    },
+    "xpack.security.http.ssl.certificate": {
+      "type": "string",
+      "description": "Specifies the path for the PEM encoded certificate (or certificate chain) that is associated with the key."
+    },
+    "xpack.security.http.ssl.certificate_authorities": {
+      "type": "string",
+      "description": "List of paths to PEM encoded certificate files that should be trusted."
+    },
+    "nuix.auth.username": {
+      "type": "string",
+      "description": "The authenticated user's username. Used with X-Pack and SearchGuard, this can be different to the transport level credentials."
+    },
+    "nuix.auth.password": {
+      "type": "string",
+      "description": "The authenticated user's password."
+    },
+    "searchguard.ssl.transport.keystore_filepath": {
+      "type": "string",
+      "description": "The path to the SSL keystore for this client's identity in JKS format. It contains client's key and certificate signed by the cluster's trusted CA allowing the cluster to trust Nuix."
+    },
+    "searchguard.ssl.transport.keystore_password": {
+      "type": "string",
+      "description": "The password to the keystore."
+    },
+    "searchguard.ssl.transport.truststore_filepath": {
+      "type": "string",
+      "description": "The path to the SSL truststore for the client's trusted CAs in JKS format. It contains the CA certificate that signed the cluster's certificates allowing Nuix to trust the cluster."
+    },
+    "searchguard.ssl.transport.truststore_password": {
+      "type": "string",
+      "description": "The password to the truststore."
+    }
+  },
+  "required": [
+    "cluster.name",
+    "nuix.transport.hosts"
+  ]
+}

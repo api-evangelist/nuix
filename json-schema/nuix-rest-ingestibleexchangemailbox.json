@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-ingestibleexchangemailbox.json",
+  "title": "IngestibleExchangeMailbox",
+  "description": "Schema for IngestibleExchangeMailbox in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "username": {
+      "type": "string",
+      "description": "The username needed to access the server account."
+    },
+    "password": {
+      "type": "string",
+      "description": "The password needed to access the server account."
+    },
+    "uri": {
+      "type": "string",
+      "description": "Protocol, host, port and path can all be specified. For SharePoint the address is the site address. For Exchange the address is the path to the Exchange Web Service (e.g., https://ex2010/ews/exchange.asmx) and it can be omitted to use auto-discovery based on the mailbox or username address."
+    },
+    "domain": {
+      "type": "string",
+      "description": "This optional parameter defines the Windows networking domain of the server account."
+    },
+    "to": {
+      "type": "string",
+      "description": "This optional parameter limits the evidence to a date range ending at the specified date/time. It must be accompanied by the 'from' parameter. Accepted date formats are RFC-3339 or a simple date format (yyyy-MM-dd) which will use the default timezone of the server.",
+      "format": "date-time"
+    },
+    "from": {
+      "type": "string",
+      "description": "This optional parameter limits the evidence to a date range beginning from the specified date/time. It must be accompanied by the 'to' parameter. Accepted date formats are RFC-3339 or a simple date format (yyyy-MM-dd) which will use the default timezone of the server.",
+      "format": "date-time"
+    },
+    "mailbox": {
+      "type": "string",
+      "description": "The mailbox (specified by email address) to ingest if it differs from the username."
+    },
+    "impersonating": {
+      "type": "boolean",
+      "description": "Instructs Exchange to impersonate the mailbox user instead of delegating when the mailbox and username are different. Defaults to false."
+    },
+    "mailboxRetrieval": {
+      "type": "array",
+      "description": "A list containing one or more of the following string values: mailbox, archive, purges, deletions, recoverable_items, archive_purges, archive_deletions, archive_recoverable_items, public_folders. Determines whether to extract from the user's mailbox, archive, recoverable items.",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

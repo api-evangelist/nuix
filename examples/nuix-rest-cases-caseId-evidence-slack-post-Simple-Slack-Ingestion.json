@@ -1,0 +1,13 @@
+{
+  "value": {
+    "target": {
+      "tempAuthCode": "23432421",
+      "storedCredentialName": null,
+      "from": "2021-01-01",
+      "to": "2021-04-30",
+      "userIds": [
+        "1244"
+      ]
+    }
+  }
+}

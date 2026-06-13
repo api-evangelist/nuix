@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-queuestatenuixtaskrequest.json",
+  "title": "QueueStateNuixTaskRequest",
+  "description": "Schema for QueueStateNuixTaskRequest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "capacity": {
+      "type": "integer",
+      "description": "The capacity of the queue.",
+      "format": "int64"
+    },
+    "head": {
+      "type": "integer",
+      "description": "The head of the queue.",
+      "format": "int64"
+    },
+    "tail": {
+      "type": "integer",
+      "description": "The tail of the queue.",
+      "format": "int64"
+    },
+    "size": {
+      "type": "integer",
+      "description": "The size of the queue."
+    },
+    "tasks": {
+      "type": "array",
+      "description": "The filtered array of tasks in the queue.",
+      "items": {
+        "$ref": "#/components/schemas/NuixTaskRequest"
+      }
+    }
+  }
+}

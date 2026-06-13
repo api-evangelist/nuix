@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-bulkapplyitemsetchangeresponse.json",
+  "title": "BulkApplyItemSetChangeResponse",
+  "description": "Schema for BulkApplyItemSetChangeResponse in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "results": {
+      "description": "The list of item set change responses.",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ItemSetItemsResponse"
+      }
+    }
+  }
+}

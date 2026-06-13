@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-ingestiblesplitfilelist.json",
+  "title": "IngestibleSplitFileList",
+  "description": "Schema for IngestibleSplitFileList in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "files": {
+      "type": "array",
+      "description": "The list of files to add. Absolute paths are recommended.",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

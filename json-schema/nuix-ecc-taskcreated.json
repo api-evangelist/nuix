@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-taskcreated.json",
+  "title": "TaskCreated",
+  "description": "Schema for TaskCreated in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "parentConfigId": {
+      "type": "integer",
+      "description": "Optional, id of the parent Collection Configuration of the new task to be copied. If omitted, the task is created from given params."
+    },
+    "taskNum": {
+      "type": "integer",
+      "description": "Optional, id of the task to be copied (within the parent conf specified above).  Required if parentConfigId is specified."
+    },
+    "taskType": {
+      "type": "string",
+      "description": "Type of task\\: one of `Collect`, `Relocate`, `Deploy`, or `Launch` (currently only `Collect` and `Relocate` are supported).  NOTE\\: If copying an Existing task, the `taskType` cannot be changed in the new task.",
+      "enum": [
+        "Collect",
+        "Relocate",
+        "Deploy",
+        "Launch"
+      ]
+    },
+    "label": {
+      "type": "string",
+      "description": "Optional, user-defined label for this job.\n\nCan be used as search criteria for jobs."
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-aboutresponse.json",
+  "title": "AboutResponse",
+  "description": "Schema for AboutResponse in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "server": {
+      "type": "string",
+      "description": "The URL of the server as configured by the publicURL property."
+    },
+    "nuixRestfulVersion": {
+      "type": "string",
+      "description": "The version of the service."
+    },
+    "engineVersion": {
+      "type": "string",
+      "description": "The version of the Nuix engine the service is running."
+    },
+    "startupTime": {
+      "type": "string",
+      "description": "The startup time of the server in milliseconds."
+    },
+    "serverId": {
+      "type": "string",
+      "description": "The server ID as configured by the serverId property."
+    }
+  }
+}

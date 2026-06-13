@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-casefunctionqueue.json",
+  "title": "CaseFunctionQueue",
+  "description": "Schema for CaseFunctionQueue in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "caseId": {
+      "type": "string",
+      "description": "Case identification token"
+    },
+    "queue": {
+      "type": "array",
+      "description": "List of AsyncFunctionStatus objects for Async functions which are queued to execute.",
+      "items": {
+        "$ref": "#/components/schemas/AsyncFunctionStatus"
+      }
+    }
+  }
+}

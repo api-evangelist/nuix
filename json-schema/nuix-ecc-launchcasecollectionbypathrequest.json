@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-launchcasecollectionbypathrequest.json",
+  "title": "launchCaseCollectionByPathRequest",
+  "description": "Schema for launchCaseCollectionByPathRequest in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "caseId": {
+      "type": "integer",
+      "description": "id of the case within which to start a collection"
+    },
+    "name": {
+      "type": "string",
+      "description": "name of the new collection"
+    },
+    "computerId": {
+      "type": "string",
+      "description": "GUID value that identifies the computer"
+    },
+    "configurationId": {
+      "type": "integer",
+      "description": "id of the collection configuration to use for collection criteria"
+    },
+    "location": {
+      "type": "string",
+      "description": "destination of the collection (if blank uses the location defined in the specified collection configuration)"
+    },
+    "label": {
+      "type": "string",
+      "description": "optional, label to be assigned to all tasks within this collection"
+    },
+    "autodetect": {
+      "type": "string",
+      "description": "optional, auto-detect option to be used instead of files/folders.\n\nIf specified, must be `AllLocalVolumes`.\n\nNote that if autodetect is used, the folders and files fields are ignored"
+    },
+    "folders": {
+      "type": "array",
+      "description": "full path(s) of folder(s) to collect from on each target computer",
+      "items": {
+        "type": "string",
+        "description": "full path"
+      }
+    },
+    "files": {
+      "type": "array",
+      "description": "full path(s) of file(s) to collect from each target computer",
+      "items": {
+        "type": "string",
+        "description": "full path"
+      }
+    },
+    "folderSpec": {
+      "type": "array",
+      "description": "optional way to specify folders, allowing for exclusions within each specified folder",
+      "items": {
+        "$ref": "#/components/schemas/FolderSpec"
+      }
+    }
+  }
+}

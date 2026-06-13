@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-bulkitemsetitemsrequest.json",
+  "title": "BulkItemSetItemsRequest",
+  "description": "Schema for BulkItemSetItemsRequest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "addItems": {
+      "type": "array",
+      "description": "The items to add to the itemset.",
+      "items": {
+        "$ref": "#/components/schemas/ItemSetAddItemsRequest"
+      }
+    },
+    "removeItems": {
+      "type": "array",
+      "description": "The items to remove from the itemset.",
+      "items": {
+        "$ref": "#/components/schemas/ItemSetRemoveItemsRequest"
+      }
+    }
+  }
+}

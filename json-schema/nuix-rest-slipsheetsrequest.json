@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-slipsheetsrequest.json",
+  "title": "SlipsheetsRequest",
+  "description": "Schema for SlipsheetsRequest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "string",
+      "description": "Query items that should be included. If a query is not supplied it defaults to an empty string, which returns all items."
+    },
+    "metadataProfile": {
+      "type": "string",
+      "description": "Defines the metadata profile to be used when generating slipsheets.  Defaults to no metadata profile."
+    }
+  }
+}

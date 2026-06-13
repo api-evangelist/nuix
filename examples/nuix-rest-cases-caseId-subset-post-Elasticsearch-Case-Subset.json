@@ -1,0 +1,20 @@
+{
+  "value": {
+    "query": "*",
+    "location": "inventory0",
+    "caseMetadata": {
+      "name": "MyElasticCase",
+      "description": "Elasticsearch case subset",
+      "elasticSearchSettings": {
+        "cluster.name": "elasticsearch",
+        "nuix.transport.hosts": [
+          "127.0.0.1"
+        ],
+        "nuix.http.hosts": [
+          "127.0.0.1"
+        ],
+        "index.number_of_shards": 1
+      }
+    }
+  }
+}

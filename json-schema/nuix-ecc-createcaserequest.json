@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-createcaserequest.json",
+  "title": "createCaseRequest",
+  "description": "Schema for createCaseRequest in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Always `0``."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the new case"
+    }
+  }
+}

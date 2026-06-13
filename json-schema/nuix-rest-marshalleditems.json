@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-marshalleditems.json",
+  "title": "MarshalledItems",
+  "description": "Schema for MarshalledItems in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "request": {
+      "$ref": "#/components/schemas/ItemMarshallingOptions"
+    },
+    "metadataItems": {
+      "type": "array",
+      "description": "The list of metadata item fields.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "localizedMetadataItems": {
+      "type": "array",
+      "description": "The list of localized metadata item fields.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "metadataItemDetails": {
+      "type": "array",
+      "description": "The list of metadata item details.",
+      "items": {
+        "$ref": "#/components/schemas/MetadataItemDetails"
+      }
+    },
+    "resultList": {
+      "type": "array",
+      "description": "The list of items.",
+      "items": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object"
+        }
+      }
+    },
+    "count": {
+      "type": "integer",
+      "description": "The total item count.  This may differ from the size of the items list depending on paging settings.",
+      "format": "int32"
+    },
+    "deduplicatedCount": {
+      "type": "integer",
+      "description": "The deduplicated item count.  This may differ from the size of the items list depending on paging settings.",
+      "format": "int32"
+    }
+  }
+}

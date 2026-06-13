@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-computerconf.json",
+  "title": "ComputerConf",
+  "description": "Schema for ComputerConf in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "id of the Computer Configuration"
+    },
+    "name": {
+      "type": "string",
+      "description": "name of the Computer Configuration"
+    },
+    "description": {
+      "type": "string",
+      "description": "description of the Computer Configuration"
+    },
+    "keepAliveInterval": {
+      "type": "integer",
+      "description": "frequency (sec) a client sends a keep-alive request to the server"
+    },
+    "keepAliveTimeout": {
+      "type": "integer",
+      "description": "time (sec) a client will wait for a response from the last keep-alive request"
+    },
+    "resourceWaitTime": {
+      "type": "integer",
+      "description": "time (sec) a client will wait for a given resource (e.g. network share)"
+    },
+    "jobWaitTime": {
+      "type": "integer",
+      "description": "frequency (sec) a client polls the server for new jobs (fallback to publish/subscribe)"
+    },
+    "startJobsWaitTime": {
+      "type": "integer",
+      "description": "time (sec) to delay a job from starting"
+    },
+    "statusUpdateWaitTime": {
+      "type": "integer",
+      "description": "frequency (sec) which a client to reports status of a running job"
+    },
+    "systemInfoUpdateWaitTime": {
+      "type": "integer",
+      "description": "frequency (sec) which a client to reports current system info"
+    },
+    "minPortRange": {
+      "type": "integer",
+      "description": "beginning of the TCP port range used for Deploy or Relocate jobs"
+    },
+    "maxPortRange": {
+      "type": "integer",
+      "description": "end of the TCP port range used for Deploy or Relocate jobs"
+    },
+    "enableLogs": {
+      "type": "boolean",
+      "description": "true if diagnostic logging is enabled"
+    },
+    "throttleOutput": {
+      "type": "boolean",
+      "description": "true if out should be throttled"
+    },
+    "maxBandwidthMbps": {
+      "type": "integer",
+      "description": "max bandwidth (in Mbps) allowed if output is throttled"
+    },
+    "altDestination": {
+      "type": "string",
+      "description": "The path to an alternate destination if a primary job destination is unreachable"
+    },
+    "altDestHasCredentials": {
+      "type": "boolean",
+      "description": "Whether the alternate destination requires credentials to access"
+    }
+  }
+}

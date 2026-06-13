@@ -38,7 +38,7 @@ apis:
       - type: Documentation
         url: https://developer.nuix.com/latest/
       - type: OpenAPI
-        url: https://nuix.github.io/REST-API-Docs/swagger-ui.html
+        url: https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/openapi/nuix-nuix-core-engine-rest-api-openapi.yml
     contact:
       - FN: Nuix Developer Program
         url: https://www.nuix.com/nuix-developer-program
@@ -77,6 +77,8 @@ apis:
     properties:
       - type: Documentation
         url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/openapi/nuix-nuix-ecc-rest-api-openapi.yml
     contact:
       - FN: Nuix Support
         url: https://nuix.service-now.com/support

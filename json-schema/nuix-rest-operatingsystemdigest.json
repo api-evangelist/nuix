@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-operatingsystemdigest.json",
+  "title": "OperatingSystemDigest",
+  "description": "Schema for OperatingSystemDigest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the operating system."
+    },
+    "version": {
+      "type": "string",
+      "description": "The version of the operating system."
+    },
+    "arch": {
+      "type": "string",
+      "description": "The arch of the operating system."
+    },
+    "description": {
+      "type": "string",
+      "description": "The description of the operating system."
+    },
+    "family": {
+      "type": "string",
+      "description": "The family of the operating system."
+    },
+    "patchLevel": {
+      "type": "string",
+      "description": "The patch level of the operating system."
+    },
+    "vendorName": {
+      "type": "string",
+      "description": "The vendor name of the operating system."
+    },
+    "vendorCodeName": {
+      "type": "string",
+      "description": "The vendorCodeName of the operating system."
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-createreviewjoboptions.json",
+  "title": "CreateReviewJobOptions",
+  "description": "The review job options.",
+  "type": "object",
+  "properties": {
+    "tags": {
+      "type": "array",
+      "description": "Tags to be used for the review job.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "highlights": {
+      "type": "array",
+      "description": "Any words to highlight.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "order": {
+      "type": "string",
+      "description": "Default sort order for items in a review job.  Default is orderAdded.",
+      "enum": [
+        "orderAdded",
+        "ascendingItemDate",
+        "descendingItemDate",
+        "ascendingTopLevelItemDate",
+        "descendingTopLevelItemDate"
+      ],
+      "default": "orderAdded"
+    },
+    "useNearDuplicates": {
+      "type": "boolean",
+      "description": "Use chained near-duplicates when batching out items to a reviewer.  Default is true.",
+      "default": true
+    },
+    "useEmailThreads": {
+      "type": "boolean",
+      "description": "Use email threads when batching out items to a reviewer.  Default is false.",
+      "default": false
+    }
+  }
+}

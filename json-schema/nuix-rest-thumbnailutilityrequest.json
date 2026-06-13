@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-thumbnailutilityrequest.json",
+  "title": "ThumbnailUtilityRequest",
+  "description": "Schema for ThumbnailUtilityRequest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "string",
+      "description": "A Nuix query to filter items."
+    },
+    "dimensions": {
+      "type": "array",
+      "description": "A list of dimensions for the thumbnails to be generated. No thumnails are generated if this is not set.",
+      "items": {
+        "$ref": "#/components/schemas/ThumbnailUtilityRequestDimension"
+      }
+    }
+  },
+  "required": [
+    "query"
+  ]
+}

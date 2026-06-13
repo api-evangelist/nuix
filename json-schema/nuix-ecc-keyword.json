@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-keyword.json",
+  "title": "Keyword",
+  "description": "Schema for Keyword in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "expressionName": {
+      "type": "string",
+      "description": "human-readable description of the search expression"
+    },
+    "expression": {
+      "type": "string",
+      "description": "search expression"
+    },
+    "caseSensitive": {
+      "type": "boolean",
+      "description": "When `true` specifies the search should be case-sensitive"
+    },
+    "regExpression": {
+      "type": "boolean",
+      "description": "When `true` specifies the `expression` is interpreted as a Regular Expression"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-clusternode.json",
+  "title": "ClusterNode",
+  "description": "Schema for ClusterNode in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "hostAddress": {
+      "type": "string",
+      "description": "The host address of the server."
+    },
+    "hostName": {
+      "type": "string",
+      "description": "The hostname of the server."
+    },
+    "port": {
+      "type": "integer",
+      "description": "The port number of the node for communication between other cluster members.",
+      "format": "int32"
+    },
+    "details": {
+      "$ref": "#/components/schemas/ClusterNodeDetails"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "value": {
+    "query": "kind: document",
+    "ocrOptions": {
+      "quality": "document_archiving_speed",
+      "ocrImagingOptions": {
+        "wordExportingEngine": "MS_OFFICE"
+      }
+    }
+  }
+}

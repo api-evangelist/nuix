@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-fileupload.json",
+  "title": "FileUpload",
+  "description": "Schema for FileUpload in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "success": {
+      "type": "boolean",
+      "description": "Boolean true/false depending on whether the upload was successful."
+    },
+    "filePath": {
+      "type": "string",
+      "description": "The physical path of the uploaded file on disk."
+    },
+    "size": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The size of the uploaded file in bytes."
+    }
+  }
+}

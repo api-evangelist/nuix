@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-listtargetsresponse.json",
+  "title": "listTargetsResponse",
+  "description": "Schema for listTargetsResponse in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "targets": {
+      "type": "array",
+      "description": "List of Targets.",
+      "items": {
+        "$ref": "#/components/schemas/Target"
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-collectiondetail.json",
+  "title": "CollectionDetail",
+  "description": "Schema for CollectionDetail in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "id of the collection"
+    },
+    "caseId": {
+      "type": "integer",
+      "description": "id of the case that owns the collection"
+    },
+    "name": {
+      "type": "string",
+      "description": "name of the collection"
+    },
+    "status": {
+      "type": "string",
+      "description": "status of the case"
+    }
+  }
+}

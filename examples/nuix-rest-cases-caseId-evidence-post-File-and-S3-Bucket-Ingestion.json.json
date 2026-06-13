@@ -1,0 +1,25 @@
+{
+  "value": {
+    "processingProfile": "Default",
+    "containers": [
+      {
+        "files": [
+          {
+            "path": "/mnt/raw-data/singleFile.txt"
+          },
+          {
+            "path": "/mnt/raw-data/directory"
+          }
+        ],
+        "s3Buckets": [
+          {
+            "access": "AWSACCESSKEY",
+            "bucket": "my.aws.bucket/bucketFolder",
+            "endpoint": "",
+            "secret": "AWSSECRETACCESSKEY"
+          }
+        ]
+      }
+    ]
+  }
+}

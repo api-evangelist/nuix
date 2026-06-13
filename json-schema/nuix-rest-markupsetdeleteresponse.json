@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-markupsetdeleteresponse.json",
+  "title": "MarkupSetDeleteResponse",
+  "description": "Schema for MarkupSetDeleteResponse in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "success": {
+      "type": "boolean",
+      "description": "Gets whether the markup set was successfully deleted."
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the deleted markup set."
+    }
+  }
+}

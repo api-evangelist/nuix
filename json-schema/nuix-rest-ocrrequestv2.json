@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-ocrrequestv2.json",
+  "title": "OcrRequestV2",
+  "description": "Schema for OcrRequestV2 in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "string",
+      "description": "Query items that should be included. If a query is not supplied it defaults to an empty string, which returns everything."
+    },
+    "ocrOptions": {
+      "$ref": "#/components/schemas/OcrOptionsV2"
+    },
+    "ocrImagingOptions": {
+      "$ref": "#/components/schemas/ImagingOptions"
+    },
+    "ocrProfile": {
+      "type": "string",
+      "description": "The name of the OCR Profile to use. If you use this setting then do not use any other settings to perform OCR from ocrOptions as everything will be overridden by the loaded OCR profile."
+    },
+    "imagingProfile": {
+      "type": "string",
+      "description": "The name of the Imaging Profile to use. If you use this setting then do not use any settings from ocrImagingOptions as those settings will be overridden by the ones from the profile."
+    },
+    "tags": {
+      "type": "object",
+      "description": "a map of tags to apply to the items.  The map must contain keys 'add' or 'remove' and the value is the tag to apply or delete.",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "parallelProcessingSettings": {
+      "$ref": "#/components/schemas/ParallelProcessingSettings"
+    }
+  }
+}

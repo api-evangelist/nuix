@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-standardresponse.json",
+  "title": "standardResponse",
+  "description": "Schema for standardResponse in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "code": {
+      "type": "integer",
+      "description": "http response status code"
+    },
+    "id": {
+      "type": "integer",
+      "description": "id of the affected Object"
+    },
+    "message": {
+      "type": "string",
+      "description": "http status message"
+    }
+  }
+}

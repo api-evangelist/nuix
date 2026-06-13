@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-evidence.json",
+  "title": "Evidence",
+  "description": "Schema for Evidence in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "destination": {
+      "type": "string",
+      "description": "destination where evidence is to be saved"
+    },
+    "credentials": {
+      "type": "boolean",
+      "description": "Set to `true` if credentials are supplied to access the destination"
+    },
+    "createFileSafe": {
+      "type": "boolean",
+      "description": "Set to `true` to create a FileSafe, `false` save native copies of the files"
+    },
+    "compression": {
+      "type": "string",
+      "description": "Compression setting for saved data.  One of `None`, `Medium`, `High` (used only if createFileSafe = `true`)",
+      "enum": [
+        "None",
+        "Medium",
+        "High"
+      ]
+    },
+    "segmentSize": {
+      "type": "integer",
+      "description": "size of each FileSafe segment (used only if createFileSafe = `true`)"
+    },
+    "segmentSizeUnit": {
+      "type": "string",
+      "description": "unit of measure which applies to segmentSize.  One of `KB`, `MB`, or `GB` (used only if createFileSafe = `true`)",
+      "enum": [
+        "KB",
+        "MB",
+        "GB"
+      ]
+    },
+    "overwrite": {
+      "type": "boolean",
+      "description": "whether to overwrite existing files at the destination (used only if createFileSafe = `false`)"
+    },
+    "maintainFullPath": {
+      "type": "boolean",
+      "description": "whether to maintain the full path of the file at the destination (used only if createFieSafe = false)"
+    },
+    "validateCollection": {
+      "type": "boolean",
+      "description": "whether to validate the entire FileSafe after collection is completed"
+    }
+  }
+}

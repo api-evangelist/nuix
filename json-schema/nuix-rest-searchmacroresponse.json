@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-searchmacroresponse.json",
+  "title": "SearchMacroResponse",
+  "description": "The search macro response object which is a file name/expansion pair.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The search macro file name without the extension."
+    },
+    "expansion": {
+      "type": "string",
+      "description": "The expanded search macro text."
+    }
+  }
+}

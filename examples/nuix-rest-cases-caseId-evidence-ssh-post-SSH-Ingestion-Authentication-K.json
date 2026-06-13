@@ -1,0 +1,11 @@
+{
+  "value": {
+    "target": {
+      "computer": "MyServerName",
+      "username": "myUserName",
+      "keyFolder": "/home/user/.ssh/id_rsa",
+      "port": 22,
+      "remoteFolder": "/mnt/data"
+    }
+  }
+}

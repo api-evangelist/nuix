@@ -1,0 +1,10 @@
+{
+  "value": {
+    "query": "*",
+    "location": "inventory0",
+    "caseMetadata": {
+      "name": "MyCase",
+      "description": "Simple case subset"
+    }
+  }
+}

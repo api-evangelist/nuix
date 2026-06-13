@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-markupsetrequest.json",
+  "title": "MarkupSetRequest",
+  "description": "Schema for MarkupSetRequest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the markup set."
+    },
+    "description": {
+      "type": "string",
+      "description": "A description of the markup set."
+    },
+    "redactionReason": {
+      "type": "string",
+      "description": "An explaination of why the redaction was added."
+    }
+  }
+}

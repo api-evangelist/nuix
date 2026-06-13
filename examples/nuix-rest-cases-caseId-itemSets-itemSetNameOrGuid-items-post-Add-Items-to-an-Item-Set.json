@@ -1,0 +1,6 @@
+{
+  "value": {
+    "batchName": "MyBatchName",
+    "query": "file-extension:html"
+  }
+}

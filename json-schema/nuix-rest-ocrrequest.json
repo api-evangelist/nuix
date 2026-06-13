@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-ocrrequest.json",
+  "title": "OcrRequest",
+  "description": "Schema for OcrRequest in Nuix REST API",
+  "type": "object",
+  "deprecated": true,
+  "properties": {
+    "query": {
+      "type": "string",
+      "description": "Query items that should be included. If a query is not supplied it defaults to an empty string, which returns everything."
+    },
+    "ocrOptions": {
+      "$ref": "#/components/schemas/OcrOptions"
+    },
+    "ocrImagingOptions": {
+      "$ref": "#/components/schemas/ImagingOptions"
+    },
+    "tags": {
+      "type": "object",
+      "description": "a map of tags to apply to the items.  The map must contain keys 'add' or 'remove' and the value is the tag to apply or delete.",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "parallelProcessingSettings": {
+      "$ref": "#/components/schemas/ParallelProcessingSettings"
+    }
+  }
+}

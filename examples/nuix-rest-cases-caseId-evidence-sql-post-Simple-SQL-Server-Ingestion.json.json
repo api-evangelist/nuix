@@ -1,0 +1,10 @@
+{
+  "value": {
+    "target": {
+      "username": "myuser",
+      "password": "mypassword",
+      "computer": "myServerAddress",
+      "instance": "myDatabase"
+    }
+  }
+}

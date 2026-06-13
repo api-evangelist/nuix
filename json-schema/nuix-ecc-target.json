@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-target.json",
+  "title": "Target",
+  "description": "Schema for Target in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "id of the Target"
+    },
+    "name": {
+      "type": "string",
+      "description": "name of the target"
+    },
+    "description": {
+      "type": "string",
+      "description": "description of the target"
+    },
+    "custodianId": {
+      "type": "integer",
+      "description": "id of the Custodian this target belongs to"
+    },
+    "computerName": {
+      "type": "string",
+      "description": "name of the Computer this target belongs to"
+    },
+    "computerGUID": {
+      "type": "string",
+      "description": "GUID of the Computer this target belongs to"
+    },
+    "Inputs": {
+      "type": "array",
+      "description": "array of inputs in the target",
+      "items": {
+        "$ref": "#/components/schemas/TargetInputs"
+      }
+    }
+  }
+}

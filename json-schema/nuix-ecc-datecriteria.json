@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-datecriteria.json",
+  "title": "DateCriteria",
+  "description": "Schema for DateCriteria in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "One of `From` or `Last`.\n\n`From` specifies absolute start/end dates.\n\n`Last` specifies last number of days back from the current date",
+      "enum": [
+        "From",
+        "Last"
+      ]
+    },
+    "useGMT": {
+      "type": "boolean",
+      "description": "`true` specifies GMT for time, `false` specifies local time"
+    },
+    "startDate": {
+      "type": "string",
+      "description": "inclusive start date in the format `yyyy-mm-ddThh:mm:ss` (only used if type = `From`)"
+    },
+    "endDate": {
+      "type": "string",
+      "description": "inclusive end date in the format `yyyy-mm-ddThh:mm:ss` (only used if type = `From`)"
+    },
+    "numDays": {
+      "type": "integer",
+      "description": "number of days back from the current date (only used if type = `Last`)"
+    },
+    "checkCreation": {
+      "type": "boolean",
+      "description": "When `true`, apply date criteria to creation date"
+    },
+    "checkModification": {
+      "type": "boolean",
+      "description": "When `true` apply date criteria to modification date"
+    },
+    "checkAccess": {
+      "type": "boolean",
+      "description": "When `true`, apply date criteria to access date"
+    }
+  }
+}

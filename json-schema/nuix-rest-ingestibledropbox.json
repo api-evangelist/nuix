@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-ingestibledropbox.json",
+  "title": "IngestibleDropbox",
+  "description": "Schema for IngestibleDropbox in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "authCode": {
+      "type": "string",
+      "description": "A string retrieved via a webpage on Dropbox that enables access to an account. The account credentials are provided only to Dropbox. To get the URL pass dropbox without this parameter, then get the authCode by following the instructions at the URL provided in the MissingAccessTokenException and invoke this method again using the retrieved authCode parameter. These codes have an expiry time of the order of minutes."
+    },
+    "team": {
+      "type": "boolean",
+      "description": "Whether or not a Dropbox team is being ingested.  This optional parameter should be present and set to true for all invocations when adding a Dropbox team to evidence. It can be omitted to add an individual Dropbox account."
+    },
+    "accessToken": {
+      "type": "string",
+      "description": "A string retrieved using the authCode that enables access to an account. For dropbox, if the access token to an account is already known, provide it directly using this parameter instead of authCode. This code doesn't expire unless the account owner revokes access for Nuix."
+    }
+  }
+}

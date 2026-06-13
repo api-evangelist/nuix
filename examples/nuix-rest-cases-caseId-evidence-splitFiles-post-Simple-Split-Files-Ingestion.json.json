@@ -1,0 +1,10 @@
+{
+  "value": {
+    "target": {
+      "files": [
+        "/mnt/splitFile1",
+        "/mnt/splitFile2"
+      ]
+    }
+  }
+}

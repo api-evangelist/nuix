@@ -1,0 +1,13 @@
+{
+  "value": {
+    "itemGuids": [
+      "706e8a5e-3457-437a-b0c7-49d3dfa8736f",
+      "806e8a5e-3457-437a-b0c7-49d3dfa8736g",
+      "906e8a5e-3457-437a-b0c7-49d3dfa8736h"
+    ],
+    "imagingProfileName": "Default",
+    "overwriteExisting": true,
+    "populateBinaryStores": true,
+    "populatePrintedImageStores": true
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-searchmacrostructuredresponse.json",
+  "title": "SearchMacroStructuredResponse",
+  "description": "A list of search macro file names without the extension and a folder map of the structured response.",
+  "type": "object",
+  "properties": {
+    "files": {
+      "uniqueItems": true,
+      "type": "array",
+      "description": "A list of search macro file names without the extension.",
+      "items": {
+        "$ref": "#/components/schemas/SearchMacroResponse"
+      }
+    },
+    "folders": {
+      "type": "object",
+      "description": "A map of folder name to a structured search macro.",
+      "additionalProperties": {
+        "$ref": "#/components/schemas/SearchMacroStructuredResponse"
+      }
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-logentry.json",
+  "title": "LogEntry",
+  "description": "Schema for LogEntry in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "name of entry, either `Error` or `Warning`",
+      "enum": [
+        "Error",
+        "Warning"
+      ]
+    },
+    "scope": {
+      "type": "string",
+      "description": "defines the scope of the entry, either `Client` or `Server`",
+      "enum": [
+        "Client",
+        "Server"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "description": "Log entry severity, one of `Error`, `Warning`, `Info`, or `Debug`",
+      "enum": [
+        "Error",
+        "Warning",
+        "Info",
+        "Debug"
+      ]
+    },
+    "grouping": {
+      "type": "string",
+      "description": "grouping for this log entry"
+    },
+    "jobId": {
+      "type": "integer",
+      "description": "id of the job the log entry is associated with"
+    },
+    "userId": {
+      "type": "integer",
+      "description": "id of the ECC user logged in when the log entry was created",
+      "nullable": true
+    },
+    "description": {
+      "type": "string",
+      "description": "description of the event logged",
+      "nullable": true
+    },
+    "date": {
+      "type": "string",
+      "description": "date and time of the log entry"
+    },
+    "computerId": {
+      "type": "string",
+      "description": "UUID of the computer on which the event occurred"
+    }
+  }
+}

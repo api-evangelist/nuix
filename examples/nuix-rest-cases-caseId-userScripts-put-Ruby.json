@@ -1,0 +1,9 @@
+{
+  "value": {
+    "async": false,
+    "description": "Ruby User Script",
+    "name": "Ruby User Script",
+    "script": "$response.setStatus(200)\n$response.setBody(\"result\":\"hello world\")",
+    "language": "RUBY"
+  }
+}

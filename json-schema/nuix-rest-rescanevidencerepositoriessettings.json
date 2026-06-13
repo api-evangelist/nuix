@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-rescanevidencerepositoriessettings.json",
+  "title": "RescanEvidenceRepositoriesSettings",
+  "description": "Settings when rescanning the case's evidence repositories.",
+  "type": "object",
+  "properties": {
+    "depth": {
+      "type": "integer",
+      "description": "Maximum depth of directories to be rescanned.",
+      "format": "int32"
+    }
+  }
+}

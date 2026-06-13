@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-aboutresponsev1.json",
+  "title": "AboutResponseV1",
+  "description": "Schema for AboutResponseV1 in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "server": {
+      "type": "string",
+      "description": "The URL of the server as configured by the publicURL property.",
+      "deprecated": true
+    },
+    "nuixRestfulVersion": {
+      "type": "string",
+      "description": "The version of the service.",
+      "deprecated": true
+    },
+    "engineVersion": {
+      "type": "string",
+      "description": "The version of the Nuix engine the service is running.",
+      "deprecated": true
+    },
+    "startupTime": {
+      "type": "string",
+      "description": "The startup time of the server in milliseconds.",
+      "deprecated": true
+    },
+    "serverId": {
+      "type": "string",
+      "description": "The server ID as configured by the serverId property.",
+      "deprecated": true
+    },
+    "licenceSource": {
+      "description": "The license source.  Note this is always server.",
+      "deprecated": true
+    },
+    "casePrivilegeSecurityEnabled": {
+      "type": "boolean",
+      "description": "Unused and deprecated.  Always false.",
+      "deprecated": true
+    },
+    "itemSecurityEnabled": {
+      "type": "boolean",
+      "description": "Unused and deprecated. Always false.",
+      "deprecated": true
+    },
+    "specificLicenseRequiredAtLogin": {
+      "type": "boolean",
+      "description": "Unused and deprecated. Always false.",
+      "deprecated": true
+    },
+    "userManagementUrl": {
+      "type": "string",
+      "description": "Unused and deprecated.  Always empty string.",
+      "deprecated": true
+    },
+    "textHighlightingEnabled": {
+      "type": "boolean",
+      "description": "Unused and deprecated.  Return value as configured based on the textHighlightingEnabled property.",
+      "deprecated": true
+    },
+    "phraseHighlightingEnabled": {
+      "type": "boolean",
+      "description": "Unused and deprecated.  Return value as configured based on the phraseHighlightingEnabled property.",
+      "deprecated": true
+    }
+  }
+}

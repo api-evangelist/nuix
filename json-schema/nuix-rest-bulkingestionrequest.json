@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-bulkingestionrequest.json",
+  "title": "BulkIngestionRequest",
+  "description": "Schema for BulkIngestionRequest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "processorSettings": {
+      "$ref": "#/components/schemas/ProcessorSettings"
+    },
+    "mimeTypeProcessorSettings": {
+      "type": "array",
+      "description": "Sets the processing settings for individual mime types.",
+      "items": {
+        "$ref": "#/components/schemas/MimeTypeProcessingSetting"
+      }
+    },
+    "parallelProcessingSettings": {
+      "$ref": "#/components/schemas/ParallelProcessingSettings"
+    },
+    "keystoreKeyParameters": {
+      "type": "array",
+      "description": "Sets the settings used to apply a keystore file to the ingestion.",
+      "items": {
+        "$ref": "#/components/schemas/KeyStoreKeyParameters"
+      }
+    },
+    "rescanEvidenceRepositories": {
+      "type": "boolean",
+      "description": "If true, the case's Evidence Repositories will be rescanned to discover new Evidence Containers within them and new files within existing Evidence Containers which are themselves within the cases's Evidence Repositories. Default is false."
+    },
+    "rescanEvidenceRepositoriesSettings": {
+      "$ref": "#/components/schemas/RescanEvidenceRepositoriesSettings"
+    },
+    "passwordDiscoverySettings": {
+      "$ref": "#/components/schemas/PasswordDiscoverySettings"
+    },
+    "configurationProfile": {
+      "type": "string",
+      "description": "Deprecated in favor of processingProfile. Configuration profile to use as base set of processor, parallel processing, and mime type settings.  Values present in processorSettings, parallelProcessingSettings, and mimeTypeProcessorSettings will override anything defined by this profile.",
+      "deprecated": true
+    },
+    "processingProfile": {
+      "type": "string",
+      "description": "The name of the Processing Profile to use. If you use this setting then do not use any other settings from processorSettings as everything will be overridden by the loaded Processing profile."
+    },
+    "repositories": {
+      "type": "array",
+      "description": "The list of evidence repositories to create",
+      "items": {
+        "$ref": "#/components/schemas/EvidenceRepository"
+      }
+    },
+    "containers": {
+      "type": "array",
+      "description": "The list of evidence containers to create",
+      "items": {
+        "$ref": "#/components/schemas/EvidenceContainerWithTargets"
+      }
+    }
+  }
+}

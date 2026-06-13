@@ -1,0 +1,2082 @@
+{
+  "name": "Nuix REST API Vocabulary",
+  "description": "Terms and concepts used in the Nuix Core Engine REST API",
+  "source": "https://developer.nuix.com/latest/reference/restapireference.html",
+  "tags": [
+    "Access",
+    "Analysis",
+    "Culling",
+    "Export",
+    "Inventory",
+    "Licensing",
+    "Monitoring",
+    "Processing",
+    "Resources",
+    "Scripting",
+    "Search",
+    "System"
+  ],
+  "schemas": [
+    "ClusteredRestErrorResponse",
+    "TaskStatusRequest",
+    "AsyncFunctionStatus",
+    "CustodianResponse",
+    "AsyncFunctionStatusObject",
+    "AsyncFunctionStatusesResponse",
+    "CaseFunctionQueue",
+    "AuthenticationRequest",
+    "AuthenticationResponse",
+    "GenericResponse",
+    "ApplyTagListRequest",
+    "ApplyTagListResponse",
+    "TagList",
+    "BulkApplyCaseTagListRequest",
+    "BulkApplyItemTagListRequest",
+    "BulkApplyItemSetChangeResponse",
+    "ItemSetItemsResponse",
+    "BulkApplyItemCustomMetadataRequest",
+    "CreateTagListResponse",
+    "DeleteTagListResponse",
+    "BulkExclusionRequest",
+    "AsyncFunctionResponse",
+    "BulkInclusionRequest",
+    "ClusterRunRequest",
+    "MetadataItemDetails",
+    "SearchNativeRequest",
+    "SearchNativeResult",
+    "BulkSearcherRequest",
+    "TagExpansion",
+    "TagRequest",
+    "CaseResponse",
+    "MarkupSet",
+    "ClusterRunResponse",
+    "KindTypeResponse",
+    "NuixItemType",
+    "ReviewJobResponse",
+    "CreateReviewJobOptions",
+    "CreateReviewJobRequest",
+    "ReviewJobAddItemsOptions",
+    "ReviewJobAddItemsRequest",
+    "NuixReviewJobItem",
+    "Success",
+    "ItemPropertiesRequest",
+    "CreateCaseRequest",
+    "ElasticSearchSettings",
+    "CaseSubsetMetadata",
+    "CaseSubsetProcessingSettings",
+    "CreateCaseSubsetRequest",
+    "CaseMetadataField",
+    "BatchLoadDetailsResponse",
+    "CaseHistoryEventResponse",
+    "NmsUser",
+    "LanguageResponse",
+    "TimezoneRequest",
+    "InvestigatorTimeZoneResponse",
+    "CaseDeleteResponse",
+    "MarkupSetRequest",
+    "MarkupSetDeleteResponse",
+    "AuditStatus",
+    "ThumbnailUtilityRequest",
+    "ThumbnailUtilityRequestDimension",
+    "CaseModification",
+    "WordCountsRequest",
+    "WordCountsResponse",
+    "DeduplicationQueryListRequest",
+    "ItemSizeResponse",
+    "ItemSizesRequest",
+    "FamilyStatisticsResponse",
+    "CountResponse",
+    "CustodianRequest",
+    "CountRequest",
+    "CustomMetadataRequest",
+    "CustomMetadataFieldResponse",
+    "CustomMetadataResponse",
+    "BulkItemCustomMetadataRequest",
+    "ApplyCustomMetadataResponse",
+    "BulkItemCustomMetadataDeleteRequest",
+    "ExportOptions",
+    "ExportRequest",
+    "ParallelProcessingSettings",
+    "SlipsheetsRequest",
+    "PopulateStoresRequest",
+    "BulkIngestionRequest",
+    "EvidenceContainerWithTargets",
+    "EvidenceRepository",
+    "IngestibleCenteraCluster",
+    "IngestibleDropbox",
+    "IngestibleEnterpriseVault",
+    "IngestibleExchangeMailbox",
+    "IngestibleFile",
+    "IngestibleLoadFile",
+    "EvidenceContainer",
+    "IngestibleMailStore",
+    "IngestibleS3Bucket",
+    "IngestibleSQLServer",
+    "IngestibleDocumentum",
+    "IngestibleOracleServer",
+    "IngestibleSSH",
+    "IngestibleTwitter",
+    "IngestibleSharepoint",
+    "IngestibleSplitFileList",
+    "IngestibleMicrosoft365",
+    "IngestibleSlack",
+    "Microsoft365VersionFilterOptions",
+    "KeyStoreKeyParameters",
+    "MimeTypeProcessingSetting",
+    "MimeTypeSpecificProcessingSettings",
+    "NamedEntity",
+    "PasswordDiscoverySettings",
+    "ProcessorSettings",
+    "RescanEvidenceRepositoriesSettings",
+    "SingleRepositoryIngestionRequest",
+    "SingleContainerIngestionRequestIngestibleFile",
+    "SingleContainerIngestionRequestIngestibleLoadFile",
+    "SingleContainerIngestionRequestIngestibleMailStore",
+    "SingleContainerIngestionRequestIngestibleExchangeMailbox",
+    "SingleContainerIngestionRequestIngestibleSharepoint",
+    "SingleContainerIngestionRequestIngestibleSQLServer",
+    "SingleContainerIngestionRequestIngestibleOracleServer",
+    "SingleContainerIngestionRequestIngestibleEnterpriseVault",
+    "SingleContainerIngestionRequestIngestibleS3Bucket",
+    "SingleContainerIngestionRequestIngestibleCenteraCluster",
+    "SingleContainerIngestionRequestIngestibleSplitFileList",
+    "SingleContainerIngestionRequestIngestibleDropbox",
+    "SingleContainerIngestionRequestIngestibleSSH",
+    "SingleContainerIngestionRequestIngestibleTwitter",
+    "SingleContainerIngestionRequestIngestibleMicrosoft365",
+    "SingleContainerIngestionRequestIngestibleSlack",
+    "SingleContainerIngestionRequestIngestibleDocumentum",
+    "ReloadItemsIngestionRequest",
+    "CaseDigest",
+    "ItemTextResponse",
+    "SearchHitRequest",
+    "SearchHit",
+    "SearchHitResponse",
+    "ItemCommentRequest",
+    "ItemCommentResponse",
+    "ItemCustodianRequest",
+    "ItemGuids",
+    "GenericItemGuidResponse",
+    "ItemCustodianResponse",
+    "ItemsShinglesRequest",
+    "ItemMarshallingOptions",
+    "MarshalledItems",
+    "ItemSetBatchResponse",
+    "ItemSetResponse",
+    "ItemSetDuplicatesResponse",
+    "ItemSetNameChangeRequest",
+    "ItemSetRequest",
+    "ItemSetCreateRequest",
+    "ItemSetAddItemsRequest",
+    "BulkItemSetItemsRequest",
+    "ItemSetRemoveItemsRequest",
+    "ConfigurationChangeResponse",
+    "LicenseDescription",
+    "NuixItemKindResponse",
+    "SearchMacroResponse",
+    "SearchMacroStructuredResponse",
+    "BulkApplyCustomMetadataResponse",
+    "NuixItemTypeResponse",
+    "FileUpload",
+    "FileUploadResponse",
+    "ImagingOptions",
+    "OcrOptions",
+    "OcrRequest",
+    "OcrOptionsV2",
+    "OcrRequestV2",
+    "ProductionSetRequest",
+    "ApplicationHealth",
+    "ClusterHealth",
+    "DirectoryAccess",
+    "NodeHealth",
+    "Cluster",
+    "ClusterNode",
+    "ClusterNodeDetails",
+    "OperatingSystemDigest",
+    "QueueStateNuixTaskRequest",
+    "NuixTaskRequest",
+    "Sequence",
+    "ProductionSetResponse",
+    "BulkProductionSetWithProfilesRequest",
+    "SystemPropertyResponse",
+    "SystemPropertyRequest",
+    "UserScriptRequest",
+    "UserScriptRequestV2",
+    "AboutResponse",
+    "AboutResponseV1",
+    "QueryValidationResponse",
+    "CharsetResponse",
+    "EntityTypesResponse",
+    "EntityType",
+    "Languages",
+    "ThirdPartyDependencyResponse",
+    "ClusterThirdPartyDependency",
+    "OcrTemplateDetails",
+    "PromoteToDiscoverRequest"
+  ],
+  "operations": [
+    {
+      "operationId": "getAsyncFunctionStatusesQueueDeprecated",
+      "summary": "Returns asynchronous function statuses",
+      "tags": [
+        "Monitoring"
+      ],
+      "path": "/v1/asyncFunctions",
+      "method": "GET"
+    },
+    {
+      "operationId": "getAsyncFunctionStatuses",
+      "summary": "Returns asynchronous function statuses",
+      "tags": [
+        "Monitoring"
+      ],
+      "path": "/asyncFunctionsQueue",
+      "method": "GET"
+    },
+    {
+      "operationId": "getAsyncFunctionStatusesQueue",
+      "summary": "Returns asynchronous function statuses",
+      "tags": [
+        "Monitoring"
+      ],
+      "path": "/asyncFunctions",
+      "method": "GET"
+    },
+    {
+      "operationId": "getAsyncFunctionStatus",
+      "summary": "Returns the status of an asynchronous function",
+      "tags": [
+        "Monitoring"
+      ],
+      "path": "/asyncFunctions/{key}",
+      "method": "GET"
+    },
+    {
+      "operationId": "cancelAsyncFunction",
+      "summary": "Cancels an asynchronous function.",
+      "tags": [
+        "Monitoring"
+      ],
+      "path": "/asyncFunctions/{key}",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "cancelProcessingJob",
+      "summary": "Cancels a processing job.",
+      "tags": [
+        "Monitoring"
+      ],
+      "path": "/asyncFunctions/processingJobs/{key}",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "login",
+      "summary": "Log in and acquire a licence",
+      "tags": [
+        "Access"
+      ],
+      "path": "/authenticatedUsers/login",
+      "method": "PUT"
+    },
+    {
+      "operationId": "deleteEnvironment",
+      "summary": "Log out",
+      "tags": [
+        "Access"
+      ],
+      "path": "/authenticatedUsers/{username}",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "bulkTag",
+      "summary": "Tags query items in bulk",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/itemTags",
+      "method": "POST"
+    },
+    {
+      "operationId": "bulkRemoveTag",
+      "summary": "Removes tags from query items in bulk",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/itemTags",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "patchItemTags",
+      "summary": "Create or remove tags from query items in bulk.",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/itemTags",
+      "method": "PATCH"
+    },
+    {
+      "operationId": "setAsyncFunctionStatus",
+      "summary": "Sets the status of an asynchronous function.",
+      "tags": [
+        "Monitoring"
+      ],
+      "path": "/asyncFunctions/{key}/status",
+      "method": "PUT"
+    },
+    {
+      "operationId": "getTags",
+      "summary": "Returns the set of tags for a case",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/tags",
+      "method": "GET"
+    },
+    {
+      "operationId": "createTagsForCase",
+      "summary": "Creates new tags for a case",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/tags",
+      "method": "POST"
+    },
+    {
+      "operationId": "deleteTagsForCase",
+      "summary": "Deletes tags for a case",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/tags",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "patchCaseTags",
+      "summary": "Create or delete tags for a case in bulk.",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/tags",
+      "method": "PATCH"
+    },
+    {
+      "operationId": "bulkExcludeAsFunction",
+      "summary": "Excludes items in bulk",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/excludedItems",
+      "method": "PUT"
+    },
+    {
+      "operationId": "bulkIncludeAsFunction",
+      "summary": "Includes items in bulk",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/includedItems",
+      "method": "PUT"
+    },
+    {
+      "operationId": "getClusterRuns",
+      "summary": "Returns the cluster runs for a case",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/clusterRuns",
+      "method": "GET"
+    },
+    {
+      "operationId": "createClusterRun",
+      "summary": "Creates a cluster run based on the query provided",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/clusterRuns",
+      "method": "POST"
+    },
+    {
+      "operationId": "getClusterRunItems",
+      "summary": "Lists items in this cluster run",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/clusterRuns/{clusterRunNameOrGuid}/items",
+      "method": "GET"
+    },
+    {
+      "operationId": "deleteClusterRun",
+      "summary": "Delete a cluster run",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/clusterRuns/{clusterRunNameOrGuid}",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "bulkSearchers",
+      "summary": "Generate a count report and optionally tag items.",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/bulkSearchers",
+      "method": "POST"
+    },
+    {
+      "operationId": "getDomains",
+      "summary": "Returns the set of communication domains in a case",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/domains",
+      "method": "GET"
+    },
+    {
+      "operationId": "openCase",
+      "summary": "Returns the top-level information for a case",
+      "tags": [
+        "Inventory"
+      ],
+      "path": "/cases/{caseId}",
+      "method": "GET"
+    },
+    {
+      "operationId": "deleteCase",
+      "summary": "Deletes a case",
+      "tags": [
+        "Inventory"
+      ],
+      "path": "/cases/{caseId}",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "addChildCaseToCompoundCase",
+      "summary": "Adds a child case to a compound case",
+      "tags": [
+        "Inventory"
+      ],
+      "path": "/cases/{caseId}/childCases/{childCaseId}",
+      "method": "PUT"
+    },
+    {
+      "operationId": "getChildCases",
+      "summary": "Returns a list of child cases for a compound case",
+      "tags": [
+        "Inventory"
+      ],
+      "path": "/cases/{caseId}/childCases",
+      "method": "GET"
+    },
+    {
+      "operationId": "addChildCasesToCompoundCase",
+      "summary": "Adds child cases to a compound case",
+      "tags": [
+        "Inventory"
+      ],
+      "path": "/cases/{caseId}/childCases",
+      "method": "POST"
+    },
+    {
+      "operationId": "closeCase",
+      "summary": "Closes a case",
+      "tags": [
+        "Inventory"
+      ],
+      "path": "/cases/{caseId}/close",
+      "method": "POST"
+    },
+    {
+      "operationId": "getExclusions",
+      "summary": "Returns exclusions for a case",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/exclusions",
+      "method": "GET"
+    },
+    {
+      "operationId": "getMarkupSets",
+      "summary": "Gets all MarkupSets for the given case",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/markupSets",
+      "method": "GET"
+    },
+    {
+      "operationId": "createMarkupSet",
+      "summary": "Create a markup set.",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/markupSets",
+      "method": "POST"
+    },
+    {
+      "operationId": "getMarkupSetDeprecated",
+      "summary": "Gets all MarkupSets for the given case",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/markupSet",
+      "method": "GET"
+    },
+    {
+      "operationId": "getItemTypes",
+      "summary": "Returns item kinds and types for a case",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/itemTypes",
+      "method": "GET"
+    },
+    {
+      "operationId": "getReviewJob",
+      "summary": "Returns details for a review job",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/reviewJobs/{reviewJobNameOrGuid}",
+      "method": "GET"
+    },
+    {
+      "operationId": "deleteReviewJob",
+      "summary": "Deletes a review job",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/reviewJobs/{reviewJobNameOrGuid}",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "getFastReviewJobs",
+      "summary": "Returns review jobs for a case",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/reviewJobs",
+      "method": "GET"
+    },
+    {
+      "operationId": "createReviewJob",
+      "summary": "Creates a review job for a case",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/reviewJobs",
+      "method": "POST"
+    },
+    {
+      "operationId": "addItemsToReviewJob_1",
+      "summary": "Returns the review job items",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/reviewJobs/{reviewJobNameOrGuid}/items",
+      "method": "GET"
+    },
+    {
+      "operationId": "addItemsToReviewJob",
+      "summary": "Adds items to a review job",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/reviewJobs/{reviewJobNameOrGuid}/items",
+      "method": "POST"
+    },
+    {
+      "operationId": "getCaseKeystores",
+      "summary": "Returns a list of keystore files available for a case",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/keyStores",
+      "method": "GET"
+    },
+    {
+      "operationId": "addKeyStoreToCase",
+      "summary": "Adds a keystore to a case",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/keyStores",
+      "method": "POST"
+    },
+    {
+      "operationId": "deleteKeystoreFromCase",
+      "summary": "Deletes the requested keystore from the case's keystore directory",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/keyStores",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "getItemProperties",
+      "summary": "Returns a list of values for the specified property.",
+      "tags": [
+        "Search"
+      ],
+      "path": "/cases/{caseId}/itemProperties/{propertyName}",
+      "method": "POST"
+    },
+    {
+      "operationId": "createCase",
+      "summary": "Creates a case",
+      "tags": [
+        "Inventory"
+      ],
+      "path": "/cases",
+      "method": "POST"
+    },
+    {
+      "operationId": "createCaseSubset",
+      "summary": "Creates a case subset",
+      "tags": [
+        "Inventory"
+      ],
+      "path": "/cases/{caseId}/subset",
+      "method": "POST"
+    },
+    {
+      "operationId": "getCaseMetadataFields",
+      "summary": "Returns metadata fields available for a case",
+      "tags": [
+        "Inventory"
+      ],
+      "path": "/cases/{caseId}/metadataFields",
+      "method": "GET"
+    },
+    {
+      "operationId": "getCaseBatches",
+      "summary": "Returns batches associated with a case",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/batches",
+      "method": "GET"
+    },
+    {
+      "operationId": "getCaseHistory",
+      "summary": "Returns history events for a case",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/history",
+      "method": "GET"
+    },
+    {
+      "operationId": "getCustodians",
+      "summary": "Returns the set of custodians for a case",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/custodians",
+      "method": "GET"
+    },
+    {
+      "operationId": "newCustodian",
+      "summary": "Creates a custodian without assigning any items to them.",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/custodians",
+      "method": "POST"
+    },
+    {
+      "operationId": "getCustodian_1",
+      "summary": "Finds a custodian by name.",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/custodians/{custodian}",
+      "method": "GET"
+    },
+    {
+      "operationId": "updateCustodian",
+      "summary": "Update a custodian.",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/custodians/{custodian}",
+      "method": "PUT"
+    },
+    {
+      "operationId": "deleteCustodian_1",
+      "summary": "Deletes a custodian.",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/custodians/{custodian}",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "assignCustodianToItems",
+      "summary": "Assign custodian to items",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/custodians/{custodian}/items",
+      "method": "POST"
+    },
+    {
+      "operationId": "assignCustodian",
+      "summary": "Assign custodian from the  items",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/items/{itemGuid}/custodian",
+      "method": "PUT"
+    },
+    {
+      "operationId": "unassignCustodian",
+      "summary": "Remove Assigned custodian from the items",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/items/{itemGuid}/custodian",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "getItemCustodian",
+      "summary": "Get item custodian",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/items/{itemGuid}/custodian",
+      "method": "GET"
+    },
+    {
+      "operationId": "getEntityTypes",
+      "summary": "Returns the set of entity types for a case",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/entityTypes",
+      "method": "GET"
+    },
+    {
+      "operationId": "getTagsFromReviewJob",
+      "summary": "Returns the tags in this review job",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/reviewJobs/{reviewJobNameOrGuid}/tags",
+      "method": "GET"
+    },
+    {
+      "operationId": "getReviewersFromReviewJob",
+      "summary": "Returns the active reviewers in this review job",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/reviewJobs/{reviewJobNameOrGuid}/reviewers",
+      "method": "GET"
+    },
+    {
+      "operationId": "getOriginalExtensions",
+      "summary": "Returns the set of original file extensions for a case",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/originalExtensions",
+      "method": "GET"
+    },
+    {
+      "operationId": "getLanguages",
+      "summary": "Returns all languages found in the case",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/languages",
+      "method": "GET"
+    },
+    {
+      "operationId": "getInvestigatorTimeZone",
+      "summary": "Returns the investigation time zone for a case",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/investigatorTimeZone",
+      "method": "GET"
+    },
+    {
+      "operationId": "setInvestigatorTimeZone",
+      "summary": "Sets the investigation time zone for a case",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/investigatorTimeZone",
+      "method": "PUT"
+    },
+    {
+      "operationId": "updateMarkupSet",
+      "summary": "Updates a markup set",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/markupSet/{markupSetNameOrGuid}",
+      "method": "PUT"
+    },
+    {
+      "operationId": "createMarkupSetDeprecated",
+      "summary": "Creates a markup set",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/markupSet/{markupSetNameOrGuid}",
+      "method": "POST"
+    },
+    {
+      "operationId": "deleteMarkupSet",
+      "summary": "Deletes a markup set",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/markupSet/{markupSetNameOrGuid}",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "getAuditFile",
+      "summary": "Returns an audit report file",
+      "tags": [
+        "Licensing"
+      ],
+      "path": "/cases/{caseId}/auditReportFile",
+      "method": "GET"
+    },
+    {
+      "operationId": "uploadAuditFile",
+      "summary": "Uploads an audit verification file",
+      "tags": [
+        "Licensing"
+      ],
+      "path": "/cases/{caseId}/auditVerificationFile",
+      "method": "POST"
+    },
+    {
+      "operationId": "deleteAllAuditFiles",
+      "summary": "Deletes all audit reports and audit verification files for a specified case",
+      "tags": [
+        "Licensing"
+      ],
+      "path": "/cases/{caseId}/auditFiles",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "checkAuditStatus",
+      "summary": "Returns the audit status for a case",
+      "tags": [
+        "Licensing"
+      ],
+      "path": "/cases/{caseId}/auditStatus",
+      "method": "GET"
+    },
+    {
+      "operationId": "generateThumbnails",
+      "summary": "Generates thumbnails for a case.",
+      "tags": [
+        "Export"
+      ],
+      "path": "/cases/{caseId}/thumbnails",
+      "method": "POST"
+    },
+    {
+      "operationId": "deleteCaseThumbnailFolder",
+      "summary": "Deletes the case's thumbnails folder, containing all generated media.",
+      "tags": [
+        "Export"
+      ],
+      "path": "/cases/{caseId}/thumbnails",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "submitPromoteToDiscoverJob",
+      "summary": "Promotes a list of items to Nuix Discover\u00ae",
+      "tags": [
+        "Export"
+      ],
+      "path": "/cases/{caseId}/promoteToDiscover/{discoverCaseId}",
+      "method": "POST"
+    },
+    {
+      "operationId": "getCaseFunctions",
+      "summary": "Case functions",
+      "tags": [
+        "Inventory"
+      ],
+      "path": "/cases/{caseId}/caseFunctions",
+      "method": "GET"
+    },
+    {
+      "operationId": "performCaseFunction",
+      "summary": "Perform a function against a case",
+      "tags": [
+        "Inventory"
+      ],
+      "path": "/cases/{caseId}/caseFunctions",
+      "method": "POST"
+    },
+    {
+      "operationId": "wordCounts",
+      "summary": "Indicates word usage and frequency in a case",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/wordCounts",
+      "method": "POST"
+    },
+    {
+      "operationId": "auditSizes",
+      "summary": "Returns total audit sizes for items matching a query",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/auditSizes",
+      "method": "POST"
+    },
+    {
+      "operationId": "fileSizes",
+      "summary": "Returns total file sizes for items matching a query",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/fileSizes",
+      "method": "POST"
+    },
+    {
+      "operationId": "itemSizes",
+      "summary": "Compute total sizes for items matching a query",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/itemSizes",
+      "method": "POST"
+    },
+    {
+      "operationId": "wordCountsAsync",
+      "summary": "Asynchronously indicates word usage and frequency in a case",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/asyncFunctions/wordCounts",
+      "method": "POST"
+    },
+    {
+      "operationId": "familyStatistics",
+      "summary": "Returns statistics for families of top-level items matching a query",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/familyStatistics",
+      "method": "POST"
+    },
+    {
+      "operationId": "familyStatisticsAsync",
+      "summary": "Asynchronously returns statistics for families of top-level items matching a query",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/asyncFunctions/familyStatistics",
+      "method": "POST"
+    },
+    {
+      "operationId": "count",
+      "summary": "Returns the total number of items in a case",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/count",
+      "method": "GET"
+    },
+    {
+      "operationId": "countPost",
+      "summary": "Returns the number of items associated with a case query",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/count",
+      "method": "POST"
+    },
+    {
+      "operationId": "getCustomMetadata",
+      "summary": "Returns custom metadata for an item",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/items/{itemGuid}/customMetadata",
+      "method": "GET"
+    },
+    {
+      "operationId": "addCustomMetadata",
+      "summary": "Applies custom metadata to an item",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/items/{itemGuid}/customMetadata",
+      "method": "PUT"
+    },
+    {
+      "operationId": "deleteCustomMetadata",
+      "summary": "Removes custom metadata on an item",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/items/{itemGuid}/customMetadata",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "bulkAddCustomMetadata",
+      "summary": "Applies custom metadata to items in bulk",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/itemCustomMetadata",
+      "method": "POST"
+    },
+    {
+      "operationId": "bulkDeleteCustomMetadata",
+      "summary": "Removes custom metadata on items in bulk",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/itemCustomMetadata",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "patchItemCustomMetadata",
+      "summary": "Adds or removes custom metadata on items in bulk.",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/itemCustomMetadata",
+      "method": "PATCH"
+    },
+    {
+      "operationId": "export",
+      "summary": "Exports production sets and items from a case",
+      "tags": [
+        "Export"
+      ],
+      "path": "/cases/{caseId}/export",
+      "method": "PUT"
+    },
+    {
+      "operationId": "renameTagsForCase",
+      "summary": "Rename a case tag.",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/tags/{tagName}",
+      "method": "PUT"
+    },
+    {
+      "operationId": "generateSlipsheets",
+      "summary": "Generates Slipsheets for items in a case",
+      "tags": [
+        "Export"
+      ],
+      "path": "/cases/{caseId}/slipsheets",
+      "method": "PUT"
+    },
+    {
+      "operationId": "populateStores",
+      "summary": "Populate stores",
+      "tags": [
+        "Export"
+      ],
+      "path": "/cases/{caseId}/stores",
+      "method": "PUT"
+    },
+    {
+      "operationId": "bulkIngestionIntoSimpleCase",
+      "summary": "Ingests a new repository and/or supported containers into a simple case",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/evidence",
+      "method": "POST"
+    },
+    {
+      "operationId": "ingestRepoIntoSimpleCase",
+      "summary": "Ingests a directory and creates a repository in a simple case",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/evidence/repository",
+      "method": "POST"
+    },
+    {
+      "operationId": "ingestFileIntoSimpleCase",
+      "summary": "Ingests a new file/directory target into a container in a simple case",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/evidence/file",
+      "method": "POST"
+    },
+    {
+      "operationId": "ingestLoadFileIntoSimpleCase",
+      "summary": "Ingests a new load file target into a container within a simple case",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/evidence/loadFile",
+      "method": "POST"
+    },
+    {
+      "operationId": "ingestMailstoreIntoSimpleCase",
+      "summary": "Ingests a new mail target into a container in a simple case",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/evidence/mail",
+      "method": "POST"
+    },
+    {
+      "operationId": "ingestExchangeIntoSimpleCase",
+      "summary": "Ingests a new Exchange target into a container in a simple case",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/evidence/exchange",
+      "method": "POST"
+    },
+    {
+      "operationId": "ingestSharepointIntoSimpleCase",
+      "summary": "Ingests a new SharePoint target into a container within a simple case",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/evidence/sharepoint",
+      "method": "POST"
+    },
+    {
+      "operationId": "ingestSqlIntoSimpleCase",
+      "summary": "Ingests a new SQL target into a container in a simple case",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/evidence/sql",
+      "method": "POST"
+    },
+    {
+      "operationId": "ingestOracleIntoSimpleCase",
+      "summary": "Ingests a new Oracle target into a container in a simple case",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/evidence/oracle",
+      "method": "POST"
+    },
+    {
+      "operationId": "ingestEnterpriseVaultIntoSimpleCase",
+      "summary": "Ingests a new enterprise vault target into a container in a simple case",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/evidence/ev",
+      "method": "POST"
+    },
+    {
+      "operationId": "ingestS3IntoSimpleCase",
+      "summary": "Ingests a new S3 target into a container in a simple case",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/evidence/s3",
+      "method": "POST"
+    },
+    {
+      "operationId": "ingestCenteraIntoSimpleCase",
+      "summary": "Ingests a new Centera target into a container in a simple case",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/evidence/centera",
+      "method": "POST"
+    },
+    {
+      "operationId": "ingestSplitFilesIntoSimpleCase",
+      "summary": "Ingests a new split file list target into a container in a simple case",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/evidence/splitFiles",
+      "method": "POST"
+    },
+    {
+      "operationId": "ingestDropboxIntoSimpleCase",
+      "summary": "Ingests a new Dropbox target into a container in a simple case",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/evidence/dropbox",
+      "method": "POST"
+    },
+    {
+      "operationId": "ingestSSHIntoSimpleCase",
+      "summary": "Ingests a new SSH-based target into a container in a simple case",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/evidence/ssh",
+      "method": "POST"
+    },
+    {
+      "operationId": "ingestTwitterIntoSimpleCase",
+      "summary": "Ingests a new historical twitter target into a container in a simple case",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/evidence/twitter",
+      "method": "POST"
+    },
+    {
+      "operationId": "ingestMs365IntoSimpleCase",
+      "summary": "Ingests a new Microsoft 365 target into a container in a simple case",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/evidence/ms365",
+      "method": "POST"
+    },
+    {
+      "operationId": "ingestSlackIntoSimpleCase",
+      "summary": "Ingests a new Slack target into a container in a simple case",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/evidence/slack",
+      "method": "POST"
+    },
+    {
+      "operationId": "ingestDocumentumIntoSimpleCase",
+      "summary": "Ingests a new Documentum target into a container in a simple case",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/evidence/documentum",
+      "method": "POST"
+    },
+    {
+      "operationId": "reloadItemsFromSourceIntoSimpleCase",
+      "summary": "Reloads items from source based on a query in a simple case",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/items",
+      "method": "PUT"
+    },
+    {
+      "operationId": "getInventoryLocations",
+      "summary": "Returns the set of inventory locations",
+      "tags": [
+        "Inventory"
+      ],
+      "path": "/inventory/locations",
+      "method": "GET"
+    },
+    {
+      "operationId": "scanInventory",
+      "summary": "Rescans your inventory",
+      "tags": [
+        "Inventory"
+      ],
+      "path": "/inventory",
+      "method": "PUT"
+    },
+    {
+      "operationId": "getCaseDigest",
+      "summary": "Returns the digest information for a case",
+      "tags": [
+        "Inventory"
+      ],
+      "path": "/inventory/{caseId}",
+      "method": "GET"
+    },
+    {
+      "operationId": "getInventoryDigest",
+      "summary": "Returns the set of case digests for all inventory locations",
+      "tags": [
+        "Inventory"
+      ],
+      "path": "/inventory/digest",
+      "method": "GET"
+    },
+    {
+      "operationId": "getItemText",
+      "summary": "Returns item text",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/items/{itemGuid}/itemText",
+      "method": "GET"
+    },
+    {
+      "operationId": "getItemTags",
+      "summary": "Returns the list of tags for an item",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/items/{itemGuid}/tags",
+      "method": "GET"
+    },
+    {
+      "operationId": "getSearchHits",
+      "summary": "Returns search hits for an item",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/items/{itemGuid}/searchHits",
+      "method": "POST"
+    },
+    {
+      "operationId": "tagItem",
+      "summary": "Tags an item in a case",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/items/{itemGuid}/tags/{tagName}",
+      "method": "PUT"
+    },
+    {
+      "operationId": "removeTagFromItem",
+      "summary": "Removes a tag from an item",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/items/{itemGuid}/tags/{tagName}",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "getItemByFields",
+      "summary": "Returns information for a specific item in a case",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/items/{itemGuid}",
+      "method": "GET"
+    },
+    {
+      "operationId": "getTopLevelItemsByCaseId",
+      "summary": "Returns the top-level items for a case",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/topLevelItems",
+      "method": "GET"
+    },
+    {
+      "operationId": "downloadItem",
+      "summary": "Downloads an item from a case",
+      "tags": [
+        "Export"
+      ],
+      "path": "/cases/{caseId}/items/{itemGuid}/download",
+      "method": "GET"
+    },
+    {
+      "operationId": "downloadItemHead",
+      "summary": "Downloads an item from a case",
+      "tags": [
+        "Export"
+      ],
+      "path": "/cases/{caseId}/items/{itemGuid}/download",
+      "method": "HEAD"
+    },
+    {
+      "operationId": "downloadItemBinary",
+      "summary": "Streams an item binary from a case if it is available",
+      "tags": [
+        "Export"
+      ],
+      "path": "/cases/{caseId}/itemBinaries/{itemGuid}",
+      "method": "GET"
+    },
+    {
+      "operationId": "downloadItemBinary_1",
+      "summary": "Streams an item binary from a case if it is available",
+      "tags": [
+        "Export"
+      ],
+      "path": "/cases/{caseId}/itemBinaries/{itemGuid}",
+      "method": "HEAD"
+    },
+    {
+      "operationId": "downloadItemBestFormat",
+      "summary": "Enables you to view a case item",
+      "tags": [
+        "Export"
+      ],
+      "path": "/cases/{caseId}/items/{itemGuid}/view",
+      "method": "GET"
+    },
+    {
+      "operationId": "downloadItemBestFormatHeadRequest",
+      "summary": "Enables you to view a case item",
+      "tags": [
+        "Export"
+      ],
+      "path": "/cases/{caseId}/items/{itemGuid}/view",
+      "method": "HEAD"
+    },
+    {
+      "operationId": "getItemComment",
+      "summary": "Returns comments for an item",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/items/{itemGuid}/comment",
+      "method": "GET"
+    },
+    {
+      "operationId": "modifyItemComment",
+      "summary": "Applies a comment to an item",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/items/{itemGuid}/comment",
+      "method": "PUT"
+    },
+    {
+      "operationId": "getItemsShingles",
+      "summary": "Calculates the number of shingles associated with a case's items",
+      "tags": [
+        "Analysis"
+      ],
+      "path": "/cases/{caseId}/itemShingles",
+      "method": "PUT"
+    },
+    {
+      "operationId": "getItemSet",
+      "summary": "Returns details for an item set",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/itemSets/{itemSetNameOrGuid}",
+      "method": "GET"
+    },
+    {
+      "operationId": "renameItemSet",
+      "summary": "Renames an item set",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/itemSets/{itemSetNameOrGuid}",
+      "method": "PUT"
+    },
+    {
+      "operationId": "deleteItemSet",
+      "summary": "Deletes an item set from a case",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/itemSets/{itemSetNameOrGuid}",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "getItemSets",
+      "summary": "Returns item sets associated with a case",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/itemSets",
+      "method": "GET"
+    },
+    {
+      "operationId": "asyncCreateItemSet",
+      "summary": "Creates an item set within a case",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/itemSets",
+      "method": "POST"
+    },
+    {
+      "operationId": "getItemSetDuplicates",
+      "summary": "Returns the duplicate items in this set",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/itemSets/{itemSetNameOrGuid}/duplicates",
+      "method": "GET"
+    },
+    {
+      "operationId": "findItemSetItemDuplicates",
+      "summary": "Returns duplicates for an item in an item set",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/itemSets/{itemSetNameOrGuid}/{itemGuid}/duplicates",
+      "method": "GET"
+    },
+    {
+      "operationId": "getOriginals",
+      "summary": "Returns the original items in this set",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/itemSets/{itemSetNameOrGuid}/originals",
+      "method": "GET"
+    },
+    {
+      "operationId": "getItemSetItems",
+      "summary": "Returns items in an item set",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/itemSets/{itemSetNameOrGuid}/items",
+      "method": "GET"
+    },
+    {
+      "operationId": "addItemsToItemSet",
+      "summary": "Adds items to an item set",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/itemSets/{itemSetNameOrGuid}/items",
+      "method": "POST"
+    },
+    {
+      "operationId": "removeItemsFromItemSet",
+      "summary": "Removes items from an item set",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/itemSets/{itemSetNameOrGuid}/items",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "patchItemsFromItemSet",
+      "summary": "Add or delete items to an item set in bulk.",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/itemSets/{itemSetNameOrGuid}/items",
+      "method": "PATCH"
+    },
+    {
+      "operationId": "setLicenseServerCredentials",
+      "summary": "Update and persist license server credentials",
+      "tags": [
+        "Licensing"
+      ],
+      "path": "/licenseServer/credentials",
+      "method": "PUT"
+    },
+    {
+      "operationId": "getItemSetBatches",
+      "summary": "Returns the batches in this item set",
+      "tags": [
+        "Culling"
+      ],
+      "path": "/cases/{caseId}/itemSets/{itemSetNameOrGuid}/batches",
+      "method": "GET"
+    },
+    {
+      "operationId": "getAvailableLicensesAus",
+      "summary": "Returns a list of available licences",
+      "tags": [
+        "Licensing"
+      ],
+      "path": "/licenses",
+      "method": "GET"
+    },
+    {
+      "operationId": "getKinds",
+      "summary": "Returns all item kinds",
+      "tags": [
+        "Resources"
+      ],
+      "path": "/kinds",
+      "method": "GET"
+    },
+    {
+      "operationId": "getSearchMacros",
+      "summary": "Returns all search macros names and expansions",
+      "tags": [
+        "Resources"
+      ],
+      "path": "/searchMacros",
+      "method": "GET"
+    },
+    {
+      "operationId": "getShingleLists",
+      "summary": "Returns all shingle list names and expansions",
+      "tags": [
+        "Resources"
+      ],
+      "path": "/shingleLists",
+      "method": "GET"
+    },
+    {
+      "operationId": "getWordLists",
+      "summary": "Returns all word list names",
+      "tags": [
+        "Resources"
+      ],
+      "path": "/wordLists",
+      "method": "GET"
+    },
+    {
+      "operationId": "getFuzzyHashLists",
+      "summary": "Returns all fuzzy hash list names",
+      "tags": [
+        "Resources"
+      ],
+      "path": "/fuzzyHashLists",
+      "method": "GET"
+    },
+    {
+      "operationId": "getMetadataProfiles",
+      "summary": "Returns all metadata profile names",
+      "tags": [
+        "Resources"
+      ],
+      "path": "/metadataProfiles",
+      "method": "GET"
+    },
+    {
+      "operationId": "getTypes",
+      "summary": "Returns all item types",
+      "tags": [
+        "Resources"
+      ],
+      "path": "/types",
+      "method": "GET"
+    },
+    {
+      "operationId": "getConfigurationProfiles",
+      "summary": "Returns all configuration profile names",
+      "tags": [
+        "Resources"
+      ],
+      "path": "/configurationProfiles",
+      "method": "GET"
+    },
+    {
+      "operationId": "availableDigests",
+      "summary": "Returns all digest list names",
+      "tags": [
+        "Resources"
+      ],
+      "path": "/digestLists",
+      "method": "GET"
+    },
+    {
+      "operationId": "addDigestListsToNuix",
+      "summary": "Uploads a digest list to a user data directory",
+      "tags": [
+        "Resources"
+      ],
+      "path": "/digestLists",
+      "method": "POST"
+    },
+    {
+      "operationId": "getImagingProfiles",
+      "summary": "Returns all imaging profile names",
+      "tags": [
+        "Resources"
+      ],
+      "path": "/imagingProfiles",
+      "method": "GET"
+    },
+    {
+      "operationId": "uploadImagingProfile",
+      "summary": "Upload an imaging profile",
+      "tags": [
+        "Resources"
+      ],
+      "path": "/imagingProfiles",
+      "method": "POST"
+    },
+    {
+      "operationId": "downloadImagingProfile",
+      "summary": "Downloads an imaging profile by name",
+      "tags": [
+        "Resources"
+      ],
+      "path": "/imagingProfiles/{name}",
+      "method": "GET"
+    },
+    {
+      "operationId": "getProductionProfiles",
+      "summary": "Returns all production profile names",
+      "tags": [
+        "Resources"
+      ],
+      "path": "/productionProfiles",
+      "method": "GET"
+    },
+    {
+      "operationId": "uploadProductionProfile",
+      "summary": "Upload a production profile",
+      "tags": [
+        "Resources"
+      ],
+      "path": "/productionProfiles",
+      "method": "POST"
+    },
+    {
+      "operationId": "downloadProductionProfile",
+      "summary": "Downloads a production profile by name",
+      "tags": [
+        "Resources"
+      ],
+      "path": "/productionProfiles/{name}",
+      "method": "GET"
+    },
+    {
+      "operationId": "getProcessingProfiles",
+      "summary": "Returns all processing profile names",
+      "tags": [
+        "Resources"
+      ],
+      "path": "/processingProfiles",
+      "method": "GET"
+    },
+    {
+      "operationId": "uploadProcessingProfile",
+      "summary": "Upload a processing profile",
+      "tags": [
+        "Resources"
+      ],
+      "path": "/processingProfiles",
+      "method": "POST"
+    },
+    {
+      "operationId": "downloadProcessingProfile",
+      "summary": "Downloads a processing profile by name",
+      "tags": [
+        "Resources"
+      ],
+      "path": "/processingProfiles/{name}",
+      "method": "GET"
+    },
+    {
+      "operationId": "getOcrProfiles",
+      "summary": "Returns all OCR profile names",
+      "tags": [
+        "Resources"
+      ],
+      "path": "/ocrProfiles",
+      "method": "GET"
+    },
+    {
+      "operationId": "uploadOcrProfile",
+      "summary": "Upload an OCR profile",
+      "tags": [
+        "Resources"
+      ],
+      "path": "/ocrProfiles",
+      "method": "POST"
+    },
+    {
+      "operationId": "downloadOcrProfile",
+      "summary": "Downloads an OCR profile by name",
+      "tags": [
+        "Resources"
+      ],
+      "path": "/ocrProfiles/{name}",
+      "method": "GET"
+    },
+    {
+      "operationId": "getOcrProfileTemplateDetails",
+      "summary": "Returns the OCR profile template details.",
+      "tags": [
+        "Resources"
+      ],
+      "path": "/ocrProfiles/{name}/details",
+      "method": "GET"
+    },
+    {
+      "operationId": "bulkOcrItemsAsFunctionV2",
+      "summary": "Performs OCR on query items",
+      "tags": [
+        "Processing"
+      ],
+      "path": "/cases/{caseId}/items/ocr",
+      "method": "PUT"
+    },
+    {
+      "operationId": "checkOcrCapability",
+      "summary": "Detects whether OCR functionality is available",
+      "tags": [
+        "System"
+      ],
+      "path": "/resources/ocr",
+      "method": "GET"
+    },
+    {
+      "operationId": "checkFfmpegCapability",
+      "summary": "Detects whether FFmpeg/FFprobe functionality is available",
+      "tags": [
+        "System"
+      ],
+      "path": "/resources/ffmpeg",
+      "method": "GET"
+    },
+    {
+      "operationId": "checkLotusNotesCapability",
+      "summary": "Detects whether Lotus Notes functionality is available",
+      "tags": [
+        "System"
+      ],
+      "path": "/resources/lotusnotes",
+      "method": "GET"
+    },
+    {
+      "operationId": "getThirdPartyDepedencies",
+      "summary": "Provides a summary of third party dependencies and their availability.",
+      "tags": [
+        "System"
+      ],
+      "path": "/resources/thirdparty",
+      "method": "GET"
+    },
+    {
+      "operationId": "getProductionSetsForCase",
+      "summary": "Returns all production sets for a case",
+      "tags": [
+        "Export"
+      ],
+      "path": "/cases/{caseId}/productionSets",
+      "method": "GET"
+    },
+    {
+      "operationId": "createProductionSet",
+      "summary": "Creates a production set",
+      "tags": [
+        "Export"
+      ],
+      "path": "/cases/{caseId}/productionSets",
+      "method": "POST"
+    },
+    {
+      "operationId": "createProductionSetDeprecated",
+      "summary": "Creates a production set",
+      "tags": [
+        "Export"
+      ],
+      "path": "/v1/cases/{caseId}/productionSets",
+      "method": "POST"
+    },
+    {
+      "operationId": "getPrintPreview",
+      "summary": "Returns a print preview for an item in the production set",
+      "tags": [
+        "Export"
+      ],
+      "path": "/cases/{caseId}/productionSets/{productionSetId}/item/{itemGuid}/printPreview",
+      "method": "GET"
+    },
+    {
+      "operationId": "getProductionSetItems",
+      "summary": "Returns the items in this production set",
+      "tags": [
+        "Export"
+      ],
+      "path": "/cases/{caseId}/productionSets/{productionSetId}/items",
+      "method": "GET"
+    },
+    {
+      "operationId": "addItemsToProductionSet",
+      "summary": "Adds items to a production set",
+      "tags": [
+        "Export"
+      ],
+      "path": "/cases/{caseId}/productionSets/{productionSetId}/items",
+      "method": "POST"
+    },
+    {
+      "operationId": "generatePrintPreviews",
+      "summary": "Generates print previews for items in the production set",
+      "tags": [
+        "Export"
+      ],
+      "path": "/cases/{caseId}/productionSets/{productionSetId}/printPreview",
+      "method": "POST"
+    },
+    {
+      "operationId": "getProductionSet",
+      "summary": "Returns details for a specific production set",
+      "tags": [
+        "Export"
+      ],
+      "path": "/cases/{caseId}/productionSets/{productionSetId}",
+      "method": "GET"
+    },
+    {
+      "operationId": "deleteProductionSet",
+      "summary": "Deletes a production set from a case",
+      "tags": [
+        "Export"
+      ],
+      "path": "/cases/{caseId}/productionSets/{productionSetId}",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "deleteProductionSetV2",
+      "summary": "Deletes a production set from a case",
+      "tags": [
+        "Export"
+      ],
+      "path": "/v2/cases/{caseId}/productionSets/{productionSetId}",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "deleteCaseAsync",
+      "summary": "Deletes a case asynchronously",
+      "tags": [
+        "Inventory"
+      ],
+      "path": "/v2/cases/{caseId}",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "searchNativeResult",
+      "summary": "Performs a search",
+      "tags": [
+        "Search"
+      ],
+      "path": "/cases/{caseId}/search",
+      "method": "GET"
+    },
+    {
+      "operationId": "searchNativeResultPost",
+      "summary": "Performs a large search",
+      "tags": [
+        "Search"
+      ],
+      "path": "/cases/{caseId}/search",
+      "method": "POST"
+    },
+    {
+      "operationId": "asyncSearchNative",
+      "summary": "Performs an asynchronous search",
+      "tags": [
+        "Search"
+      ],
+      "path": "/cases/{caseId}/asyncFunctions/search",
+      "method": "POST"
+    },
+    {
+      "operationId": "getSystemProperty",
+      "summary": "Gets a Nuix system property",
+      "tags": [
+        "System"
+      ],
+      "path": "/system/properties/{propertyName}",
+      "method": "GET"
+    },
+    {
+      "operationId": "setSystemProperty",
+      "summary": "Sets a Nuix system property",
+      "tags": [
+        "System"
+      ],
+      "path": "/system/properties/{propertyName}",
+      "method": "PUT"
+    },
+    {
+      "operationId": "clearSystemProperty",
+      "summary": "Clears a Nuix system property",
+      "tags": [
+        "System"
+      ],
+      "path": "/system/properties/{propertyName}",
+      "method": "DELETE"
+    },
+    {
+      "operationId": "generateSystemsDiagnostics",
+      "summary": "Generates a system diagnostics ZIP file",
+      "tags": [
+        "System"
+      ],
+      "path": "/system/diagnostics",
+      "method": "GET"
+    },
+    {
+      "operationId": "generateSystemDiagnosticsDistributed_1",
+      "summary": "Generates a system diagnostics ZIP file asyncronously.",
+      "tags": [
+        "System"
+      ],
+      "path": "/system/diagnostics",
+      "method": "POST"
+    },
+    {
+      "operationId": "downloadFile_1",
+      "summary": "Downloads a file given an id.",
+      "tags": [
+        "System"
+      ],
+      "path": "/downloads/{id}",
+      "method": "GET"
+    },
+    {
+      "operationId": "heartbeat",
+      "summary": "Checks whether the REST server is running",
+      "tags": [
+        "System"
+      ],
+      "path": "/system/health",
+      "method": "GET"
+    },
+    {
+      "operationId": "executeUserScriptFunctionForCase",
+      "summary": "Executes a user script on a case",
+      "tags": [
+        "Scripting"
+      ],
+      "path": "/cases/{caseId}/userScripts",
+      "method": "PUT"
+    },
+    {
+      "operationId": "fetchUserScripts",
+      "summary": "Retrieves the list of existing user scripts",
+      "tags": [
+        "Scripting"
+      ],
+      "path": "/userScripts",
+      "method": "GET"
+    },
+    {
+      "operationId": "executeUserScriptFunction",
+      "summary": "Executes a user script",
+      "tags": [
+        "Scripting"
+      ],
+      "path": "/userScripts",
+      "method": "PUT"
+    },
+    {
+      "operationId": "aboutV1",
+      "summary": "Retrieves information about Nuix RESTful services",
+      "tags": [
+        "System"
+      ],
+      "path": "/about",
+      "method": "GET"
+    },
+    {
+      "operationId": "getCharSets",
+      "summary": "Returns the list of charsets on the system.",
+      "tags": [
+        "System"
+      ],
+      "path": "/charsets",
+      "method": "GET"
+    },
+    {
+      "operationId": "validateQueryPost",
+      "summary": "Validates a list of queries",
+      "tags": [
+        "Search"
+      ],
+      "path": "/validation/query",
+      "method": "POST"
+    }
+  ]
+}

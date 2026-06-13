@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-launchcasecollectionbytargetrequest.json",
+  "title": "launchCaseCollectionByTargetRequest",
+  "description": "Schema for launchCaseCollectionByTargetRequest in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "caseId": {
+      "type": "integer",
+      "description": "id of the case within which to start a collection"
+    },
+    "name": {
+      "type": "string",
+      "description": "name of the new collection"
+    },
+    "targetId": {
+      "type": "integer",
+      "description": "id of the Target to use for sources"
+    },
+    "configurationId": {
+      "type": "integer",
+      "description": "id of the collection configuration to use for collection criteria"
+    },
+    "location": {
+      "type": "string",
+      "description": "destination of the collection (if blank uses the destination from the specified collection configuration)"
+    }
+  }
+}

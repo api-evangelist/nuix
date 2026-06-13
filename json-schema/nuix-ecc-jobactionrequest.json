@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-jobactionrequest.json",
+  "title": "jobActionRequest",
+  "description": "Schema for jobActionRequest in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "action": {
+      "type": "string",
+      "description": "action to be applied to the specified job.",
+      "enum": [
+        "Cancel",
+        "Pause",
+        "Continue",
+        "Resume",
+        "Restart"
+      ]
+    }
+  }
+}

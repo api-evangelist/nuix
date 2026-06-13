@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-clusterrunrequest.json",
+  "title": "ClusterRunRequest",
+  "description": "Schema for ClusterRunRequest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name to give the cluster run."
+    },
+    "query": {
+      "type": "string",
+      "description": "A query that selects the items to perform cluster analysis on."
+    },
+    "resemblanceThreshold": {
+      "type": "number",
+      "format": "float",
+      "description": "The resemblance threshold used for computing chained near-duplicates."
+    },
+    "useChainedNearDuplicates": {
+      "type": "boolean",
+      "description": "Whether or not the clustering algorithm should use chained near-deduplication."
+    },
+    "useEmailThreads": {
+      "type": "boolean",
+      "description": "Whether or not the clustering algorithm should use email threads."
+    },
+    "saveIfEmpty": {
+      "type": "boolean",
+      "description": "Only create the cluster run if near-duplicates are found."
+    }
+  },
+  "required": [
+    "name",
+    "query"
+  ]
+}

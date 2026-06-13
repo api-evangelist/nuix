@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-clusteredresterrorresponse.json",
+  "title": "ClusteredRestErrorResponse",
+  "description": "Schema for ClusteredRestErrorResponse in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "serverId": {
+      "type": "string",
+      "description": "The server ID of the server reporting the error."
+    },
+    "developerMessage": {
+      "type": "string",
+      "description": "The technical description of the error."
+    },
+    "userMessage": {
+      "type": "string",
+      "description": "The friendly error message."
+    },
+    "additionalInfo": {
+      "type": "object",
+      "description": "Additional information about the error.",
+      "additionalProperties": {
+        "type": "object",
+        "description": "This is a map of additional properties."
+      }
+    },
+    "errorCode": {
+      "type": "string",
+      "description": "The specific error code for the error from the list of available error codes.",
+      "enum": [
+        "AUTHENTICATION_FAILED",
+        "CASE_ACCESS_RESTRICTED",
+        "CASE_LOCKED",
+        "DELETE_DENIED",
+        "DUPLICATE_CASES_DETECTED",
+        "ENGINE_EXCEPTION",
+        "FILE_TOO_LARGE",
+        "INVALID_REQUEST_FORMAT",
+        "INVALID_APPLICATION_RESPONSE",
+        "INVALID_ARGUMENT",
+        "ITEM_ACCESS_RESTRICTED",
+        "LICENSE_EXCEPTION",
+        "MEDIA_TYPE_NOT_SUPPORTED",
+        "MEDIA_TYPE_NOT_ACCEPTABLE",
+        "METHOD_NOT_ALLOWED",
+        "NOT_IMPLEMENTED",
+        "PRODUCTION_SET_FROZEN",
+        "REQUIRED_ARGUMENT_MISSING",
+        "RESOURCE_NOT_FOUND",
+        "UNAUTHORISED",
+        "UNKNOWN",
+        "USER_SCRIPT_NOT_PROVIDED",
+        "FOLDER_ALREADY_EXISTS",
+        "CASE_LOCKED_BY_FUNCTION",
+        "MISSING_THUMBNAIL",
+        "ITEM_SET_ALREADY_EXISTS",
+        "INVALID_LICENSE_TYPE_FOR_CASE",
+        "SIMPLE_CASE_REQUIRED",
+        "USER_ACCOUNT_LOCKED",
+        "APPLICATION_NOT_REGISTERED",
+        "INVALID_TEMPLATE",
+        "DUPLICATE_RECORD",
+        "CASE_MIGRATION_REQUIRED",
+        "SERVICE_UNAVAILABLE",
+        "RESPONSE_TOO_LARGE",
+        "QUERY_PARSE_ERROR",
+        "REMOTE_SYSTEM_ERROR",
+        "FILE_SYSTEM_ERROR"
+      ]
+    }
+  }
+}

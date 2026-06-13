@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-tagexpansion.json",
+  "title": "TagExpansion",
+  "description": "Schema for TagExpansion in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "directMatchPrefix": {
+      "type": "string",
+      "description": "A prefix to apply to direct matches, i.e. items that match the given query, or null not to apply a prefix. Defaults to null."
+    },
+    "directMatchSuffix": {
+      "type": "string",
+      "description": "A suffix to apply to direct matches, i.e. items that match the given query, or null not to apply a suffix. Defaults to null."
+    },
+    "topLevelMatchPrefix": {
+      "type": "string",
+      "description": "A prefix to apply to top-level item matches, or null not to apply a prefix. Only has an effect if includeFamilies == true. Defaults to null."
+    },
+    "topLevelMatchSuffix": {
+      "type": "string",
+      "description": "A suffix to apply to top-level item matches, or null not to apply a suffix. Only has an effect if includeFamilies == true. Defaults to null."
+    },
+    "familyMatchPrefix": {
+      "type": "string",
+      "description": "A prefix to apply to family item matches, or null not to apply a prefix. Only has an effect if includeFamilies == true. Defaults to null."
+    },
+    "familyMatchSuffix": {
+      "type": "string",
+      "description": "A suffix to apply to family item matches, or null not to apply a suffix. Only has an effect if includeFamilies == true. Defaults to null."
+    },
+    "deduplicatedTopLevelMatchPrefix": {
+      "type": "string",
+      "description": "A prefix to apply to deduplicated top-level item matches, or null not to apply a prefix. Only has an effect if deduplicateFamilies == true. Defaults to null."
+    },
+    "deduplicatedTopLevelMatchSuffix": {
+      "type": "string",
+      "description": "A suffix to apply to deduplicated top-level item matches, or null not to apply a suffix. Only has an effect if deduplicateFamilies == true. Defaults to null."
+    },
+    "deduplicatedFamilyMatchPrefix": {
+      "type": "string",
+      "description": "A prefix to apply to deduplicated family item matches, or null not to apply a prefix. Only has an effect if deduplicateFamilies == true. Defaults to null."
+    },
+    "deduplicatedFamilyMatchSuffix": {
+      "type": "string",
+      "description": "A suffix to apply to deduplicated family item matches, or null not to apply a suffix. Only has an effect if deduplicateFamilies == true. Defaults to null."
+    },
+    "uniqueMatchPrefix": {
+      "type": "string",
+      "description": "A prefix to apply to unique item matches, or null not to apply a prefix. Only has an effect if tagUniqueItems == true. Defaults to null."
+    },
+    "uniqueMatchSuffix": {
+      "type": "string",
+      "description": "A suffix to apply to unique item matches, or null not to apply a prefix. Only has an effect if tagUniqueItems == true. Defaults to null."
+    }
+  }
+}

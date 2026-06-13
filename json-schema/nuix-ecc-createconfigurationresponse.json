@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-createconfigurationresponse.json",
+  "title": "createConfigurationResponse",
+  "description": "Schema for createConfigurationResponse in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "id of the new Collection Configuration"
+    },
+    "name": {
+      "type": "string",
+      "description": "name of the new Collection Configuration"
+    },
+    "description": {
+      "type": "string",
+      "description": "description of the new Collection Configuration"
+    },
+    "template": {
+      "type": "string",
+      "description": "template of the new Collection Configuration"
+    },
+    "category": {
+      "type": "string",
+      "description": "Optional category of the new Collection Configuration"
+    },
+    "targets": {
+      "type": "array",
+      "description": "Array of targets specified in this Collection Configuration",
+      "items": {
+        "$ref": "#/components/schemas/Target"
+      }
+    },
+    "hasInputs": {
+      "type": "boolean",
+      "description": "whether any input paths are specified within any of the Targets or Computers in this Collection Configuration"
+    },
+    "tasks": {
+      "type": "array",
+      "description": "Array of tasks specified in this Collection Configuration",
+      "items": {
+        "$ref": "#/components/schemas/TaskCreated"
+      }
+    }
+  }
+}

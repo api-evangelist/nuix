@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-bulkapplyitemcustommetadatarequest.json",
+  "title": "BulkApplyItemCustomMetadataRequest",
+  "description": "Schema for BulkApplyItemCustomMetadataRequest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "addBulkCustomMetadata": {
+      "type": "array",
+      "description": "The array of bulk custom metadata to add to the item.",
+      "items": {
+        "$ref": "#/components/schemas/BulkItemCustomMetadataRequest"
+      }
+    },
+    "deleteBulkCustomMetadata": {
+      "type": "array",
+      "description": "The array of the bulk custom metadata to remove from the item.",
+      "items": {
+        "$ref": "#/components/schemas/BulkItemCustomMetadataDeleteRequest"
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-nodehealth.json",
+  "title": "NodeHealth",
+  "description": "Schema for NodeHealth in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "hostAddress": {
+      "type": "string",
+      "description": "The host address."
+    },
+    "hostName": {
+      "type": "string",
+      "description": "The host name."
+    },
+    "port": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The port."
+    },
+    "applicationHealth": {
+      "$ref": "#/components/schemas/ApplicationHealth"
+    }
+  }
+}

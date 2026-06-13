@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-ingestibleloadfile.json",
+  "title": "IngestibleLoadFile",
+  "description": "Schema for IngestibleLoadFile in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "csvFile": {
+      "type": "string",
+      "description": "Location of a UTF-8 encoded CSV file containing an ITEMPATH column with values containing relative paths to the native items. Currently all other columns become metadata for that item. Not used if missing, but one load file type is required."
+    },
+    "idxFile": {
+      "type": "string",
+      "description": "Location of a UTF-8 encoded IDX file. Not used if missing, but one load file type is required."
+    }
+  }
+}

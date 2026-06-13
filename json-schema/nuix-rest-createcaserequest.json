@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-createcaserequest.json",
+  "title": "CreateCaseRequest",
+  "description": "Schema for CreateCaseRequest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "compound": {
+      "type": "boolean",
+      "description": "Determines whether the case is simple or compound.  Default is false",
+      "default": false
+    },
+    "location": {
+      "type": "string",
+      "description": "Where the case should be created.  e.g. inventory0, inventory1",
+      "default": "inventory0"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the case.  e.g. mycase"
+    },
+    "description": {
+      "type": "string",
+      "description": "The case description"
+    },
+    "investigator": {
+      "type": "string",
+      "description": "The case investigator"
+    },
+    "elasticSearchSettings": {
+      "$ref": "#/components/schemas/ElasticSearchSettings"
+    },
+    "binaryStoreLocation": {
+      "type": "string",
+      "description": "Path to file system binary store for this case. It can be shared by cases and should be accessible from all workers. Defaults to null, which means binary store will be within the on-disk portion of the case."
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-modifygrouprequest.json",
+  "title": "modifyGroupRequest",
+  "description": "Schema for modifyGroupRequest in Nuix ECC REST API",
+  "type": "object",
+  "properties": {
+    "groupId": {
+      "type": "integer",
+      "description": "id of the group to be modified"
+    },
+    "groupName": {
+      "type": "string",
+      "description": "optional, new name of the group"
+    },
+    "description": {
+      "type": "string",
+      "description": "optional, new description of the group"
+    },
+    "addCustodians": {
+      "type": "array",
+      "description": "optional, array of Custodian Ids to be added to the group",
+      "items": {
+        "type": "object",
+        "properties": {
+          "custodianId": {
+            "type": "integer",
+            "description": "id of the custodian to be added"
+          }
+        }
+      }
+    },
+    "removeCustodians": {
+      "type": "array",
+      "description": "optional, array of Custodian Ids to be removed from the group",
+      "items": {
+        "type": "object",
+        "properties": {
+          "custodianId": {
+            "type": "integer",
+            "description": "id of the custodian to be removed"
+          }
+        }
+      }
+    }
+  }
+}

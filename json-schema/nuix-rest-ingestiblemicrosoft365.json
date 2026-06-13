@@ -1,0 +1,145 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-ingestiblemicrosoft365.json",
+  "title": "IngestibleMicrosoft365",
+  "description": "Schema for IngestibleMicrosoft365 in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "tenantId": {
+      "type": "string",
+      "description": "The tenant ID for the Azure Active Directory tenant."
+    },
+    "clientId": {
+      "type": "string",
+      "description": "The client/application ID for an app that has been registered with your Azure Active Directory tenant and granted the necessary privileges."
+    },
+    "clientSecret": {
+      "type": "string",
+      "description": "The client secret that has been configured for the clientId provided, for authentication."
+    },
+    "username": {
+      "type": "string",
+      "description": "The optional username for a user that is a member of the Teams to be processed, only needed for ingesting Team Calendars."
+    },
+    "password": {
+      "type": "string",
+      "description": "The password for the username if it is present."
+    },
+    "certificateStorePath": {
+      "type": "string",
+      "description": "The path to a PKCS#12 certificate store, usable instead of clientSecret for authentication."
+    },
+    "certificateStorePassword": {
+      "type": "string",
+      "description": "The password to the PKCS#12 certificate store."
+    },
+    "from": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Sets the start date on the location. The start date and end date are both required, and if retrievals(Collection) includes USERS_CALENDARS or TEAMS_CALENDARS, then the date range cannot exceed five years.  Accepted date formats are RFC-3339 or a simple date format (yyyy-MM-dd) which will use the default timezone of the server."
+    },
+    "to": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Sets the end date on the location. The start date and end date are both required, and if retrievals(Collection) includes USERS_CALENDARS or TEAMS_CALENDARS, then the date range cannot exceed five years.  Accepted date formats are RFC-3339 or a simple date format (yyyy-MM-dd) which will use the default timezone of the server."
+    },
+    "retrievals": {
+      "type": "array",
+      "description": "Sets the content to be retrieved from Microsoft Graph. Available options are TEAMS_CHANNELS, TEAMS_CALENDARS, USERS_CHATS, USERS_CONTACTS, USERS_CALENDARS, USERS_EMAILS, ORG_CONTACTS, SHAREPOINT",
+      "items": {
+        "type": "string",
+        "enum": [
+          "TEAMS_CHANNELS",
+          "TEAMS_CALENDARS",
+          "USERS_CHATS",
+          "USERS_CONTACTS",
+          "USERS_CALENDARS",
+          "USERS_EMAILS",
+          "ORG_CONTACTS",
+          "SHAREPOINT"
+        ]
+      }
+    },
+    "mailFolderRetrievals": {
+      "type": "array",
+      "description": "Sets the mail folder retrieval areas for Exchange Online.",
+      "items": {
+        "type": "string",
+        "enum": [
+          "ALL",
+          "MAILBOX_ALL",
+          "RECOVERABLE_ITEMS_ALL",
+          "ARCHIVE",
+          "CLUTTER",
+          "CONVERSATION_HISTORY",
+          "DELETED_ITEMS",
+          "DRAFTS",
+          "INBOX",
+          "JUNK",
+          "OUTBOX",
+          "SENT_ITEMS",
+          "SYNC_ISSUES",
+          "OTHER",
+          "RECOVERABLE_ITEMS_DELETIONS",
+          "RECOVERABLE_ITEMS_PURGES",
+          "RECOVERABLE_ITEMS_DISCOVERY_HOLDS",
+          "RECOVERABLE_ITEMS_SUBSTRATE_HOLDS",
+          "RECOVERABLE_ITEMS_OTHER"
+        ]
+      }
+    },
+    "mailboxRetrievals": {
+      "type": "array",
+      "deprecated": true,
+      "description": "list of possible areas to retrieve from. Defaults to [ \"MAILBOX\" ]. Possible values MAILBOX, ARCHIVE, PURGES, DELETIONS, RECOVERABLE_ITEMS, ARCHIVE_PURGES, ARCHIVE_DELETIONS, ARCHIVE_RECOVERABLE_ITEMS, PUBLIC_FOLDERS.",
+      "default": [
+        "MAILBOX"
+      ],
+      "items": {
+        "type": "string",
+        "enum": [
+          "MAILBOX",
+          "ARCHIVE",
+          "PURGES",
+          "DELETIONS",
+          "RECOVERABLE_ITEMS",
+          "ARCHIVE_PURGES",
+          "ARCHIVE_DELETIONS",
+          "ARCHIVE_RECOVERABLE_ITEMS",
+          "PUBLIC_FOLDERS"
+        ]
+      }
+    },
+    "teamNames": {
+      "type": "array",
+      "description": "Sets the team names on the location.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "userPrincipalNames": {
+      "type": "array",
+      "description": "Sets the user principal names on the location.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "versionFilters": {
+      "$ref": "#/components/schemas/Microsoft365VersionFilterOptions"
+    },
+    "licenseModel": {
+      "description": "The payment models and licensing requirements for Microsoft Teams APIs in Microsoft Graph.  If not provided, evaluation mode will be used.  Model 'A' is restricted to applications performing a security or compliance function.  Model 'B' is restricted to applications that don't perform a security or compliance function.  Please see https://learn.microsoft.com/en-us/graph/teams-licenses for more information regarding Microsoft Teams APIs.",
+      "type": "string",
+      "enum": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  "required": [
+    "tenantId",
+    "clientId",
+    "from",
+    "to"
+  ]
+}

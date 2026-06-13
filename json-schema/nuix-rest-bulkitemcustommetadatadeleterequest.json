@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-bulkitemcustommetadatadeleterequest.json",
+  "title": "BulkItemCustomMetadataDeleteRequest",
+  "description": "Schema for BulkItemCustomMetadataDeleteRequest in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "fieldName": {
+      "type": "string",
+      "description": "The name of the custom metadata field"
+    },
+    "query": {
+      "type": "string",
+      "description": "Query items that should be included. If a query is not supplied it defaults to an empty string, which returns all items."
+    },
+    "deduplication": {
+      "type": "string",
+      "description": "Deduplicate content. Defaults to none.",
+      "default": "none",
+      "enum": [
+        "none",
+        "md5",
+        "per custodian"
+      ]
+    },
+    "relationType": {
+      "type": "string",
+      "description": "Result of the deduplicated query can be applied to related items of the items.  Options are 'topTypes', 'family', and 'descendants'",
+      "enum": [
+        "family",
+        "topTypes",
+        "descendants"
+      ]
+    }
+  }
+}

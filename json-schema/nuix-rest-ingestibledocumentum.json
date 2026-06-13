@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-ingestibledocumentum.json",
+  "title": "IngestibleDocumentum",
+  "description": "Schema for IngestibleDocumentum in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "domain": {
+      "type": "string",
+      "description": "This optional parameter defines the Windows networking domain of the server account."
+    },
+    "username": {
+      "type": "string",
+      "description": "The username needed to access the server account."
+    },
+    "password": {
+      "type": "string",
+      "description": "The password needed to access the server account."
+    },
+    "port": {
+      "type": "integer",
+      "description": "The port number",
+      "default": 1489
+    },
+    "query": {
+      "type": "string",
+      "description": "This optional parameter specifies a DQL (documentum) query used to filter the content."
+    },
+    "server": {
+      "type": "string",
+      "description": "This parameter specifies the Documentum server address."
+    },
+    "docBase": {
+      "type": "string",
+      "description": "This parameter specifies the Documentum docbase repository."
+    },
+    "propertyFile": {
+      "type": "string",
+      "description": "This optional parameter specifies the Documentum property file."
+    }
+  }
+}

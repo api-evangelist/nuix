@@ -1,0 +1,11 @@
+{
+  "value": {
+    "target": {
+      "computer": "MyServerName",
+      "username": "myUserName",
+      "password": "myPassword",
+      "port": 22,
+      "remoteFolder": "/mnt/data"
+    }
+  }
+}

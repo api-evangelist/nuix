@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-familystatisticsresponse.json",
+  "title": "FamilyStatisticsResponse",
+  "description": "Schema for FamilyStatisticsResponse in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "string",
+      "description": "The specified query"
+    },
+    "auditSize": {
+      "type": "integer",
+      "description": "The total audit size of all family items",
+      "format": "int64"
+    },
+    "itemCount": {
+      "type": "integer",
+      "description": "The total number of family items",
+      "format": "int64"
+    },
+    "auditItemCount": {
+      "type": "integer",
+      "description": "The total number of family items which are audited (excludes immaterial items)",
+      "format": "int64"
+    }
+  }
+}

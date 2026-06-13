@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-rest-batchloaddetailsresponse.json",
+  "title": "BatchLoadDetailsResponse",
+  "description": "Schema for BatchLoadDetailsResponse in Nuix REST API",
+  "type": "object",
+  "properties": {
+    "batchId": {
+      "type": "string",
+      "description": "The batch identifier."
+    },
+    "loadedOn": {
+      "type": "integer",
+      "description": "The date and time the batch was loaded represented in milliseconds since the epoch."
+    },
+    "operatingSystem": {
+      "type": "string",
+      "description": "The name of the operating system the batch was loaded under."
+    },
+    "operatingSystemArchitecture": {
+      "type": "string",
+      "description": "The operating system architecture the batch was loaded under"
+    },
+    "processArchitecture": {
+      "type": "string",
+      "description": "process architecture the batch was loaded under"
+    },
+    "dataSettings": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object"
+      },
+      "description": "The data settings for the batch load as a map."
+    },
+    "dataProcessingSettings": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object"
+      },
+      "description": "The data processing settings for the batch load as a map."
+    },
+    "parallelProcessingSettings": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object"
+      },
+      "description": "The parallel processing settings for the batch load as a map"
+    },
+    "caseEvidenceSettings": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object"
+      },
+      "description": "The case evidence settings for the batch load as a map."
+    },
+    "additionalSettings": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object"
+      },
+      "description": "The additional settings for the batch load as a map."
+    }
+  }
+}

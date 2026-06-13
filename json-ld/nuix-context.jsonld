@@ -1,0 +1,62 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "nuix": "https://developer.nuix.com/latest/reference/",
+    "nuix-ecc": "https://developer.nuix.com/latest/reference/eccapireference/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "AsyncFunctionStatus": "nuix:AsyncFunctionStatus",
+    "CaseResponse": "nuix:CaseResponse",
+    "AuthenticationRequest": "nuix:AuthenticationRequest",
+    "AuthenticationResponse": "nuix:AuthenticationResponse",
+    "SearchNativeRequest": "nuix:SearchNativeRequest",
+    "SearchNativeResult": "nuix:SearchNativeResult",
+    "CreateCaseRequest": "nuix:CreateCaseRequest",
+    "ItemPropertiesRequest": "nuix:ItemPropertiesRequest",
+    "MarkupSet": "nuix:MarkupSet",
+    "ReviewJobResponse": "nuix:ReviewJobResponse",
+    "TagList": "nuix:TagList",
+    "GenericResponse": "nuix:GenericResponse",
+    "BulkExclusionRequest": "nuix:BulkExclusionRequest",
+    "BulkInclusionRequest": "nuix:BulkInclusionRequest",
+    "MetadataItemDetails": "nuix:MetadataItemDetails",
+    "CustodianResponse": "nuix:CustodianResponse",
+    "Case": "nuix-ecc:Case",
+    "Computer": "nuix-ecc:Computer",
+    "Custodian": "nuix-ecc:Custodian",
+    "Target": "nuix-ecc:Target",
+    "Group": "nuix-ecc:Group",
+    "Task": "nuix-ecc:Task",
+    "Evidence": "nuix-ecc:Evidence",
+    "Configuration": "nuix-ecc:Configuration",
+    "LogEntry": "nuix-ecc:LogEntry",
+    "CollectionDetail": "nuix-ecc:CollectionDetail",
+    "caseId": {
+      "@id": "nuix:caseId",
+      "@type": "xsd:string"
+    },
+    "operationId": {
+      "@id": "nuix:operationId",
+      "@type": "xsd:string"
+    },
+    "asyncFunctionId": {
+      "@id": "nuix:asyncFunctionId",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "nuix:status",
+      "@type": "xsd:string"
+    },
+    "progress": {
+      "@id": "nuix:progress",
+      "@type": "xsd:integer"
+    },
+    "tags": {
+      "@id": "nuix:tags",
+      "@container": "@set"
+    },
+    "items": {
+      "@id": "nuix:items",
+      "@container": "@list"
+    }
+  }
+}

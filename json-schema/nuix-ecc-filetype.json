@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/json-schema/nuix-ecc-filetype.json",
+  "title": "FileType",
+  "description": "describes the file type filters used in the collection (this object is optional)",
+  "type": "object",
+  "properties": {
+    "analyzeSignatures": {
+      "type": "boolean",
+      "description": "when `true`, read the beginning of each file to determine file type.  When `false` use filename extension only to determine file type."
+    },
+    "mode": {
+      "type": "string",
+      "description": "One of `Include` or `Exclude` - include or exclude the file types listed in the `extensions` array",
+      "enum": [
+        "Include",
+        "Exclude"
+      ]
+    },
+    "extensions": {
+      "type": "array",
+      "description": "array of one or more file type extensions",
+      "items": {
+        "$ref": "#/components/schemas/Extension"
+      }
+    }
+  }
+}

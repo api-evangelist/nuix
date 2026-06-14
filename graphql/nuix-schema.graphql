@@ -1,0 +1,579 @@
+# Nuix Discover Connect Graph API — GraphQL Schema
+# Source: https://developer.nuix.com/latest/discover/graph-api/queries-and-mutations/examplesMD.html
+# Product: Nuix Discover (Connect API / Connect Graph API)
+# Note: The Nuix Core Engine and ECC products are REST-only.
+# Schema reconstructed from official query/mutation examples in the Nuix SDK documentation.
+
+# ─── Enums ───────────────────────────────────────────────────────────────────
+
+enum DecommissionStatusEnumType {
+  All
+  Deleted
+  Archived
+  Live
+}
+
+enum BillingStatus {
+  Active
+  Inactive
+}
+
+enum FieldType {
+  Boolean
+  DateTime
+  Memo
+  Number
+  PickList
+  Text
+}
+
+enum FieldAction {
+  Append
+  Delete
+  InsertUpdate
+  Ignore
+}
+
+enum CoreAction {
+  Update
+  Delete
+  Ignore
+}
+
+enum SAAction {
+  Delete
+  InsertUpdate
+}
+
+enum CodingAction {
+  Insert
+  Save
+  Delete
+}
+
+enum AnnotationColor {
+  RED
+  BLACK
+  REDACTION
+}
+
+enum JobStatus {
+  Pending
+  Running
+  Completed
+  Failed
+  Cancelled
+}
+
+# ─── Scalar Types ─────────────────────────────────────────────────────────────
+
+scalar DateTime
+scalar JSON
+
+# ─── Object Types ─────────────────────────────────────────────────────────────
+
+type Case {
+  id: ID!
+  name: String!
+  active: Boolean
+  caseCreatedDate: DateTime
+  decommissionStatus: DecommissionStatusEnumType
+  caseDecommissionedBy: String
+  caseDecommissionedDate: DateTime
+  lastActive: DateTime
+  billingStatus: BillingStatus
+  statistics: Statistics
+  documents(id: ID, mainIds: [ID]): [Document]
+  fields: [Field]
+  groups: [Group]
+  binders: [Binder]
+  productions: [Production]
+  searchResults(id: ID): [SearchResult]
+  documentLoads: [DocumentLoad]
+  reviewWorkflow: [ReviewWorkflow]
+  caseProcs: [CaseProc]
+  caseProcParams: [CaseProcParam]
+  dataModels: [DataModel]
+  annotationTypes: [AnnotationType]
+}
+
+type Statistics {
+  customStatistics: JSON
+  metricsAvailability: Boolean
+  maxActiveHostedSize: Float
+  dateOfMaxActiveHostedSize: DateTime
+  countOfTranslationDocRequests: Int
+  countOfTranscribedAudioMinutes: Int
+  sizeOfFolderData_GB: Float
+}
+
+type Document {
+  documentId: ID!
+  title: String
+  mainIds: [ID]
+  pages: [Page]
+  files: [ContentFile]
+  documentProductions: [DocumentProduction]
+  productionDetails: [ProductionDetail]
+  hash: String
+  familyhash: String
+  level: Int
+  parentId: ID
+  correspondence: CorrespondenceData
+  mainfields: JSON
+  fields: [DocumentField]
+}
+
+type Page {
+  id: ID!
+  fileName: String
+  pageLabel: String
+  pageFileNumber: Int
+  pageCount: Int
+  annotations: [Annotation]
+}
+
+type Annotation {
+  id: ID!
+  annotationType: AnnotationType
+  color: AnnotationColor
+  pageNumber: Int
+  x1: Float
+  x2: Float
+  y1: Float
+  y2: Float
+  referenceId: String
+}
+
+type AnnotationType {
+  id: ID!
+  name: String
+}
+
+type ContentFile {
+  id: ID!
+  fileName: String
+  fileType: String
+  fileSize: Int
+}
+
+type DocumentProduction {
+  productionId: ID
+  productionName: String
+}
+
+type ProductionDetail {
+  productionId: ID
+  documentId: ID
+  beginBates: String
+  endBates: String
+}
+
+type Field {
+  id: ID!
+  name: String
+  fieldType: FieldType
+  pickListValues: [String]
+}
+
+type DocumentField {
+  fieldId: ID
+  fieldName: String
+  value: String
+}
+
+type Group {
+  id: ID!
+  name: String
+  description: String
+  members: [User]
+}
+
+type Binder {
+  id: ID!
+  name: String
+  type: String
+  owner: User
+  creator: User
+  createdDate: DateTime
+  documents: [Document]
+}
+
+type Production {
+  id: ID!
+  name: String
+  status: String
+  createdDate: DateTime
+  createdBy: User
+  documents: [Document]
+}
+
+type SearchResult {
+  id: ID!
+  count: Int
+  dateRun: DateTime
+  entityId: ID
+  fields: [Field]
+  includeSourceAttachments: Boolean
+  threading: Boolean
+  renditions: Boolean
+  label: String
+  searchRml: String
+  user: User
+}
+
+type ReviewWorkflow {
+  name: String
+  documentCount: Int
+}
+
+type DocumentLoad {
+  name: String
+  type: String
+  status: String
+  documentCount: Int
+  jobStart: DateTime
+  duration: Int
+  user: User
+  sourceFileCount: Int
+  suppressedDupCount: Int
+}
+
+type CaseProc {
+  id: ID!
+  name: String
+  status: String
+}
+
+type CaseProcParam {
+  id: ID!
+  name: String
+  value: String
+}
+
+type DataModel {
+  id: ID!
+  name: String
+  entities: [Entity]
+}
+
+type Entity {
+  id: ID!
+  name: String
+  fields: [Field]
+}
+
+type User {
+  id: ID!
+  firstName: String
+  lastName: String
+  username: String
+  email: String
+  companyId: ID
+  identityProviderId: ID
+  portalCategory: String
+  disabled: Boolean
+  requirePasswordChange: Boolean
+  licenses: [String]
+}
+
+type Organization {
+  id: ID!
+  accountNumber: String
+  providerOrganizationId: ID
+  providerOrganizationName: String
+}
+
+type Extension {
+  id: ID!
+  name: String
+  description: String
+  location: String
+  url: String
+  configuration: JSON
+  createdDate: DateTime
+  createdByUser: User
+  organizations: [Organization]
+  cases: [Case]
+  audit: [AuditEntry]
+}
+
+type AuditEntry {
+  id: ID!
+  action: String
+  timestamp: DateTime
+  user: User
+  details: JSON
+}
+
+type RpfJob {
+  id: ID!
+  case: Case
+  name: String
+  status: JobStatus
+  dateStarted: DateTime
+  dateFinished: DateTime
+  duration: Int
+  categoryName: String
+}
+
+type CorrespondenceData {
+  from: String
+  to: [String]
+  cc: [String]
+  bcc: [String]
+  subject: String
+  dateSent: DateTime
+}
+
+# ─── Import API Types ──────────────────────────────────────────────────────────
+
+type ImportJob {
+  rdxJobId: ID!
+  rpfJobId: ID
+  description: String
+  name: String
+  status: JobStatus
+}
+
+type CodingResult {
+  totalCount: Int
+  successCount: Int
+  errorCount: Int
+  successItems: [ID]
+  erroredItems: [CodingError]
+}
+
+type CodingError {
+  id: ID
+  message: String
+}
+
+type AnnotationResult {
+  totalCount: Int
+  successCount: Int
+  successItems: [ID]
+  errorCount: Int
+  erroredItems: [AnnotationError]
+}
+
+type AnnotationError {
+  id: ID
+  message: String
+}
+
+type MutationResult {
+  success: Boolean
+  message: String
+}
+
+# ─── Input Types ──────────────────────────────────────────────────────────────
+
+input ImportJobCreateInput {
+  description: String
+  name: String!
+  documentIdType: String
+  level: Int
+  docsPerLevel: Int
+  updateGroupCoding: Boolean
+}
+
+input ImportDocumentInput {
+  documentId: ID!
+  hash: String
+  familyhash: String
+  level: Int
+  parentId: ID
+  sourceattachmentaction: SAAction
+  pageaction: String
+  mainfields: JSON
+  fields: [DocumentFieldInput]
+  correspondence: CorrespondenceInput
+  pages: [PageInput]
+  contentfiles: [ContentFileInput]
+}
+
+input DocumentFieldInput {
+  fieldId: ID
+  fieldName: String
+  value: String
+  action: FieldAction
+}
+
+input CorrespondenceInput {
+  from: String
+  to: [String]
+  cc: [String]
+  bcc: [String]
+  subject: String
+  dateSent: DateTime
+}
+
+input PageInput {
+  fileName: String!
+  pageLabel: String
+  pageFileNumber: Int
+}
+
+input ContentFileInput {
+  fileName: String!
+  fileType: String
+}
+
+input ImportJobAddDocumentsInput {
+  rdxJobId: ID!
+  documents: [ImportDocumentInput!]!
+}
+
+input ImportJobSubmitInput {
+  rdxJobId: ID!
+}
+
+input UserUpdateInput {
+  userId: ID!
+  firstName: String
+  lastName: String
+  email: String
+  companyId: ID
+  identityProviderId: ID
+  portalCategory: String
+  disabled: Boolean
+  requirePasswordChange: Boolean
+  licenses: [String]
+  password: String
+}
+
+input UserAddInput {
+  firstName: String!
+  lastName: String!
+  username: String!
+  password: String!
+  portalCategory: String
+  email: String
+  licenses: [String]
+  organizationID: ID
+  companyID: ID
+  addToActiveDirectory: Boolean
+}
+
+input UserDeleteInput {
+  userId: [ID!]!
+}
+
+input FieldCodeInput {
+  caseId: ID!
+  action: CodingAction!
+  mainIds: [ID!]!
+  fieldId: ID!
+  value: String
+}
+
+input AnnotationAddInput {
+  mainId: ID!
+  pageId: ID!
+  pageNumber: Int!
+  annotationTypeId: ID!
+  x1: Float!
+  x2: Float!
+  y1: Float!
+  y2: Float!
+  color: AnnotationColor
+  referenceId: String
+}
+
+input AnnotationDeleteInput {
+  annotationId: ID!
+  mainId: ID!
+  pageId: ID!
+}
+
+input FieldCodeSpecificInput {
+  caseId: ID!
+  mainIds: [ID!]!
+  fieldId: ID!
+  newValue: String
+  previousValue: String
+}
+
+input OrganizationUpdateInput {
+  id: ID!
+  accountNumber: String
+  providerOrganizationId: ID
+  providerOrganizationName: String
+}
+
+input UserGroupAssignInput {
+  userId: ID!
+  groupId: ID!
+}
+
+# ─── Root Types ───────────────────────────────────────────────────────────────
+
+type Query {
+  cases(
+    id: ID
+    name: String
+    decommissionStatus: DecommissionStatusEnumType
+    billingStatus: BillingStatus
+  ): [Case]
+
+  organizations: [Organization]
+
+  extensions(id: ID): [Extension]
+
+  rpf(id: ID, categoryName: String): RpfJob
+}
+
+type Mutation {
+  importJobCreate(caseId: ID!, input: ImportJobCreateInput!): ImportJob
+
+  importJobAddDocuments(
+    caseId: ID!
+    input: ImportJobAddDocumentsInput!
+  ): ImportJob
+
+  importJobSubmit(caseId: ID!, input: ImportJobSubmitInput!): ImportJob
+
+  userUpdate(input: [UserUpdateInput!]!): MutationResult
+
+  userAdd(input: UserAddInput!): User
+
+  userDelete(input: UserDeleteInput!): MutationResult
+
+  userGroupAssign(input: UserGroupAssignInput!): MutationResult
+
+  userGroupUnassign(input: UserGroupAssignInput!): MutationResult
+
+  fieldCode(input: FieldCodeInput!): CodingResult
+
+  fieldCodeUpdateSpecific(input: FieldCodeSpecificInput!): CodingResult
+
+  fieldCodeDeleteSpecific(input: FieldCodeSpecificInput!): CodingResult
+
+  annotationAdd(
+    caseId: ID!
+    input: [AnnotationAddInput!]!
+  ): AnnotationResult
+
+  annotationDelete(
+    caseId: ID!
+    input: [AnnotationDeleteInput!]!
+  ): AnnotationResult
+
+  caseClone(caseId: ID!, targetOrganizationId: ID): Case
+
+  caseProc(caseId: ID!, procId: ID!, params: JSON): CaseProcResult
+
+  organizationUpdate(input: OrganizationUpdateInput!): Organization
+}
+
+type CaseProcResult {
+  success: Boolean
+  message: String
+  data: JSON
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}

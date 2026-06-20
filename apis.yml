@@ -4,7 +4,7 @@ description: Nuix is an investigative analytics and intelligence platform provid
   REST APIs for processing unstructured data, managing forensic cases, running entity
   extraction, conducting digital investigations, and supporting eDiscovery and compliance
   workflows across legal, security, and law enforcement domains.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -25,7 +25,7 @@ apis:
     forensic cases, ingesting evidence, running search queries, performing OCR and
     entity extraction, and orchestrating asynchronous processing jobs within Nuix
     Core Engine.
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://developer.nuix.com/latest/
   baseURL: https://localhost:4444
   tags:
@@ -47,7 +47,7 @@ apis:
   description: GraphQL-based API for querying and managing discovery data within Nuix
     Discover, supporting queries and mutations for document review, production sets,
     and legal analytics workflows.
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
   baseURL: https://discover.nuix.com/api
   tags:
@@ -70,7 +70,7 @@ apis:
   description: REST API for managing endpoint evidence collection operations within
     Nuix Enterprise Collection Center, enabling remote collection, configuration,
     and task orchestration across enterprise endpoints.
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
   baseURL: https://ecc.nuix.com/api
   tags:

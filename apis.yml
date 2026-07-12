@@ -87,6 +87,12 @@ apis:
   - FN: Nuix Support
     url: https://nuix.service-now.com/support
 common:
+- type: VulnerabilityDisclosure
+  url: security/nuix-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/nuix-domain-security.yml
+- type: Authentication
+  url: authentication/nuix-authentication.yml
 - type: Portal
   url: https://developer.nuix.com/
 - type: Documentation

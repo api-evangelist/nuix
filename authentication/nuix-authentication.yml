@@ -1,0 +1,27 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/nuix-nuix-core-engine-rest-api-openapi.yml, openapi/nuix-nuix-ecc-rest-api-openapi.yml
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: nuix-auth-token
+  sources:
+  - openapi/nuix-nuix-core-engine-rest-api-openapi.yml
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  sources:
+  - openapi/nuix-nuix-core-engine-rest-api-openapi.yml
+- name: BasicAuth
+  type: http
+  scheme: basic
+  sources:
+  - openapi/nuix-nuix-ecc-rest-api-openapi.yml

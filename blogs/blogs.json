@@ -2,13 +2,14 @@
   "repo": "nuix",
   "feeds": [
     {
-      "source": "https://www.nuix.com/blog",
-      "feed_url": "",
+      "source": "https://github.com/nuix",
+      "feed_url": "https://github.com/nuix",
+      "title": "",
       "saved": 0,
-      "method": "agent-scrape"
+      "method": "none"
     }
   ],
   "post_count": 25,
-  "fetched": "2026-06-27T12:57:30Z",
-  "agent_pulled": "2026-06-27"
+  "fetched": "2026-07-11T11:50:51Z",
+  "agent_pulled": "2026-07-04"
 }

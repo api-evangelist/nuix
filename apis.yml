@@ -87,6 +87,8 @@ apis:
   - FN: Nuix Support
     url: https://nuix.service-now.com/support
 common:
+- type: AgenticAccess
+  url: agentic-access/nuix-agentic-access.yml
 - type: VulnerabilityDisclosure
   url: security/nuix-vulnerability-disclosure.yml
 - type: DomainSecurity

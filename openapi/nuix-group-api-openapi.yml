@@ -1,0 +1,328 @@
+openapi: 3.0.1
+info:
+  title: NUIX ECC REST API Command Reference Case Group API
+  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.
+
+
+    **Note\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.
+
+
+    **Note\:** This command reference has been updated for Nuix ECC version 9.12.0.'
+  contact:
+    name: Nuix
+    url: https://nuix.github.io/sdk-docs/latest/
+    email: APISupport@nuix.com
+  license:
+    name: Licence
+    url: https://www.nuix.com/sites/default/files/20200210_EULA_v1.pdf
+  version: ${customer.version}
+servers:
+- url: '{protocol}://{address}:{port}/api/ecc'
+  variables:
+    protocol:
+      default: https
+      description: protocol for communication
+      enum:
+      - http
+      - https
+    address:
+      default: 127.0.0.1
+      description: The location which the ECC resides
+    port:
+      default: '80'
+      description: 80, 443 or alternative
+security:
+- BasicAuth: []
+tags:
+- name: Group
+paths:
+  /v2/groups:
+    get:
+      tags:
+      - Group
+      summary: Lists all Groups
+      description: Lists all custodian groups defined on the connected server.
+      operationId: listGroupsAll
+      responses:
+        '200':
+          description: Successful Listing of groups
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listGroupsResponse'
+              example:
+                cases:
+                - id: 8
+                  name: Accounting
+                  description: Accounting department
+                  deleted: false
+                - id: 10
+                  name: Marketing
+                  description: Marketing department
+                  deleted: false
+                - id: 12
+                  name: IT
+                  description: IT department
+                  deleted: false
+  /v2/group:
+    post:
+      tags:
+      - Group
+      summary: Create a new group
+      description: Create a new group.
+      operationId: createGroup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createGroupRequest'
+            example:
+              groupName: Administration
+              description: Administration Department
+      responses:
+        '200':
+          description: Group was created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 200
+                id: 100
+                message: 'GROUP added: Name={group-name}, ID={group-id}, REST=POST api/ecc/v2/group'
+        '400':
+          description: General error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                create_group_err_name:
+                  summary: Group name missing
+                  value:
+                    code: 400
+                    id: 101
+                    message: groupName field is missing.  A new group name must be provided
+                create_group_err_json:
+                  summary: JSON request body missing
+                  value:
+                    code: 400
+                    id: 101
+                    message: No json body was provided.
+    put:
+      tags:
+      - Group
+      summary: Modify a group
+      description: Modifies or renames a new group.
+      operationId: modifyGroup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/modifyGroupRequest'
+            examples:
+              rename_a_group:
+                summary: Rename a group
+                value:
+                  groupId: 16
+                  groupName: 'Executive (revised group name for group #16)'
+                  description: The new description for the Executive group
+              add_custodians_to_group:
+                summary: Add custodians to a group
+                value:
+                  groupId: 16
+                  addCustodians:
+                  - custodianId: 79
+                  - custodianId: 80
+              remove_custodians_from_group:
+                summary: Remove custodians from a group
+                value:
+                  groupId: 16
+                  removeCustodians:
+                  - custodianId: 42
+                  - custodianId: 49
+      responses:
+        '200':
+          description: Group was modified successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 200
+                id: 100
+                message: OK
+        '400':
+          description: Failed to modify group
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                failed_group_modify_json:
+                  summary: No json body
+                  value:
+                    code: 400
+                    id: 101
+                    message: No json body was provided.
+                failed_group_modify_empty:
+                  summary: Cannot rename group to an empty string
+                  value:
+                    code: 400
+                    id: 101
+                    message: Group ID {groupId} cannot be renamed with an empty string
+                failed_group_modify_add_remove:
+                  summary: Cannot add and remove the same custodian
+                  value:
+                    code: 400
+                    id: 101
+                    message: Custodian ID {id} was specified for both addition and removal
+                failed_group_modify_already_added:
+                  summary: Custodian already present
+                  value:
+                    code: 400
+                    id: 101
+                    message: Custodian ID {id} is already in the group but specified for addition
+                failed_group_modify_unexpected:
+                  summary: Custodian could not be added to group
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'Unexpected DB error: Custodian ID {} was not added to the group, {}'
+                failed_group_modify_id:
+                  summary: Group not found
+                  value:
+                    code: 400
+                    id: 101
+                    message: Group ID {} was not found.
+    delete:
+      tags:
+      - Group
+      summary: Delete a group
+      description: 'Delete a group specified by groupId in the request body.
+
+
+        **Note\:** once a group is deleted any custodians which (1) previously belonged to the deleted
+
+        group, and (2) which do not belong to another group will be added to the "unassigned" group.'
+      operationId: deleteGroup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                groupId:
+                  type: integer
+                  description: id of the group to be deleted
+            example:
+              groupId: 15
+      responses:
+        '200':
+          description: Group was deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 200
+                id: 100
+                message: OK
+        '400':
+          description: Failed to delete group
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                failed_group_delete_json:
+                  summary: No json body
+                  value:
+                    code: 400
+                    id: 101
+                    message: No json body was provided.
+                failed_group_delete_id:
+                  summary: Group not found
+                  value:
+                    code: 400
+                    id: 101
+                    message: Group ID {} was not found.
+components:
+  schemas:
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
+    createGroupRequest:
+      type: object
+      properties:
+        groupName:
+          type: string
+          description: name of the group to be created
+        description:
+          type: string
+          description: description of the group to be created
+    modifyGroupRequest:
+      type: object
+      properties:
+        groupId:
+          type: integer
+          description: id of the group to be modified
+        groupName:
+          type: string
+          description: optional, new name of the group
+        description:
+          type: string
+          description: optional, new description of the group
+        addCustodians:
+          type: array
+          description: optional, array of Custodian Ids to be added to the group
+          items:
+            type: object
+            properties:
+              custodianId:
+                type: integer
+                description: id of the custodian to be added
+        removeCustodians:
+          type: array
+          description: optional, array of Custodian Ids to be removed from the group
+          items:
+            type: object
+            properties:
+              custodianId:
+                type: integer
+                description: id of the custodian to be removed
+    listGroupsResponse:
+      type: object
+      properties:
+        cases:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
+    Group:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the group
+        name:
+          type: string
+          description: name of the group
+        description:
+          type: string
+          description: description of the group
+        deleted:
+          type: boolean
+          description: true if the group has been deleted
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

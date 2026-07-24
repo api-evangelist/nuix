@@ -1,0 +1,306 @@
+openapi: 3.0.1
+info:
+  title: NUIX ECC REST API Command Reference Case API
+  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.
+
+
+    **Note\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.
+
+
+    **Note\:** This command reference has been updated for Nuix ECC version 9.12.0.'
+  contact:
+    name: Nuix
+    url: https://nuix.github.io/sdk-docs/latest/
+    email: APISupport@nuix.com
+  license:
+    name: Licence
+    url: https://www.nuix.com/sites/default/files/20200210_EULA_v1.pdf
+  version: ${customer.version}
+servers:
+- url: '{protocol}://{address}:{port}/api/ecc'
+  variables:
+    protocol:
+      default: https
+      description: protocol for communication
+      enum:
+      - http
+      - https
+    address:
+      default: 127.0.0.1
+      description: The location which the ECC resides
+    port:
+      default: '80'
+      description: 80, 443 or alternative
+security:
+- BasicAuth: []
+tags:
+- name: Case
+paths:
+  /v2/cases:
+    get:
+      tags:
+      - Case
+      summary: Lists all cases
+      description: 'Lists all cases defined on the connected server.
+
+
+        **Note:** both open and closed cases are listed.'
+      operationId: listCasesAll
+      responses:
+        '200':
+          description: Successful Listing of cases
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listCasesResponse'
+              example:
+                cases:
+                - id: 1
+                  name: Default
+                  status: Open
+                - id: 100
+                  name: Testing
+                  status: Closed
+                - id: 103
+                  name: latest
+                  status: Open
+    post:
+      tags:
+      - Case
+      summary: Create a new case
+      description: 'Create a new case.
+
+
+        id is always 0 when submitting this request'
+      operationId: createCase
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createCaseRequest'
+            example:
+              id: 0
+              name: New Case Name
+      responses:
+        '200':
+          description: Case was created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 200
+                id: 105
+                message: OK
+  /v2/cases/{caseId}:
+    get:
+      tags:
+      - Case
+      summary: Lists the specified case
+      description: Lists information about the specified case.
+      operationId: listCases
+      parameters:
+      - in: path
+        name: caseId
+        description: Case id
+        schema:
+          type: integer
+        required: true
+      responses:
+        '200':
+          description: Successful Listing of cases
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listCasesResponse'
+              example:
+                cases:
+                - id: 103
+                  name: latest
+                  status: Open
+  /v2/cases/{id}:
+    put:
+      tags:
+      - Case
+      summary: Rename a case and-or change case status
+      description: Rename and/or change the status of the specfied case
+      operationId: modifyCase
+      parameters:
+      - name: id
+        in: path
+        description: The id of the Case to rename or change status
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/modifyCaseRequest'
+            examples:
+              change_case_name:
+                summary: Change case name
+                value:
+                  name: Revised Case Name
+              cloase_a_case:
+                summary: Rename and close a case
+                value:
+                  name: Investigation XYZ - Completed
+                  status: Closed
+      responses:
+        '200':
+          description: Case was modified successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 200
+                id: 101
+                message: OK
+        '400':
+          description: Failed to modify case
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                case_id_not_found:
+                  summary: Case ID not found
+                  value:
+                    code: 400
+                    id: 101
+                    message: Case ID {id} was not found.
+                case_name_and_status_missing:
+                  summary: Neither case name nor status provided
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'Case not updated\: neither status nor name were provided.'
+        '504':
+          description: Waiting for the model to load
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 504
+                id: 101
+                message: Waiting for the model to load
+    delete:
+      tags:
+      - Case
+      summary: Delete a case
+      description: 'Deletes the case identified by the case ignored.
+
+
+        **Note\:** Only closed cases can be deleted.
+
+
+        **Warning:** Any jobs associated with the specified case
+
+        will also be deleted.'
+      operationId: deleteCase
+      parameters:
+      - name: id
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Case was deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 200
+                id: 101
+                message: OK
+        '400':
+          description: Specified Case ID is [ invalid | not found | in use ] and cannot be deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Invalid Case ID supplied
+        '500':
+          description: Delete Case command failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 500
+                id: 101
+                message: Delete Case Command failed
+        '504':
+          description: Waiting for the model to load
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 504
+                id: 101
+                message: Waiting for the model to load
+components:
+  schemas:
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
+    Case:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the case
+        name:
+          type: string
+          description: name of the case
+        status:
+          type: string
+          description: case status, Open or Closed
+    createCaseRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Always `0``.
+        name:
+          type: string
+          description: Name of the new case
+    modifyCaseRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: optional, new case name
+        status:
+          type: string
+          description: optional, new case status.  Either `Open` or `Closed`.
+    listCasesResponse:
+      type: object
+      properties:
+        cases:
+          type: array
+          items:
+            $ref: '#/components/schemas/Case'
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

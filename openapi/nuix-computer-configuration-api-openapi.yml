@@ -1,0 +1,235 @@
+openapi: 3.0.1
+info:
+  title: NUIX ECC REST API Command Reference Case Computer Configuration API
+  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.
+
+
+    **Note\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.
+
+
+    **Note\:** This command reference has been updated for Nuix ECC version 9.12.0.'
+  contact:
+    name: Nuix
+    url: https://nuix.github.io/sdk-docs/latest/
+    email: APISupport@nuix.com
+  license:
+    name: Licence
+    url: https://www.nuix.com/sites/default/files/20200210_EULA_v1.pdf
+  version: ${customer.version}
+servers:
+- url: '{protocol}://{address}:{port}/api/ecc'
+  variables:
+    protocol:
+      default: https
+      description: protocol for communication
+      enum:
+      - http
+      - https
+    address:
+      default: 127.0.0.1
+      description: The location which the ECC resides
+    port:
+      default: '80'
+      description: 80, 443 or alternative
+security:
+- BasicAuth: []
+tags:
+- name: Computer Configuration
+paths:
+  /v2/compConfigurations:
+    get:
+      tags:
+      - Computer Configuration
+      summary: Returns all Computer Configurations.
+      description: 'Returns all Computer Configurations.  A Computer Configuration can be
+
+        associated with multiple Computers.'
+      operationId: listComputerConfigsAll
+      responses:
+        '200':
+          description: Computer Configuration submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listComputerConfResponse'
+              example:
+                compConfigurations:
+                - id: 2
+                  name: Comp Config - Minimal Status
+                  description: Comp Config with infrequent status updates
+                  keepAliveInterval: 90
+                  keepAliveTimeout: 30
+                  resourceWaitTime: 86400
+                  jobWaitTime: null
+                  startJobsWaitTime: 1
+                  statusUpdateWaitTime: 600
+                  systemInfoUpdateWaitTime: 86400
+                  minPortRange: 0
+                  maxPortRange: 65535
+                  enableLogs: false
+                  throttleOutput: false
+                  maxBandwidthMbps: 50
+                  altDestination: null
+                  altDestHasCredentials: false
+                - id: 6
+                  name: Comp Config - Spare Server
+                  description: Comp Config with alt destination set to Spare Server
+                  keepAliveInterval: 90
+                  keepAliveTimeout: 30
+                  resourceWaitTime: 86400
+                  jobWaitTime: null
+                  startJobsWaitTime: 1
+                  statusUpdateWaitTime: 60
+                  systemInfoUpdateWaitTime: 86400
+                  minPortRange: 0
+                  maxPortRange: 65535
+                  enableLogs: false
+                  throttleOutput: false
+                  maxBandwidthMbps: 50
+                  altDestination: \\SPARE\CollectionShare
+                  altDestHasCredentials: true
+        '400':
+          description: error response - computer configuration not retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                confid_not_found:
+                  summary: Computer Configuration ID not found
+                  value:
+                    code: 400
+                    id: 101
+                    message: Computer Configuration ID was not found
+  /v2/compConfigurations/{confid}:
+    get:
+      tags:
+      - Computer Configuration
+      summary: Returns the specified Computer Configuration.
+      description: Returns the Computer Configuration specified in the URL by `confid`, i.e. the Computer Configuration id.
+      operationId: listComputerConfigsOne
+      parameters:
+      - name: confid
+        in: query
+        description: ID of the Computer Configuration to get
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Computer Configuration submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listComputerConfResponse'
+              example:
+                compConfigurations:
+                - id: 6
+                  name: Comp Config - Spare Server
+                  description: Comp Config with alt destination set to Spare Server
+                  keepAliveInterval: 90
+                  keepAliveTimeout: 30
+                  resourceWaitTime: 86400
+                  jobWaitTime: null
+                  startJobsWaitTime: 1
+                  statusUpdateWaitTime: 60
+                  systemInfoUpdateWaitTime: 86400
+                  minPortRange: 0
+                  maxPortRange: 65535
+                  enableLogs: false
+                  throttleOutput: false
+                  maxBandwidthMbps: 50
+                  altDestination: \\SPARE\CollectionShare
+                  altDestHasCredentials: true
+        '400':
+          description: error response - computer configuration not retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                confid_not_found:
+                  summary: Computer Configuration ID not found
+                  value:
+                    code: 400
+                    id: 101
+                    message: Computer Configuration ID was not found
+components:
+  schemas:
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
+    listComputerConfResponse:
+      type: object
+      properties:
+        configurations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComputerConf'
+    ComputerConf:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the Computer Configuration
+        name:
+          type: string
+          description: name of the Computer Configuration
+        description:
+          type: string
+          description: description of the Computer Configuration
+        keepAliveInterval:
+          type: integer
+          description: frequency (sec) a client sends a keep-alive request to the server
+        keepAliveTimeout:
+          type: integer
+          description: time (sec) a client will wait for a response from the last keep-alive request
+        resourceWaitTime:
+          type: integer
+          description: time (sec) a client will wait for a given resource (e.g. network share)
+        jobWaitTime:
+          type: integer
+          description: frequency (sec) a client polls the server for new jobs (fallback to publish/subscribe)
+        startJobsWaitTime:
+          type: integer
+          description: time (sec) to delay a job from starting
+        statusUpdateWaitTime:
+          type: integer
+          description: frequency (sec) which a client to reports status of a running job
+        systemInfoUpdateWaitTime:
+          type: integer
+          description: frequency (sec) which a client to reports current system info
+        minPortRange:
+          type: integer
+          description: beginning of the TCP port range used for Deploy or Relocate jobs
+        maxPortRange:
+          type: integer
+          description: end of the TCP port range used for Deploy or Relocate jobs
+        enableLogs:
+          type: boolean
+          description: true if diagnostic logging is enabled
+        throttleOutput:
+          type: boolean
+          description: true if out should be throttled
+        maxBandwidthMbps:
+          type: integer
+          description: max bandwidth (in Mbps) allowed if output is throttled
+        altDestination:
+          type: string
+          description: The path to an alternate destination if a primary job destination is unreachable
+        altDestHasCredentials:
+          type: boolean
+          description: Whether the alternate destination requires credentials to access
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

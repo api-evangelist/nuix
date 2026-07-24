@@ -1,0 +1,368 @@
+openapi: 3.0.1
+info:
+  title: NUIX ECC REST API Command Reference Case Computer API
+  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.
+
+
+    **Note\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.
+
+
+    **Note\:** This command reference has been updated for Nuix ECC version 9.12.0.'
+  contact:
+    name: Nuix
+    url: https://nuix.github.io/sdk-docs/latest/
+    email: APISupport@nuix.com
+  license:
+    name: Licence
+    url: https://www.nuix.com/sites/default/files/20200210_EULA_v1.pdf
+  version: ${customer.version}
+servers:
+- url: '{protocol}://{address}:{port}/api/ecc'
+  variables:
+    protocol:
+      default: https
+      description: protocol for communication
+      enum:
+      - http
+      - https
+    address:
+      default: 127.0.0.1
+      description: The location which the ECC resides
+    port:
+      default: '80'
+      description: 80, 443 or alternative
+security:
+- BasicAuth: []
+tags:
+- name: Computer
+paths:
+  /v2/computers:
+    post:
+      tags:
+      - Computer
+      summary: Lists computers (endpoints) with ECC installed
+      description: 'Lists computers (endpoints) with ECC Client or ECC Admin Console installed.
+
+        If the `computerId` field in the JSON body is provided, all other fields are ignored, as only that single computer will be returned.  Otherwise a list of computers will be returned matching the criteria provided in the `filters` section.
+
+
+        Computer Fields available for filters and sorting\:
+
+
+        | Field name       | Type    | Description / Possible Values   |
+
+        | ---------------- | ------- | ------------------------------- |
+
+        | ID               | long    | id of computer                  |
+
+        | Name             | String  | name of the computer            |
+
+        | Description      | String  | computer description (may be null)                             |
+
+        | ConfigId         | String  | id of the Computer Configuration associated with this computer |
+
+        | Purpose          | String  | `Client` or `Admin Console`     |
+
+        | Presence         | String  | `Online`, `Nearline` or `Offline` - see note, below            |
+
+        | PairingState     | String  | `Paired`, `Awaiting` or `Denied`  |
+
+        | Staging          | Boolean | `true` if the computer is a staging computer                   |
+
+        | TimeZoneID       | String  |                                 |
+
+        | TimeZoneOffset   | String  |                                 |
+
+        | FirstContactTime | String  | date/time of first contact in the format `yyyy-mm-ddThh:mm:ss` |
+
+        | LastContactTime  | String  | date/time of last contact in the format `yyyy-mm-ddThh:mm:ss`  |
+
+        | UUID             | String  | GUID uniquely identifying this computer                        |
+
+        | OSName           | String  | name of the OS                  |
+
+        | SearchEnabled    | Boolean | `true` specifies  Advanced Search is enabled on this computer  |
+
+        | ClientParameters | String  |                                 |
+
+        | ClientPublicKey  | String  |                                 |
+
+        | Config           | long    |                                 |
+
+        | ConfigName       | String  |                                 |
+
+        | FullName         | String  | name of the computer including domain                          |
+
+        | History          | String  |                                 |
+
+        | LastUser         | String  | last logged in username         |
+
+        | OSName           | String  | name of the OS                  |
+
+        | PeerIP           | String  |                                 |
+
+        | ServerParameters | String  |                                 |
+
+        | ServerPrivateKey | String  |                                 |
+
+        | ServerPublicKey  | String  |                                 |
+
+        **Note\:** Presence values are case-sensitive: they must be `Nearline`, `Online` or `Offline` in a request body. Values returned for Presence however, are returned in ALL UPPERCASE.'
+      operationId: listComputersByFilter
+      parameters:
+      - name: offset
+        in: query
+        description: offset (0-based) into the list of computers at which retrieval should start
+        required: false
+        schema:
+          type: integer
+      - name: version
+        in: query
+        description: "version of the Jobs table from the last call to this function.\n\nThe version of the table is returned in the response body for this query in the field `tableVersion`.\n\nIf `version` is supplied, it is compared to the current version of the Jobs table.\n\nIf the version numbers match, there is no updated data since the last call, \nand the query is aborted with a 204, 'No Content.' response code."
+        required: false
+        schema:
+          type: integer
+      - name: countOnly
+        in: query
+        description: 'if `true`, the total count for this query (ignoring `limit` and `offset`) is returned in the Response Body, with no other data.
+
+
+          This should be used ahead of the actual query to determine the total number of records in the response.'
+        required: false
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/listComputerRequest'
+            example:
+              limit: -1
+              sortBy: Name
+              filters:
+              - name: Presence
+                value: Online
+              - name: Purpose
+                value: Client
+      responses:
+        '200':
+          description: Computer Listing was submitted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tableVersion:
+                    type: integer
+                    description: 'current version of the computers table.
+
+
+                      Use this in the query field `version` to prevent unneeded queries'
+                  totalCount:
+                    type: integer
+                    description: total number of computers for this response, as if `limit` was not provided
+                  startRow:
+                    type: integer
+                    description: starting row of this response within the total count
+                    nullable: true
+                  endRow:
+                    type: integer
+                    description: ending row of this response within the total count
+                    nullable: true
+                  next:
+                    type: string
+                    description: 'url to get the next set of responses.
+
+
+                      Included only if `endRow` does not include all available responses.'
+                  computers:
+                    type: array
+                    description: array of computers in the response
+                    items:
+                      $ref: '#/components/schemas/Computer'
+        '204':
+          description: No Content/Match
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 204
+                id: 101
+                message: No Content
+        '400':
+          description: Computer ID not found/Field was not found/Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Invalid Computer ID supplied
+components:
+  schemas:
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
+    listComputerRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: optional, maximum number of computers to be included in the response
+        computerId:
+          type: string
+          description: 'optional, GUID value that identifies a specific computer.
+
+
+            If provided, only that computer is included in the response'
+        sortBy:
+          type: string
+          description: optional, field name to sort result
+          enum:
+          - ID
+          - Name
+          - Description
+          - ConfigID
+          - Purpose
+          - Presence
+          - PairingState
+          - Staging
+          - TimeZoneID
+          - TimeZoneOffset
+          - FirstContactTime
+          - LastContactTime
+          - UUID
+          - OSName
+          - SearchEnabled
+          - ClientParameters
+          - ClientPublicKey
+          - Config
+          - ConfigName
+          - FullName
+          - History
+          - LastUser
+          - OSName
+          - PeerIP
+          - ServerParameters
+          - ServerPrivateKey
+          - ServerPublicKey
+        ascending:
+          type: boolean
+          description: 'optional, `true` to sort results in ascending order, `false` for descending.
+
+
+            If omitted, sort is ascending'
+        where:
+          type: string
+          description: 'optional, SQL WHERE clause (minus the word WHERE) used to construct more complex filtering.
+
+
+            If `where` is specified or present then the `filters` field is ignored.'
+        filters:
+          type: array
+          description: An optional array of field/value pairs to filter by.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: field name
+                enum:
+                - ID
+                - Name
+                - Description
+                - ConfigID
+                - Purpose
+                - Presence
+                - PairingState
+                - Staging
+                - TimeZoneID
+                - TimeZoneOffset
+                - FirstContactTime
+                - LastContactTime
+                - UUID
+                - OSName
+                - SearchEnabled
+                - ClientParameters
+                - ClientPublicKey
+                - Config
+                - ConfigName
+                - FullName
+                - History
+                - LastUser
+                - OSName
+                - PeerIP
+                - ServerParameters
+                - ServerPrivateKey
+                - ServerPublicKey
+              value:
+                description: Comparison is case-sensitive.  See the list of filtering and sorting fields, above, for field types and descriptions.
+    Computer:
+      type: object
+      properties:
+        name:
+          type: string
+          description: name of the computer
+        fullName:
+          type: string
+          description: name of the computer including domain
+        description:
+          type: string
+          description: description of the computer
+          nullable: true
+        UUID:
+          type: string
+          description: GUID uniquely identifying this computer, used in all other api functions
+        presence:
+          type: string
+          description: One of `ONLINE`, `NEARLINE` or `OFFLINE`
+          enum:
+          - ONLINE
+          - NEARLINE
+          - OFFLINE
+        purpose:
+          type: string
+          description: One of `Client` or `Admin Console`
+          enum:
+          - Client
+          - Admin Console
+        staging:
+          type: boolean
+          description: Set to `true` if the computer is a staging computer
+        pairingState:
+          type: string
+          description: One of `Paired`, `Awaiting`, or `Denied`
+          enum:
+          - Paired
+          - Awaiting
+          - Denied
+        firstContact:
+          type: string
+          description: date/time of first contact in the format `yyyy-mm-ddThh:mm:ss`
+        lastContact:
+          type: string
+          description: date/time of last contact in the format `yyyy-mm-ddThh:mm:ss`
+        osName:
+          type: string
+          description: name of the OS
+        lastUser:
+          type: string
+          description: last logged in username
+        searchEnabled:
+          type: boolean
+          description: Set to `true` if Advanced Search is enabled on this computer
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

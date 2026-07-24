@@ -1,0 +1,360 @@
+openapi: 3.0.1
+info:
+  title: NUIX ECC REST API Command Reference Case Target API
+  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.
+
+
+    **Note\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.
+
+
+    **Note\:** This command reference has been updated for Nuix ECC version 9.12.0.'
+  contact:
+    name: Nuix
+    url: https://nuix.github.io/sdk-docs/latest/
+    email: APISupport@nuix.com
+  license:
+    name: Licence
+    url: https://www.nuix.com/sites/default/files/20200210_EULA_v1.pdf
+  version: ${customer.version}
+servers:
+- url: '{protocol}://{address}:{port}/api/ecc'
+  variables:
+    protocol:
+      default: https
+      description: protocol for communication
+      enum:
+      - http
+      - https
+    address:
+      default: 127.0.0.1
+      description: The location which the ECC resides
+    port:
+      default: '80'
+      description: 80, 443 or alternative
+security:
+- BasicAuth: []
+tags:
+- name: Target
+paths:
+  /v2/targets:
+    get:
+      tags:
+      - Target
+      summary: Lists all target/s
+      description: Lists all targets on the connected server, or if a computer GUID is specified as an optional query value, only targets for the specified computer are returned.
+      operationId: listTargets
+      parameters:
+      - name: computerId
+        in: query
+        description: GUID value that identifies the computer
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Listing of Targets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listTargetsResponse'
+              example:
+                targets:
+                - id: 67
+                  name: DESKTOP_0198_FREDS_FILES
+                  description: Fred's Profile directory from DESKTOP_0198
+                  custodianId: 142
+                  computerName: DESKTOP_0198
+                  computerGUID: 4B62734F-21E0-40FF-853A-853A1CDFEC0E
+                  Inputs:
+                  - type: Local Path
+                    location: C:\Users\Fred
+                - id: 68
+                  name: DESKTOP_0212_KIMS_FILES
+                  description: Kim's Profile directory from DESKTOP_0212
+                  custodianId: 116
+                  computerName: DESKTOP_0212
+                  computerGUID: 14194EA8-0A0B-430C-9B8F-C910C8E02A9E
+                  Inputs:
+                  - type: Local Path
+                    location: C:\Users\Kim
+        '504':
+          description: Waiting for the model to load
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 504
+                id: 101
+                message: Waiting for the model to load
+  /v2/targets/{id}:
+    get:
+      tags:
+      - Target
+      summary: Get information about the target specified by id
+      description: Get information about the target specified by id
+      operationId: listTarget
+      parameters:
+      - name: id
+        in: path
+        description: id of the target
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listTargetsResponse'
+              example:
+                targets:
+                - id: 67
+                  name: DESKTOP_0198_FREDS_FILES
+                  description: Fred's Profile directory from DESKTOP_0198
+                  custodianId: 142
+                  computerName: DESKTOP_0198
+                  computerGUID: 4B62734F-21E0-40FF-853A-853A1CDFEC0E
+                  Inputs:
+                  - type: Local Path
+                    location: C:\Users\Fred
+        '400':
+          description: Target ID {id} was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Target ID {id} was not found.
+        '504':
+          description: Waiting for the model to load
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 504
+                id: 101
+                message: Waiting for the model to load
+    delete:
+      tags:
+      - Target
+      summary: Delete a Target
+      description: Delete a Target.
+      operationId: deleteTarget
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                targetId:
+                  type: integer
+                  description: id of the Target to be deleted
+            example:
+              targetId: 105
+      responses:
+        '200':
+          description: Target was deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 200
+                id: 100
+                message: OK
+        '400':
+          description: Failed to delete Target
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                failed_target_delete_json:
+                  summary: No JSON body
+                  value:
+                    code: 400
+                    id: 101
+                    message: No json body was provided.
+                failed_target_delete_missing:
+                  summary: Target not found
+                  value:
+                    code: 400
+                    id: 101
+                    message: Target ID {targetId} was not found.
+  /v2/target:
+    post:
+      tags:
+      - Target
+      summary: Add a new target
+      description: Creates a new target
+      operationId: createTarget
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createTargetRequest'
+            examples:
+              create_target_example:
+                summary: Create a target.
+                value:
+                  targetName: Juan's data folders
+                  description: Data folders from Juan's profile folder on DESKTOP_0354
+                  computerId: 08AFD7C6-5144-48A9-85D0-9D4093A95834
+                  custodianId: '126'
+                  inputs:
+                  - type: Local Path
+                    location: C:\Users\Juan
+                    exclusion: AppData\tMusic\tVideos
+      responses:
+        '200':
+          description: Target created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 200
+                id: 100
+                message: 'TARGET added: Name={new target name}, ID={new target id}, REST=POST api/ecc/v2/target'
+        '400':
+          description: General error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                create_target_err_json:
+                  summary: No JSON body
+                  value:
+                    code: 400
+                    id: 101
+                    message: No json body was provided.
+                create_target_err_no_name:
+                  summary: No target name
+                  value:
+                    code: 400
+                    id: 101
+                    message: targetName field is missing.  A target name must be provided.
+                create_target_err_computer_none:
+                  summary: No computer specified
+                  value:
+                    code: 400
+                    id: 101
+                    message: computerId field is missing.  A computer Id must be provided.
+                create_target_err_no_inputs:
+                  summary: No new inputs (target locations) provided
+                  value:
+                    code: 400
+                    id: 101
+                    message: no new inputs were provided.
+                create_target_err_custodian_missing:
+                  summary: Custodian not found
+                  value:
+                    code: 400
+                    id: 101
+                    message: Custodian ID {} does not exist.
+                create_target_err_computer_missing:
+                  summary: Computer not found
+                  value:
+                    code: 400
+                    id: 101
+                    message: No computer found with id {}
+components:
+  schemas:
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
+    createTargetRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: always 0
+        name:
+          type: string
+          description: case name to set
+        targetName:
+          type: string
+          description: name of the new Target
+        description:
+          type: string
+          description: optional, description of the new Target
+        computerId:
+          type: string
+          description: GUID of the computer this Target belongs to
+        custodianId:
+          type: string
+          description: optional, id of Custodian this Target is associated with (Unassigned Custodian if omitted)
+        inputs:
+          type: array
+          description: array of input paths
+          items:
+            $ref: '#/components/schemas/TargetInputs'
+    TargetInputs:
+      type: object
+      properties:
+        types:
+          type: string
+          description: Path, Local Path, or AutoDetect
+          enum:
+          - Path
+          - Local Path
+          - AutoDetect
+        location:
+          type: string
+          description: full path or AutoDetect setting for the source
+        exclusion:
+          type: string
+          description: excluded subfolders in the location (only for Path type)
+    Target:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the Target
+        name:
+          type: string
+          description: name of the target
+        description:
+          type: string
+          description: description of the target
+        custodianId:
+          type: integer
+          description: id of the Custodian this target belongs to
+        computerName:
+          type: string
+          description: name of the Computer this target belongs to
+        computerGUID:
+          type: string
+          description: GUID of the Computer this target belongs to
+        Inputs:
+          type: array
+          description: array of inputs in the target
+          items:
+            $ref: '#/components/schemas/TargetInputs'
+    listTargetsResponse:
+      type: object
+      properties:
+        targets:
+          type: array
+          description: List of Targets.
+          items:
+            $ref: '#/components/schemas/Target'
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

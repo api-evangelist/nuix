@@ -1,0 +1,173 @@
+openapi: 3.0.1
+info:
+  title: NUIX ECC REST API Command Reference Case Log API
+  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.
+
+
+    **Note\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.
+
+
+    **Note\:** This command reference has been updated for Nuix ECC version 9.12.0.'
+  contact:
+    name: Nuix
+    url: https://nuix.github.io/sdk-docs/latest/
+    email: APISupport@nuix.com
+  license:
+    name: Licence
+    url: https://www.nuix.com/sites/default/files/20200210_EULA_v1.pdf
+  version: ${customer.version}
+servers:
+- url: '{protocol}://{address}:{port}/api/ecc'
+  variables:
+    protocol:
+      default: https
+      description: protocol for communication
+      enum:
+      - http
+      - https
+    address:
+      default: 127.0.0.1
+      description: The location which the ECC resides
+    port:
+      default: '80'
+      description: 80, 443 or alternative
+security:
+- BasicAuth: []
+tags:
+- name: Log
+paths:
+  /v2/logs:
+    get:
+      tags:
+      - Log
+      summary: Returns the log entries (errors and warnings) associated with the specified job
+      description: Returns the log entries (errors and warnings) associated with the specified job
+      operationId: listLogByJob
+      parameters:
+      - name: jobId
+        in: query
+        description: ID of the job for which log information should be displayed
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Log Listing was submitted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  logs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LogEntry'
+              example:
+                logs:
+                - name: Warning
+                  scope: Client
+                  severity: Warning
+                  grouping: ''
+                  jobId: 103
+                  userId: null
+                  description: Could NOT Open and Read Owner Info on First Try - Succeeded with Snapshot
+                  date: 7/18/20 9:08 PM
+                  computerId: ''
+                - name: Error
+                  scope: Client
+                  severity: Error
+                  grouping: ''
+                  jobId: 103
+                  userId: null
+                  description: Job cancelled by user.
+                  date: 7/18/20 9:09 PM
+                  computerId: ''
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 204
+                message: No Content.
+        '400':
+          description: error response - log entries not retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                job_id_not_found:
+                  summary: Job ID not found
+                  value:
+                    code: 400
+                    id: 101
+                    message: Job ID was not found
+                job_id_param_missing:
+                  summary: Job ID parameter missing
+                  value:
+                    code: 400
+                    id: 101
+                    message: Query parameter "jobId" expected, but not found.
+components:
+  schemas:
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
+    LogEntry:
+      type: object
+      properties:
+        name:
+          type: string
+          description: name of entry, either `Error` or `Warning`
+          enum:
+          - Error
+          - Warning
+        scope:
+          type: string
+          description: defines the scope of the entry, either `Client` or `Server`
+          enum:
+          - Client
+          - Server
+        severity:
+          type: string
+          description: Log entry severity, one of `Error`, `Warning`, `Info`, or `Debug`
+          enum:
+          - Error
+          - Warning
+          - Info
+          - Debug
+        grouping:
+          type: string
+          description: grouping for this log entry
+        jobId:
+          type: integer
+          description: id of the job the log entry is associated with
+        userId:
+          type: integer
+          description: id of the ECC user logged in when the log entry was created
+          nullable: true
+        description:
+          type: string
+          description: description of the event logged
+          nullable: true
+        date:
+          type: string
+          description: date and time of the log entry
+        computerId:
+          type: string
+          description: UUID of the computer on which the event occurred
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

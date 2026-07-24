@@ -1,0 +1,650 @@
+openapi: 3.0.1
+info:
+  title: NUIX ECC REST API Command Reference Case Job API
+  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.
+
+
+    **Note\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.
+
+
+    **Note\:** This command reference has been updated for Nuix ECC version 9.12.0.'
+  contact:
+    name: Nuix
+    url: https://nuix.github.io/sdk-docs/latest/
+    email: APISupport@nuix.com
+  license:
+    name: Licence
+    url: https://www.nuix.com/sites/default/files/20200210_EULA_v1.pdf
+  version: ${customer.version}
+servers:
+- url: '{protocol}://{address}:{port}/api/ecc'
+  variables:
+    protocol:
+      default: https
+      description: protocol for communication
+      enum:
+      - http
+      - https
+    address:
+      default: 127.0.0.1
+      description: The location which the ECC resides
+    port:
+      default: '80'
+      description: 80, 443 or alternative
+security:
+- BasicAuth: []
+tags:
+- name: Job
+paths:
+  /v2/jobs/{id}:
+    get:
+      tags:
+      - Job
+      summary: Display details of the specified job
+      description: Display details the job specified by the id in the path (URL)
+      operationId: jobDetails
+      parameters:
+      - name: id
+        in: path
+        description: id of the job
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Job details found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jobs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/jobDetail'
+              example:
+                jobs:
+                - id: 103
+                  taskName: Collect
+                  label: ''
+                  caseName: Testing
+                  status: Cancelled
+                  warnings: 3
+                  errors: 1
+                  bytesCollected: 0
+                  bytesToCollect: 0
+                  filesCollected: 0
+                  filesToCollect: 126600
+                  collectionId: 103
+                  collectionName: Email Collect3
+                  custodianName: ''
+                  custodianId: 1
+                  targetName: ''
+                  targetId: 1
+                  destination: 'c:\collection\Testing\Email Collect3\AUSYD-L-NX0142\FileSafe\AUSYD-L-NX0142 2020-07-18 21-08-23.
+
+
+                    mfs01'
+                  beginTime: '2020-07-18T11:08:23.
+
+
+                    711Z'
+                  endTime: '2020-07-18T11:09:53.
+
+
+                    757Z'
+                  computerId: E21287F5-9E96-6CFF-0624-056AFA28E902
+                  computerName: AUSYD-L-NX0142
+        '400':
+          description: Job ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Invalid Job ID supplied
+  /v2/jobs:
+    post:
+      tags:
+      - Job
+      summary: Lists all jobs that match the specified filter
+      description: 'Lists all jobs matching the filter criteria specified in the JSON body.
+
+
+        ### Job fields available for filtering and sorting\:
+
+
+        | Field name        | Type    | Description / Possible Values            |
+
+        | ----------------- | ------- | ---------------------------------------- |
+
+        | BeginTime         | String  | Job start date and time                  |
+
+        | BytesCollected    | String  | Bytes collected so far                   |
+
+        | BytesToCollect    | Long    | Total bytes to be collected              |
+
+        | CaseName          | String  | Case name                                |
+
+        | CollectionID      | Long    | Collection ID number                     |
+
+        | CollectionName    | String  | Collection name                          |
+
+        | ComputerID        | String  | Computer ID number                       |
+
+        | ComputerName      | String  | Computer name                            |
+
+        | CustodianID       | Long    | Custodian ID number                      |
+
+        | CustodianName     | String  | Custodian name                           |
+
+        | Destination       | String  | Destination path                         |
+
+        | DestinationType   | String  | Destination type, one of                 |
+
+        | EndTime           | String  | Job end date and time                    |
+
+        | ID                | Long    | Job ID number                            |
+
+        | Label             | String  | Label value associated with this Job     |
+
+        | NumErrors         | Long    | Number of errors encountered so far      |
+
+        | NumFilesCollected | Long    | Number of files collected so far         |
+
+        | NumFilesToCollect | Long    | Total number fo files to collect         |
+
+        | NumWarninings     | Long    | Number of warnings encountered so far    |
+
+        | PausedMinutes:    | String  | Number of minutes to job has been paused |
+
+        | Priority          | String  | Job priority number                      |
+
+        | ProgramName       | String  | Name of program performing the job       |
+
+        | ReportingTime     | String  | Date and time of last job status report  |
+
+        | Stage             | String  | Job stage                                |
+
+        | Status            | String  | Job status (see list below)              |
+
+        | SubmitTime        | String  | Date and time job was sbmitted           |
+
+        | TargetID          | Long    | Target ID number                         |
+
+        | TargetName        | String  | Target name                              |
+
+        | TaskName          | String  | Task name                                |
+
+        | TaskNumber        | Integer | Task ID number                           |
+
+        | TotalTasks        | Integer | Total number of tasks in this job        |
+
+
+
+        ### Job status values\:
+
+
+        Awaiting Resource, Cancelled, Cancelling, Failed, Finished, Paused, Pausing, PickedUp, Ready, Resumed, Resuming, Running, Suspended, Suspending, Waiting'
+      operationId: listJobsByFilter
+      parameters:
+      - name: offset
+        in: query
+        description: zero-based offset in the list of computers at which retrieval should start
+        required: false
+        schema:
+          type: integer
+      - name: version
+        in: query
+        description: 'version of the Jobs table, obtained from the last call to this function.
+
+
+          The Jobs table in the ECC Server database gets a new version whenever it is modified.
+
+          This version is returned in the response body for this query in the field `tableVersion`.
+
+
+          If `version` is supplied, it is compared to the current version of the Jobs table.
+
+          If the version numbers match, there is no updated data since the last call,
+
+          and the query is aborted with a **204, ''No Content.''** response code.'
+        required: false
+        schema:
+          type: integer
+      - name: countOnly
+        in: query
+        description: 'if `true`, the total count for this query (ignoring `limit` and `offset`) is returned in the Response Body, with no other data.
+
+
+          This should be used ahead of the actual query to determine the total number of records in the response.'
+        required: false
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/listJobRequest'
+            example:
+              limit: -1
+              filters:
+              - name: CollectionID
+                value: 109
+      responses:
+        '200':
+          description: Job Listing was submitted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tableVersion:
+                    type: integer
+                    description: 'current version of the Jobs table in the ECC database.
+
+
+                      Use this in subsequent Job List commands, in the query field `version`, to prevent unneeded queries.'
+                  totalCount:
+                    type: integer
+                    description: total number of jobs for this response, as if `limit` was not provided
+                  startRow:
+                    type: integer
+                    description: starting row of this response within the total count
+                  endRow:
+                    type: integer
+                    description: ending row of this response within the total count
+                  next:
+                    type: string
+                    description: 'URL to get the next set of responses.
+
+
+                      Included only if `endRow` does not include all available responses.'
+                  jobs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/jobListDetail'
+              example:
+                tableVersion: 0
+                totalCount: 2
+                startRow: 0
+                endRow: 0
+                next: /api/ecc/v2/jobs?offset=1
+                jobs:
+                - id: 109
+                  taskName: Collect
+                  label: ''
+                  caseName: Group
+                  status: Finished
+                  warnings: 0
+                  errors: 1
+                  bytesCollected: 138007
+                  bytesToCollect: 138007
+                  filesCollected: 5
+                  filesToCollect: 30
+                  collectionId: 109
+                  collectionName: 'Group Test 8.
+
+
+                    12pm'
+                  custodianName: Unassigned
+                  custodianId: 1
+                  targetName: _System
+                  targetId: 1
+                  destination: 'c:\collection\Group\Group Test 8.
+
+
+                    12pm\AUSYD-L-NX0142\FileSafe\AUSYD-L-NX0142 2020-07-19 20-13-13.
+
+
+                    mfs01'
+                  beginTime: '2020-07-19T10:13:13.
+
+
+                    000Z'
+                  endTime: '2020-07-19T10:14:00.
+
+
+                    000Z'
+                  computerId: E21287F5-9E96-6CFF-0624-056AFA28E902
+                  computerName: AUSYD-L-NX0142
+  /v2/jobAction/{id}:
+    post:
+      tags:
+      - Job
+      summary: Modifies the state of the specified job
+      description: 'Modify the job state of the job identified by the id in the URL.  The `action` string in the body applies the following state change to the job\:
+
+
+        | Action   | Description                                             |
+
+        | -------- | ------------------------------------------------------- |
+
+        | Cancel   | cancels the job                                         |
+
+        | Pause    | pause the job (can be continued)                        |
+
+        | Continue | continues a paused job                                  |
+
+        | Resume   | resumes a failed or stopped job from where it stopped   |
+
+        | Restart  | restarts a job from the beginning                       |'
+      operationId: jobAction
+      parameters:
+      - name: id
+        in: path
+        description: id of the job
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/jobActionRequest'
+            example:
+              action: Pause
+      responses:
+        '200':
+          description: Job status changed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 200
+                id: 100
+                message: OK
+        '400':
+          description: error response - job status has not been changed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                job_action_not_recognized:
+                  summary: Job action not recognized
+                  value:
+                    code: 400
+                    id: 101
+                    message: Action Terminate is not a recognized job state.
+                job_action_unknown:
+                  summary: Job action unknown
+                  value:
+                    code: 400
+                    id: 101
+                    message: Job action, null is an unknown action.
+                job_action_unavailable:
+                  summary: Job action unavailable
+                  value:
+                    code: 400
+                    id: 101
+                    message: Action Pause is unavailable in Paused state of a job.
+                job_action_error:
+                  summary: Job action error
+                  value:
+                    code: 400
+                    id: 101
+                    message: Error changing the job state to Paused
+components:
+  schemas:
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
+    jobDetail:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the job
+        taskType:
+          type: string
+          description: type of the task, one of `Collect`, `Relocate`, `Deploy` or `Launch`
+        status:
+          type: string
+          description: current status of the job (see values below)
+        warnings:
+          type: integer
+          description: current number of warnings
+        errors:
+          type: integer
+          description: current number of errors
+        bytesCollected:
+          type: integer
+          description: bytes currently collected
+        bytesToCollect:
+          type: integer
+          description: total bytes to collect in the job
+        filesCollected:
+          type: integer
+          description: files currently collected
+        filesToCollect:
+          type: integer
+          description: total files to collect in the job
+        collectionName:
+          type: string
+          description: name of the collection this job is running in
+        collectionId:
+          type: integer
+          description: id of the collection this job is running in
+        custodianName:
+          type: string
+          description: name of the custodian associated with this collection, if any
+        custodianId:
+          type: integer
+          description: id of the custodian associated with this collection, if any
+        targetName:
+          type: string
+          description: name of the target this job is collecting from
+        targetId:
+          type: integer
+          description: id of the target this job is collecting from
+        destination:
+          type: string
+          description: destination path for this job
+        startTime:
+          type: string
+          description: date/time of the start of this job
+        endTime:
+          type: string
+          description: date/time of the end of this job
+    jobListDetail:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the job
+        taskName:
+          type: string
+          description: Name of task, one of `Collect`, `Relocate` `Deploy` or `Launch`.
+        label:
+          type: string
+          description: 'Optional, user-defined label for this job.
+
+
+            Can be used subsequently as search criteria for jobs.'
+        caseName:
+          type: string
+          description: name of the Case this job is running under
+        status:
+          type: string
+          description: current status of the job (see values below)
+        warnings:
+          type: integer
+          description: current number of warnings
+        errors:
+          type: integer
+          description: current number of errors
+        bytesCollected:
+          type: integer
+          description: bytes currently collected
+        bytesToCollect:
+          type: integer
+          description: total bytes to collect in the job
+        filesCollected:
+          type: integer
+          description: files currently collected
+        filesToCollect:
+          type: integer
+          description: total files to collect in the job
+        collectionId:
+          type: integer
+          description: id of the collection this job is running in
+        collectionName:
+          type: string
+          description: name of the collection this job is running in
+        custodianName:
+          type: string
+          description: name of the custodian associated with this collection, if any
+        custodianId:
+          type: integer
+          description: id of the custodian associated with this collection, if any
+        targetName:
+          type: string
+          description: name of the target this job is collecting from
+        targetId:
+          type: integer
+          description: id of the target this job is collecting from
+        destination:
+          type: string
+          description: destination path for this job
+        startTime:
+          type: string
+          description: date/time of the start of this job
+        endTime:
+          type: string
+          description: date/time of the end of this job
+        computerId:
+          type: integer
+          description: id of the computer on which this job is running
+        computerName:
+          type: string
+          description: name of the computer on which this job is running
+    jobActionRequest:
+      type: object
+      properties:
+        action:
+          type: string
+          description: action to be applied to the specified job.
+          enum:
+          - Cancel
+          - Pause
+          - Continue
+          - Resume
+          - Restart
+    listJobRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: optional, maximum number of jobs to be included in the response.
+        jobId:
+          type: integer
+          description: 'optional, id of a specific job to retrieve.
+
+
+            If provided, other parameters are ignored, as only the specified job is included in the response.'
+        sortBy:
+          type: string
+          description: optional, field name to sort result (see list of field names in the description of this command).
+          enum:
+          - ID
+          - CollectionID
+          - CustodianID
+          - TargetID
+          - ComputerID
+          - TaskName
+          - TaskNumber
+          - Label
+          - TotalTasks
+          - ProgramName
+          - Destination
+          - DestinationType
+          - CaseName
+          - CollectionName
+          - CustodianName
+          - TargetName
+          - ComputerName
+          - Status
+          - Priority
+          - Stage
+          - SubmitTime
+          - BeginTime
+          - EndTime
+          - NumFilesToCollect
+          - NumFilesCollected
+          - BytesToCollect
+          - BytesCollected
+          - NumWarninings
+          - NumErrors
+          - ReportingTime
+          - PausedMinutes
+        ascending:
+          type: boolean
+          description: 'optional, `true` to sort results in ascending order, `false` for descending.
+
+
+            If omitted, sort is ascending'
+        filters:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the field to filter by.  See the list of field names in the description of this command.
+                enum:
+                - ID
+                - CollectionID
+                - CustodianID
+                - TargetID
+                - ComputerID
+                - TaskName
+                - TaskNumber
+                - Label
+                - TotalTasks
+                - ProgramName
+                - Destination
+                - DestinationType
+                - CaseName
+                - CollectionName
+                - CustodianName
+                - TargetName
+                - ComputerName
+                - Status
+                - Priority
+                - Stage
+                - SubmitTime
+                - BeginTime
+                - EndTime
+                - NumFilesToCollect
+                - NumFilesCollected
+                - BytesToCollect
+                - BytesCollected
+                - NumWarninings
+                - NumErrors
+                - ReportingTime
+                - PausedMinutes
+              value:
+                description: The value of the specified field to filter by.  The type can vary depending on the field (see the field list in this command's description).  String comparisons are case-sensitive.
+        where:
+          type: string
+          description: 'optional, SQL WHERE clause (minus the word WHERE) used to construct more complex filtering.
+
+
+            If `where` is specified or present then the `filters` field is ignored.'
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

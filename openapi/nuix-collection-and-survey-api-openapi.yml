@@ -1,0 +1,558 @@
+openapi: 3.0.1
+info:
+  title: NUIX ECC REST API Command Reference Case Collection and Survey API
+  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.
+
+
+    **Note\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.
+
+
+    **Note\:** This command reference has been updated for Nuix ECC version 9.12.0.'
+  contact:
+    name: Nuix
+    url: https://nuix.github.io/sdk-docs/latest/
+    email: APISupport@nuix.com
+  license:
+    name: Licence
+    url: https://www.nuix.com/sites/default/files/20200210_EULA_v1.pdf
+  version: ${customer.version}
+servers:
+- url: '{protocol}://{address}:{port}/api/ecc'
+  variables:
+    protocol:
+      default: https
+      description: protocol for communication
+      enum:
+      - http
+      - https
+    address:
+      default: 127.0.0.1
+      description: The location which the ECC resides
+    port:
+      default: '80'
+      description: 80, 443 or alternative
+security:
+- BasicAuth: []
+tags:
+- name: Collection and Survey
+paths:
+  /v2/collections:
+    get:
+      tags:
+      - Collection and Survey
+      summary: Lists all collections for the specified case
+      description: 'Lists all collections for the specified case.
+
+
+        Note that completed and failed collections are listed as well as currently running collections'
+      operationId: listCaseCollection
+      parameters:
+      - name: caseId
+        in: query
+        description: Case identification token of the case to list collections
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Listing of Collections
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listCaseCollectionResponse'
+              example:
+                collections:
+                - id: 110
+                  caseId: 103
+                  name: Latest Collect and Relocate
+                  status: Open
+        '400':
+          description: Invalid Case ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Invalid Case ID supplied
+    post:
+      tags:
+      - Collection and Survey
+      summary: Launch a new collection by Custodian
+      description: 'Launch a new collection for one or more Custodians.
+
+
+        If location is blank the location is determined from the specified Collection Configuration
+
+
+        Must specify at least one Custodian ID'
+      operationId: launchCaseCollection
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/launchCaseCollectionRequest'
+            example:
+              caseId: 0
+              name: name of the new collection
+              configurationId: 0
+              location: C://collections
+              custodianIds:
+              - 1
+              - 2
+              - 3
+              - 4
+      responses:
+        '200':
+          description: Collection was submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/launchCaseCollectionResponse'
+              example:
+                collectionId: 103
+                computers:
+                - computerName: AUSYD-L-NX0142
+                  computerId: E21287F5-9E96-6CFF-0624-056AFA28E902
+                  jobs:
+                  - id: 102
+                    taskName: Collect
+                    taskNum: 1
+                    totalTasks: 1
+        '400':
+          description: Invalid Case ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Invalid Case ID supplied
+        '504':
+          description: No valid targets selected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 504
+                id: 101
+                message: No valid targets selected
+  /v2/collectionsByPath:
+    post:
+      tags:
+      - Collection and Survey
+      summary: Launch a new collection explicitly defining folders and files with no custodian.
+      description: 'Launch a new collection explicitly defining folders and files with no custodian.
+
+
+        **Note\:** if autoDetect is used it must have the value AllLocalVolumes and when used all files and folders fields are ignored.'
+      operationId: launchCollectionsByPath
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/launchCaseCollectionByPathRequest'
+            example:
+              caseId: 0
+              name: name of the new collection
+              computerId: ABCDEF-12345
+              configurationId: 0
+              location: C://collections
+              label: a label
+              autodetect: ''
+              folders:
+              - c:/path1
+              - c:/path2
+              files:
+              - C:/path/file1.csv
+              - C:/path/file2.txt
+              folderSpec:
+              - folder: C://somePath
+                excludeFolders:
+                - subPath
+                - subPath2
+                excludeFiles:
+                - someFile.txt
+                - someFile2.txt
+                excludeWildcards:
+                - '*.pdf'
+      responses:
+        '200':
+          description: Collection was submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/launchCaseCollectionResponse'
+              example:
+                collectionId: 103
+                computers:
+                - computerName: AUSYD-L-NX0142
+                  computerId: E21287F5-9E96-6CFF-0624-056AFA28E902
+                  jobs:
+                  - id: 102
+                    taskName: Collect
+                    taskNum: 1
+                    totalTasks: 1
+        '400':
+          description: Invalid Case/Computer ID supplied or no collections were specified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Invalid Case ID supplied
+        '504':
+          description: No valid targets selected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 504
+                id: 101
+                message: No valid targets selected
+  /v2/collectionsByTarget:
+    post:
+      tags:
+      - Collection and Survey
+      summary: Launch a new collection specifying only target and collection configuration
+      description: 'Launch a new collection specifying only target and collection Configuration.
+
+
+        **Note\:** All other job criteria will be determined from the specified Collection Configuration'
+      operationId: launchCollectionsByTarget
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/launchCaseCollectionByTargetRequest'
+            example:
+              caseId: 0
+              name: name of the new collection
+              targetId: 1
+              configurationId: 0
+              location: C://collections
+      responses:
+        '200':
+          description: Collection was submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/launchCaseCollectionResponse'
+              example:
+                collectionId: 103
+                computers:
+                - computerName: AUSYD-L-NX0142
+                  computerId: E21287F5-9E96-6CFF-0624-056AFA28E902
+                  jobs:
+                  - id: 102
+                    taskName: Collect
+                    taskNum: 1
+                    totalTasks: 1
+        '400':
+          description: Invalid Case/Target ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Invalid Case ID supplied
+        '504':
+          description: No valid targets selected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 504
+                id: 101
+                message: No valid targets selected
+  /v2/collectionsByConfiguration:
+    post:
+      tags:
+      - Collection and Survey
+      summary: Launch a new collection for a specific computer and Collection Configuration
+      description: 'Launch a new collection for a specific computer and Collection Configuration.
+
+
+        Optionally, the destination can be specified in the `location` field.
+
+
+        **Note\:** since no targets or explicit sources are defined in the API body, the specified Collection Configuration must specify the collection source(s).
+
+
+        **Note\:** if the specified Collection Configuration contains targets, they will be ignored in favor of the specified computer.'
+      operationId: launchCollectionsByConfiguration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/launchCaseCollectionByConfigurationRequest'
+            example:
+              caseId: 0
+              name: name of the new collection
+              computerId: 1
+              configurationId: 0
+              location: C://collections
+      responses:
+        '200':
+          description: Collection was submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/launchCaseCollectionByConfigurationResponse'
+              example:
+                collectionId: 103
+                computers:
+                - computerName: AUSYD-L-NX0142
+                  computerId: E21287F5-9E96-6CFF-0624-056AFA28E902
+                  jobs:
+                  - id: 102
+                    taskName: Collect
+                    taskNum: 1
+                    totalTasks: 1
+        '400':
+          description: Invalid Case/Computer/Configuration ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Invalid Case ID supplied
+        '504':
+          description: No valid targets selected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 504
+                id: 101
+                message: No valid targets selected
+components:
+  schemas:
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
+    launchCaseCollectionResponse:
+      type: object
+      properties:
+        collectionId:
+          type: integer
+          description: id of the newly started collection
+        jobs:
+          type: array
+          description: array of job IDs that have been started within the collection
+          items:
+            type: integer
+    CollectionDetail:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the collection
+        caseId:
+          type: integer
+          description: id of the case that owns the collection
+        name:
+          type: string
+          description: name of the collection
+        status:
+          type: string
+          description: status of the case
+    launchCaseCollectionByConfigurationRequest:
+      type: object
+      properties:
+        caseId:
+          type: integer
+          description: id of the case within which to start a collection
+        name:
+          type: string
+          description: name of the new collection (must be unique)
+        computerId:
+          type: string
+          description: GUID value that identifies the computer
+        configurationId:
+          type: integer
+          description: id of the collection configuration to use for collection criteria
+        location:
+          type: string
+          description: destination of the collection (if blank uses the location within the specified collection configuration)
+    launchCaseCollectionByPathRequest:
+      type: object
+      properties:
+        caseId:
+          type: integer
+          description: id of the case within which to start a collection
+        name:
+          type: string
+          description: name of the new collection
+        computerId:
+          type: string
+          description: GUID value that identifies the computer
+        configurationId:
+          type: integer
+          description: id of the collection configuration to use for collection criteria
+        location:
+          type: string
+          description: destination of the collection (if blank uses the location defined in the specified collection configuration)
+        label:
+          type: string
+          description: optional, label to be assigned to all tasks within this collection
+        autodetect:
+          type: string
+          description: 'optional, auto-detect option to be used instead of files/folders.
+
+
+            If specified, must be `AllLocalVolumes`.
+
+
+            Note that if autodetect is used, the folders and files fields are ignored'
+        folders:
+          type: array
+          description: full path(s) of folder(s) to collect from on each target computer
+          items:
+            type: string
+            description: full path
+        files:
+          type: array
+          description: full path(s) of file(s) to collect from each target computer
+          items:
+            type: string
+            description: full path
+        folderSpec:
+          type: array
+          description: optional way to specify folders, allowing for exclusions within each specified folder
+          items:
+            $ref: '#/components/schemas/FolderSpec'
+    listCaseCollectionResponse:
+      type: object
+      properties:
+        collections:
+          type: array
+          items:
+            $ref: '#/components/schemas/CollectionDetail'
+    FolderSpec:
+      type: object
+      properties:
+        folder:
+          type: string
+          description: full path of the folder to collect from.
+        excludeFolders:
+          type: array
+          items:
+            type: string
+            description: optional, path(s) of folder(s) to exclude.  These are relative paths, relative to the `folder` to collect from.
+        excludeFiles:
+          type: array
+          items:
+            type: string
+            description: optional, path(s) of file(s) to exclude.  These are relative paths, relative to the `folder` to collect from.
+        excludeWildcards:
+          type: array
+          items:
+            type: string
+            description: 'optional, wildcard specification(s) (e.g *.pdf) specifying files to exclude from `folder` path.
+
+
+              Note that wildcard exclusions are recursive under `folder` path.'
+    launchCaseCollectionRequest:
+      type: object
+      properties:
+        caseId:
+          type: integer
+          description: id of the case within which to start a collection
+        name:
+          type: string
+          description: name of the new collection
+        configurationId:
+          type: integer
+          description: id of the collection configuration to use for collection criteria
+        location:
+          type: string
+          description: destination of the collection (if blank then destination determined by the specified collection configuration)
+        custodianIds:
+          type: array
+          description: id(s) of the custodian(s) for which to launch this collection
+          items:
+            type: integer
+    ComputerJobs:
+      type: object
+      properties:
+        computerName:
+          type: string
+          description: name of the computer where the job is running
+        computerId:
+          type: string
+          description: UUID of the computer
+        jobs:
+          type: array
+          description: List of tasks being run
+          items:
+            $ref: '#/components/schemas/JobCreated'
+    JobCreated:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID of task
+        taskName:
+          type: string
+          description: Name of task, one of `Collect`, `Relocate` `Deploy` or `Launch`.
+        taskNum:
+          type: integer
+          description: Task number, defines sequence in a multi-job collection
+        totalTasks:
+          type: integer
+          description: Total number of tasks in the collection
+    launchCaseCollectionByTargetRequest:
+      type: object
+      properties:
+        caseId:
+          type: integer
+          description: id of the case within which to start a collection
+        name:
+          type: string
+          description: name of the new collection
+        targetId:
+          type: integer
+          description: id of the Target to use for sources
+        configurationId:
+          type: integer
+          description: id of the collection configuration to use for collection criteria
+        location:
+          type: string
+          description: destination of the collection (if blank uses the destination from the specified collection configuration)
+    launchCaseCollectionByConfigurationResponse:
+      type: object
+      properties:
+        collectionId:
+          type: integer
+          description: id of the newly created collection
+        computers:
+          type: array
+          description: array of computers where the job is running (there will be only one computer)
+          items:
+            $ref: '#/components/schemas/ComputerJobs'
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

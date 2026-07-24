@@ -1,0 +1,885 @@
+openapi: 3.0.1
+info:
+  title: NUIX ECC REST API Command Reference Case Collection Configuration API
+  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.
+
+
+    **Note\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.
+
+
+    **Note\:** This command reference has been updated for Nuix ECC version 9.12.0.'
+  contact:
+    name: Nuix
+    url: https://nuix.github.io/sdk-docs/latest/
+    email: APISupport@nuix.com
+  license:
+    name: Licence
+    url: https://www.nuix.com/sites/default/files/20200210_EULA_v1.pdf
+  version: ${customer.version}
+servers:
+- url: '{protocol}://{address}:{port}/api/ecc'
+  variables:
+    protocol:
+      default: https
+      description: protocol for communication
+      enum:
+      - http
+      - https
+    address:
+      default: 127.0.0.1
+      description: The location which the ECC resides
+    port:
+      default: '80'
+      description: 80, 443 or alternative
+security:
+- BasicAuth: []
+tags:
+- name: Collection Configuration
+paths:
+  /v2/configurations:
+    get:
+      tags:
+      - Collection Configuration
+      summary: Lists all Collection Configurations
+      description: 'Lists all Collection Configurations defined on the connected server, or a filtered list if optional query params are used.
+
+
+        **Note\:** In the response body, a Collect task type will be followed by an Evidence object, and optionally a FileType, DateRange, AdvancedSearch, Hash, Volatile, and RAM object.'
+      operationId: listConfigurations
+      parameters:
+      - name: id
+        in: query
+        description: 'The id of the configuration to list.
+
+
+          **Note\:** if `id` is specified, the `category` query parameter is ignored.'
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: category
+        in: query
+        description: Optional category assigned to one or more configurations.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Listing of Configurations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listConfigurationsResponse'
+              examples:
+                targets_and_computers:
+                  summary: Configuration with targets and computers
+                  value:
+                  - configurations:
+                    - id: 101
+                      name: Configuration Example
+                      description: Example configuration with both targets and computers
+                      template: Default
+                      category: ''
+                      targets:
+                      - 106
+                      - 142
+                      computers:
+                      - 5B05C769-6368-4608-A387-9525C4332B50
+                      - E594B78A-15AD-4BA5-AB9D-68905B657DC6
+                      hasInputs: false
+                      tasks:
+                      - taskNum: 0
+                        taskType: Collect
+                        impersonation: None
+                        label: ''
+                        Evidence:
+                          destination: c:\collection
+                          credentials: false
+                          createFileSafe: true
+                          compression: High
+                          segmentSize: 2
+                          segmentSizeUnit: GB
+                          validateCollection: true
+                        FileType:
+                          analyzeSignatures: false
+                          mode: Include
+                          extensions:
+                          - extension: ai
+                            collectAll: false
+                      - taskNum: 1
+                        taskType: Relocate
+                        impersonation: None
+                        label: ''
+                        SmartMover:
+                          destinationFolder: c:\collection
+                          destComputerName: AUSYD-L-NX0142
+                          destComputerId: E21287F5-9E96-6CFF-0624-056AFA28E902
+                          moveOrCopy: Move
+                          relocateData: true
+                          relocateLogs: true
+        '400':
+          description: Invalid Configuration ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Invalid Configuration ID supplied
+        '504':
+          description: Waiting for the model to load
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 504
+                id: 101
+                message: Waiting for the model to load
+    post:
+      tags:
+      - Collection Configuration
+      summary: Creates a new Collection Configuration based on an existing Collection Configuration
+      description: 'The new Collection Configuration is created with all tasks removed.
+
+
+        Tasks can be created in the new Collection Configuration by either creating a new task from scratch, or referencing an existing Task in any other Collection Configuration, which is then copied into the new Collection Configuration.
+
+
+        Copied tasks can be used as is, or modified.
+
+
+        **Note\:** credentials used for the destination are stored in the task (Collect or Relocate) part of a Collection Configuration, so if credentials are needed, the appropriate task should be copied into the new Collection Configuration.
+
+
+        ### The following objects vary depending on the value of taskType\:
+
+
+        ### taskType = Collect
+
+
+        If `parentConfigId` and `taskNum` values are *not* specified (i.e. a new task is being created), then an `Evidence` object must follow, with `FileType`, `DateRange`,
+
+        `AdvancedSearch`, `Hash`, `Volatile`, and `RAM` objects optional.
+
+
+        However, if a `parentConfigId` and `taskNum` *are* specified, then all following objects are optional, and required only to override what is already defined in the task being copied.
+
+
+        **Note\:** existing criteria within a task are retained. For example, copying a task that contains `FileType` criteria and then adding `DateRange` criteria will result in a task that has both `FileType` and `DateRange`.
+
+
+        ### taskType = Relocate
+
+
+        If `parentConfigId` and `taskNum` values are *not* specified (i.e. a new task is being created), then a `SmartMover` object must follow.
+
+
+        However, if `parentConfigId` and `taskNum` *are* specified, then no additional fields are required if the Relocate task is to be used ''as is''.
+
+
+        See the GET configurations call for a definition of the objects within a task.'
+      operationId: createConfiguration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createConfigurationRequest'
+            examples:
+              from_existing_task:
+                summary: Create a configuration based on an existing Configuration and its Task.
+                value:
+                  baseConfigId: -1
+                  newConfigName: some config name
+                  description: new description
+                  category: optional
+                  tasks:
+                  - parentConfigId: 101
+                    taskNum: 0
+                    taskType: Collect
+                    label: new Label
+      responses:
+        '200':
+          description: Configuration was created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createConfigurationResponse'
+              example:
+                id: 116
+                name: some config name
+                description: new description
+                template: Default
+                category: optional
+                targets: []
+                hasInputs: true
+                tasks:
+                - taskNum: 0
+                  taskType: Collect
+                  impersonation: None
+                  label: new Label
+                  Evidence:
+                    destination: c:\collection
+                    credentials: false
+                    createFileSafe: true
+                    compression: High
+                    segmentSize: 2
+                    segmentSizeUnit: GB
+                    validateCollection: true
+                  FileType:
+                    analyzeSignatures: false
+                    mode: Include
+                    extensions:
+                    - extension: contact
+                      collectAll: false
+                    - extension: dbx
+                      collectAll: false
+                    - extension: eml
+                      collectAll: false
+                    - extension: group
+                      collectAll: false
+                    - extension: idx
+                      collectAll: false
+                    - extension: MailDB
+                      collectAll: false
+                    - extension: mbx
+                      collectAll: false
+                    - extension: msf
+                      collectAll: false
+                    - extension: msg
+                      collectAll: false
+                    - extension: msmessagestore
+                      collectAll: false
+                    - extension: ns2
+                      collectAll: false
+                    - extension: ns3
+                      collectAll: false
+                    - extension: ns4
+                      collectAll: false
+                    - extension: nsf
+                      collectAll: false
+                    - extension: nws
+                      collectAll: false
+                    - extension: oeaccount
+                      collectAll: false
+                    - extension: ost
+                      collectAll: false
+                    - extension: pbx
+                      collectAll: false
+                    - extension: pst
+                      collectAll: false
+                    - extension: slt
+                      collectAll: false
+                    - extension: snm
+                      collectAll: false
+                    - extension: wab
+                      collectAll: false
+        '400':
+          description: No JSON body, config field missing, no new tasks, name is missing etc.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Invalid Configuration ID supplied
+  /v2/configurations/{id}:
+    delete:
+      tags:
+      - Collection Configuration
+      summary: Delete the Configuration
+      description: Delete the configuration identified by `{id}`
+      operationId: deleteConfiguration
+      parameters:
+      - name: id
+        in: path
+        description: Collection Configuration id
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Case was deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 200
+                id: 101
+                message: OK
+        '400':
+          description: Configuration {id} could not be deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Configuration {id} could not be deleted
+        '504':
+          description: Waiting for the model to load
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 504
+                id: 101
+                message: Waiting for the model to load
+components:
+  schemas:
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
+    Hash:
+      type: object
+      properties:
+        hashValue:
+          type: string
+          description: 32-character MD5 hash value
+        fileSize:
+          type: number
+          description: 'Optional file size.
+
+
+            If provided, will be used to match before calculating hash'
+        microHash:
+          type: string
+          description: 'Optional MD5 hash value of the first 64 KB of a file.
+
+
+            Used to match before calculating a full hash'
+    createConfigurationResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the new Collection Configuration
+        name:
+          type: string
+          description: name of the new Collection Configuration
+        description:
+          type: string
+          description: description of the new Collection Configuration
+        template:
+          type: string
+          description: template of the new Collection Configuration
+        category:
+          type: string
+          description: Optional category of the new Collection Configuration
+        targets:
+          type: array
+          description: Array of targets specified in this Collection Configuration
+          items:
+            $ref: '#/components/schemas/Target'
+        hasInputs:
+          type: boolean
+          description: whether any input paths are specified within any of the Targets or Computers in this Collection Configuration
+        tasks:
+          type: array
+          description: Array of tasks specified in this Collection Configuration
+          items:
+            $ref: '#/components/schemas/TaskCreated'
+    Configuration:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the collection configuration
+        name:
+          type: string
+          description: name of the collection configuration
+        description:
+          type: string
+          description: description of the collection configuration
+          nullable: true
+        template:
+          type: string
+          description: name of the Template used by the collection configuration
+          nullable: true
+        category:
+          type: string
+          description: name of the Category (optional value attached to a collection configuration)
+          nullable: true
+        targets:
+          type: array
+          description: array of Target IDs used in this collection configuration
+          items:
+            type: integer
+            description: Target ID
+          nullable: true
+        computers:
+          type: array
+          description: array of Computer GUIDs used in this collection configuration
+          items:
+            type: string
+            description: computer GUID
+          nullable: true
+        hasInputs:
+          type: boolean
+          description: true if any input paths exist within the targets or computers specified in this collection configuration
+        tasks:
+          type: array
+          description: array of Tasks used in this collection configuration
+          items:
+            $ref: '#/components/schemas/Task'
+    FileType:
+      type: object
+      description: describes the file type filters used in the collection (this object is optional)
+      properties:
+        analyzeSignatures:
+          type: boolean
+          description: when `true`, read the beginning of each file to determine file type.  When `false` use filename extension only to determine file type.
+        mode:
+          type: string
+          description: One of `Include` or `Exclude` - include or exclude the file types listed in the `extensions` array
+          enum:
+          - Include
+          - Exclude
+        extensions:
+          type: array
+          description: array of one or more file type extensions
+          items:
+            $ref: '#/components/schemas/Extension'
+    Evidence:
+      type: object
+      properties:
+        destination:
+          type: string
+          description: destination where evidence is to be saved
+        credentials:
+          type: boolean
+          description: Set to `true` if credentials are supplied to access the destination
+        createFileSafe:
+          type: boolean
+          description: Set to `true` to create a FileSafe, `false` save native copies of the files
+        compression:
+          type: string
+          description: Compression setting for saved data.  One of `None`, `Medium`, `High` (used only if createFileSafe = `true`)
+          enum:
+          - None
+          - Medium
+          - High
+        segmentSize:
+          type: integer
+          description: size of each FileSafe segment (used only if createFileSafe = `true`)
+        segmentSizeUnit:
+          type: string
+          description: unit of measure which applies to segmentSize.  One of `KB`, `MB`, or `GB` (used only if createFileSafe = `true`)
+          enum:
+          - KB
+          - MB
+          - GB
+        overwrite:
+          type: boolean
+          description: whether to overwrite existing files at the destination (used only if createFileSafe = `false`)
+        maintainFullPath:
+          type: boolean
+          description: whether to maintain the full path of the file at the destination (used only if createFieSafe = false)
+        validateCollection:
+          type: boolean
+          description: whether to validate the entire FileSafe after collection is completed
+    TaskCreated:
+      type: object
+      properties:
+        parentConfigId:
+          type: integer
+          description: Optional, id of the parent Collection Configuration of the new task to be copied. If omitted, the task is created from given params.
+        taskNum:
+          type: integer
+          description: Optional, id of the task to be copied (within the parent conf specified above).  Required if parentConfigId is specified.
+        taskType:
+          type: string
+          description: 'Type of task\: one of `Collect`, `Relocate`, `Deploy`, or `Launch` (currently only `Collect` and `Relocate` are supported).  NOTE\: If copying an Existing task, the `taskType` cannot be changed in the new task.'
+          enum:
+          - Collect
+          - Relocate
+          - Deploy
+          - Launch
+        label:
+          type: string
+          description: 'Optional, user-defined label for this job.
+
+
+            Can be used as search criteria for jobs.'
+    Task:
+      type: object
+      properties:
+        taskNum:
+          type: integer
+          description: 0-based index of tasks (jobs) to be run in this collection configuration
+        label:
+          type: string
+          description: 'user-defined label for this job.
+
+
+            Can be used as search criteria for jobs'
+        impersonation:
+          type: string
+          description: The enumeration value `None` or `Logged on User`
+          enum:
+          - None
+          - Logged on User
+        taskType:
+          type: string
+          description: 'The type of task.  One of `Collect`, `Relocate`, `Deploy` or `Launch`.
+
+            This value will determine which fields follow.'
+          enum:
+          - Collect
+          - Relocate
+          - Deploy
+          - Launch
+        Evidence:
+          $ref: '#/components/schemas/Evidence'
+        FileType:
+          $ref: '#/components/schemas/FileType'
+        DateRange:
+          type: object
+          properties:
+            dates:
+              type: array
+              description: array of one or more date criteria
+              items:
+                $ref: '#/components/schemas/DateCriteria'
+        AdvancedSearch:
+          type: object
+          properties:
+            keywords:
+              type: array
+              description: array of keywords
+              items:
+                $ref: '#/components/schemas/Keyword'
+        Hash:
+          type: object
+          properties:
+            hashType:
+              type: string
+              description: always `MD5`
+              enum:
+              - MD5
+            hashes:
+              type: array
+              description: array of hash values used to identify files to be collected
+              items:
+                $ref: '#/components/schemas/Hash'
+        Volatile:
+          type: object
+          description: Describes a volatile configuration
+          properties:
+            collectVolatile:
+              type: boolean
+              description: Whether to collect volatile information,  When `false` the remaining fields are ignored
+            collectHandles:
+              type: boolean
+              description: Whether to collect handles as part of the collection (collectVolatile must be `true`)
+            collectionScreenShots:
+              type: boolean
+              description: Whether to capture screen shots of all windows (requires impersonation, collectVolatile must be `true`)
+            screenShotFormat:
+              type: string
+              description: The graphic file format to save screen shot images.  One of `PNG` or `JPG` (collectScreenShots must be `true`)
+              enum:
+              - PNG
+              - JPG
+        RAM:
+          type: object
+          description: Describes RAM collection
+          properties:
+            collectRAM:
+              type: boolean
+              description: When `true` saves a bit-for-bit image of the RAM
+        SmartMover:
+          type: object
+          description: For a `Deploy` or `Relocate` task.  Specifies the copying or moving of files from one ECC Client to another
+          properties:
+            destinationFolder:
+              type: string
+              description: folder on the destination computer where evidence is to be copied
+            destComputerName:
+              type: string
+              description: name of the destination computer
+            destComputerId:
+              type: string
+              description: GUID of the destination computer
+            moveOrCopy:
+              type: string
+              description: '`Move` or `Copy`.
+
+
+                Either setting will copy files to the destination computer.  `Move` will delete evidence from the source after the copy is complete.'
+              enum:
+              - Move
+              - Copy
+            relocateData:
+              type: boolean
+              description: When `true` relocate the evidence (data files)
+            relocateLogs:
+              type: boolean
+              description: When `true` relocate the collection logs
+    TargetInputs:
+      type: object
+      properties:
+        types:
+          type: string
+          description: Path, Local Path, or AutoDetect
+          enum:
+          - Path
+          - Local Path
+          - AutoDetect
+        location:
+          type: string
+          description: full path or AutoDetect setting for the source
+        exclusion:
+          type: string
+          description: excluded subfolders in the location (only for Path type)
+    TaskToCreate:
+      type: object
+      properties:
+        parentConfigId:
+          type: integer
+          description: optional, id of the parent Collection Configuration which holds the task to be copied. If omitted, the task is created from given parameters.
+        taskNum:
+          type: integer
+          description: optional, id of the task to be copied (within the parent conf specified above).  Required if `parentConfigId` is specified.
+        taskType:
+          type: string
+          description: 'type of task\: one of `Collect`, `Relocate`, `Deploy`, or `Launch` (currently only `Collect` and `Relocate` are supported).
+
+
+            **Note\:** If copying an existing task, the `taskType` cannot be changed in the new task.'
+          enum:
+          - Collect
+          - Relocate
+          - Deploy
+          - Launch
+        label:
+          type: string
+          description: 'optional, user-defined label for this job.
+
+
+            Can be used as search criteria for jobs'
+        impersonation:
+          type: string
+          description: None or Logged on User
+          enum:
+          - None
+          - Logged on User
+        Evidence:
+          $ref: '#/components/schemas/Evidence'
+        FileType:
+          $ref: '#/components/schemas/FileType'
+        DateRange:
+          type: object
+          properties:
+            dates:
+              type: array
+              description: array of one or more date criteria
+              items:
+                $ref: '#/components/schemas/DateCriteria'
+        AdvancedSearch:
+          type: object
+          properties:
+            keywords:
+              type: array
+              description: array of keywords
+              items:
+                $ref: '#/components/schemas/Keyword'
+        Hash:
+          type: object
+          properties:
+            hashType:
+              type: string
+              description: always MD5
+              enum:
+              - MD5
+            hashes:
+              type: array
+              description: array of hashes
+              items:
+                $ref: '#/components/schemas/Hash'
+        Volatile:
+          type: object
+          description: Describes a volatile configuration
+          properties:
+            collectVolatile:
+              type: boolean
+              description: Whether to collect volatile information,  When `false` the remaining fields are ignored
+            collectHandles:
+              type: boolean
+              description: Whether to collect handles as part of the collection (collectVolatile must be `true`)
+            collectionScreenShots:
+              type: boolean
+              description: Whether to capture screen shots of all windows (requires impersonation, collectVolatile must be `true`)
+            screenShotFormat:
+              type: string
+              description: The graphic file format to save screen shot images.  One of `PNG` or `JPG` (collectScreenShots must be `true`)
+              enum:
+              - PNG
+              - JPG
+        RAM:
+          type: object
+          description: Describes RAM collection
+          properties:
+            collectRAM:
+              type: boolean
+              description: When `true` saves a bit-for-bit image of the RAM
+        SmartMover:
+          type: object
+          description: For a `Deploy` or `Relocate` task.  Specifies the copying or moving of files from one ECC Client to another
+          properties:
+            destinationFolder:
+              type: string
+              description: folder on the destination computer where evidence is to be copied
+            destComputerName:
+              type: string
+              description: name of the destination computer
+            destComputerId:
+              type: string
+              description: GUID of the destination computer
+            moveOrCopy:
+              type: string
+              description: 'Move or Copy.
+
+
+                Move to delete evidence from the source after the copy is complete'
+              enum:
+              - Move
+              - Copy
+            relocateData:
+              type: boolean
+              description: true to relocate the evidence (data)
+            relocateLogs:
+              type: boolean
+              description: true to relocate the logs
+    Target:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the Target
+        name:
+          type: string
+          description: name of the target
+        description:
+          type: string
+          description: description of the target
+        custodianId:
+          type: integer
+          description: id of the Custodian this target belongs to
+        computerName:
+          type: string
+          description: name of the Computer this target belongs to
+        computerGUID:
+          type: string
+          description: GUID of the Computer this target belongs to
+        Inputs:
+          type: array
+          description: array of inputs in the target
+          items:
+            $ref: '#/components/schemas/TargetInputs'
+    Extension:
+      type: object
+      description: Describes a File Extension
+      properties:
+        extension:
+          type: string
+          description: file type extension (do not include the preceding dot)
+        collectAll:
+          type: boolean
+          description: If `true`, collect this file type regardless of keyword search
+    Keyword:
+      type: object
+      properties:
+        expressionName:
+          type: string
+          description: human-readable description of the search expression
+        expression:
+          type: string
+          description: search expression
+        caseSensitive:
+          type: boolean
+          description: When `true` specifies the search should be case-sensitive
+        regExpression:
+          type: boolean
+          description: When `true` specifies the `expression` is interpreted as a Regular Expression
+    listConfigurationsResponse:
+      type: object
+      properties:
+        configurations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Configuration'
+    createConfigurationRequest:
+      type: object
+      properties:
+        baseConfigId:
+          type: integer
+          description: Id of an existing Collection Configuration to use as the basis for a new Collection Configuration, or -1 to create a new Collection Configuration from scratch
+        newConfigName:
+          type: string
+          description: New Collection Configuration name
+        description:
+          type: string
+          description: New Collection Configuration description
+        category:
+          type: string
+          description: Optional. A Category associated with this Collection Configuration (a GET call can filter by Category)
+        tasks:
+          type: array
+          description: Array of new tasks to add to the new collection configuration.  At least one task must be specified.
+          items:
+            $ref: '#/components/schemas/TaskToCreate'
+    DateCriteria:
+      type: object
+      properties:
+        type:
+          type: string
+          description: 'One of `From` or `Last`.
+
+
+            `From` specifies absolute start/end dates.
+
+
+            `Last` specifies last number of days back from the current date'
+          enum:
+          - From
+          - Last
+        useGMT:
+          type: boolean
+          description: '`true` specifies GMT for time, `false` specifies local time'
+        startDate:
+          type: string
+          description: inclusive start date in the format `yyyy-mm-ddThh:mm:ss` (only used if type = `From`)
+        endDate:
+          type: string
+          description: inclusive end date in the format `yyyy-mm-ddThh:mm:ss` (only used if type = `From`)
+        numDays:
+          type: integer
+          description: number of days back from the current date (only used if type = `Last`)
+        checkCreation:
+          type: boolean
+          description: When `true`, apply date criteria to creation date
+        checkModification:
+          type: boolean
+          description: When `true` apply date criteria to modification date
+        checkAccess:
+          type: boolean
+          description: When `true`, apply date criteria to access date
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

@@ -1,0 +1,250 @@
+openapi: 3.0.1
+info:
+  title: NUIX ECC REST API Command Reference Case Custodian API
+  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.
+
+
+    **Note\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.
+
+
+    **Note\:** This command reference has been updated for Nuix ECC version 9.12.0.'
+  contact:
+    name: Nuix
+    url: https://nuix.github.io/sdk-docs/latest/
+    email: APISupport@nuix.com
+  license:
+    name: Licence
+    url: https://www.nuix.com/sites/default/files/20200210_EULA_v1.pdf
+  version: ${customer.version}
+servers:
+- url: '{protocol}://{address}:{port}/api/ecc'
+  variables:
+    protocol:
+      default: https
+      description: protocol for communication
+      enum:
+      - http
+      - https
+    address:
+      default: 127.0.0.1
+      description: The location which the ECC resides
+    port:
+      default: '80'
+      description: 80, 443 or alternative
+security:
+- BasicAuth: []
+tags:
+- name: Custodian
+paths:
+  /v2/custodians:
+    get:
+      tags:
+      - Custodian
+      summary: Lists Custodian/s
+      description: Lists all custodians on the connected server
+      operationId: listCustodians
+      responses:
+        '200':
+          description: Successful Listing of Custodians
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listCustodianResponse'
+              example:
+                custodians:
+                - id: 106
+                  name: Sarah Smith
+                  groups:
+                  - id: 6
+                    name: Management
+                  - id: 8
+                    name: Accounting
+    post:
+      tags:
+      - Custodian
+      summary: Create a new Custodian
+      description: Create a new Custodian.
+      operationId: createCustodian
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createCustodianRequest'
+            example:
+              custodianName: Mary O'Connor
+              description: CEO, Americas
+              groups:
+              - groupId: 16
+              - groupId: 18
+      responses:
+        '200':
+          description: Custodian was created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                create_custodian_success:
+                  summary: Normal success response
+                  value:
+                    code: 200
+                    id: 100
+                    message: OK
+                create_custodian_with_warn_1:
+                  summary: Success with warning response 1
+                  value:
+                    code: 200
+                    id: 100
+                    message: Failed adding the custodian to one or more groups
+                create_custodian_with_warn_2:
+                  summary: Success with warning response 2
+                  value:
+                    code: 200
+                    id: 100
+                    message: One or more of the specified groups does not exist
+        '400':
+          description: Failed to create Custodian
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                create_custodian_failue_json:
+                  summary: No JSON body
+                  value:
+                    code: 400
+                    id: 101
+                    message: No json body was provided.
+                create_custodian_failue_name:
+                  summary: Missing Custodian name
+                  value:
+                    code: 400
+                    id: 101
+                    message: custodianName field is missing.  A new custodian name must be provided
+    delete:
+      tags:
+      - Custodian
+      summary: Delete a Custodian
+      description: 'Delete a Custodian.
+
+
+        **Note\:**  When the option `deleteTargets` is set to `true` any targets associated with
+
+        this custodian will be deleted.  When `deleteTargets` is `false` any targets associated with
+
+        this custodian will be reassigned to the "unassigned" custodian.'
+      operationId: deleteCustodian
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                custodianId:
+                  type: integer
+                  description: id of the Custodian to be deleted
+                deleteTargets:
+                  type: boolean
+                  description: true if associated targets should be deleted
+            example:
+              custodianId: 15
+              deleteTargets: false
+      responses:
+        '200':
+          description: Custodian was deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 200
+                id: 100
+                message: OK
+        '400':
+          description: Failed to delete Custodian
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                failed_custodian_delete_json:
+                  summary: No json body
+                  value:
+                    code: 400
+                    id: 101
+                    message: No json body was provided.
+                failed_custodian_delete_no_id:
+                  summary: No custodian ID specified
+                  value:
+                    code: 400
+                    id: 101
+                    message: custodian ID field was not provided.
+                failed_custodian_delete_not_found:
+                  summary: Specified custodian not found
+                  value:
+                    code: 400
+                    id: 101
+                    message: custodian ID {id} was not found.
+components:
+  schemas:
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
+    createCustodianRequest:
+      type: object
+      properties:
+        custodianName:
+          type: string
+          description: name of the custodian to be created
+        description:
+          type: string
+          description: optional, description of the custodian to be created
+        groups:
+          type: array
+          description: optional, array of ids(s) of group(s) this custodian will be added to
+          items:
+            type: object
+            properties:
+              groupId:
+                type: string
+                description: id of the group to add this custodian to
+    listCustodianResponse:
+      type: object
+      properties:
+        custodians:
+          type: array
+          description: List of Custodians.
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: id of the custodian
+              name:
+                type: string
+                description: name of the custodian
+              groups:
+                type: array
+                description: array of groups that this custodian belongs to
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: id of the group
+                    name:
+                      type: string
+                      description: name of the group
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

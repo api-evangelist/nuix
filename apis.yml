@@ -4,7 +4,20 @@ description: Nuix is an investigative analytics and intelligence platform provid
   REST APIs for processing unstructured data, managing forensic cases, running entity
   extraction, conducting digital investigations, and supporting eDiscovery and compliance
   workflows across legal, security, and law enforcement domains.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: enterprise
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Enterprise · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/nuix.png
 url: https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -21,10 +34,10 @@ tags:
 apis:
 - aid: nuix:nuix-core-engine-rest-api
   name: Nuix Core Engine REST API
-  description: Primary RESTful service for processing unstructured data, managing
-    forensic cases, ingesting evidence, running search queries, performing OCR and
-    entity extraction, and orchestrating asynchronous processing jobs within Nuix
-    Core Engine.
+  description: >-
+    Primary RESTful service for processing unstructured data, managing forensic cases, ingesting evidence,
+    running search queries, performing OCR and entity extraction, and orchestrating asynchronous processing
+    jobs within Nuix Core Engine.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://developer.nuix.com/latest/
   baseURL: https://localhost:4444
@@ -38,17 +51,19 @@ apis:
   - type: Documentation
     url: https://developer.nuix.com/latest/
   - type: OpenAPI
-    url: https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/openapi/nuix-nuix-core-engine-rest-api-openapi.yml
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/openapi/nuix-nuix-core-engine-rest-api-openapi.yml
   contact:
   - FN: Nuix Developer Program
     url: https://www.nuix.com/nuix-developer-program
 - aid: nuix:nuix-discover-connect-api
   name: Nuix Discover Connect API
-  description: GraphQL-based API for querying and managing discovery data within Nuix
-    Discover, supporting queries and mutations for document review, production sets,
-    and legal analytics workflows.
+  description: >-
+    GraphQL-based API for querying and managing discovery data within Nuix Discover, supporting queries
+    and mutations for document review, production sets, and legal analytics workflows.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
+  humanURL: >-
+    https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
   baseURL: https://discover.nuix.com/api
   tags:
   - GraphQL
@@ -57,7 +72,8 @@ apis:
   - Legal
   properties:
   - type: Documentation
-    url: https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
+    url: >-
+      https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
   - url: graphql/nuix-graphql.md
     type: GraphQL
   - url: graphql/nuix-schema.graphql
@@ -65,27 +81,150 @@ apis:
   contact:
   - FN: Nuix Support
     url: https://nuix.service-now.com/support
-- aid: nuix:nuix-ecc-rest-api
-  name: Nuix Enterprise Collection Center REST API
-  description: REST API for managing endpoint evidence collection operations within
-    Nuix Enterprise Collection Center, enabling remote collection, configuration,
-    and task orchestration across enterprise endpoints.
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
-  baseURL: https://ecc.nuix.com/api
+- aid: nuix:nuix-case-api
+  name: Nuix Case API
+  description: The Case API from Nuix — 3 operation(s) for case.
+  humanURL: https://developer.nuix.com/latest/
+  baseURL: https://localhost:4444
   tags:
-  - Endpoint Collection
-  - Security
-  - Forensics
-  - Enterprise
+  - Case
   properties:
-  - type: Documentation
-    url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
   - type: OpenAPI
-    url: https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/openapi/nuix-nuix-ecc-rest-api-openapi.yml
-  contact:
-  - FN: Nuix Support
-    url: https://nuix.service-now.com/support
+    url: openapi/nuix-case-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+- aid: nuix:nuix-collection-and-survey-api
+  name: Nuix Collection and Survey API
+  description: The Collection and Survey API from Nuix — 4 operation(s) for collection and survey.
+  humanURL: https://developer.nuix.com/latest/
+  baseURL: https://localhost:4444
+  tags:
+  - Collection and Survey
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-collection-and-survey-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+- aid: nuix:nuix-collection-configuration-api
+  name: Nuix Collection Configuration API
+  description: >-
+    The Collection Configuration API from Nuix — 2 operation(s) for collection configuration.
+  humanURL: https://developer.nuix.com/latest/
+  baseURL: https://localhost:4444
+  tags:
+  - Collection Configuration
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-collection-configuration-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+- aid: nuix:nuix-computer-api
+  name: Nuix Computer API
+  description: The Computer API from Nuix — 1 operation(s) for computer.
+  humanURL: https://developer.nuix.com/latest/
+  baseURL: https://localhost:4444
+  tags:
+  - Computer
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-computer-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+- aid: nuix:nuix-computer-configuration-api
+  name: Nuix Computer Configuration API
+  description: The Computer Configuration API from Nuix — 2 operation(s) for computer configuration.
+  humanURL: https://developer.nuix.com/latest/
+  baseURL: https://localhost:4444
+  tags:
+  - Computer Configuration
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-computer-configuration-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+- aid: nuix:nuix-custodian-api
+  name: Nuix Custodian API
+  description: The Custodian API from Nuix — 1 operation(s) for custodian.
+  humanURL: https://developer.nuix.com/latest/
+  baseURL: https://localhost:4444
+  tags:
+  - Custodian
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-custodian-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+- aid: nuix:nuix-group-api
+  name: Nuix Group API
+  description: The Group API from Nuix — 2 operation(s) for group.
+  humanURL: https://developer.nuix.com/latest/
+  baseURL: https://localhost:4444
+  tags:
+  - Group
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-group-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+- aid: nuix:nuix-job-api
+  name: Nuix Job API
+  description: The Job API from Nuix — 3 operation(s) for job.
+  humanURL: https://developer.nuix.com/latest/
+  baseURL: https://localhost:4444
+  tags:
+  - Job
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-job-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+- aid: nuix:nuix-log-api
+  name: Nuix Log API
+  description: The Log API from Nuix — 1 operation(s) for log.
+  humanURL: https://developer.nuix.com/latest/
+  baseURL: https://localhost:4444
+  tags:
+  - Log
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-log-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+- aid: nuix:nuix-target-api
+  name: Nuix Target API
+  description: The Target API from Nuix — 3 operation(s) for target.
+  humanURL: https://developer.nuix.com/latest/
+  baseURL: https://localhost:4444
+  tags:
+  - Target
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-target-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+- aid: nuix:nuix-utility-api
+  name: Nuix Utility API
+  description: The Utility API from Nuix — 3 operation(s) for utility.
+  humanURL: https://developer.nuix.com/latest/
+  baseURL: https://localhost:4444
+  tags:
+  - Utility
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-utility-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
 common:
 - type: AgenticAccess
   url: agentic-access/nuix-agentic-access.yml

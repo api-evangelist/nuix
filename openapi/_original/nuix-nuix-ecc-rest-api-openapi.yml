@@ -1,0 +1,3713 @@
+openapi: 3.0.1
+info:
+  title: NUIX ECC REST API Command Reference
+  description: |-
+    Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.
+    
+    **Note\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.
+    
+    **Note\:** This command reference has been updated for Nuix ECC version 9.12.0.
+  contact:
+    name: Nuix
+    url: https://nuix.github.io/sdk-docs/latest/
+    email: APISupport@nuix.com
+  license:
+    name: Licence
+    url: https://www.nuix.com/sites/default/files/20200210_EULA_v1.pdf
+  version: ${customer.version}
+paths:
+  /v2/cases:
+    get:
+      tags:
+        - Case
+      summary: Lists all cases
+      description: |-
+        Lists all cases defined on the connected server.
+
+        **Note:** both open and closed cases are listed.
+      operationId: listCasesAll
+      responses:
+        '200':
+          description: Successful Listing of cases
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listCasesResponse'
+              example:
+                cases:
+                  - id: 1
+                    name: Default
+                    status: Open
+                  - id: 100
+                    name: Testing
+                    status: Closed
+                  - id: 103
+                    name: latest
+                    status: Open
+    post:
+      tags:
+        - Case
+      summary: Create a new case
+      description: |-
+        Create a new case.
+
+        id is always 0 when submitting this request
+      operationId: createCase
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createCaseRequest'
+            example:
+              id: 0
+              name: New Case Name
+      responses:
+        '200':
+          description: Case was created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 200
+                id: 105
+                message: OK
+  /v2/cases/{caseId}:
+    get:
+      tags:
+        - Case
+      summary: Lists the specified case
+      description: |-
+        Lists information about the specified case.
+      operationId: listCases
+      parameters:
+        - in: path
+          name: caseId
+          description: Case id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Successful Listing of cases
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listCasesResponse'
+              example:
+                cases:
+                  - id: 103
+                    name: latest
+                    status: Open
+  /v2/cases/{id}:
+    put:
+      tags:
+        - Case
+      summary: Rename a case and-or change case status
+      description: Rename and/or change the status of the specfied case
+      operationId: modifyCase
+      parameters:
+        - name: id
+          in: path
+          description: The id of the Case to rename or change status
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/modifyCaseRequest'
+            examples:
+              change_case_name:
+                summary: Change case name
+                value:
+                  name: Revised Case Name
+              cloase_a_case:
+                summary: Rename and close a case
+                value:
+                  name: Investigation XYZ - Completed
+                  status: Closed
+      responses:
+        '200':
+          description: Case was modified successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 200
+                id: 101
+                message: OK
+        '400':
+          description: Failed to modify case
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                case_id_not_found:
+                  summary: 'Case ID not found'
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'Case ID {id} was not found.'
+                case_name_and_status_missing:
+                  summary: 'Neither case name nor status provided'
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'Case not updated\: neither status nor name were provided.'
+        '504':
+          description: Waiting for the model to load
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 504
+                id: 101
+                message: Waiting for the model to load
+    delete:
+      tags:
+        - Case
+      summary: Delete a case
+      description: |-
+        Deletes the case identified by the case ignored.
+
+        **Note\:** Only closed cases can be deleted.
+
+        **Warning:** Any jobs associated with the specified case
+        will also be deleted.
+      operationId: deleteCase
+      parameters:
+        - name: id
+          in: path
+          description: Case identification token
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Case was deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 200
+                id: 101
+                message: OK
+        '400':
+          description: Specified Case ID is [ invalid | not found | in use ] and cannot be deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Invalid Case ID supplied
+        '500':
+          description: Delete Case command failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 500
+                id: 101
+                message: Delete Case Command failed
+        '504':
+          description: Waiting for the model to load
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 504
+                id: 101
+                message: Waiting for the model to load
+  /v2/computers:
+    post:
+      tags:
+        - Computer
+      summary: Lists computers (endpoints) with ECC installed
+      description: |-
+        Lists computers (endpoints) with ECC Client or ECC Admin Console installed.
+        If the `computerId` field in the JSON body is provided, all other fields are ignored, as only that single computer will be returned.  Otherwise a list of computers will be returned matching the criteria provided in the `filters` section.
+
+        Computer Fields available for filters and sorting\:
+
+        | Field name       | Type    | Description / Possible Values   |
+        | ---------------- | ------- | ------------------------------- |
+        | ID               | long    | id of computer                  |
+        | Name             | String  | name of the computer            |
+        | Description      | String  | computer description (may be null)                             |
+        | ConfigId         | String  | id of the Computer Configuration associated with this computer |
+        | Purpose          | String  | `Client` or `Admin Console`     |
+        | Presence         | String  | `Online`, `Nearline` or `Offline` - see note, below            |
+        | PairingState     | String  | `Paired`, `Awaiting` or `Denied`  |
+        | Staging          | Boolean | `true` if the computer is a staging computer                   |
+        | TimeZoneID       | String  |                                 |
+        | TimeZoneOffset   | String  |                                 |
+        | FirstContactTime | String  | date/time of first contact in the format `yyyy-mm-ddThh:mm:ss` |
+        | LastContactTime  | String  | date/time of last contact in the format `yyyy-mm-ddThh:mm:ss`  |
+        | UUID             | String  | GUID uniquely identifying this computer                        |
+        | OSName           | String  | name of the OS                  |
+        | SearchEnabled    | Boolean | `true` specifies  Advanced Search is enabled on this computer  |
+        | ClientParameters | String  |                                 |
+        | ClientPublicKey  | String  |                                 |
+        | Config           | long    |                                 |
+        | ConfigName       | String  |                                 |
+        | FullName         | String  | name of the computer including domain                          |
+        | History          | String  |                                 |
+        | LastUser         | String  | last logged in username         |
+        | OSName           | String  | name of the OS                  |
+        | PeerIP           | String  |                                 |
+        | ServerParameters | String  |                                 |
+        | ServerPrivateKey | String  |                                 |
+        | ServerPublicKey  | String  |                                 |
+        **Note\:** Presence values are case-sensitive: they must be `Nearline`, `Online` or `Offline` in a request body. Values returned for Presence however, are returned in ALL UPPERCASE.
+      operationId: listComputersByFilter
+      parameters:
+        - name: offset
+          in: query
+          description: offset (0-based) into the list of computers at which retrieval should start
+          required: false
+          schema:
+            type: integer
+        - name: version
+          in: query
+          description: |-
+            version of the Jobs table from the last call to this function.
+
+            The version of the table is returned in the response body for this query in the field `tableVersion`.
+
+            If `version` is supplied, it is compared to the current version of the Jobs table.
+
+            If the version numbers match, there is no updated data since the last call, 
+            and the query is aborted with a 204, 'No Content.' response code.
+          required: false
+          schema:
+            type: integer
+        - name: countOnly
+          in: query
+          description: |-
+            if `true`, the total count for this query (ignoring `limit` and `offset`) is returned in the Response Body, with no other data.
+
+            This should be used ahead of the actual query to determine the total number of records in the response.
+          required: false
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/listComputerRequest'
+            example:
+              limit: -1
+              sortBy: Name
+              filters:
+                - name: Presence
+                  value: Online
+                - name: Purpose
+                  value: Client
+      responses:
+        '200':
+          description: Computer Listing was submitted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tableVersion:
+                    type: integer
+                    description: |-
+                      current version of the computers table.
+
+                      Use this in the query field `version` to prevent unneeded queries
+                  totalCount:
+                    type: integer
+                    description: total number of computers for this response, as if `limit` was not provided
+                  startRow:
+                    type: integer
+                    description: starting row of this response within the total count
+                    nullable: true
+                  endRow:
+                    type: integer
+                    description: ending row of this response within the total count
+                    nullable: true
+                  next:
+                    type: string
+                    description: |-
+                      url to get the next set of responses.
+
+                      Included only if `endRow` does not include all available responses.
+                  computers:
+                    type: array
+                    description: array of computers in the response
+                    items:
+                      $ref: '#/components/schemas/Computer'
+        '204':
+          description: No Content/Match
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 204
+                id: 101
+                message: No Content
+        '400':
+          description: Computer ID not found/Field was not found/Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Invalid Computer ID supplied
+  /v2/compConfigurations:
+    get:
+      tags:
+        - Computer Configuration
+      summary: Returns all Computer Configurations.
+      description: |-
+        Returns all Computer Configurations.  A Computer Configuration can be
+        associated with multiple Computers.
+      operationId: listComputerConfigsAll
+      responses:
+        '200':
+          description: Computer Configuration submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listComputerConfResponse'
+              example:
+                compConfigurations:
+                  - id: 2
+                    name: Comp Config - Minimal Status
+                    description: Comp Config with infrequent status updates
+                    keepAliveInterval: 90
+                    keepAliveTimeout: 30
+                    resourceWaitTime: 86400
+                    jobWaitTime:
+                    startJobsWaitTime: 1
+                    statusUpdateWaitTime: 600
+                    systemInfoUpdateWaitTime: 86400
+                    minPortRange: 0
+                    maxPortRange: 65535
+                    enableLogs: false
+                    throttleOutput: false
+                    maxBandwidthMbps: 50
+                    altDestination: 
+                    altDestHasCredentials: false
+                  - id: 6
+                    name: Comp Config - Spare Server
+                    description: Comp Config with alt destination set to Spare Server
+                    keepAliveInterval: 90
+                    keepAliveTimeout: 30
+                    resourceWaitTime: 86400
+                    jobWaitTime:
+                    startJobsWaitTime: 1
+                    statusUpdateWaitTime: 60
+                    systemInfoUpdateWaitTime: 86400
+                    minPortRange: 0
+                    maxPortRange: 65535
+                    enableLogs: false
+                    throttleOutput: false
+                    maxBandwidthMbps: 50
+                    altDestination: \\SPARE\CollectionShare
+                    altDestHasCredentials: true
+        '400':
+          description: error response - computer configuration not retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                confid_not_found:
+                  summary: Computer Configuration ID not found
+                  value:
+                    code: 400
+                    id: 101
+                    message: Computer Configuration ID was not found
+  /v2/compConfigurations/{confid}:
+    get:
+      tags:
+        - Computer Configuration
+      summary: Returns the specified Computer Configuration.
+      description: Returns the Computer Configuration specified in the URL by `confid`, i.e. the Computer Configuration id.
+      operationId: listComputerConfigsOne
+      parameters:
+        - name: confid
+          in: query
+          description: ID of the Computer Configuration to get
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Computer Configuration submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listComputerConfResponse'
+              example:
+                compConfigurations:
+                  - id: 6
+                    name: Comp Config - Spare Server
+                    description: Comp Config with alt destination set to Spare Server
+                    keepAliveInterval: 90
+                    keepAliveTimeout: 30
+                    resourceWaitTime: 86400
+                    jobWaitTime:
+                    startJobsWaitTime: 1
+                    statusUpdateWaitTime: 60
+                    systemInfoUpdateWaitTime: 86400
+                    minPortRange: 0
+                    maxPortRange: 65535
+                    enableLogs: false
+                    throttleOutput: false
+                    maxBandwidthMbps: 50
+                    altDestination: \\SPARE\CollectionShare
+                    altDestHasCredentials: true
+        '400':
+          description: error response - computer configuration not retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                confid_not_found:
+                  summary: Computer Configuration ID not found
+                  value:
+                    code: 400
+                    id: 101
+                    message: Computer Configuration ID was not found
+  /v2/configurations:
+    get:
+      tags:
+        - Collection Configuration
+      summary: Lists all Collection Configurations
+      description: |-
+        Lists all Collection Configurations defined on the connected server, or a filtered list if optional query params are used.
+
+        **Note\:** In the response body, a Collect task type will be followed by an Evidence object, and optionally a FileType, DateRange, AdvancedSearch, Hash, Volatile, and RAM object.
+      operationId: listConfigurations
+      parameters:
+        - name: id
+          in: query
+          description: |-
+            The id of the configuration to list.
+
+            **Note\:** if `id` is specified, the `category` query parameter is ignored.
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: category
+          in: query
+          description: Optional category assigned to one or more configurations.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful Listing of Configurations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listConfigurationsResponse'
+              examples:
+                targets_and_computers:
+                  summary: Configuration with targets and computers
+                  value:
+                  - configurations:
+                      - id: 101
+                        name: Configuration Example
+                        description: Example configuration with both targets and computers
+                        template: Default
+                        category: ''
+                        targets:
+                          - 106
+                          - 142
+                        computers:
+                          - "5B05C769-6368-4608-A387-9525C4332B50"
+                          - "E594B78A-15AD-4BA5-AB9D-68905B657DC6"
+                        hasInputs:
+                          false
+                        tasks:
+                          - taskNum: 0
+                            taskType: Collect
+                            impersonation: None
+                            label: ''
+                            Evidence:
+                              destination: c:\collection
+                              credentials: false
+                              createFileSafe: true
+                              compression: High
+                              segmentSize: 2
+                              segmentSizeUnit: GB
+                              validateCollection: true
+                            FileType:
+                              analyzeSignatures: false
+                              mode: Include
+                              extensions:
+                                - extension: ai
+                                  collectAll: false
+                          - taskNum: 1
+                            taskType: Relocate
+                            impersonation: None
+                            label: ''
+                            SmartMover:
+                              destinationFolder: c:\collection
+                              destComputerName: AUSYD-L-NX0142
+                              destComputerId: E21287F5-9E96-6CFF-0624-056AFA28E902
+                              moveOrCopy: Move
+                              relocateData: true
+                              relocateLogs: true
+        '400':
+          description: Invalid Configuration ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Invalid Configuration ID supplied
+        '504':
+          description: Waiting for the model to load
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 504
+                id: 101
+                message: Waiting for the model to load
+    post:
+      tags:
+        - Collection Configuration
+      summary: Creates a new Collection Configuration based on an existing Collection Configuration
+      description: |-
+        The new Collection Configuration is created with all tasks removed.
+
+        Tasks can be created in the new Collection Configuration by either creating a new task from scratch, or referencing an existing Task in any other Collection Configuration, which is then copied into the new Collection Configuration.
+
+        Copied tasks can be used as is, or modified.
+
+        **Note\:** credentials used for the destination are stored in the task (Collect or Relocate) part of a Collection Configuration, so if credentials are needed, the appropriate task should be copied into the new Collection Configuration.
+
+        ### The following objects vary depending on the value of taskType\:
+        
+        ### taskType = Collect
+        
+        If `parentConfigId` and `taskNum` values are *not* specified (i.e. a new task is being created), then an `Evidence` object must follow, with `FileType`, `DateRange`,
+        `AdvancedSearch`, `Hash`, `Volatile`, and `RAM` objects optional.
+
+        However, if a `parentConfigId` and `taskNum` *are* specified, then all following objects are optional, and required only to override what is already defined in the task being copied.
+
+        **Note\:** existing criteria within a task are retained. For example, copying a task that contains `FileType` criteria and then adding `DateRange` criteria will result in a task that has both `FileType` and `DateRange`.
+
+        ### taskType = Relocate
+        
+        If `parentConfigId` and `taskNum` values are *not* specified (i.e. a new task is being created), then a `SmartMover` object must follow.
+
+        However, if `parentConfigId` and `taskNum` *are* specified, then no additional fields are required if the Relocate task is to be used 'as is'.
+
+        See the GET configurations call for a definition of the objects within a task.
+      operationId: createConfiguration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createConfigurationRequest'
+            examples:
+              from_existing_task:
+                summary: Create a configuration based on an existing Configuration and its Task.
+                value:
+                  baseConfigId: -1
+                  newConfigName: some config name
+                  description: new description
+                  category: optional
+                  tasks:
+                    - parentConfigId: 101
+                      taskNum: 0
+                      taskType: Collect
+                      label: new Label
+      responses:
+        '200':
+          description: Configuration was created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createConfigurationResponse'
+              example:
+                id: 116
+                name: some config name
+                description: new description
+                template: Default
+                category: optional
+                targets: []
+                hasInputs: true
+                tasks:
+                  - taskNum: 0
+                    taskType: Collect
+                    impersonation: None
+                    label: new Label
+                    Evidence:
+                      destination: c:\collection
+                      credentials: false
+                      createFileSafe: true
+                      compression: High
+                      segmentSize: 2
+                      segmentSizeUnit: GB
+                      validateCollection: true
+                    FileType:
+                      analyzeSignatures: false
+                      mode: Include
+                      extensions:
+                        - extension: contact
+                          collectAll: false
+                        - extension: dbx
+                          collectAll: false
+                        - extension: eml
+                          collectAll: false
+                        - extension: group
+                          collectAll: false
+                        - extension: idx
+                          collectAll: false
+                        - extension: MailDB
+                          collectAll: false
+                        - extension: mbx
+                          collectAll: false
+                        - extension: msf
+                          collectAll: false
+                        - extension: msg
+                          collectAll: false
+                        - extension: msmessagestore
+                          collectAll: false
+                        - extension: ns2
+                          collectAll: false
+                        - extension: ns3
+                          collectAll: false
+                        - extension: ns4
+                          collectAll: false
+                        - extension: nsf
+                          collectAll: false
+                        - extension: nws
+                          collectAll: false
+                        - extension: oeaccount
+                          collectAll: false
+                        - extension: ost
+                          collectAll: false
+                        - extension: pbx
+                          collectAll: false
+                        - extension: pst
+                          collectAll: false
+                        - extension: slt
+                          collectAll: false
+                        - extension: snm
+                          collectAll: false
+                        - extension: wab
+                          collectAll: false
+        '400':
+          description: No JSON body, config field missing, no new tasks, name is missing etc.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Invalid Configuration ID supplied
+  /v2/configurations/{id}:
+    delete:
+      tags:
+        - Collection Configuration
+      summary: Delete the Configuration
+      description: Delete the configuration identified by `{id}`
+      operationId: deleteConfiguration
+      parameters:
+        - name: id
+          in: path
+          description: Collection Configuration id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Case was deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 200
+                id: 101
+                message: OK
+        '400':
+          description: Configuration {id} could not be deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Configuration {id} could not be deleted
+        '504':
+          description: Waiting for the model to load
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 504
+                id: 101
+                message: Waiting for the model to load
+  /v2/logs:
+    get:
+      tags:
+        - Log
+      summary: Returns the log entries (errors and warnings) associated with the specified job
+      description: Returns the log entries (errors and warnings) associated with the specified job
+      operationId: listLogByJob
+      parameters:
+        - name: jobId
+          in: query
+          description: ID of the job for which log information should be displayed
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Log Listing was submitted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  logs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LogEntry'
+              example:
+                logs:
+                  - name: Warning
+                    scope: Client
+                    severity: Warning
+                    grouping: ''
+                    jobId: 103
+                    userId: null
+                    description: Could NOT Open and Read Owner Info on First Try - Succeeded with Snapshot
+                    date: 7/18/20 9:08 PM
+                    computerId: ''
+                  - name: Error
+                    scope: Client
+                    severity: Error
+                    grouping: ''
+                    jobId: 103
+                    userId: null
+                    description: Job cancelled by user.
+                    date: 7/18/20 9:09 PM
+                    computerId: ''
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 204
+                message: No Content.
+        '400':
+          description: error response - log entries not retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                job_id_not_found:
+                  summary: Job ID not found
+                  value:
+                    code: 400
+                    id: 101
+                    message: Job ID was not found
+                job_id_param_missing:
+                  summary: Job ID parameter missing
+                  value:
+                    code: 400
+                    id: 101
+                    message: Query parameter "jobId" expected, but not found.
+  /v2/jobs/{id}:
+    get:
+      tags:
+        - Job
+      summary: Display details of the specified job
+      description: Display details the job specified by the id in the path (URL)
+      operationId: jobDetails
+      parameters:
+        - name: id
+          in: path
+          description: id of the job
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Job details found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jobs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/jobDetail'
+              example:
+                jobs:
+                  - id: 103
+                    taskName: Collect
+                    label: ''
+                    caseName: Testing
+                    status: Cancelled
+                    warnings: 3
+                    errors: 1
+                    bytesCollected: 0
+                    bytesToCollect: 0
+                    filesCollected: 0
+                    filesToCollect: 126600
+                    collectionId: 103
+                    collectionName: Email Collect3
+                    custodianName: ''
+                    custodianId: 1
+                    targetName: ''
+                    targetId: 1
+                    destination: |-
+                      c:\collection\Testing\Email Collect3\AUSYD-L-NX0142\FileSafe\AUSYD-L-NX0142 2020-07-18 21-08-23.
+
+                      mfs01
+                    beginTime: |-
+                      2020-07-18T11:08:23.
+
+                      711Z
+                    endTime: |-
+                      2020-07-18T11:09:53.
+
+                      757Z
+                    computerId: E21287F5-9E96-6CFF-0624-056AFA28E902
+                    computerName: AUSYD-L-NX0142
+        '400':
+          description: Job ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Invalid Job ID supplied
+  /v2/jobs:
+    post:
+      tags:
+        - Job
+      summary: Lists all jobs that match the specified filter
+      description: |-
+        Lists all jobs matching the filter criteria specified in the JSON body.
+
+        ### Job fields available for filtering and sorting\:
+
+        | Field name        | Type    | Description / Possible Values            |
+        | ----------------- | ------- | ---------------------------------------- |
+        | BeginTime         | String  | Job start date and time                  |
+        | BytesCollected    | String  | Bytes collected so far                   |
+        | BytesToCollect    | Long    | Total bytes to be collected              |
+        | CaseName          | String  | Case name                                |
+        | CollectionID      | Long    | Collection ID number                     |
+        | CollectionName    | String  | Collection name                          |
+        | ComputerID        | String  | Computer ID number                       |
+        | ComputerName      | String  | Computer name                            |
+        | CustodianID       | Long    | Custodian ID number                      |
+        | CustodianName     | String  | Custodian name                           |
+        | Destination       | String  | Destination path                         |
+        | DestinationType   | String  | Destination type, one of                 |
+        | EndTime           | String  | Job end date and time                    |
+        | ID                | Long    | Job ID number                            |
+        | Label             | String  | Label value associated with this Job     |
+        | NumErrors         | Long    | Number of errors encountered so far      |
+        | NumFilesCollected | Long    | Number of files collected so far         |
+        | NumFilesToCollect | Long    | Total number fo files to collect         |
+        | NumWarninings     | Long    | Number of warnings encountered so far    |
+        | PausedMinutes:    | String  | Number of minutes to job has been paused |
+        | Priority          | String  | Job priority number                      |
+        | ProgramName       | String  | Name of program performing the job       |
+        | ReportingTime     | String  | Date and time of last job status report  |
+        | Stage             | String  | Job stage                                |
+        | Status            | String  | Job status (see list below)              |
+        | SubmitTime        | String  | Date and time job was sbmitted           |
+        | TargetID          | Long    | Target ID number                         |
+        | TargetName        | String  | Target name                              |
+        | TaskName          | String  | Task name                                |
+        | TaskNumber        | Integer | Task ID number                           |
+        | TotalTasks        | Integer | Total number of tasks in this job        |
+
+
+        ### Job status values\:
+
+        Awaiting Resource, Cancelled, Cancelling, Failed, Finished, Paused, Pausing, PickedUp, Ready, Resumed, Resuming, Running, Suspended, Suspending, Waiting
+
+      operationId: listJobsByFilter
+      parameters:
+        - name: offset
+          in: query
+          description: zero-based offset in the list of computers at which retrieval should start
+          required: false
+          schema:
+            type: integer
+        - name: version
+          in: query
+          description: |-
+            version of the Jobs table, obtained from the last call to this function.
+
+            The Jobs table in the ECC Server database gets a new version whenever it is modified.
+            This version is returned in the response body for this query in the field `tableVersion`.
+
+            If `version` is supplied, it is compared to the current version of the Jobs table.
+            If the version numbers match, there is no updated data since the last call,
+            and the query is aborted with a **204, 'No Content.'** response code.
+          required: false
+          schema:
+            type: integer
+        - name: countOnly
+          in: query
+          description: |-
+            if `true`, the total count for this query (ignoring `limit` and `offset`) is returned in the Response Body, with no other data.
+
+            This should be used ahead of the actual query to determine the total number of records in the response.
+          required: false
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/listJobRequest'
+            example:
+              limit: -1
+              filters:
+                - name: CollectionID
+                  value: 109
+      responses:
+        '200':
+          description: Job Listing was submitted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tableVersion:
+                    type: integer
+                    description: |-
+                      current version of the Jobs table in the ECC database.
+
+                      Use this in subsequent Job List commands, in the query field `version`, to prevent unneeded queries.
+                  totalCount:
+                    type: integer
+                    description: total number of jobs for this response, as if `limit` was not provided
+                  startRow:
+                    type: integer
+                    description: starting row of this response within the total count
+                  endRow:
+                    type: integer
+                    description: ending row of this response within the total count
+                  next:
+                    type: string
+                    description: |-
+                      URL to get the next set of responses.
+
+                      Included only if `endRow` does not include all available responses.
+                  jobs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/jobListDetail'
+              example:
+                tableVersion: 0
+                totalCount: 2
+                startRow: 0
+                endRow: 0
+                next: /api/ecc/v2/jobs?offset=1
+                jobs:
+                  - id: 109
+                    taskName: Collect
+                    label: ''
+                    caseName: Group
+                    status: Finished
+                    warnings: 0
+                    errors: 1
+                    bytesCollected: 138007
+                    bytesToCollect: 138007
+                    filesCollected: 5
+                    filesToCollect: 30
+                    collectionId: 109
+                    collectionName: |-
+                      Group Test 8.
+
+                      12pm
+                    custodianName: Unassigned
+                    custodianId: 1
+                    targetName: _System
+                    targetId: 1
+                    destination: |-
+                      c:\collection\Group\Group Test 8.
+
+                      12pm\AUSYD-L-NX0142\FileSafe\AUSYD-L-NX0142 2020-07-19 20-13-13.
+
+                      mfs01
+                    beginTime: |-
+                      2020-07-19T10:13:13.
+
+                      000Z
+                    endTime: |-
+                      2020-07-19T10:14:00.
+
+                      000Z
+                    computerId: E21287F5-9E96-6CFF-0624-056AFA28E902
+                    computerName: AUSYD-L-NX0142
+  /v2/jobAction/{id}:
+    post:
+      tags:
+        - Job
+      summary: Modifies the state of the specified job
+      description: |-
+        Modify the job state of the job identified by the id in the URL.  The `action` string in the body applies the following state change to the job\:
+
+        | Action   | Description                                             |
+        | -------- | ------------------------------------------------------- |
+        | Cancel   | cancels the job                                         |
+        | Pause    | pause the job (can be continued)                        |
+        | Continue | continues a paused job                                  |
+        | Resume   | resumes a failed or stopped job from where it stopped   |
+        | Restart  | restarts a job from the beginning                       |
+
+      operationId: jobAction
+      parameters:
+        - name: id
+          in: path
+          description: id of the job
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/jobActionRequest'
+            example:
+              action: "Pause"
+      responses:
+        '200':
+          description: Job status changed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 200
+                id: 100
+                message: OK
+        '400':
+          description: error response - job status has not been changed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                job_action_not_recognized:
+                  summary: Job action not recognized
+                  value:
+                    code: 400
+                    id: 101
+                    message: "Action Terminate is not a recognized job state."
+                job_action_unknown:
+                  summary: Job action unknown
+                  value:
+                    code: 400
+                    id: 101
+                    message: "Job action, null is an unknown action."
+                job_action_unavailable:
+                  summary: Job action unavailable
+                  value:
+                    code: 400
+                    id: 101
+                    message: "Action Pause is unavailable in Paused state of a job."
+                job_action_error:
+                  summary: Job action error
+                  value:
+                    code: 400
+                    id: 101
+                    message: "Error changing the job state to Paused"
+  /v2/groups:
+    get:
+      tags:
+        - Group
+      summary: Lists all Groups
+      description: |-
+        Lists all custodian groups defined on the connected server.
+      operationId: listGroupsAll
+      responses:
+        '200':
+          description: Successful Listing of groups
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listGroupsResponse'
+              example:
+                cases:
+                  - id: 8
+                    name: 'Accounting'
+                    description: 'Accounting department'
+                    deleted: false
+                  - id: 10
+                    name: 'Marketing'
+                    description: 'Marketing department'
+                    deleted: false
+                  - id: 12
+                    name: 'IT'
+                    description: 'IT department'
+                    deleted: false
+  /v2/group:
+    post:
+      tags:
+        - Group
+      summary: Create a new group
+      description: |-
+        Create a new group.
+      operationId: createGroup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createGroupRequest'
+            example:
+              groupName: 'Administration'
+              description: 'Administration Department'
+      responses:
+        '200':
+          description: Group was created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 200
+                id: 100
+                message: 'GROUP added: Name={group-name}, ID={group-id}, REST=POST api/ecc/v2/group'
+        '400':
+          description: General error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                create_group_err_name:
+                  summary: 'Group name missing'
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'groupName field is missing.  A new group name must be provided'
+                create_group_err_json:
+                  summary: 'JSON request body missing'
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'No json body was provided.'
+    put:
+      tags:
+        - Group
+      summary: Modify a group
+      description: |-
+        Modifies or renames a new group.
+      operationId: modifyGroup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/modifyGroupRequest'
+            examples:
+              rename_a_group:
+                summary: 'Rename a group'
+                value:
+                  groupId: 16
+                  groupName: 'Executive (revised group name for group #16)'
+                  description: 'The new description for the Executive group'
+              add_custodians_to_group:
+                summary: 'Add custodians to a group'
+                value:
+                  groupId: 16
+                  addCustodians:
+                    - custodianId: 79
+                    - custodianId: 80
+              remove_custodians_from_group:
+                summary: 'Remove custodians from a group'
+                value:
+                  groupId: 16
+                  removeCustodians:
+                    - custodianId: 42
+                    - custodianId: 49
+      responses:
+        '200':
+          description: Group was modified successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 200
+                id: 100
+                message: 'OK'
+        '400':
+          description: Failed to modify group
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                failed_group_modify_json:
+                  summary: 'No json body'
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'No json body was provided.'
+                failed_group_modify_empty:
+                  summary: 'Cannot rename group to an empty string'
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'Group ID {groupId} cannot be renamed with an empty string'
+                failed_group_modify_add_remove:
+                  summary: 'Cannot add and remove the same custodian'
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'Custodian ID {id} was specified for both addition and removal'
+                failed_group_modify_already_added:
+                  summary: 'Custodian already present'
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'Custodian ID {id} is already in the group but specified for addition'
+                failed_group_modify_unexpected:
+                  summary: 'Custodian could not be added to group'
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'Unexpected DB error: Custodian ID {} was not added to the group, {}'
+                failed_group_modify_id:
+                  summary: 'Group not found'
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'Group ID {} was not found.'
+    delete:
+      tags:
+        - Group
+      summary: Delete a group
+      description: |-
+        Delete a group specified by groupId in the request body.
+
+        **Note\:** once a group is deleted any custodians which (1) previously belonged to the deleted
+        group, and (2) which do not belong to another group will be added to the "unassigned" group.
+      operationId: deleteGroup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                groupId:
+                  type: integer
+                  description: id of the group to be deleted
+            example:
+              groupId: 15
+      responses:
+        '200':
+          description: Group was deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 200
+                id: 100
+                message: 'OK'
+        '400':
+          description: Failed to delete group
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                failed_group_delete_json:
+                  summary: 'No json body'
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'No json body was provided.'
+                failed_group_delete_id:
+                  summary: 'Group not found'
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'Group ID {} was not found.'
+  /v2/custodians:
+    get:
+      tags:
+        - Custodian
+      summary: Lists Custodian/s
+      description: Lists all custodians on the connected server
+      operationId: listCustodians
+      responses:
+        '200':
+          description: Successful Listing of Custodians
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listCustodianResponse'
+              example:
+                custodians:
+                  - id: 106
+                    name: 'Sarah Smith'
+                    groups:
+                      - id: 6
+                        name: Management
+                      - id: 8
+                        name: Accounting
+    post:
+      tags:
+        - Custodian
+      summary: Create a new Custodian
+      description: |-
+        Create a new Custodian.
+      operationId: createCustodian
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createCustodianRequest'
+            example:
+              custodianName: 'Mary O''Connor'
+              description: 'CEO, Americas'
+              groups:
+                - groupId: 16
+                - groupId: 18
+      responses:
+        '200':
+          description: Custodian was created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                create_custodian_success:
+                  summary: 'Normal success response'
+                  value:
+                    code: 200
+                    id: 100
+                    message: 'OK'
+                create_custodian_with_warn_1:
+                  summary: 'Success with warning response 1'
+                  value:
+                    code: 200
+                    id: 100
+                    message: 'Failed adding the custodian to one or more groups'
+                create_custodian_with_warn_2:
+                  summary: 'Success with warning response 2'
+                  value:
+                    code: 200
+                    id: 100
+                    message: 'One or more of the specified groups does not exist'
+        '400':
+          description: Failed to create Custodian
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                create_custodian_failue_json:
+                  summary: 'No JSON body'
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'No json body was provided.'
+                create_custodian_failue_name:
+                  summary: 'Missing Custodian name'
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'custodianName field is missing.  A new custodian name must be provided'
+    delete:
+      tags:
+        - Custodian
+      summary: Delete a Custodian
+      description: |-
+        Delete a Custodian.
+
+        **Note\:**  When the option `deleteTargets` is set to `true` any targets associated with
+        this custodian will be deleted.  When `deleteTargets` is `false` any targets associated with
+        this custodian will be reassigned to the "unassigned" custodian.
+      operationId: deleteCustodian
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                custodianId:
+                  type: integer
+                  description: id of the Custodian to be deleted
+                deleteTargets:
+                  type: boolean
+                  description: 'true if associated targets should be deleted'
+            example:
+              custodianId: 15
+              deleteTargets: false
+      responses:
+        '200':
+          description: Custodian was deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 200
+                id: 100
+                message: 'OK'
+        '400':
+          description: Failed to delete Custodian
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                failed_custodian_delete_json:
+                  summary: 'No json body'
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'No json body was provided.'
+                failed_custodian_delete_no_id:
+                  summary: 'No custodian ID specified'
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'custodian ID field was not provided.'
+                failed_custodian_delete_not_found:
+                  summary: 'Specified custodian not found'
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'custodian ID {id} was not found.'
+  /v2/targets:
+    get:
+      tags:
+        - Target
+      summary: Lists all target/s
+      description: Lists all targets on the connected server, or if a computer GUID is specified as an optional query value, only targets for the specified computer are returned.
+      operationId: listTargets
+      parameters:
+        - name: computerId
+          in: query
+          description: GUID value that identifies the computer
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful Listing of Targets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listTargetsResponse'
+              example:
+                targets:
+                  - id: 67
+                    name: DESKTOP_0198_FREDS_FILES
+                    description: 'Fred''s Profile directory from DESKTOP_0198'
+                    custodianId: 142
+                    computerName: DESKTOP_0198
+                    computerGUID: 4B62734F-21E0-40FF-853A-853A1CDFEC0E
+                    Inputs: [
+                      {
+                        type: 'Local Path',
+                        location: 'C:\Users\Fred'
+                      }
+                    ]
+                  - id: 68
+                    name: DESKTOP_0212_KIMS_FILES
+                    description: 'Kim''s Profile directory from DESKTOP_0212'
+                    custodianId: 116
+                    computerName: DESKTOP_0212
+                    computerGUID: 14194EA8-0A0B-430C-9B8F-C910C8E02A9E
+                    Inputs: [
+                      {
+                        type: 'Local Path',
+                        location: 'C:\Users\Kim'
+                      }
+                    ]
+        '504':
+          description: Waiting for the model to load
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 504
+                id: 101
+                message: Waiting for the model to load
+  /v2/targets/{id}:
+    get:
+      tags:
+        - Target
+      summary: Get information about the target specified by id
+      description: Get information about the target specified by id
+      operationId: listTarget
+      parameters:
+        - name: id
+          in: path
+          description: id of the target
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listTargetsResponse'
+              example:
+                targets:
+                  - id: 67
+                    name: DESKTOP_0198_FREDS_FILES
+                    description: 'Fred''s Profile directory from DESKTOP_0198'
+                    custodianId: 142
+                    computerName: DESKTOP_0198
+                    computerGUID: 4B62734F-21E0-40FF-853A-853A1CDFEC0E
+                    Inputs: [
+                      {
+                        type: 'Local Path',
+                        location: 'C:\Users\Fred'
+                      }
+                    ]
+        '400':
+          description: Target ID {id} was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Target ID {id} was not found.
+        '504':
+          description: Waiting for the model to load
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 504
+                id: 101
+                message: Waiting for the model to load
+    delete:
+      tags:
+        - Target
+      summary: Delete a Target
+      description: |-
+        Delete a Target.
+      operationId: deleteTarget
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                targetId:
+                  type: integer
+                  description: id of the Target to be deleted
+            example:
+              targetId: 105
+      responses:
+        '200':
+          description: Target was deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 200
+                id: 100
+                message: 'OK'
+        '400':
+          description: Failed to delete Target
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                failed_target_delete_json:
+                  summary: 'No JSON body'
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'No json body was provided.'
+                failed_target_delete_missing:
+                  summary: 'Target not found'
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'Target ID {targetId} was not found.'
+  /v2/target:
+    post:
+      tags:
+        - Target
+      summary: Add a new target
+      description: Creates a new target
+      operationId: createTarget
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createTargetRequest'
+            examples:
+              create_target_example:
+                summary: Create a target.
+                value:
+                  targetName: 'Juan''s data folders'
+                  description: 'Data folders from Juan''s profile folder on DESKTOP_0354'
+                  computerId: '08AFD7C6-5144-48A9-85D0-9D4093A95834'
+                  custodianId: '126'
+                  inputs:
+                    - type: 'Local Path'
+                      location: 'C:\Users\Juan'
+                      exclusion: 'AppData\tMusic\tVideos'
+      responses:
+        '200':
+          description: Target created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 200
+                id: 100
+                message: 'TARGET added: Name={new target name}, ID={new target id}, REST=POST api/ecc/v2/target'
+        '400':
+          description: General error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              examples:
+                create_target_err_json:
+                  summary: No JSON body
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'No json body was provided.'
+                create_target_err_no_name:
+                  summary: No target name
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'targetName field is missing.  A target name must be provided.'
+                create_target_err_computer_none:
+                  summary: No computer specified
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'computerId field is missing.  A computer Id must be provided.'
+                create_target_err_no_inputs:
+                  summary: No new inputs (target locations) provided
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'no new inputs were provided.'
+                create_target_err_custodian_missing:
+                  summary: Custodian not found
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'Custodian ID {} does not exist.'
+                create_target_err_computer_missing:
+                  summary: Computer not found
+                  value:
+                    code: 400
+                    id: 101
+                    message: 'No computer found with id {}'
+  /v2/collections:
+    get:
+      tags:
+        - Collection and Survey
+      summary: Lists all collections for the specified case
+      description: |-
+        Lists all collections for the specified case.
+
+        Note that completed and failed collections are listed as well as currently running collections
+      operationId: listCaseCollection
+      parameters:
+        - name: caseId
+          in: query
+          description: Case identification token of the case to list collections
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful Listing of Collections
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listCaseCollectionResponse'
+              example:
+                collections:
+                  - id: 110
+                    caseId: 103
+                    name: Latest Collect and Relocate
+                    status: Open
+        '400':
+          description: Invalid Case ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Invalid Case ID supplied
+    post:
+      tags:
+        - Collection and Survey
+      summary: Launch a new collection by Custodian
+      description: |-
+        Launch a new collection for one or more Custodians.
+
+        If location is blank the location is determined from the specified Collection Configuration
+
+        Must specify at least one Custodian ID
+      operationId: launchCaseCollection
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/launchCaseCollectionRequest'
+            example:
+              caseId: 0
+              name: name of the new collection
+              configurationId: 0
+              location: C://collections
+              custodianIds:
+                - 1
+                - 2
+                - 3
+                - 4
+      responses:
+        '200':
+          description: Collection was submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/launchCaseCollectionResponse'
+              example:
+                collectionId: 103
+                computers:
+                  - computerName: AUSYD-L-NX0142
+                    computerId: E21287F5-9E96-6CFF-0624-056AFA28E902
+                    jobs:
+                      - id: 102
+                        taskName: Collect
+                        taskNum: 1
+                        totalTasks: 1
+        '400':
+          description: Invalid Case ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Invalid Case ID supplied
+        '504':
+          description: No valid targets selected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 504
+                id: 101
+                message: No valid targets selected
+  /v2/collectionsByPath:
+    post:
+      tags:
+        - Collection and Survey
+      summary: Launch a new collection explicitly defining folders and files with no custodian.
+      description: |-
+        Launch a new collection explicitly defining folders and files with no custodian.
+
+        **Note\:** if autoDetect is used it must have the value AllLocalVolumes and when used all files and folders fields are ignored.
+      operationId: launchCollectionsByPath
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/launchCaseCollectionByPathRequest'
+            example:
+              caseId: 0
+              name: name of the new collection
+              computerId: ABCDEF-12345
+              configurationId: 0
+              location: C://collections
+              label: a label
+              autodetect: ''
+              folders:
+                - c:/path1
+                - c:/path2
+              files:
+                - C:/path/file1.csv
+                - C:/path/file2.txt
+              folderSpec:
+                - folder: C://somePath
+                  excludeFolders:
+                    - subPath
+                    - subPath2
+                  excludeFiles:
+                    - someFile.txt
+                    - someFile2.txt
+                  excludeWildcards:
+                    - '*.pdf'
+      responses:
+        '200':
+          description: Collection was submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/launchCaseCollectionResponse'
+              example:
+                collectionId: 103
+                computers:
+                  - computerName: AUSYD-L-NX0142
+                    computerId: E21287F5-9E96-6CFF-0624-056AFA28E902
+                    jobs:
+                      - id: 102
+                        taskName: Collect
+                        taskNum: 1
+                        totalTasks: 1
+        '400':
+          description: Invalid Case/Computer ID supplied or no collections were specified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Invalid Case ID supplied
+        '504':
+          description: No valid targets selected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 504
+                id: 101
+                message: No valid targets selected
+  /v2/collectionsByTarget:
+    post:
+      tags:
+        - Collection and Survey
+      summary: Launch a new collection specifying only target and collection configuration
+      description: |-
+        Launch a new collection specifying only target and collection Configuration.
+
+        **Note\:** All other job criteria will be determined from the specified Collection Configuration
+      operationId: launchCollectionsByTarget
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/launchCaseCollectionByTargetRequest'
+            example:
+              caseId: 0
+              name: name of the new collection
+              targetId: 1
+              configurationId: 0
+              location: C://collections
+      responses:
+        '200':
+          description: Collection was submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/launchCaseCollectionResponse'
+              example:
+                collectionId: 103
+                computers:
+                  - computerName: AUSYD-L-NX0142
+                    computerId: E21287F5-9E96-6CFF-0624-056AFA28E902
+                    jobs:
+                      - id: 102
+                        taskName: Collect
+                        taskNum: 1
+                        totalTasks: 1
+        '400':
+          description: Invalid Case/Target ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Invalid Case ID supplied
+        '504':
+          description: No valid targets selected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 504
+                id: 101
+                message: No valid targets selected
+  /v2/collectionsByConfiguration:
+    post:
+      tags:
+        - Collection and Survey
+      summary: Launch a new collection for a specific computer and Collection Configuration
+      description: |-
+        Launch a new collection for a specific computer and Collection Configuration.
+
+        Optionally, the destination can be specified in the `location` field.
+
+        **Note\:** since no targets or explicit sources are defined in the API body, the specified Collection Configuration must specify the collection source(s).
+
+        **Note\:** if the specified Collection Configuration contains targets, they will be ignored in favor of the specified computer.
+      operationId: launchCollectionsByConfiguration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/launchCaseCollectionByConfigurationRequest'
+            example:
+              caseId: 0
+              name: name of the new collection
+              computerId: 1
+              configurationId: 0
+              location: C://collections
+      responses:
+        '200':
+          description: Collection was submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/launchCaseCollectionByConfigurationResponse'
+              example:
+                collectionId: 103
+                computers:
+                  - computerName: AUSYD-L-NX0142
+                    computerId: E21287F5-9E96-6CFF-0624-056AFA28E902
+                    jobs:
+                      - id: 102
+                        taskName: Collect
+                        taskNum: 1
+                        totalTasks: 1
+        '400':
+          description: Invalid Case/Computer/Configuration ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Invalid Case ID supplied
+        '504':
+          description: No valid targets selected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 504
+                id: 101
+                message: No valid targets selected
+  /v2/eccInstalled:
+    get:
+      tags:
+        - Utility
+      summary: Verify whether ECC Client or ECC Admin Console is installed on the specified computer.
+      description: |-
+        Verify whether ECC Client or ECC Admin Console is installed on the specified computer.
+        If ECC Client or ECC Admin Console is installed, returns the name of the specified computer.
+        If ECC client or ECC Admin Console is not installed, returns an ID 400 response.
+      operationId: eccInstalled
+      parameters:
+        - name: computerId
+          in: query
+          description: GUID which identifies the computer
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful query of ECC Installed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  computer name:
+                    type: string
+                    description: name of the computer identified by `computerId`
+              example:
+                computer name: |-
+                  someComputer.
+
+                  local
+        '400':
+          description: Invalid Computer ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/standardResponse'
+              example:
+                code: 400
+                id: 101
+                message: Computer ID was not found
+  /v2/license:
+    get:
+      tags:
+        - Utility
+      summary: Get ECC Server license information
+      description: |-
+        Returns the license info for the ECC Server specified in the URL.
+      operationId: getServerLicense
+      responses:
+        '200':
+          description: Successful query of ECC License
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/licenseResponse'
+              example:
+                hardwareId: "ecc\\\\4\\\\ee5bb2fb\\\\ac3446ec-758b36fb-82f2cccf-51713e8e"
+                license: "-----BEGIN LICENCE-----\nKey: XYZ100\n\n\n\nhWtEQ2mXJMqU/E2v0LQtOTQqFThFYseE6ZgiLZpaBKqQUhnAtYENd1I0CkwR\nYImmLrgSbof4VDXE3WqqnwWnN34yg6D36gJsaLR3k/Q0FZHi5/Ey72SI6KNZ\nmC/y57I/g3ncMRFfeOkURvv2+t74AjblS8vF7L716UKEV9BsuQVjHJK1qhvQ\nUirsUTFyFytTfT2N4Jh0iojvoPaacZBD8tGicJLetPF31rO8H6ABEz0wTNRs\n2p2GqWg0efPY5joOaezL2/VKXbjcp9VNyHIaOsgCQnp9Bn+QuRJP7PAp9zTK\nFQDgltafqLeI1xdGToirZECTU0LpM7o1Xlb27JSAKdCC27KcmcDY3J1qRcdK\n+3xOWTuSgjjge3aZhls+mau+w0ila1HcCh/YKqUoExMun77aObJVwVg5cpX9\nD2HPt8w=\n-----END LICENCE-----"
+                licenseDetails: 
+                  generatedBy: "Generated by LicenceGenServer"
+                  generatedDate: "Wed Sep 21 20:07:44 UTC 2022"
+                  created-at: "20220921200738"
+                  deadline: "20221019000000"
+                  ecc.clients_hard_cap: "60"
+                  ecc.clients_soft_cap: "50"
+                  id: "XYZ100"
+                  keyid: "ecc\\\\4\\\\ee5bb2fb\\\\ac3446ec-758b36fb-82f2cccf-51713e8e"
+                  owner: "Testing"
+                  profile: "ecc"
+  /v2/systemInfo:
+    get:
+      tags:
+        - Utility
+      summary: Get ECC Server system information
+      description: |-
+        Returns the system information for the ECC Server specified in the URL.
+      operationId: getServerInfo
+      responses:
+        '200':
+          description: Successful query of ECC Server information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/systemInfoResponse'
+              example:
+                eccVersion: "9.10.0.27511"
+                osName: "Windows 10"
+                osVersion: "10"
+                osBitness: "64-bit"
+                memoryGB: "16.9 GB"
+                NIC:   
+                - Name: "eth3"
+                  Display-Name: "PANGP Virtual Ethernet Adapter"
+                  IP-Address: "192.168.0.50"
+                - Name: "eth4"
+                  Display-Name: "Realtek USB GbE Family Controller"
+                  IP-Address: "192.168.0.51"
+                - Name: "eth20"
+                  Display-Name: "Hyper-V Virtual Ethernet Adapter"
+                  IP-Address: "192.168.0.52"
+                Volumes:
+                  - Type: "NTFS"
+                    Free-Space: "629.9 GB"
+security:
+  - BasicAuth: []
+servers:
+  - url: '{protocol}://{address}:{port}/api/ecc'
+    variables:
+      protocol:
+        default: https
+        description: protocol for communication
+        enum:
+          - http
+          - https
+      address:
+        default: 127.0.0.1
+        description: The location which the ECC resides
+      port:
+        default: '80'
+        description: 80, 443 or alternative
+tags:
+  - name: Case
+  - name: Computer
+  - name: Computer Configuration
+  - name: Collection Configuration
+  - name: Group
+  - name: Custodian
+  - name: Target
+  - name: Collection and Survey
+  - name: Other Tasks
+  - name: Job
+  - name: Log
+  - name: Utility
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+  schemas:
+    Extension:
+      type: object
+      description: Describes a File Extension
+      properties:
+        extension:
+          type: string
+          description: file type extension (do not include the preceding dot)
+        collectAll:
+          type: boolean
+          description: If `true`, collect this file type regardless of keyword search
+    Evidence:
+      type: object
+      properties:
+        destination:
+          type: string
+          description: destination where evidence is to be saved
+        credentials:
+          type: boolean
+          description: Set to `true` if credentials are supplied to access the destination
+        createFileSafe:
+          type: boolean
+          description: Set to `true` to create a FileSafe, `false` save native copies of the files
+        compression:
+          type: string
+          description: Compression setting for saved data.  One of `None`, `Medium`, `High` (used only if createFileSafe = `true`)
+          enum:
+            - None
+            - Medium
+            - High
+        segmentSize:
+          type: integer
+          description: size of each FileSafe segment (used only if createFileSafe = `true`)
+        segmentSizeUnit:
+          type: string
+          description: unit of measure which applies to segmentSize.  One of `KB`, `MB`, or `GB` (used only if createFileSafe = `true`)
+          enum:
+            - KB
+            - MB
+            - GB
+        overwrite:
+          type: boolean
+          description: whether to overwrite existing files at the destination (used only if createFileSafe = `false`)
+        maintainFullPath:
+          type: boolean
+          description: whether to maintain the full path of the file at the destination (used only if createFieSafe = false)
+        validateCollection:
+          type: boolean
+          description: whether to validate the entire FileSafe after collection is completed
+    FileType:
+      type: object
+      description: describes the file type filters used in the collection (this object is optional)
+      properties:
+        analyzeSignatures:
+          type: boolean
+          description: when `true`, read the beginning of each file to determine file type.  When `false` use filename extension only to determine file type.
+        mode:
+          type: string
+          description: One of `Include` or `Exclude` - include or exclude the file types listed in the `extensions` array
+          enum:
+            - Include
+            - Exclude
+        extensions:
+          type: array
+          description: array of one or more file type extensions
+          items:
+            $ref: '#/components/schemas/Extension'
+    DateCriteria:
+      type: object
+      properties:
+        type:
+          type: string
+          description: |-
+            One of `From` or `Last`.
+
+            `From` specifies absolute start/end dates.
+
+            `Last` specifies last number of days back from the current date
+          enum:
+            - From
+            - Last
+        useGMT:
+          type: boolean
+          description: |-
+            `true` specifies GMT for time, `false` specifies local time
+        startDate:
+          type: string
+          description: inclusive start date in the format `yyyy-mm-ddThh:mm:ss` (only used if type = `From`)
+        endDate:
+          type: string
+          description: inclusive end date in the format `yyyy-mm-ddThh:mm:ss` (only used if type = `From`)
+        numDays:
+          type: integer
+          description: number of days back from the current date (only used if type = `Last`)
+        checkCreation:
+          type: boolean
+          description: |-
+            When `true`, apply date criteria to creation date
+        checkModification:
+          type: boolean
+          description: |-
+            When `true` apply date criteria to modification date
+        checkAccess:
+          type: boolean
+          description: |-
+            When `true`, apply date criteria to access date
+    FolderSpec:
+      type: object
+      properties:
+        folder:
+          type: string
+          description: full path of the folder to collect from.
+        excludeFolders:
+          type: array
+          items:
+            type: string
+            description: optional, path(s) of folder(s) to exclude.  These are relative paths, relative to the `folder` to collect from.
+        excludeFiles:
+          type: array
+          items:
+            type: string
+            description: optional, path(s) of file(s) to exclude.  These are relative paths, relative to the `folder` to collect from.
+        excludeWildcards:
+          type: array
+          items:
+            type: string
+            description: |-
+              optional, wildcard specification(s) (e.g *.pdf) specifying files to exclude from `folder` path.
+
+              Note that wildcard exclusions are recursive under `folder` path.
+    Keyword:
+      type: object
+      properties:
+        expressionName:
+          type: string
+          description: human-readable description of the search expression
+        expression:
+          type: string
+          description: search expression
+        caseSensitive:
+          type: boolean
+          description: When `true` specifies the search should be case-sensitive
+        regExpression:
+          type: boolean
+          description: When `true` specifies the `expression` is interpreted as a Regular Expression
+    Hash:
+      type: object
+      properties:
+        hashValue:
+          type: string
+          description: 32-character MD5 hash value
+        fileSize:
+          type: number
+          description: |-
+            Optional file size.
+
+            If provided, will be used to match before calculating hash
+        microHash:
+          type: string
+          description: |-
+            Optional MD5 hash value of the first 64 KB of a file.
+
+            Used to match before calculating a full hash
+    JobCreated:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID of task
+        taskName:
+          type: string
+          description: Name of task, one of `Collect`, `Relocate` `Deploy` or `Launch`.
+        taskNum:
+          type: integer
+          description: Task number, defines sequence in a multi-job collection
+        totalTasks:
+          type: integer
+          description: Total number of tasks in the collection
+    TargetInputs:
+      type: object
+      properties:
+        types:
+          type: string
+          description: Path, Local Path, or AutoDetect
+          enum:
+            - Path
+            - Local Path
+            - AutoDetect
+        location:
+          type: string
+          description: full path or AutoDetect setting for the source
+        exclusion:
+          type: string
+          description: excluded subfolders in the location (only for Path type)
+    Case:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the case
+        name:
+          type: string
+          description: name of the case
+        status:
+          type: string
+          description: case status, Open or Closed
+    Computer:
+      type: object
+      properties:
+        name:
+          type: string
+          description: name of the computer
+        fullName:
+          type: string
+          description: name of the computer including domain
+        description:
+          type: string
+          description: description of the computer
+          nullable: true
+        UUID:
+          type: string
+          description: GUID uniquely identifying this computer, used in all other api functions
+        presence:
+          type: string
+          description: One of `ONLINE`, `NEARLINE` or `OFFLINE`
+          enum:
+            - ONLINE
+            - NEARLINE
+            - OFFLINE
+        purpose:
+          type: string
+          description: One of `Client` or `Admin Console`
+          enum:
+            - Client
+            - Admin Console
+        staging:
+          type: boolean
+          description: Set to `true` if the computer is a staging computer
+        pairingState:
+          type: string
+          description: One of `Paired`, `Awaiting`, or `Denied`
+          enum:
+            - Paired
+            - Awaiting
+            - Denied
+        firstContact:
+          type: string
+          description: date/time of first contact in the format `yyyy-mm-ddThh:mm:ss`
+        lastContact:
+          type: string
+          description: date/time of last contact in the format `yyyy-mm-ddThh:mm:ss`
+        osName:
+          type: string
+          description: name of the OS
+        lastUser:
+          type: string
+          description: last logged in username
+        searchEnabled:
+          type: boolean
+          description: Set to `true` if Advanced Search is enabled on this computer
+    ComputerConf:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the Computer Configuration
+        name:
+          type: string
+          description: name of the Computer Configuration
+        description:
+          type: string
+          description: description of the Computer Configuration
+        keepAliveInterval:
+          type: integer
+          description: frequency (sec) a client sends a keep-alive request to the server
+        keepAliveTimeout:
+          type: integer
+          description: time (sec) a client will wait for a response from the last keep-alive request
+        resourceWaitTime:
+          type: integer
+          description: time (sec) a client will wait for a given resource (e.g. network share)
+        jobWaitTime:
+          type: integer
+          description: frequency (sec) a client polls the server for new jobs (fallback to publish/subscribe)
+        startJobsWaitTime:
+          type: integer
+          description: time (sec) to delay a job from starting
+        statusUpdateWaitTime:
+          type: integer
+          description: frequency (sec) which a client to reports status of a running job
+        systemInfoUpdateWaitTime:
+          type: integer
+          description: frequency (sec) which a client to reports current system info
+        minPortRange:
+          type: integer
+          description: beginning of the TCP port range used for Deploy or Relocate jobs
+        maxPortRange:
+          type: integer
+          description: end of the TCP port range used for Deploy or Relocate jobs
+        enableLogs:
+          type: boolean
+          description: true if diagnostic logging is enabled
+        throttleOutput:
+          type: boolean
+          description: true if out should be throttled
+        maxBandwidthMbps:
+          type: integer
+          description: max bandwidth (in Mbps) allowed if output is throttled
+        altDestination:
+          type: string
+          description: The path to an alternate destination if a primary job destination is unreachable
+        altDestHasCredentials:
+          type: boolean
+          description: Whether the alternate destination requires credentials to access
+    Custodian:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the custodian
+        name:
+          type: string
+          description: name of the custodian
+    Group:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the group
+        name:
+          type: string
+          description: name of the group
+        description:
+          type: string
+          description: description of the group
+        deleted:
+          type: boolean
+          description: true if the group has been deleted
+    Target:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the Target
+        name:
+          type: string
+          description: name of the target
+        description:
+          type: string
+          description: description of the target
+        custodianId:
+          type: integer
+          description: id of the Custodian this target belongs to
+        computerName:
+          type: string
+          description: name of the Computer this target belongs to
+        computerGUID:
+          type: string
+          description: GUID of the Computer this target belongs to
+        Inputs:
+          type: array
+          description: array of inputs in the target
+          items:
+            $ref: '#/components/schemas/TargetInputs'
+    LogEntry:
+      type: object
+      properties:
+        name:
+          type: string
+          description: name of entry, either `Error` or `Warning`
+          enum:
+            - Error
+            - Warning
+        scope:
+          type: string
+          description: defines the scope of the entry, either `Client` or `Server`
+          enum:
+            - Client
+            - Server
+        severity:
+          type: string
+          description: Log entry severity, one of `Error`, `Warning`, `Info`, or `Debug`
+          enum:
+            - Error
+            - Warning
+            - Info
+            - Debug
+        grouping:
+          type: string
+          description: grouping for this log entry
+        jobId:
+          type: integer
+          description: id of the job the log entry is associated with
+        userId:
+          type: integer
+          description: id of the ECC user logged in when the log entry was created
+          nullable: true
+        description:
+          type: string
+          description: description of the event logged
+          nullable: true
+        date:
+          type: string
+          description: date and time of the log entry
+        computerId:
+          type: string
+          description: UUID of the computer on which the event occurred
+    ComputerJobs:
+      type: object
+      properties:
+        computerName:
+          type: string
+          description: name of the computer where the job is running
+        computerId:
+          type: string
+          description: UUID of the computer
+        jobs:
+          type: array
+          description: List of tasks being run
+          items:
+            $ref: '#/components/schemas/JobCreated'
+    CollectionDetail:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the collection
+        caseId:
+          type: integer
+          description: id of the case that owns the collection
+        name:
+          type: string
+          description: name of the collection
+        status:
+          type: string
+          description: status of the case
+    Task:
+      type: object
+      properties:
+        taskNum:
+          type: integer
+          description: 0-based index of tasks (jobs) to be run in this collection configuration
+        label:
+          type: string
+          description: |-
+            user-defined label for this job.
+
+            Can be used as search criteria for jobs
+        impersonation:
+          type: string
+          description: The enumeration value `None` or `Logged on User`
+          enum:
+            - None
+            - Logged on User
+        taskType:
+          type: string
+          description: |-
+            The type of task.  One of `Collect`, `Relocate`, `Deploy` or `Launch`.
+            This value will determine which fields follow.
+          enum:
+            - Collect
+            - Relocate
+            - Deploy
+            - Launch
+        Evidence:
+          $ref: '#/components/schemas/Evidence'
+        FileType:
+          $ref: '#/components/schemas/FileType'
+        DateRange:
+          type: object
+          properties:
+            dates:
+              type: array
+              description: array of one or more date criteria
+              items:
+                $ref: '#/components/schemas/DateCriteria'
+        AdvancedSearch:
+          type: object
+          properties:
+            keywords:
+              type: array
+              description: array of keywords
+              items:
+                $ref: '#/components/schemas/Keyword'
+        Hash:
+          type: object
+          properties:
+            hashType:
+              type: string
+              description: always `MD5`
+              enum:
+                - MD5
+            hashes:
+              type: array
+              description: array of hash values used to identify files to be collected
+              items:
+                $ref: '#/components/schemas/Hash'
+        Volatile:
+          type: object
+          description: Describes a volatile configuration
+          properties:
+            collectVolatile:
+              type: boolean
+              description: Whether to collect volatile information,  When `false` the remaining fields are ignored
+            collectHandles:
+              type: boolean
+              description: Whether to collect handles as part of the collection (collectVolatile must be `true`)
+            collectionScreenShots:
+              type: boolean
+              description: Whether to capture screen shots of all windows (requires impersonation, collectVolatile must be `true`)
+            screenShotFormat:
+              type: string
+              description: The graphic file format to save screen shot images.  One of `PNG` or `JPG` (collectScreenShots must be `true`)
+              enum:
+                - PNG
+                - JPG
+        RAM:
+          type: object
+          description: Describes RAM collection
+          properties:
+            collectRAM:
+              type: boolean
+              description: When `true` saves a bit-for-bit image of the RAM
+        SmartMover:
+          type: object
+          description: For a `Deploy` or `Relocate` task.  Specifies the copying or moving of files from one ECC Client to another
+          properties:
+            destinationFolder:
+              type: string
+              description: folder on the destination computer where evidence is to be copied
+            destComputerName:
+              type: string
+              description: name of the destination computer
+            destComputerId:
+              type: string
+              description: GUID of the destination computer
+            moveOrCopy:
+              type: string
+              description: |-
+                `Move` or `Copy`.
+
+                Either setting will copy files to the destination computer.  `Move` will delete evidence from the source after the copy is complete.
+              enum:
+                - Move
+                - Copy
+            relocateData:
+              type: boolean
+              description: When `true` relocate the evidence (data files)
+            relocateLogs:
+              type: boolean
+              description: When `true` relocate the collection logs
+    TaskToCreate:
+      type: object
+      properties:
+        parentConfigId:
+          type: integer
+          description: optional, id of the parent Collection Configuration which holds the task to be copied. If omitted, the task is created from given parameters.
+        taskNum:
+          type: integer
+          description: optional, id of the task to be copied (within the parent conf specified above).  Required if `parentConfigId` is specified.
+        taskType:
+          type: string
+          description: |-
+            type of task\: one of `Collect`, `Relocate`, `Deploy`, or `Launch` (currently only `Collect` and `Relocate` are supported).
+            
+            **Note\:** If copying an existing task, the `taskType` cannot be changed in the new task.
+          enum:
+            - Collect
+            - Relocate
+            - Deploy
+            - Launch
+        label:
+          type: string
+          description: |-
+            optional, user-defined label for this job.
+
+            Can be used as search criteria for jobs
+        impersonation:
+          type: string
+          description: None or Logged on User
+          enum:
+            - None
+            - Logged on User
+        Evidence:
+          $ref: '#/components/schemas/Evidence'
+        FileType:
+          $ref: '#/components/schemas/FileType'
+        DateRange:
+          type: object
+          properties:
+            dates:
+              type: array
+              description: array of one or more date criteria
+              items:
+                $ref: '#/components/schemas/DateCriteria'
+        AdvancedSearch:
+          type: object
+          properties:
+            keywords:
+              type: array
+              description: array of keywords
+              items:
+                $ref: '#/components/schemas/Keyword'
+        Hash:
+          type: object
+          properties:
+            hashType:
+              type: string
+              description: always MD5
+              enum:
+                - MD5
+            hashes:
+              type: array
+              description: array of hashes
+              items:
+                $ref: '#/components/schemas/Hash'
+        Volatile:
+          type: object
+          description: Describes a volatile configuration
+          properties:
+            collectVolatile:
+              type: boolean
+              description: Whether to collect volatile information,  When `false` the remaining fields are ignored
+            collectHandles:
+              type: boolean
+              description: Whether to collect handles as part of the collection (collectVolatile must be `true`)
+            collectionScreenShots:
+              type: boolean
+              description: Whether to capture screen shots of all windows (requires impersonation, collectVolatile must be `true`)
+            screenShotFormat:
+              type: string
+              description: The graphic file format to save screen shot images.  One of `PNG` or `JPG` (collectScreenShots must be `true`)
+              enum:
+                - PNG
+                - JPG
+        RAM:
+          type: object
+          description: Describes RAM collection
+          properties:
+            collectRAM:
+              type: boolean
+              description: When `true` saves a bit-for-bit image of the RAM
+        SmartMover:
+          type: object
+          description: For a `Deploy` or `Relocate` task.  Specifies the copying or moving of files from one ECC Client to another
+          properties:
+            destinationFolder:
+              type: string
+              description: folder on the destination computer where evidence is to be copied
+            destComputerName:
+              type: string
+              description: name of the destination computer
+            destComputerId:
+              type: string
+              description: GUID of the destination computer
+            moveOrCopy:
+              type: string
+              description: |-
+                Move or Copy.
+
+                Move to delete evidence from the source after the copy is complete
+              enum:
+                - Move
+                - Copy
+            relocateData:
+              type: boolean
+              description: true to relocate the evidence (data)
+            relocateLogs:
+              type: boolean
+              description: true to relocate the logs
+    TaskCreated:
+      type: object
+      properties:
+        parentConfigId:
+          type: integer
+          description: Optional, id of the parent Collection Configuration of the new task to be copied. If omitted, the task is created from given params.
+        taskNum:
+          type: integer
+          description: Optional, id of the task to be copied (within the parent conf specified above).  Required if parentConfigId is specified.
+        taskType:
+          type: string
+          description: |-
+            Type of task\: one of `Collect`, `Relocate`, `Deploy`, or `Launch` (currently only `Collect` and `Relocate` are supported).  NOTE\: If copying an Existing task, the `taskType` cannot be changed in the new task.
+          enum:
+            - Collect
+            - Relocate
+            - Deploy
+            - Launch
+        label:
+          type: string
+          description: |-
+            Optional, user-defined label for this job.
+
+            Can be used as search criteria for jobs.
+    Configuration:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the collection configuration
+        name:
+          type: string
+          description: name of the collection configuration
+        description:
+          type: string
+          description: description of the collection configuration
+          nullable: true
+        template:
+          type: string
+          description: name of the Template used by the collection configuration
+          nullable: true
+        category:
+          type: string
+          description: name of the Category (optional value attached to a collection configuration)
+          nullable: true
+        targets:
+          type: array
+          description: array of Target IDs used in this collection configuration
+          items:
+            type: integer
+            description: Target ID
+          nullable: true
+        computers:
+          type: array
+          description: array of Computer GUIDs used in this collection configuration
+          items:
+            type: string
+            description: computer GUID
+          nullable: true
+        hasInputs:
+          type: boolean
+          description: true if any input paths exist within the targets or computers specified in this collection configuration
+        tasks:
+          type: array
+          description: array of Tasks used in this collection configuration
+          items:
+            $ref: '#/components/schemas/Task'
+    jobDetail:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the job
+        taskType:
+          type: string
+          description: type of the task, one of `Collect`, `Relocate`, `Deploy` or `Launch`
+        status:
+          type: string
+          description: current status of the job (see values below)
+        warnings:
+          type: integer
+          description: current number of warnings
+        errors:
+          type: integer
+          description: current number of errors
+        bytesCollected:
+          type: integer
+          description: bytes currently collected
+        bytesToCollect:
+          type: integer
+          description: total bytes to collect in the job
+        filesCollected:
+          type: integer
+          description: files currently collected
+        filesToCollect:
+          type: integer
+          description: total files to collect in the job
+        collectionName:
+          type: string
+          description: name of the collection this job is running in
+        collectionId:
+          type: integer
+          description: id of the collection this job is running in
+        custodianName:
+          type: string
+          description: name of the custodian associated with this collection, if any
+        custodianId:
+          type: integer
+          description: id of the custodian associated with this collection, if any
+        targetName:
+          type: string
+          description: name of the target this job is collecting from
+        targetId:
+          type: integer
+          description: id of the target this job is collecting from
+        destination:
+          type: string
+          description: destination path for this job
+        startTime:
+          type: string
+          description: date/time of the start of this job
+        endTime:
+          type: string
+          description: date/time of the end of this job
+    jobListDetail:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the job
+        taskName:
+          type: string
+          description: Name of task, one of `Collect`, `Relocate` `Deploy` or `Launch`.
+        label:
+          type: string
+          description: |-
+            Optional, user-defined label for this job.
+
+            Can be used subsequently as search criteria for jobs.
+        caseName:
+          type: string
+          description: name of the Case this job is running under
+        status:
+          type: string
+          description: current status of the job (see values below)
+        warnings:
+          type: integer
+          description: current number of warnings
+        errors:
+          type: integer
+          description: current number of errors
+        bytesCollected:
+          type: integer
+          description: bytes currently collected
+        bytesToCollect:
+          type: integer
+          description: total bytes to collect in the job
+        filesCollected:
+          type: integer
+          description: files currently collected
+        filesToCollect:
+          type: integer
+          description: total files to collect in the job
+        collectionId:
+          type: integer
+          description: id of the collection this job is running in
+        collectionName:
+          type: string
+          description: name of the collection this job is running in
+        custodianName:
+          type: string
+          description: name of the custodian associated with this collection, if any
+        custodianId:
+          type: integer
+          description: id of the custodian associated with this collection, if any
+        targetName:
+          type: string
+          description: name of the target this job is collecting from
+        targetId:
+          type: integer
+          description: id of the target this job is collecting from
+        destination:
+          type: string
+          description: destination path for this job
+        startTime:
+          type: string
+          description: date/time of the start of this job
+        endTime:
+          type: string
+          description: date/time of the end of this job
+        computerId: 
+          type: integer
+          description: id of the computer on which this job is running
+        computerName:
+          type: string
+          description: name of the computer on which this job is running
+    listComputerRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: optional, maximum number of computers to be included in the response
+        computerId:
+          type: string
+          description: |-
+            optional, GUID value that identifies a specific computer.
+
+            If provided, only that computer is included in the response
+        sortBy:
+          type: string
+          description: optional, field name to sort result
+          enum:
+            - ID
+            - Name
+            - Description
+            - ConfigID
+            - Purpose
+            - Presence
+            - PairingState
+            - Staging
+            - TimeZoneID
+            - TimeZoneOffset
+            - FirstContactTime
+            - LastContactTime
+            - UUID
+            - OSName
+            - SearchEnabled
+            - ClientParameters
+            - ClientPublicKey
+            - Config
+            - ConfigName
+            - FullName
+            - History
+            - LastUser
+            - OSName
+            - PeerIP
+            - ServerParameters
+            - ServerPrivateKey
+            - ServerPublicKey
+        ascending:
+          type: boolean
+          description: |-
+            optional, `true` to sort results in ascending order, `false` for descending.
+
+            If omitted, sort is ascending
+        where:
+          type: string
+          description: |-
+            optional, SQL WHERE clause (minus the word WHERE) used to construct more complex filtering.
+
+            If `where` is specified or present then the `filters` field is ignored.
+        filters:
+          type: array
+          description: An optional array of field/value pairs to filter by.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: field name
+                enum:
+                  - ID
+                  - Name
+                  - Description
+                  - ConfigID
+                  - Purpose
+                  - Presence
+                  - PairingState
+                  - Staging
+                  - TimeZoneID
+                  - TimeZoneOffset
+                  - FirstContactTime
+                  - LastContactTime
+                  - UUID
+                  - OSName
+                  - SearchEnabled
+                  - ClientParameters
+                  - ClientPublicKey
+                  - Config
+                  - ConfigName
+                  - FullName
+                  - History
+                  - LastUser
+                  - OSName
+                  - PeerIP
+                  - ServerParameters
+                  - ServerPrivateKey
+                  - ServerPublicKey
+              value:
+                description: Comparison is case-sensitive.  See the list of filtering and sorting fields, above, for field types and descriptions.
+    listJobRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: optional, maximum number of jobs to be included in the response.
+        jobId:
+          type: integer
+          description: |-
+            optional, id of a specific job to retrieve.
+
+            If provided, other parameters are ignored, as only the specified job is included in the response.
+        sortBy:
+          type: string
+          description: optional, field name to sort result (see list of field names in the description of this command).
+          enum:
+            - ID
+            - CollectionID
+            - CustodianID
+            - TargetID
+            - ComputerID
+            - TaskName
+            - TaskNumber
+            - Label
+            - TotalTasks
+            - ProgramName
+            - Destination
+            - DestinationType
+            - CaseName
+            - CollectionName
+            - CustodianName
+            - TargetName
+            - ComputerName
+            - Status
+            - Priority
+            - Stage
+            - SubmitTime
+            - BeginTime
+            - EndTime
+            - NumFilesToCollect
+            - NumFilesCollected
+            - BytesToCollect
+            - BytesCollected
+            - NumWarninings
+            - NumErrors
+            - ReportingTime
+            - PausedMinutes
+        ascending:
+          type: boolean
+          description: |-
+            optional, `true` to sort results in ascending order, `false` for descending.
+
+            If omitted, sort is ascending
+        filters:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the field to filter by.  See the list of field names in the description of this command.
+                enum:
+                  - ID
+                  - CollectionID
+                  - CustodianID
+                  - TargetID
+                  - ComputerID
+                  - TaskName
+                  - TaskNumber
+                  - Label
+                  - TotalTasks
+                  - ProgramName
+                  - Destination
+                  - DestinationType
+                  - CaseName
+                  - CollectionName
+                  - CustodianName
+                  - TargetName
+                  - ComputerName
+                  - Status
+                  - Priority
+                  - Stage
+                  - SubmitTime
+                  - BeginTime
+                  - EndTime
+                  - NumFilesToCollect
+                  - NumFilesCollected
+                  - BytesToCollect
+                  - BytesCollected
+                  - NumWarninings
+                  - NumErrors
+                  - ReportingTime
+                  - PausedMinutes
+              value:
+                description: The value of the specified field to filter by.  The type can vary depending on the field (see the field list in this command's description).  String comparisons are case-sensitive.
+        where:
+          type: string
+          description: |-
+            optional, SQL WHERE clause (minus the word WHERE) used to construct more complex filtering.
+
+            If `where` is specified or present then the `filters` field is ignored.
+    jobActionRequest:
+      type: object
+      properties:
+        action:
+          type: string
+          description: action to be applied to the specified job.
+          enum:
+            - Cancel
+            - Pause
+            - Continue
+            - Resume
+            - Restart
+    launchCaseCollectionRequest:
+      type: object
+      properties:
+        caseId:
+          type: integer
+          description: id of the case within which to start a collection
+        name:
+          type: string
+          description: name of the new collection
+        configurationId:
+          type: integer
+          description: id of the collection configuration to use for collection criteria
+        location:
+          type: string
+          description: destination of the collection (if blank then destination determined by the specified collection configuration)
+        custodianIds:
+          type: array
+          description: id(s) of the custodian(s) for which to launch this collection
+          items:
+            type: integer
+    launchCaseCollectionByConfigurationRequest:
+      type: object
+      properties:
+        caseId:
+          type: integer
+          description: id of the case within which to start a collection
+        name:
+          type: string
+          description: name of the new collection (must be unique)
+        computerId:
+          type: string
+          description: GUID value that identifies the computer
+        configurationId:
+          type: integer
+          description: id of the collection configuration to use for collection criteria
+        location:
+          type: string
+          description: destination of the collection (if blank uses the location within the specified collection configuration)
+    launchCaseCollectionByTargetRequest:
+      type: object
+      properties:
+        caseId:
+          type: integer
+          description: id of the case within which to start a collection
+        name:
+          type: string
+          description: name of the new collection
+        targetId:
+          type: integer
+          description: id of the Target to use for sources
+        configurationId:
+          type: integer
+          description: id of the collection configuration to use for collection criteria
+        location:
+          type: string
+          description: destination of the collection (if blank uses the destination from the specified collection configuration)
+    launchCaseCollectionByPathRequest:
+      type: object
+      properties:
+        caseId:
+          type: integer
+          description: id of the case within which to start a collection
+        name:
+          type: string
+          description: name of the new collection
+        computerId:
+          type: string
+          description: GUID value that identifies the computer
+        configurationId:
+          type: integer
+          description: id of the collection configuration to use for collection criteria
+        location:
+          type: string
+          description: destination of the collection (if blank uses the location defined in the specified collection configuration)
+        label:
+          type: string
+          description: optional, label to be assigned to all tasks within this collection
+        autodetect:
+          type: string
+          description: |-
+            optional, auto-detect option to be used instead of files/folders.
+
+            If specified, must be `AllLocalVolumes`.
+
+            Note that if autodetect is used, the folders and files fields are ignored
+        folders:
+          type: array
+          description: full path(s) of folder(s) to collect from on each target computer
+          items:
+            type: string
+            description: full path
+        files:
+          type: array
+          description: full path(s) of file(s) to collect from each target computer
+          items:
+            type: string
+            description: full path
+        folderSpec:
+          type: array
+          description: optional way to specify folders, allowing for exclusions within each specified folder
+          items:
+            $ref: '#/components/schemas/FolderSpec'
+    createConfigurationRequest:
+      type: object
+      properties:
+        baseConfigId:
+          type: integer
+          description: Id of an existing Collection Configuration to use as the basis for a new Collection Configuration, or -1 to create a new Collection Configuration from scratch
+        newConfigName:
+          type: string
+          description: New Collection Configuration name
+        description:
+          type: string
+          description: New Collection Configuration description
+        category:
+          type: string
+          description: Optional. A Category associated with this Collection Configuration (a GET call can filter by Category)
+        tasks:
+          type: array
+          description: Array of new tasks to add to the new collection configuration.  At least one task must be specified.
+          items:
+            $ref: '#/components/schemas/TaskToCreate'
+    createCaseRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Always `0``.
+        name:
+          type: string
+          description: Name of the new case
+    modifyCaseRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: optional, new case name
+        status:
+          type: string
+          description: optional, new case status.  Either `Open` or `Closed`.
+    createGroupRequest:
+      type: object
+      properties:
+        groupName:
+          type: string
+          description: name of the group to be created
+        description:
+          type: string
+          description: description of the group to be created
+    createCustodianRequest:
+      type: object
+      properties:
+        custodianName:
+          type: string
+          description: name of the custodian to be created
+        description:
+          type: string
+          description: optional, description of the custodian to be created
+        groups:
+          type: array
+          description: optional, array of ids(s) of group(s) this custodian will be added to
+          items:
+            type: object
+            properties:
+              groupId:
+                type: string
+                description: id of the group to add this custodian to
+    createTargetRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: always 0
+        name:
+          type: string
+          description: case name to set
+        targetName:
+          type: string
+          description: name of the new Target
+        description:
+          type: string
+          description: optional, description of the new Target
+        computerId:
+          type: string
+          description: GUID of the computer this Target belongs to
+        custodianId:
+          type: string
+          description: optional, id of Custodian this Target is associated with (Unassigned Custodian if omitted) 
+        inputs:
+          type: array
+          description: array of input paths
+          items:
+            $ref: '#/components/schemas/TargetInputs'
+    modifyGroupRequest:
+      type: object
+      properties:
+        groupId:
+          type: integer
+          description: 'id of the group to be modified'
+        groupName:
+          type: string
+          description: 'optional, new name of the group'
+        description:
+          type: string
+          description: 'optional, new description of the group'
+        addCustodians: 
+          type: array
+          description: optional, array of Custodian Ids to be added to the group
+          items:
+            type: object
+            properties:
+              custodianId:
+                type: integer
+                description: 'id of the custodian to be added'
+        removeCustodians:
+          type: array
+          description: optional, array of Custodian Ids to be removed from the group
+          items:
+            type: object
+            properties:
+              custodianId:
+                type: integer
+                description: 'id of the custodian to be removed'
+    createConfigurationResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the new Collection Configuration
+        name:
+          type: string
+          description: name of the new Collection Configuration
+        description:
+          type: string
+          description: description of the new Collection Configuration
+        template:
+          type: string
+          description: template of the new Collection Configuration
+        category:
+          type: string
+          description: Optional category of the new Collection Configuration
+        targets:
+          type: array
+          description: Array of targets specified in this Collection Configuration
+          items:
+            $ref: '#/components/schemas/Target'
+        hasInputs:
+          type: boolean
+          description: whether any input paths are specified within any of the Targets or Computers in this Collection Configuration
+        tasks:
+          type: array
+          description: Array of tasks specified in this Collection Configuration
+          items:
+            $ref: '#/components/schemas/TaskCreated'
+    licenseResponse:
+      type: object
+      properties:
+        hardwareId:
+          type: string
+          description: The license hardware ID
+        license:
+          type: string
+          description: The license key, as PEM-encoded text
+        licenseDetails:
+          type: object
+          properties:
+            generatedBy:
+              type: string
+              description: The system which generated the license
+            generatedDate:
+              type: string
+              description: The date (as a formatted string) when the license was generated.
+            created-at:
+              type: string
+              description: The date (as an unformatted string) when the license was generated.
+            deadline:
+              type: string
+              description: The date (as an unformatted string) when the license expires.
+            ecc.clients_hard_cap:
+              type: string
+              description: The maximum number of ECC Clients which can be associated with this ECC Server.
+            ecc.clients_soft_cap:
+              type: string
+              description: |-
+                The number of ECC Clients which can be associated with this ECC Server
+                without license warnings appearing in ECC Admin Console.
+            id:
+              type: string
+              description: The license ID
+            keyid:
+              type: string
+              description: The license key ID
+            owner:
+              type: string
+              description: The license owner
+            profile:
+              type: string
+              description: The license profile, typically `ecc`
+    listTargetsResponse:
+      type: object
+      properties:
+        targets:
+          type: array
+          description: List of Targets.
+          items:
+            $ref: '#/components/schemas/Target'
+    listComputerConfResponse:
+      type: object
+      properties:
+        configurations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComputerConf'
+    listCustodianResponse:
+      type: object
+      properties:
+        custodians:
+          type: array
+          description: List of Custodians.
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: id of the custodian
+              name:
+                type: string
+                description: name of the custodian
+              groups:
+                type: array
+                description: array of groups that this custodian belongs to
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: id of the group
+                    name:
+                      type: string
+                      description: name of the group
+    listConfigurationsResponse:
+      type: object
+      properties:
+        configurations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Configuration'
+    listCaseCollectionResponse:
+      type: object
+      properties:
+        collections:
+          type: array
+          items:
+            $ref: '#/components/schemas/CollectionDetail'
+    listCasesResponse:
+      type: object
+      properties:
+        cases:
+          type: array
+          items:
+            $ref: '#/components/schemas/Case'
+    listGroupsResponse:
+      type: object
+      properties:
+        cases:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
+    launchCaseCollectionByConfigurationResponse:
+      type: object
+      properties:
+        collectionId:
+          type: integer
+          description: id of the newly created collection
+        computers:
+          type: array
+          description: array of computers where the job is running (there will be only one computer)
+          items:
+            $ref: '#/components/schemas/ComputerJobs'
+    launchCaseCollectionResponse:
+      type: object
+      properties:
+        collectionId:
+          type: integer
+          description: id of the newly started collection
+        jobs:
+          type: array
+          description: array of job IDs that have been started within the collection
+          items:
+            type: integer
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
+    systemInfoResponse:
+      type: object
+      properties:
+        eccVersion:
+          type: string
+          description: The ECC version number of the ECC Server
+        osName:
+          type: string
+          description: The name of the OS of the ECC Server
+        osVersion:
+          type: string
+          description: The version of the OS of the ECC Server
+        osBitness:
+          type: string
+          description: The bitness of the OS of the ECC Server, e.g. `64-bit`
+        memoryGB:
+          type: string
+          description: The total physical memory of the ECC Server
+        NIC:   
+          type: array
+          description: array of network adapters on the ECC Server
+          items:
+            type: object
+            properties:
+              Name:
+                type: string
+                description: The network adapter system name, e.g. `eth3`
+              Display-Name:
+                type: string
+                description: The network adapter display name, e.g. `Realtek USB GbE Family Controller`
+              IP-Address:
+                type: string
+                description: The IPv4 address assigned to this network adapter
+        Volumes:
+          type: array
+          description: array of volumes on the ECC Server
+          items:
+            type: object
+            properties:
+              Type:
+                type: string
+                description: The filesystem of this volume, e.g. `NTFS`
+              Free-Space:
+                type: string
+                description: The total free space on this volume

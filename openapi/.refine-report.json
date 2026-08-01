@@ -1,0 +1,36 @@
+{
+  "provider": "nuix",
+  "sources": [
+    "nuix-case-api-openapi.yml",
+    "nuix-collection-and-survey-api-openapi.yml",
+    "nuix-collection-configuration-api-openapi.yml",
+    "nuix-computer-api-openapi.yml",
+    "nuix-computer-configuration-api-openapi.yml",
+    "nuix-custodian-api-openapi.yml",
+    "nuix-group-api-openapi.yml",
+    "nuix-job-api-openapi.yml",
+    "nuix-log-api-openapi.yml",
+    "nuix-target-api-openapi.yml",
+    "nuix-utility-api-openapi.yml"
+  ],
+  "outputs": [
+    "nuix-case-api-openapi.yml",
+    "nuix-collection-and-survey-api-openapi.yml",
+    "nuix-collection-configuration-api-openapi.yml",
+    "nuix-computer-api-openapi.yml",
+    "nuix-computer-configuration-api-openapi.yml",
+    "nuix-custodian-api-openapi.yml",
+    "nuix-group-api-openapi.yml",
+    "nuix-job-api-openapi.yml",
+    "nuix-log-api-openapi.yml",
+    "nuix-target-api-openapi.yml",
+    "nuix-utility-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": [
+    "nuix-nuix-core-engine-rest-api-openapi.yml: parse error ScannerError: while scanning for the next token"
+  ]
+}

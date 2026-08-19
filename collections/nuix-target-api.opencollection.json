@@ -1,0 +1,93 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NUIX ECC REST API Command Reference Case Target API",
+    "version": "${customer.version}"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Target",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Lists all target/s",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/targets",
+            "params": [
+              {
+                "name": "computerId",
+                "value": "",
+                "type": "query",
+                "description": "GUID value that identifies the computer"
+              }
+            ]
+          },
+          "docs": "Lists all targets on the connected server, or if a computer GUID is specified as an optional query value, only targets for the specified computer are returned."
+        },
+        {
+          "info": {
+            "name": "Get information about the target specified by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/targets/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id of the target"
+              }
+            ]
+          },
+          "docs": "Get information about the target specified by id"
+        },
+        {
+          "info": {
+            "name": "Delete a Target",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/targets/:id",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete a Target."
+        },
+        {
+          "info": {
+            "name": "Add a new target",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/target",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new target"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

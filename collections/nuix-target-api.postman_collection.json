@@ -1,0 +1,969 @@
+{
+  "item": [
+    {
+      "id": "98b2d561-25b3-421f-9ea4-a29cb8f56348",
+      "name": "Target",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7cf46adf-2ee9-4245-9315-6b63241ed52f",
+          "name": "Lists all target/s",
+          "request": {
+            "name": "Lists all target/s",
+            "description": {
+              "content": "Lists all targets on the connected server, or if a computer GUID is specified as an optional query value, only targets for the specified computer are returned.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "targets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "computerId",
+                  "value": "<string>",
+                  "description": "GUID value that identifies the computer"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "protocol for communication (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "The location which the ECC resides",
+                  "type": "any",
+                  "value": "{{address}}",
+                  "key": "address"
+                },
+                {
+                  "description": "80, 443 or alternative",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7ad8ce94-1cf3-429f-b749-56fa99b17bca",
+              "name": "Successful Listing of Targets",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "targets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "computerId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"targets\": [\n    {\n      \"id\": 67,\n      \"name\": \"DESKTOP_0198_FREDS_FILES\",\n      \"description\": \"Fred's Profile directory from DESKTOP_0198\",\n      \"custodianId\": 142,\n      \"computerName\": \"DESKTOP_0198\",\n      \"computerGUID\": \"4B62734F-21E0-40FF-853A-853A1CDFEC0E\",\n      \"Inputs\": [\n        {\n          \"type\": \"Local Path\",\n          \"location\": \"C:\\\\Users\\\\Fred\"\n        }\n      ]\n    },\n    {\n      \"id\": 68,\n      \"name\": \"DESKTOP_0212_KIMS_FILES\",\n      \"description\": \"Kim's Profile directory from DESKTOP_0212\",\n      \"custodianId\": 116,\n      \"computerName\": \"DESKTOP_0212\",\n      \"computerGUID\": \"14194EA8-0A0B-430C-9B8F-C910C8E02A9E\",\n      \"Inputs\": [\n        {\n          \"type\": \"Local Path\",\n          \"location\": \"C:\\\\Users\\\\Kim\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e531581-b519-43f1-9152-944b539b7309",
+              "name": "Waiting for the model to load",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "targets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "computerId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 504,\n  \"id\": 101,\n  \"message\": \"Waiting for the model to load\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a8338c71-e0b2-4f33-96f0-340b65651f56",
+          "name": "Get information about the target specified by id",
+          "request": {
+            "name": "Get information about the target specified by id",
+            "description": {
+              "content": "Get information about the target specified by id",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "targets",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) id of the target"
+                },
+                {
+                  "description": "protocol for communication (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "The location which the ECC resides",
+                  "type": "any",
+                  "value": "{{address}}",
+                  "key": "address"
+                },
+                {
+                  "description": "80, 443 or alternative",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "21e17983-f576-4112-bd61-d0ddf43c6fef",
+              "name": "Successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "targets",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) id of the target"
+                    },
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"targets\": [\n    {\n      \"id\": 67,\n      \"name\": \"DESKTOP_0198_FREDS_FILES\",\n      \"description\": \"Fred's Profile directory from DESKTOP_0198\",\n      \"custodianId\": 142,\n      \"computerName\": \"DESKTOP_0198\",\n      \"computerGUID\": \"4B62734F-21E0-40FF-853A-853A1CDFEC0E\",\n      \"Inputs\": [\n        {\n          \"type\": \"Local Path\",\n          \"location\": \"C:\\\\Users\\\\Fred\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e30137de-a90c-4db0-8885-9165b5279f70",
+              "name": "Target ID {id} was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "targets",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) id of the target"
+                    },
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"id\": 101,\n  \"message\": \"Target ID {id} was not found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9c97bca-11eb-41c6-8a6e-a725b9bb29cd",
+              "name": "Waiting for the model to load",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "targets",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) id of the target"
+                    },
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 504,\n  \"id\": 101,\n  \"message\": \"Waiting for the model to load\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "043d80f9-9edf-4441-8c8e-3c5d48b752da",
+          "name": "Delete a Target",
+          "request": {
+            "name": "Delete a Target",
+            "description": {
+              "content": "Delete a Target.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "targets",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "protocol for communication (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "The location which the ECC resides",
+                  "type": "any",
+                  "value": "{{address}}",
+                  "key": "address"
+                },
+                {
+                  "description": "80, 443 or alternative",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"targetId\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dff7f833-d8b5-48a6-9258-daf2d8a5b09d",
+              "name": "Target was deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "targets",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"targetId\": 105\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 200,\n  \"id\": 100,\n  \"message\": \"OK\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "300a2edc-44cb-4005-9bbb-27de02863834",
+              "name": "Failed to delete Target",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "targets",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"targetId\": 105\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"id\": 101,\n  \"message\": \"No json body was provided.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9437e8cb-da8b-4171-aced-a0fb037a7b4d",
+          "name": "Add a new target",
+          "request": {
+            "name": "Add a new target",
+            "description": {
+              "content": "Creates a new target",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "target"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "protocol for communication (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "The location which the ECC resides",
+                  "type": "any",
+                  "value": "{{address}}",
+                  "key": "address"
+                },
+                {
+                  "description": "80, 443 or alternative",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"targetName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"computerId\": \"<string>\",\n  \"custodianId\": \"<string>\",\n  \"inputs\": [\n    {\n      \"types\": \"<string>\",\n      \"location\": \"<string>\",\n      \"exclusion\": \"<string>\"\n    },\n    {\n      \"types\": \"<string>\",\n      \"location\": \"<string>\",\n      \"exclusion\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "211201b0-b127-4769-9282-c467b076cfe0",
+              "name": "Target created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "target"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"targetName\": \"Juan's data folders\",\n  \"description\": \"Data folders from Juan's profile folder on DESKTOP_0354\",\n  \"computerId\": \"08AFD7C6-5144-48A9-85D0-9D4093A95834\",\n  \"custodianId\": \"126\",\n  \"inputs\": [\n    {\n      \"type\": \"Local Path\",\n      \"location\": \"C:\\\\Users\\\\Juan\",\n      \"exclusion\": \"AppData\\\\tMusic\\\\tVideos\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 200,\n  \"id\": 100,\n  \"message\": \"TARGET added: Name={new target name}, ID={new target id}, REST=POST api/ecc/v2/target\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d686e45c-c2bc-434a-ba17-3d9f6c0eed0b",
+              "name": "General error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "target"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"targetName\": \"Juan's data folders\",\n  \"description\": \"Data folders from Juan's profile folder on DESKTOP_0354\",\n  \"computerId\": \"08AFD7C6-5144-48A9-85D0-9D4093A95834\",\n  \"custodianId\": \"126\",\n  \"inputs\": [\n    {\n      \"type\": \"Local Path\",\n      \"location\": \"C:\\\\Users\\\\Juan\",\n      \"exclusion\": \"AppData\\\\tMusic\\\\tVideos\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"id\": 101,\n  \"message\": \"No json body was provided.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "protocol for communication (This can only be one of http,https)",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "https",
+      "key": "protocol"
+    },
+    {
+      "description": {
+        "content": "The location which the ECC resides",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "127.0.0.1",
+      "key": "address"
+    },
+    {
+      "description": {
+        "content": "80, 443 or alternative",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "80",
+      "key": "port"
+    },
+    {
+      "type": "string",
+      "value": "{{protocol}}://{{address}}:{{port}}/api/ecc",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6a6d2a2a-0529-4210-b90c-d1b108e1a3b2",
+    "name": "NUIX ECC REST API Command Reference Case Target API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.\n\n**Note\\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.\n\n**Note\\:** This command reference has been updated for Nuix ECC version 9.12.0.\n\nContact Support:\n Name: Nuix\n Email: APISupport@nuix.com",
+      "type": "text/plain"
+    }
+  }
+}

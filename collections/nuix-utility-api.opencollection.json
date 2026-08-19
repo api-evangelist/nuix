@@ -1,0 +1,66 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NUIX ECC REST API Command Reference Case Utility API",
+    "version": "${customer.version}"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Utility",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Verify whether ECC Client or ECC Admin Console is installed on the specified computer.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/eccInstalled",
+            "params": [
+              {
+                "name": "computerId",
+                "value": "",
+                "type": "query",
+                "description": "GUID which identifies the computer"
+              }
+            ]
+          },
+          "docs": "Verify whether ECC Client or ECC Admin Console is installed on the specified computer.\nIf ECC Client or ECC Admin Console is installed, returns the name of the specified computer.\nIf ECC client or ECC Admin Console is not installed, returns an ID 400 response."
+        },
+        {
+          "info": {
+            "name": "Get ECC Server license information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/license"
+          },
+          "docs": "Returns the license info for the ECC Server specified in the URL."
+        },
+        {
+          "info": {
+            "name": "Get ECC Server system information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/systemInfo"
+          },
+          "docs": "Returns the system information for the ECC Server specified in the URL."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

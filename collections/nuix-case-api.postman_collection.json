@@ -1,0 +1,1123 @@
+{
+  "item": [
+    {
+      "id": "86d6e027-db98-40d7-a9da-f55ab423905a",
+      "name": "Case",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c1a8d06a-8c72-46c8-84d3-14235a5a9e83",
+          "name": "Lists all cases",
+          "request": {
+            "name": "Lists all cases",
+            "description": {
+              "content": "Lists all cases defined on the connected server.\n\n**Note:** both open and closed cases are listed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cases"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "protocol for communication (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "The location which the ECC resides",
+                  "type": "any",
+                  "value": "{{address}}",
+                  "key": "address"
+                },
+                {
+                  "description": "80, 443 or alternative",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "32acb390-e798-465f-8a4b-88cdac7cd261",
+              "name": "Successful Listing of cases",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cases\": [\n    {\n      \"id\": 1,\n      \"name\": \"Default\",\n      \"status\": \"Open\"\n    },\n    {\n      \"id\": 100,\n      \"name\": \"Testing\",\n      \"status\": \"Closed\"\n    },\n    {\n      \"id\": 103,\n      \"name\": \"latest\",\n      \"status\": \"Open\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "073ba7b2-bfb1-4206-bf95-112cb69ad8c0",
+          "name": "Create a new case",
+          "request": {
+            "name": "Create a new case",
+            "description": {
+              "content": "Create a new case.\n\nid is always 0 when submitting this request",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cases"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "protocol for communication (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "The location which the ECC resides",
+                  "type": "any",
+                  "value": "{{address}}",
+                  "key": "address"
+                },
+                {
+                  "description": "80, 443 or alternative",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f2090306-a6ea-49bf-8773-dd96933f217e",
+              "name": "Case was created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": 0,\n  \"name\": \"New Case Name\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 200,\n  \"id\": 105,\n  \"message\": \"OK\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "44ed2ead-ed0d-4ab3-b6ee-ac34376e7110",
+          "name": "Lists the specified case",
+          "request": {
+            "name": "Lists the specified case",
+            "description": {
+              "content": "Lists information about the specified case.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cases",
+                ":caseId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "caseId",
+                  "description": "(Required) Case id"
+                },
+                {
+                  "description": "protocol for communication (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "The location which the ECC resides",
+                  "type": "any",
+                  "value": "{{address}}",
+                  "key": "address"
+                },
+                {
+                  "description": "80, 443 or alternative",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4a6c96cb-3cf5-400b-bc06-ad9865a569f8",
+              "name": "Successful Listing of cases",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":caseId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "caseId",
+                      "description": "(Required) Case id"
+                    },
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cases\": [\n    {\n      \"id\": 103,\n      \"name\": \"latest\",\n      \"status\": \"Open\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6c37bc70-b718-40c5-9529-5093671eb289",
+          "name": "Rename a case and-or change case status",
+          "request": {
+            "name": "Rename a case and-or change case status",
+            "description": {
+              "content": "Rename and/or change the status of the specfied case",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cases",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The id of the Case to rename or change status"
+                },
+                {
+                  "description": "protocol for communication (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "The location which the ECC resides",
+                  "type": "any",
+                  "value": "{{address}}",
+                  "key": "address"
+                },
+                {
+                  "description": "80, 443 or alternative",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"status\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "120beddb-5cc9-482f-ae65-db653c38e812",
+              "name": "Case was modified successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the Case to rename or change status"
+                    },
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Revised Case Name\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 200,\n  \"id\": 101,\n  \"message\": \"OK\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fdb9ca0d-6bc0-4b4b-a00b-19cd851563f7",
+              "name": "Failed to modify case",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the Case to rename or change status"
+                    },
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Revised Case Name\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"id\": 101,\n  \"message\": \"Case ID {id} was not found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e251b305-29fd-4fa1-8ba4-86e3fa2a1ddd",
+              "name": "Waiting for the model to load",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the Case to rename or change status"
+                    },
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Revised Case Name\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 504,\n  \"id\": 101,\n  \"message\": \"Waiting for the model to load\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bf932259-e54b-479f-9f07-cda1021170f9",
+          "name": "Delete a case",
+          "request": {
+            "name": "Delete a case",
+            "description": {
+              "content": "Deletes the case identified by the case ignored.\n\n**Note\\:** Only closed cases can be deleted.\n\n**Warning:** Any jobs associated with the specified case\nwill also be deleted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cases",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Case identification token"
+                },
+                {
+                  "description": "protocol for communication (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "The location which the ECC resides",
+                  "type": "any",
+                  "value": "{{address}}",
+                  "key": "address"
+                },
+                {
+                  "description": "80, 443 or alternative",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c8809750-645f-466d-ab7a-0054edc6ade2",
+              "name": "Case was deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Case identification token"
+                    },
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 200,\n  \"id\": 101,\n  \"message\": \"OK\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "adef77c2-9bc8-4a41-b3d2-e09c5eea0a8f",
+              "name": "Specified Case ID is [ invalid | not found | in use ] and cannot be deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Case identification token"
+                    },
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"id\": 101,\n  \"message\": \"Invalid Case ID supplied\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "95be596f-5892-420e-b5b4-5bdae94001ae",
+              "name": "Delete Case command failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Case identification token"
+                    },
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 500,\n  \"id\": 101,\n  \"message\": \"Delete Case Command failed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8de44f3b-7399-4ef8-8854-f56e22cf598f",
+              "name": "Waiting for the model to load",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cases",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Case identification token"
+                    },
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 504,\n  \"id\": 101,\n  \"message\": \"Waiting for the model to load\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "protocol for communication (This can only be one of http,https)",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "https",
+      "key": "protocol"
+    },
+    {
+      "description": {
+        "content": "The location which the ECC resides",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "127.0.0.1",
+      "key": "address"
+    },
+    {
+      "description": {
+        "content": "80, 443 or alternative",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "80",
+      "key": "port"
+    },
+    {
+      "type": "string",
+      "value": "{{protocol}}://{{address}}:{{port}}/api/ecc",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "19f8c292-cb78-4dd5-b359-0a9e8d7fd048",
+    "name": "NUIX ECC REST API Command Reference Case API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.\n\n**Note\\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.\n\n**Note\\:** This command reference has been updated for Nuix ECC version 9.12.0.\n\nContact Support:\n Name: Nuix\n Email: APISupport@nuix.com",
+      "type": "text/plain"
+    }
+  }
+}

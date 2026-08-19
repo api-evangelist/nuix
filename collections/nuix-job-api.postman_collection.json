@@ -1,0 +1,682 @@
+{
+  "item": [
+    {
+      "id": "57a1678c-95c5-4ec7-bd9f-5be7d7a2ad4c",
+      "name": "Job",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "01e73e49-1feb-41ff-919f-7798a4d899f1",
+          "name": "Display details of the specified job",
+          "request": {
+            "name": "Display details of the specified job",
+            "description": {
+              "content": "Display details the job specified by the id in the path (URL)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "jobs",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) id of the job"
+                },
+                {
+                  "description": "protocol for communication (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "The location which the ECC resides",
+                  "type": "any",
+                  "value": "{{address}}",
+                  "key": "address"
+                },
+                {
+                  "description": "80, 443 or alternative",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ae0c85bc-4538-4f1e-a21d-514cc6bb8921",
+              "name": "Job details found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) id of the job"
+                    },
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jobs\": [\n    {\n      \"id\": 103,\n      \"taskName\": \"Collect\",\n      \"label\": \"\",\n      \"caseName\": \"Testing\",\n      \"status\": \"Cancelled\",\n      \"warnings\": 3,\n      \"errors\": 1,\n      \"bytesCollected\": 0,\n      \"bytesToCollect\": 0,\n      \"filesCollected\": 0,\n      \"filesToCollect\": 126600,\n      \"collectionId\": 103,\n      \"collectionName\": \"Email Collect3\",\n      \"custodianName\": \"\",\n      \"custodianId\": 1,\n      \"targetName\": \"\",\n      \"targetId\": 1,\n      \"destination\": \"c:\\\\collection\\\\Testing\\\\Email Collect3\\\\AUSYD-L-NX0142\\\\FileSafe\\\\AUSYD-L-NX0142 2020-07-18 21-08-23.\\n\\nmfs01\",\n      \"beginTime\": \"2020-07-18T11:08:23.\\n\\n711Z\",\n      \"endTime\": \"2020-07-18T11:09:53.\\n\\n757Z\",\n      \"computerId\": \"E21287F5-9E96-6CFF-0624-056AFA28E902\",\n      \"computerName\": \"AUSYD-L-NX0142\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34c25c4b-5742-4418-b568-a5f447bf7a6f",
+              "name": "Job ID not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) id of the job"
+                    },
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"id\": 101,\n  \"message\": \"Invalid Job ID supplied\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "20133064-cbac-4bb1-b3f9-78731d45204e",
+          "name": "Lists all jobs that match the specified filter",
+          "request": {
+            "name": "Lists all jobs that match the specified filter",
+            "description": {
+              "content": "Lists all jobs matching the filter criteria specified in the JSON body.\n\n### Job fields available for filtering and sorting\\:\n\n| Field name        | Type    | Description / Possible Values            |\n| ----------------- | ------- | ---------------------------------------- |\n| BeginTime         | String  | Job start date and time                  |\n| BytesCollected    | String  | Bytes collected so far                   |\n| BytesToCollect    | Long    | Total bytes to be collected              |\n| CaseName          | String  | Case name                                |\n| CollectionID      | Long    | Collection ID number                     |\n| CollectionName    | String  | Collection name                          |\n| ComputerID        | String  | Computer ID number                       |\n| ComputerName      | String  | Computer name                            |\n| CustodianID       | Long    | Custodian ID number                      |\n| CustodianName     | String  | Custodian name                           |\n| Destination       | String  | Destination path                         |\n| DestinationType   | String  | Destination type, one of                 |\n| EndTime           | String  | Job end date and time                    |\n| ID                | Long    | Job ID number                            |\n| Label             | String  | Label value associated with this Job     |\n| NumErrors         | Long    | Number of errors encountered so far      |\n| NumFilesCollected | Long    | Number of files collected so far         |\n| NumFilesToCollect | Long    | Total number fo files to collect         |\n| NumWarninings     | Long    | Number of warnings encountered so far    |\n| PausedMinutes:    | String  | Number of minutes to job has been paused |\n| Priority          | String  | Job priority number                      |\n| ProgramName       | String  | Name of program performing the job       |\n| ReportingTime     | String  | Date and time of last job status report  |\n| Stage             | String  | Job stage                                |\n| Status            | String  | Job status (see list below)              |\n| SubmitTime        | String  | Date and time job was sbmitted           |\n| TargetID          | Long    | Target ID number                         |\n| TargetName        | String  | Target name                              |\n| TaskName          | String  | Task name                                |\n| TaskNumber        | Integer | Task ID number                           |\n| TotalTasks        | Integer | Total number of tasks in this job        |\n\n\n### Job status values\\:\n\nAwaiting Resource, Cancelled, Cancelling, Failed, Finished, Paused, Pausing, PickedUp, Ready, Resumed, Resuming, Running, Suspended, Suspending, Waiting",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "jobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "zero-based offset in the list of computers at which retrieval should start"
+                },
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<integer>",
+                  "description": "version of the Jobs table, obtained from the last call to this function.\n\nThe Jobs table in the ECC Server database gets a new version whenever it is modified.\nThis version is returned in the response body for this query in the field `tableVersion`.\n\nIf `version` is supplied, it is compared to the current version of the Jobs table.\nIf the version numbers match, there is no updated data since the last call,\nand the query is aborted with a **204, 'No Content.'** response code."
+                },
+                {
+                  "disabled": false,
+                  "key": "countOnly",
+                  "value": "<boolean>",
+                  "description": "if `true`, the total count for this query (ignoring `limit` and `offset`) is returned in the Response Body, with no other data.\n\nThis should be used ahead of the actual query to determine the total number of records in the response."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "protocol for communication (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "The location which the ECC resides",
+                  "type": "any",
+                  "value": "{{address}}",
+                  "key": "address"
+                },
+                {
+                  "description": "80, 443 or alternative",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"limit\": \"<integer>\",\n  \"jobId\": \"<integer>\",\n  \"sortBy\": \"<string>\",\n  \"ascending\": \"<boolean>\",\n  \"filters\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": {}\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": {}\n    }\n  ],\n  \"where\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "816600fd-13f1-4340-b841-60f80ddb252f",
+              "name": "Job Listing was submitted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "version",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "countOnly",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": -1,\n  \"filters\": [\n    {\n      \"name\": \"CollectionID\",\n      \"value\": 109\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tableVersion\": 0,\n  \"totalCount\": 2,\n  \"startRow\": 0,\n  \"endRow\": 0,\n  \"next\": \"/api/ecc/v2/jobs?offset=1\",\n  \"jobs\": [\n    {\n      \"id\": 109,\n      \"taskName\": \"Collect\",\n      \"label\": \"\",\n      \"caseName\": \"Group\",\n      \"status\": \"Finished\",\n      \"warnings\": 0,\n      \"errors\": 1,\n      \"bytesCollected\": 138007,\n      \"bytesToCollect\": 138007,\n      \"filesCollected\": 5,\n      \"filesToCollect\": 30,\n      \"collectionId\": 109,\n      \"collectionName\": \"Group Test 8.\\n\\n12pm\",\n      \"custodianName\": \"Unassigned\",\n      \"custodianId\": 1,\n      \"targetName\": \"_System\",\n      \"targetId\": 1,\n      \"destination\": \"c:\\\\collection\\\\Group\\\\Group Test 8.\\n\\n12pm\\\\AUSYD-L-NX0142\\\\FileSafe\\\\AUSYD-L-NX0142 2020-07-19 20-13-13.\\n\\nmfs01\",\n      \"beginTime\": \"2020-07-19T10:13:13.\\n\\n000Z\",\n      \"endTime\": \"2020-07-19T10:14:00.\\n\\n000Z\",\n      \"computerId\": \"E21287F5-9E96-6CFF-0624-056AFA28E902\",\n      \"computerName\": \"AUSYD-L-NX0142\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f73a5bf3-0b23-4c1b-b90b-b4aa13c2e38b",
+          "name": "Modifies the state of the specified job",
+          "request": {
+            "name": "Modifies the state of the specified job",
+            "description": {
+              "content": "Modify the job state of the job identified by the id in the URL.  The `action` string in the body applies the following state change to the job\\:\n\n| Action   | Description                                             |\n| -------- | ------------------------------------------------------- |\n| Cancel   | cancels the job                                         |\n| Pause    | pause the job (can be continued)                        |\n| Continue | continues a paused job                                  |\n| Resume   | resumes a failed or stopped job from where it stopped   |\n| Restart  | restarts a job from the beginning                       |",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "jobAction",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) id of the job"
+                },
+                {
+                  "description": "protocol for communication (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "The location which the ECC resides",
+                  "type": "any",
+                  "value": "{{address}}",
+                  "key": "address"
+                },
+                {
+                  "description": "80, 443 or alternative",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bfa4bf78-30e6-4004-bdc3-d688c5bd5b3e",
+              "name": "Job status changed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobAction",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) id of the job"
+                    },
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"action\": \"Pause\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 200,\n  \"id\": 100,\n  \"message\": \"OK\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "291ce416-5bf5-4cdb-b77c-1b511bcbe24f",
+              "name": "error response - job status has not been changed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "jobAction",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) id of the job"
+                    },
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"action\": \"Pause\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"id\": 101,\n  \"message\": \"Action Terminate is not a recognized job state.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "protocol for communication (This can only be one of http,https)",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "https",
+      "key": "protocol"
+    },
+    {
+      "description": {
+        "content": "The location which the ECC resides",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "127.0.0.1",
+      "key": "address"
+    },
+    {
+      "description": {
+        "content": "80, 443 or alternative",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "80",
+      "key": "port"
+    },
+    {
+      "type": "string",
+      "value": "{{protocol}}://{{address}}:{{port}}/api/ecc",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c15cf364-b2b1-4891-b23b-945cffccf954",
+    "name": "NUIX ECC REST API Command Reference Case Job API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.\n\n**Note\\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.\n\n**Note\\:** This command reference has been updated for Nuix ECC version 9.12.0.\n\nContact Support:\n Name: Nuix\n Email: APISupport@nuix.com",
+      "type": "text/plain"
+    }
+  }
+}

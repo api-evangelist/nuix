@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NUIX ECC REST API Command Reference Case Log API",
+    "version": "${customer.version}"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Log",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns the log entries (errors and warnings) associated with the specified job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/logs",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "query",
+                "description": "ID of the job for which log information should be displayed"
+              }
+            ]
+          },
+          "docs": "Returns the log entries (errors and warnings) associated with the specified job"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,454 @@
+{
+  "item": [
+    {
+      "id": "dc888e9f-9649-4c5c-8609-364edbaccdfc",
+      "name": "Computer Configuration",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c94b390e-2450-403b-95ed-cd98843a57cf",
+          "name": "Returns all Computer Configurations.",
+          "request": {
+            "name": "Returns all Computer Configurations.",
+            "description": {
+              "content": "Returns all Computer Configurations.  A Computer Configuration can be\nassociated with multiple Computers.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "compConfigurations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "protocol for communication (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "The location which the ECC resides",
+                  "type": "any",
+                  "value": "{{address}}",
+                  "key": "address"
+                },
+                {
+                  "description": "80, 443 or alternative",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "59a5ff91-72aa-4ccc-b967-3e963fa3ef15",
+              "name": "Computer Configuration submitted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "compConfigurations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"compConfigurations\": [\n    {\n      \"id\": 2,\n      \"name\": \"Comp Config - Minimal Status\",\n      \"description\": \"Comp Config with infrequent status updates\",\n      \"keepAliveInterval\": 90,\n      \"keepAliveTimeout\": 30,\n      \"resourceWaitTime\": 86400,\n      \"jobWaitTime\": null,\n      \"startJobsWaitTime\": 1,\n      \"statusUpdateWaitTime\": 600,\n      \"systemInfoUpdateWaitTime\": 86400,\n      \"minPortRange\": 0,\n      \"maxPortRange\": 65535,\n      \"enableLogs\": false,\n      \"throttleOutput\": false,\n      \"maxBandwidthMbps\": 50,\n      \"altDestination\": null,\n      \"altDestHasCredentials\": false\n    },\n    {\n      \"id\": 6,\n      \"name\": \"Comp Config - Spare Server\",\n      \"description\": \"Comp Config with alt destination set to Spare Server\",\n      \"keepAliveInterval\": 90,\n      \"keepAliveTimeout\": 30,\n      \"resourceWaitTime\": 86400,\n      \"jobWaitTime\": null,\n      \"startJobsWaitTime\": 1,\n      \"statusUpdateWaitTime\": 60,\n      \"systemInfoUpdateWaitTime\": 86400,\n      \"minPortRange\": 0,\n      \"maxPortRange\": 65535,\n      \"enableLogs\": false,\n      \"throttleOutput\": false,\n      \"maxBandwidthMbps\": 50,\n      \"altDestination\": \"\\\\\\\\SPARE\\\\CollectionShare\",\n      \"altDestHasCredentials\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b573c592-dbf3-45af-a2b9-d42f8a93b81d",
+              "name": "error response - computer configuration not retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "compConfigurations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"id\": 101,\n  \"message\": \"Computer Configuration ID was not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1918b801-4cdf-4280-a5b7-911b19536bec",
+          "name": "Returns the specified Computer Configuration.",
+          "request": {
+            "name": "Returns the specified Computer Configuration.",
+            "description": {
+              "content": "Returns the Computer Configuration specified in the URL by `confid`, i.e. the Computer Configuration id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "compConfigurations",
+                ":confid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "confid",
+                  "value": "<integer>",
+                  "description": "(Required) ID of the Computer Configuration to get"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "protocol for communication (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "The location which the ECC resides",
+                  "type": "any",
+                  "value": "{{address}}",
+                  "key": "address"
+                },
+                {
+                  "description": "80, 443 or alternative",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "be35fe5d-9c15-483a-9708-c66de9913384",
+              "name": "Computer Configuration submitted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "compConfigurations",
+                    ":confid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "confid",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"compConfigurations\": [\n    {\n      \"id\": 6,\n      \"name\": \"Comp Config - Spare Server\",\n      \"description\": \"Comp Config with alt destination set to Spare Server\",\n      \"keepAliveInterval\": 90,\n      \"keepAliveTimeout\": 30,\n      \"resourceWaitTime\": 86400,\n      \"jobWaitTime\": null,\n      \"startJobsWaitTime\": 1,\n      \"statusUpdateWaitTime\": 60,\n      \"systemInfoUpdateWaitTime\": 86400,\n      \"minPortRange\": 0,\n      \"maxPortRange\": 65535,\n      \"enableLogs\": false,\n      \"throttleOutput\": false,\n      \"maxBandwidthMbps\": 50,\n      \"altDestination\": \"\\\\\\\\SPARE\\\\CollectionShare\",\n      \"altDestHasCredentials\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "54826f10-4fb5-4e44-ae97-b05c75f3bd76",
+              "name": "error response - computer configuration not retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "compConfigurations",
+                    ":confid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "confid",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"id\": 101,\n  \"message\": \"Computer Configuration ID was not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "protocol for communication (This can only be one of http,https)",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "https",
+      "key": "protocol"
+    },
+    {
+      "description": {
+        "content": "The location which the ECC resides",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "127.0.0.1",
+      "key": "address"
+    },
+    {
+      "description": {
+        "content": "80, 443 or alternative",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "80",
+      "key": "port"
+    },
+    {
+      "type": "string",
+      "value": "{{protocol}}://{{address}}:{{port}}/api/ecc",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6da623eb-89d3-4762-81b6-1eb90e8400b4",
+    "name": "NUIX ECC REST API Command Reference Case Computer Configuration API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.\n\n**Note\\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.\n\n**Note\\:** This command reference has been updated for Nuix ECC version 9.12.0.\n\nContact Support:\n Name: Nuix\n Email: APISupport@nuix.com",
+      "type": "text/plain"
+    }
+  }
+}

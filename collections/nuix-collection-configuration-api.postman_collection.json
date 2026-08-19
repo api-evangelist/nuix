@@ -1,0 +1,842 @@
+{
+  "item": [
+    {
+      "id": "25c739f5-8557-4893-8318-488abf7cf84a",
+      "name": "Collection Configuration",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f503674f-8155-4034-a100-6672ad64e1cb",
+          "name": "Lists all Collection Configurations",
+          "request": {
+            "name": "Lists all Collection Configurations",
+            "description": {
+              "content": "Lists all Collection Configurations defined on the connected server, or a filtered list if optional query params are used.\n\n**Note\\:** In the response body, a Collect task type will be followed by an Evidence object, and optionally a FileType, DateRange, AdvancedSearch, Hash, Volatile, and RAM object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "configurations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<integer>",
+                  "description": "The id of the configuration to list.\n\n**Note\\:** if `id` is specified, the `category` query parameter is ignored."
+                },
+                {
+                  "disabled": false,
+                  "key": "category",
+                  "value": "<string>",
+                  "description": "Optional category assigned to one or more configurations."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "protocol for communication (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "The location which the ECC resides",
+                  "type": "any",
+                  "value": "{{address}}",
+                  "key": "address"
+                },
+                {
+                  "description": "80, 443 or alternative",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "62298588-5d45-43c6-bb99-77fd6a38391e",
+              "name": "Successful Listing of Configurations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "configurations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"configurations\": [\n      {\n        \"id\": 101,\n        \"name\": \"Configuration Example\",\n        \"description\": \"Example configuration with both targets and computers\",\n        \"template\": \"Default\",\n        \"category\": \"\",\n        \"targets\": [\n          106,\n          142\n        ],\n        \"computers\": [\n          \"5B05C769-6368-4608-A387-9525C4332B50\",\n          \"E594B78A-15AD-4BA5-AB9D-68905B657DC6\"\n        ],\n        \"hasInputs\": false,\n        \"tasks\": [\n          {\n            \"taskNum\": 0,\n            \"taskType\": \"Collect\",\n            \"impersonation\": \"None\",\n            \"label\": \"\",\n            \"Evidence\": {\n              \"destination\": \"c:\\\\collection\",\n              \"credentials\": false,\n              \"createFileSafe\": true,\n              \"compression\": \"High\",\n              \"segmentSize\": 2,\n              \"segmentSizeUnit\": \"GB\",\n              \"validateCollection\": true\n            },\n            \"FileType\": {\n              \"analyzeSignatures\": false,\n              \"mode\": \"Include\",\n              \"extensions\": [\n                {\n                  \"extension\": \"ai\",\n                  \"collectAll\": false\n                }\n              ]\n            }\n          },\n          {\n            \"taskNum\": 1,\n            \"taskType\": \"Relocate\",\n            \"impersonation\": \"None\",\n            \"label\": \"\",\n            \"SmartMover\": {\n              \"destinationFolder\": \"c:\\\\collection\",\n              \"destComputerName\": \"AUSYD-L-NX0142\",\n              \"destComputerId\": \"E21287F5-9E96-6CFF-0624-056AFA28E902\",\n              \"moveOrCopy\": \"Move\",\n              \"relocateData\": true,\n              \"relocateLogs\": true\n            }\n          }\n        ]\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35e5b0ff-f1a2-4894-a022-c768224c9c73",
+              "name": "Invalid Configuration ID",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "configurations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"id\": 101,\n  \"message\": \"Invalid Configuration ID supplied\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88972b0a-5fed-4562-ab10-fc201c155758",
+              "name": "Waiting for the model to load",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "configurations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 504,\n  \"id\": 101,\n  \"message\": \"Waiting for the model to load\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ae573623-9447-495e-b226-8efa7bc26415",
+          "name": "Creates a new Collection Configuration based on an existing Collection Configuration",
+          "request": {
+            "name": "Creates a new Collection Configuration based on an existing Collection Configuration",
+            "description": {
+              "content": "The new Collection Configuration is created with all tasks removed.\n\nTasks can be created in the new Collection Configuration by either creating a new task from scratch, or referencing an existing Task in any other Collection Configuration, which is then copied into the new Collection Configuration.\n\nCopied tasks can be used as is, or modified.\n\n**Note\\:** credentials used for the destination are stored in the task (Collect or Relocate) part of a Collection Configuration, so if credentials are needed, the appropriate task should be copied into the new Collection Configuration.\n\n### The following objects vary depending on the value of taskType\\:\n\n### taskType = Collect\n\nIf `parentConfigId` and `taskNum` values are *not* specified (i.e. a new task is being created), then an `Evidence` object must follow, with `FileType`, `DateRange`,\n`AdvancedSearch`, `Hash`, `Volatile`, and `RAM` objects optional.\n\nHowever, if a `parentConfigId` and `taskNum` *are* specified, then all following objects are optional, and required only to override what is already defined in the task being copied.\n\n**Note\\:** existing criteria within a task are retained. For example, copying a task that contains `FileType` criteria and then adding `DateRange` criteria will result in a task that has both `FileType` and `DateRange`.\n\n### taskType = Relocate\n\nIf `parentConfigId` and `taskNum` values are *not* specified (i.e. a new task is being created), then a `SmartMover` object must follow.\n\nHowever, if `parentConfigId` and `taskNum` *are* specified, then no additional fields are required if the Relocate task is to be used 'as is'.\n\nSee the GET configurations call for a definition of the objects within a task.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "configurations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "protocol for communication (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "The location which the ECC resides",
+                  "type": "any",
+                  "value": "{{address}}",
+                  "key": "address"
+                },
+                {
+                  "description": "80, 443 or alternative",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"baseConfigId\": \"<integer>\",\n  \"newConfigName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"category\": \"<string>\",\n  \"tasks\": [\n    {\n      \"parentConfigId\": \"<integer>\",\n      \"taskNum\": \"<integer>\",\n      \"taskType\": \"<string>\",\n      \"label\": \"<string>\",\n      \"impersonation\": \"<string>\",\n      \"Evidence\": {\n        \"destination\": \"<string>\",\n        \"credentials\": \"<boolean>\",\n        \"createFileSafe\": \"<boolean>\",\n        \"compression\": \"<string>\",\n        \"segmentSize\": \"<integer>\",\n        \"segmentSizeUnit\": \"<string>\",\n        \"overwrite\": \"<boolean>\",\n        \"maintainFullPath\": \"<boolean>\",\n        \"validateCollection\": \"<boolean>\"\n      },\n      \"FileType\": {\n        \"analyzeSignatures\": \"<boolean>\",\n        \"mode\": \"<string>\",\n        \"extensions\": [\n          {\n            \"extension\": \"<string>\",\n            \"collectAll\": \"<boolean>\"\n          },\n          {\n            \"extension\": \"<string>\",\n            \"collectAll\": \"<boolean>\"\n          }\n        ]\n      },\n      \"DateRange\": {\n        \"dates\": [\n          {\n            \"type\": \"<string>\",\n            \"useGMT\": \"<boolean>\",\n            \"startDate\": \"<string>\",\n            \"endDate\": \"<string>\",\n            \"numDays\": \"<integer>\",\n            \"checkCreation\": \"<boolean>\",\n            \"checkModification\": \"<boolean>\",\n            \"checkAccess\": \"<boolean>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"useGMT\": \"<boolean>\",\n            \"startDate\": \"<string>\",\n            \"endDate\": \"<string>\",\n            \"numDays\": \"<integer>\",\n            \"checkCreation\": \"<boolean>\",\n            \"checkModification\": \"<boolean>\",\n            \"checkAccess\": \"<boolean>\"\n          }\n        ]\n      },\n      \"AdvancedSearch\": {\n        \"keywords\": [\n          {\n            \"expressionName\": \"<string>\",\n            \"expression\": \"<string>\",\n            \"caseSensitive\": \"<boolean>\",\n            \"regExpression\": \"<boolean>\"\n          },\n          {\n            \"expressionName\": \"<string>\",\n            \"expression\": \"<string>\",\n            \"caseSensitive\": \"<boolean>\",\n            \"regExpression\": \"<boolean>\"\n          }\n        ]\n      },\n      \"Hash\": {\n        \"hashType\": \"<string>\",\n        \"hashes\": [\n          {\n            \"hashValue\": \"<string>\",\n            \"fileSize\": \"<number>\",\n            \"microHash\": \"<string>\"\n          },\n          {\n            \"hashValue\": \"<string>\",\n            \"fileSize\": \"<number>\",\n            \"microHash\": \"<string>\"\n          }\n        ]\n      },\n      \"Volatile\": {\n        \"collectVolatile\": \"<boolean>\",\n        \"collectHandles\": \"<boolean>\",\n        \"collectionScreenShots\": \"<boolean>\",\n        \"screenShotFormat\": \"<string>\"\n      },\n      \"RAM\": {\n        \"collectRAM\": \"<boolean>\"\n      },\n      \"SmartMover\": {\n        \"destinationFolder\": \"<string>\",\n        \"destComputerName\": \"<string>\",\n        \"destComputerId\": \"<string>\",\n        \"moveOrCopy\": \"<string>\",\n        \"relocateData\": \"<boolean>\",\n        \"relocateLogs\": \"<boolean>\"\n      }\n    },\n    {\n      \"parentConfigId\": \"<integer>\",\n      \"taskNum\": \"<integer>\",\n      \"taskType\": \"<string>\",\n      \"label\": \"<string>\",\n      \"impersonation\": \"<string>\",\n      \"Evidence\": {\n        \"destination\": \"<string>\",\n        \"credentials\": \"<boolean>\",\n        \"createFileSafe\": \"<boolean>\",\n        \"compression\": \"<string>\",\n        \"segmentSize\": \"<integer>\",\n        \"segmentSizeUnit\": \"<string>\",\n        \"overwrite\": \"<boolean>\",\n        \"maintainFullPath\": \"<boolean>\",\n        \"validateCollection\": \"<boolean>\"\n      },\n      \"FileType\": {\n        \"analyzeSignatures\": \"<boolean>\",\n        \"mode\": \"<string>\",\n        \"extensions\": [\n          {\n            \"extension\": \"<string>\",\n            \"collectAll\": \"<boolean>\"\n          },\n          {\n            \"extension\": \"<string>\",\n            \"collectAll\": \"<boolean>\"\n          }\n        ]\n      },\n      \"DateRange\": {\n        \"dates\": [\n          {\n            \"type\": \"<string>\",\n            \"useGMT\": \"<boolean>\",\n            \"startDate\": \"<string>\",\n            \"endDate\": \"<string>\",\n            \"numDays\": \"<integer>\",\n            \"checkCreation\": \"<boolean>\",\n            \"checkModification\": \"<boolean>\",\n            \"checkAccess\": \"<boolean>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"useGMT\": \"<boolean>\",\n            \"startDate\": \"<string>\",\n            \"endDate\": \"<string>\",\n            \"numDays\": \"<integer>\",\n            \"checkCreation\": \"<boolean>\",\n            \"checkModification\": \"<boolean>\",\n            \"checkAccess\": \"<boolean>\"\n          }\n        ]\n      },\n      \"AdvancedSearch\": {\n        \"keywords\": [\n          {\n            \"expressionName\": \"<string>\",\n            \"expression\": \"<string>\",\n            \"caseSensitive\": \"<boolean>\",\n            \"regExpression\": \"<boolean>\"\n          },\n          {\n            \"expressionName\": \"<string>\",\n            \"expression\": \"<string>\",\n            \"caseSensitive\": \"<boolean>\",\n            \"regExpression\": \"<boolean>\"\n          }\n        ]\n      },\n      \"Hash\": {\n        \"hashType\": \"<string>\",\n        \"hashes\": [\n          {\n            \"hashValue\": \"<string>\",\n            \"fileSize\": \"<number>\",\n            \"microHash\": \"<string>\"\n          },\n          {\n            \"hashValue\": \"<string>\",\n            \"fileSize\": \"<number>\",\n            \"microHash\": \"<string>\"\n          }\n        ]\n      },\n      \"Volatile\": {\n        \"collectVolatile\": \"<boolean>\",\n        \"collectHandles\": \"<boolean>\",\n        \"collectionScreenShots\": \"<boolean>\",\n        \"screenShotFormat\": \"<string>\"\n      },\n      \"RAM\": {\n        \"collectRAM\": \"<boolean>\"\n      },\n      \"SmartMover\": {\n        \"destinationFolder\": \"<string>\",\n        \"destComputerName\": \"<string>\",\n        \"destComputerId\": \"<string>\",\n        \"moveOrCopy\": \"<string>\",\n        \"relocateData\": \"<boolean>\",\n        \"relocateLogs\": \"<boolean>\"\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5350bb2e-3091-4b54-ba98-2dc1cbd7c06d",
+              "name": "Configuration was created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "configurations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"baseConfigId\": -1,\n  \"newConfigName\": \"some config name\",\n  \"description\": \"new description\",\n  \"category\": \"optional\",\n  \"tasks\": [\n    {\n      \"parentConfigId\": 101,\n      \"taskNum\": 0,\n      \"taskType\": \"Collect\",\n      \"label\": \"new Label\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 116,\n  \"name\": \"some config name\",\n  \"description\": \"new description\",\n  \"template\": \"Default\",\n  \"category\": \"optional\",\n  \"targets\": [],\n  \"hasInputs\": true,\n  \"tasks\": [\n    {\n      \"taskNum\": 0,\n      \"taskType\": \"Collect\",\n      \"impersonation\": \"None\",\n      \"label\": \"new Label\",\n      \"Evidence\": {\n        \"destination\": \"c:\\\\collection\",\n        \"credentials\": false,\n        \"createFileSafe\": true,\n        \"compression\": \"High\",\n        \"segmentSize\": 2,\n        \"segmentSizeUnit\": \"GB\",\n        \"validateCollection\": true\n      },\n      \"FileType\": {\n        \"analyzeSignatures\": false,\n        \"mode\": \"Include\",\n        \"extensions\": [\n          {\n            \"extension\": \"contact\",\n            \"collectAll\": false\n          },\n          {\n            \"extension\": \"dbx\",\n            \"collectAll\": false\n          },\n          {\n            \"extension\": \"eml\",\n            \"collectAll\": false\n          },\n          {\n            \"extension\": \"group\",\n            \"collectAll\": false\n          },\n          {\n            \"extension\": \"idx\",\n            \"collectAll\": false\n          },\n          {\n            \"extension\": \"MailDB\",\n            \"collectAll\": false\n          },\n          {\n            \"extension\": \"mbx\",\n            \"collectAll\": false\n          },\n          {\n            \"extension\": \"msf\",\n            \"collectAll\": false\n          },\n          {\n            \"extension\": \"msg\",\n            \"collectAll\": false\n          },\n          {\n            \"extension\": \"msmessagestore\",\n            \"collectAll\": false\n          },\n          {\n            \"extension\": \"ns2\",\n            \"collectAll\": false\n          },\n          {\n            \"extension\": \"ns3\",\n            \"collectAll\": false\n          },\n          {\n            \"extension\": \"ns4\",\n            \"collectAll\": false\n          },\n          {\n            \"extension\": \"nsf\",\n            \"collectAll\": false\n          },\n          {\n            \"extension\": \"nws\",\n            \"collectAll\": false\n          },\n          {\n            \"extension\": \"oeaccount\",\n            \"collectAll\": false\n          },\n          {\n            \"extension\": \"ost\",\n            \"collectAll\": false\n          },\n          {\n            \"extension\": \"pbx\",\n            \"collectAll\": false\n          },\n          {\n            \"extension\": \"pst\",\n            \"collectAll\": false\n          },\n          {\n            \"extension\": \"slt\",\n            \"collectAll\": false\n          },\n          {\n            \"extension\": \"snm\",\n            \"collectAll\": false\n          },\n          {\n            \"extension\": \"wab\",\n            \"collectAll\": false\n          }\n        ]\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d298d1be-c6d9-4373-976f-d2b255397493",
+              "name": "No JSON body, config field missing, no new tasks, name is missing etc.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "configurations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"baseConfigId\": -1,\n  \"newConfigName\": \"some config name\",\n  \"description\": \"new description\",\n  \"category\": \"optional\",\n  \"tasks\": [\n    {\n      \"parentConfigId\": 101,\n      \"taskNum\": 0,\n      \"taskType\": \"Collect\",\n      \"label\": \"new Label\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"id\": 101,\n  \"message\": \"Invalid Configuration ID supplied\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "facc9c16-ca98-4d03-8e0a-143ec2d87a72",
+          "name": "Delete the Configuration",
+          "request": {
+            "name": "Delete the Configuration",
+            "description": {
+              "content": "Delete the configuration identified by `{id}`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "configurations",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Collection Configuration id"
+                },
+                {
+                  "description": "protocol for communication (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "The location which the ECC resides",
+                  "type": "any",
+                  "value": "{{address}}",
+                  "key": "address"
+                },
+                {
+                  "description": "80, 443 or alternative",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "137b9b31-1d43-45a4-bdc8-216378c740de",
+              "name": "Case was deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "configurations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Collection Configuration id"
+                    },
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 200,\n  \"id\": 101,\n  \"message\": \"OK\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b9892ee-4019-4a2d-be69-2ced3cbb5d33",
+              "name": "Configuration {id} could not be deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "configurations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Collection Configuration id"
+                    },
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"id\": 101,\n  \"message\": \"Configuration {id} could not be deleted\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ecd191ad-85d9-4638-8e34-abb71b18f17c",
+              "name": "Waiting for the model to load",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "configurations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Collection Configuration id"
+                    },
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 504,\n  \"id\": 101,\n  \"message\": \"Waiting for the model to load\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "protocol for communication (This can only be one of http,https)",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "https",
+      "key": "protocol"
+    },
+    {
+      "description": {
+        "content": "The location which the ECC resides",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "127.0.0.1",
+      "key": "address"
+    },
+    {
+      "description": {
+        "content": "80, 443 or alternative",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "80",
+      "key": "port"
+    },
+    {
+      "type": "string",
+      "value": "{{protocol}}://{{address}}:{{port}}/api/ecc",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f3e2bdd8-3cdb-44c1-838f-8b40442683c3",
+    "name": "NUIX ECC REST API Command Reference Case Collection Configuration API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.\n\n**Note\\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.\n\n**Note\\:** This command reference has been updated for Nuix ECC version 9.12.0.\n\nContact Support:\n Name: Nuix\n Email: APISupport@nuix.com",
+      "type": "text/plain"
+    }
+  }
+}

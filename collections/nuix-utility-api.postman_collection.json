@@ -1,0 +1,506 @@
+{
+  "item": [
+    {
+      "id": "c8bc2e1d-75f0-4769-9220-717014b57173",
+      "name": "Utility",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f796d406-c390-4200-898d-4c8d0d42ae97",
+          "name": "Verify whether ECC Client or ECC Admin Console is installed on the specified computer.",
+          "request": {
+            "name": "Verify whether ECC Client or ECC Admin Console is installed on the specified computer.",
+            "description": {
+              "content": "Verify whether ECC Client or ECC Admin Console is installed on the specified computer.\nIf ECC Client or ECC Admin Console is installed, returns the name of the specified computer.\nIf ECC client or ECC Admin Console is not installed, returns an ID 400 response.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "eccInstalled"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "computerId",
+                  "value": "<string>",
+                  "description": "(Required) GUID which identifies the computer"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "protocol for communication (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "The location which the ECC resides",
+                  "type": "any",
+                  "value": "{{address}}",
+                  "key": "address"
+                },
+                {
+                  "description": "80, 443 or alternative",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6b29c061-6300-401c-9236-4522575cb137",
+              "name": "Successful query of ECC Installed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "eccInstalled"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "computerId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"computer name\": \"someComputer.\\n\\nlocal\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "38106e6a-4c16-4a91-9066-eb3e710e5122",
+              "name": "Invalid Computer ID",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "eccInstalled"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "computerId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"id\": 101,\n  \"message\": \"Computer ID was not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "603fa4a5-ec75-4d6e-8381-554b75aeb718",
+          "name": "Get ECC Server license information",
+          "request": {
+            "name": "Get ECC Server license information",
+            "description": {
+              "content": "Returns the license info for the ECC Server specified in the URL.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "license"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "protocol for communication (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "The location which the ECC resides",
+                  "type": "any",
+                  "value": "{{address}}",
+                  "key": "address"
+                },
+                {
+                  "description": "80, 443 or alternative",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d8458cf8-e418-485b-a80d-5dd3b43c4472",
+              "name": "Successful query of ECC License",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "license"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hardwareId\": \"ecc\\\\\\\\4\\\\\\\\ee5bb2fb\\\\\\\\ac3446ec-758b36fb-82f2cccf-51713e8e\",\n  \"license\": \"-----BEGIN LICENCE-----\\nKey: XYZ100\\n\\n\\n\\nhWtEQ2mXJMqU/E2v0LQtOTQqFThFYseE6ZgiLZpaBKqQUhnAtYENd1I0CkwR\\nYImmLrgSbof4VDXE3WqqnwWnN34yg6D36gJsaLR3k/Q0FZHi5/Ey72SI6KNZ\\nmC/y57I/g3ncMRFfeOkURvv2+t74AjblS8vF7L716UKEV9BsuQVjHJK1qhvQ\\nUirsUTFyFytTfT2N4Jh0iojvoPaacZBD8tGicJLetPF31rO8H6ABEz0wTNRs\\n2p2GqWg0efPY5joOaezL2/VKXbjcp9VNyHIaOsgCQnp9Bn+QuRJP7PAp9zTK\\nFQDgltafqLeI1xdGToirZECTU0LpM7o1Xlb27JSAKdCC27KcmcDY3J1qRcdK\\n+3xOWTuSgjjge3aZhls+mau+w0ila1HcCh/YKqUoExMun77aObJVwVg5cpX9\\nD2HPt8w=\\n-----END LICENCE-----\",\n  \"licenseDetails\": {\n    \"generatedBy\": \"Generated by LicenceGenServer\",\n    \"generatedDate\": \"Wed Sep 21 20:07:44 UTC 2022\",\n    \"created-at\": \"20220921200738\",\n    \"deadline\": \"20221019000000\",\n    \"ecc.clients_hard_cap\": \"60\",\n    \"ecc.clients_soft_cap\": \"50\",\n    \"id\": \"XYZ100\",\n    \"keyid\": \"ecc\\\\\\\\4\\\\\\\\ee5bb2fb\\\\\\\\ac3446ec-758b36fb-82f2cccf-51713e8e\",\n    \"owner\": \"Testing\",\n    \"profile\": \"ecc\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a7927cfb-5e1a-445b-9407-ed26d77567a3",
+          "name": "Get ECC Server system information",
+          "request": {
+            "name": "Get ECC Server system information",
+            "description": {
+              "content": "Returns the system information for the ECC Server specified in the URL.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "systemInfo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "protocol for communication (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "The location which the ECC resides",
+                  "type": "any",
+                  "value": "{{address}}",
+                  "key": "address"
+                },
+                {
+                  "description": "80, 443 or alternative",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2097f38f-1d29-49bf-b5aa-fa91da5e469b",
+              "name": "Successful query of ECC Server information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "systemInfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"eccVersion\": \"9.10.0.27511\",\n  \"osName\": \"Windows 10\",\n  \"osVersion\": \"10\",\n  \"osBitness\": \"64-bit\",\n  \"memoryGB\": \"16.9 GB\",\n  \"NIC\": [\n    {\n      \"Name\": \"eth3\",\n      \"Display-Name\": \"PANGP Virtual Ethernet Adapter\",\n      \"IP-Address\": \"192.168.0.50\"\n    },\n    {\n      \"Name\": \"eth4\",\n      \"Display-Name\": \"Realtek USB GbE Family Controller\",\n      \"IP-Address\": \"192.168.0.51\"\n    },\n    {\n      \"Name\": \"eth20\",\n      \"Display-Name\": \"Hyper-V Virtual Ethernet Adapter\",\n      \"IP-Address\": \"192.168.0.52\"\n    }\n  ],\n  \"Volumes\": [\n    {\n      \"Type\": \"NTFS\",\n      \"Free-Space\": \"629.9 GB\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "protocol for communication (This can only be one of http,https)",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "https",
+      "key": "protocol"
+    },
+    {
+      "description": {
+        "content": "The location which the ECC resides",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "127.0.0.1",
+      "key": "address"
+    },
+    {
+      "description": {
+        "content": "80, 443 or alternative",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "80",
+      "key": "port"
+    },
+    {
+      "type": "string",
+      "value": "{{protocol}}://{{address}}:{{port}}/api/ecc",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6c308890-48f6-453c-abfe-e5d340e11ed8",
+    "name": "NUIX ECC REST API Command Reference Case Utility API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.\n\n**Note\\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.\n\n**Note\\:** This command reference has been updated for Nuix ECC version 9.12.0.\n\nContact Support:\n Name: Nuix\n Email: APISupport@nuix.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NUIX ECC REST API Command Reference Case Custodian API",
+    "version": "${customer.version}"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Custodian",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Lists Custodian/s",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/custodians"
+          },
+          "docs": "Lists all custodians on the connected server"
+        },
+        {
+          "info": {
+            "name": "Create a new Custodian",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/custodians",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Custodian."
+        },
+        {
+          "info": {
+            "name": "Delete a Custodian",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/custodians",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete a Custodian.\n\n**Note\\:**  When the option `deleteTargets` is set to `true` any targets associated with\nthis custodian will be deleted.  When `deleteTargets` is `false` any targets associated with\nthis custodian will be reassigned to the \"unassigned\" custodian."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

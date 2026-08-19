@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NUIX ECC REST API Command Reference Case Computer API",
+    "version": "${customer.version}"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Computer",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Lists computers (endpoints) with ECC installed",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/computers",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "offset (0-based) into the list of computers at which retrieval should start"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "version of the Jobs table from the last call to this function.\n\nThe version of the table is returned in the response body for this query in the field `tableVersion`.\n\nIf `version` is supplied, it is compared to the current version of the Jobs table.\n\nIf the version numbers match, there is no updated data since the last call, \nand the query is aborted with a 204, 'No Content.' response code."
+              },
+              {
+                "name": "countOnly",
+                "value": "",
+                "type": "query",
+                "description": "if `true`, the total count for this query (ignoring `limit` and `offset`) is returned in the Response Body, with no other data.\n\nThis should be used ahead of the actual query to determine the total number of records in the response."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Lists computers (endpoints) with ECC Client or ECC Admin Console installed.\nIf the `computerId` field in the JSON body is provided, all other fields are ignored, as only that single computer will be returned.  Otherwise a list of computers will be returned matching the criteria provided in the `filters` section.\n\nComputer Fields available for filters and sorting\\:\n\n| Field name       | Type    | Description / Possible Values   |\n| ---------------- | ------- | ------------------------------- |\n| "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

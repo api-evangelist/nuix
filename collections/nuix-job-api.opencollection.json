@@ -1,0 +1,102 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NUIX ECC REST API Command Reference Case Job API",
+    "version": "${customer.version}"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Job",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Display details of the specified job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/jobs/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id of the job"
+              }
+            ]
+          },
+          "docs": "Display details the job specified by the id in the path (URL)"
+        },
+        {
+          "info": {
+            "name": "Lists all jobs that match the specified filter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/jobs",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "zero-based offset in the list of computers at which retrieval should start"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "version of the Jobs table, obtained from the last call to this function.\n\nThe Jobs table in the ECC Server database gets a new version whenever it is modified.\nThis version is returned in the response body for this query in the field `tableVersion`.\n\nIf `version` is supplied, it is compared to the current version of the Jobs table.\nIf the version numbers match, there is no updated data since the last call,\nand the query is aborted with a **204, 'No Content.'** response code."
+              },
+              {
+                "name": "countOnly",
+                "value": "",
+                "type": "query",
+                "description": "if `true`, the total count for this query (ignoring `limit` and `offset`) is returned in the Response Body, with no other data.\n\nThis should be used ahead of the actual query to determine the total number of records in the response."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Lists all jobs matching the filter criteria specified in the JSON body.\n\n### Job fields available for filtering and sorting\\:\n\n| Field name        | Type    | Description / Possible Values            |\n| ----------------- | ------- | ---------------------------------------- |\n| BeginTime         | String  | Job start date and time                  |\n| BytesCollected    | String  | Bytes collected so far                   |\n| BytesToCollect    | Long    | Total bytes to be collected              "
+        },
+        {
+          "info": {
+            "name": "Modifies the state of the specified job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/jobAction/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id of the job"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Modify the job state of the job identified by the id in the URL.  The `action` string in the body applies the following state change to the job\\:\n\n| Action   | Description                                             |\n| -------- | ------------------------------------------------------- |\n| Cancel   | cancels the job                                         |\n| Pause    | pause the job (can be continued)                        |\n| Continue | continues a paused job                                  "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

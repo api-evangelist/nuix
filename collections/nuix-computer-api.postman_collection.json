@@ -1,0 +1,411 @@
+{
+  "item": [
+    {
+      "id": "fffb2803-c49a-41c7-bf95-deb0c1889f3c",
+      "name": "Computer",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ee3dd4bd-9b02-46e0-b4df-baae36c819b3",
+          "name": "Lists computers (endpoints) with ECC installed",
+          "request": {
+            "name": "Lists computers (endpoints) with ECC installed",
+            "description": {
+              "content": "Lists computers (endpoints) with ECC Client or ECC Admin Console installed.\nIf the `computerId` field in the JSON body is provided, all other fields are ignored, as only that single computer will be returned.  Otherwise a list of computers will be returned matching the criteria provided in the `filters` section.\n\nComputer Fields available for filters and sorting\\:\n\n| Field name       | Type    | Description / Possible Values   |\n| ---------------- | ------- | ------------------------------- |\n| ID               | long    | id of computer                  |\n| Name             | String  | name of the computer            |\n| Description      | String  | computer description (may be null)                             |\n| ConfigId         | String  | id of the Computer Configuration associated with this computer |\n| Purpose          | String  | `Client` or `Admin Console`     |\n| Presence         | String  | `Online`, `Nearline` or `Offline` - see note, below            |\n| PairingState     | String  | `Paired`, `Awaiting` or `Denied`  |\n| Staging          | Boolean | `true` if the computer is a staging computer                   |\n| TimeZoneID       | String  |                                 |\n| TimeZoneOffset   | String  |                                 |\n| FirstContactTime | String  | date/time of first contact in the format `yyyy-mm-ddThh:mm:ss` |\n| LastContactTime  | String  | date/time of last contact in the format `yyyy-mm-ddThh:mm:ss`  |\n| UUID             | String  | GUID uniquely identifying this computer                        |\n| OSName           | String  | name of the OS                  |\n| SearchEnabled    | Boolean | `true` specifies  Advanced Search is enabled on this computer  |\n| ClientParameters | String  |                                 |\n| ClientPublicKey  | String  |                                 |\n| Config           | long    |                                 |\n| ConfigName       | String  |                                 |\n| FullName         | String  | name of the computer including domain                          |\n| History          | String  |                                 |\n| LastUser         | String  | last logged in username         |\n| OSName           | String  | name of the OS                  |\n| PeerIP           | String  |                                 |\n| ServerParameters | String  |                                 |\n| ServerPrivateKey | String  |                                 |\n| ServerPublicKey  | String  |                                 |\n**Note\\:** Presence values are case-sensitive: they must be `Nearline`, `Online` or `Offline` in a request body. Values returned for Presence however, are returned in ALL UPPERCASE.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "computers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "offset (0-based) into the list of computers at which retrieval should start"
+                },
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<integer>",
+                  "description": "version of the Jobs table from the last call to this function.\n\nThe version of the table is returned in the response body for this query in the field `tableVersion`.\n\nIf `version` is supplied, it is compared to the current version of the Jobs table.\n\nIf the version numbers match, there is no updated data since the last call, \nand the query is aborted with a 204, 'No Content.' response code."
+                },
+                {
+                  "disabled": false,
+                  "key": "countOnly",
+                  "value": "<boolean>",
+                  "description": "if `true`, the total count for this query (ignoring `limit` and `offset`) is returned in the Response Body, with no other data.\n\nThis should be used ahead of the actual query to determine the total number of records in the response."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "protocol for communication (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "The location which the ECC resides",
+                  "type": "any",
+                  "value": "{{address}}",
+                  "key": "address"
+                },
+                {
+                  "description": "80, 443 or alternative",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"limit\": \"<integer>\",\n  \"computerId\": \"<string>\",\n  \"sortBy\": \"<string>\",\n  \"ascending\": \"<boolean>\",\n  \"where\": \"<string>\",\n  \"filters\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": {}\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": {}\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "afdffcbe-64f7-446c-9cc6-e9ca670261d8",
+              "name": "Computer Listing was submitted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "computers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "version",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "countOnly",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": -1,\n  \"sortBy\": \"Name\",\n  \"filters\": [\n    {\n      \"name\": \"Presence\",\n      \"value\": \"Online\"\n    },\n    {\n      \"name\": \"Purpose\",\n      \"value\": \"Client\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tableVersion\": 6111,\n  \"totalCount\": 5182,\n  \"startRow\": 1644,\n  \"endRow\": 6046,\n  \"next\": \"string\",\n  \"computers\": [\n    {\n      \"name\": \"string\",\n      \"fullName\": \"string\",\n      \"description\": \"string\",\n      \"UUID\": \"string\",\n      \"presence\": \"NEARLINE\",\n      \"purpose\": \"Client\",\n      \"staging\": true,\n      \"pairingState\": \"Awaiting\",\n      \"firstContact\": \"string\",\n      \"lastContact\": \"string\",\n      \"osName\": \"string\",\n      \"lastUser\": \"string\",\n      \"searchEnabled\": true\n    },\n    {\n      \"name\": \"string\",\n      \"fullName\": \"string\",\n      \"description\": \"string\",\n      \"UUID\": \"string\",\n      \"presence\": \"NEARLINE\",\n      \"purpose\": \"Client\",\n      \"staging\": false,\n      \"pairingState\": \"Awaiting\",\n      \"firstContact\": \"string\",\n      \"lastContact\": \"string\",\n      \"osName\": \"string\",\n      \"lastUser\": \"string\",\n      \"searchEnabled\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "730228ee-f19e-404b-82d7-993478fe27e3",
+              "name": "No Content/Match",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "computers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "version",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "countOnly",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": -1,\n  \"sortBy\": \"Name\",\n  \"filters\": [\n    {\n      \"name\": \"Presence\",\n      \"value\": \"Online\"\n    },\n    {\n      \"name\": \"Purpose\",\n      \"value\": \"Client\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 204,\n  \"id\": 101,\n  \"message\": \"No Content\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90a658a3-a7a3-45ea-b891-26006187eaf7",
+              "name": "Computer ID not found/Field was not found/Internal Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "computers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "version",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "countOnly",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "protocol for communication (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "The location which the ECC resides",
+                      "type": "any",
+                      "value": "{{address}}",
+                      "key": "address"
+                    },
+                    {
+                      "description": "80, 443 or alternative",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": -1,\n  \"sortBy\": \"Name\",\n  \"filters\": [\n    {\n      \"name\": \"Presence\",\n      \"value\": \"Online\"\n    },\n    {\n      \"name\": \"Purpose\",\n      \"value\": \"Client\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"id\": 101,\n  \"message\": \"Invalid Computer ID supplied\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "protocol for communication (This can only be one of http,https)",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "https",
+      "key": "protocol"
+    },
+    {
+      "description": {
+        "content": "The location which the ECC resides",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "127.0.0.1",
+      "key": "address"
+    },
+    {
+      "description": {
+        "content": "80, 443 or alternative",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "80",
+      "key": "port"
+    },
+    {
+      "type": "string",
+      "value": "{{protocol}}://{{address}}:{{port}}/api/ecc",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3fc9eaf6-b5ae-4b4a-8277-5b67a4e98691",
+    "name": "NUIX ECC REST API Command Reference Case Computer API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.\n\n**Note\\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.\n\n**Note\\:** This command reference has been updated for Nuix ECC version 9.12.0.\n\nContact Support:\n Name: Nuix\n Email: APISupport@nuix.com",
+      "type": "text/plain"
+    }
+  }
+}

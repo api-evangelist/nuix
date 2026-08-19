@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NUIX ECC REST API Command Reference Case Computer Configuration API",
+    "version": "${customer.version}"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Computer Configuration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns all Computer Configurations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/compConfigurations"
+          },
+          "docs": "Returns all Computer Configurations.  A Computer Configuration can be\nassociated with multiple Computers."
+        },
+        {
+          "info": {
+            "name": "Returns the specified Computer Configuration.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/compConfigurations/:confid",
+            "params": [
+              {
+                "name": "confid",
+                "value": "",
+                "type": "query",
+                "description": "ID of the Computer Configuration to get"
+              }
+            ]
+          },
+          "docs": "Returns the Computer Configuration specified in the URL by `confid`, i.e. the Computer Configuration id."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

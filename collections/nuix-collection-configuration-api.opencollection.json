@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NUIX ECC REST API Command Reference Case Collection Configuration API",
+    "version": "${customer.version}"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Collection Configuration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Lists all Collection Configurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/configurations",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "The id of the configuration to list.\n\n**Note\\:** if `id` is specified, the `category` query parameter is ignored."
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Optional category assigned to one or more configurations."
+              }
+            ]
+          },
+          "docs": "Lists all Collection Configurations defined on the connected server, or a filtered list if optional query params are used.\n\n**Note\\:** In the response body, a Collect task type will be followed by an Evidence object, and optionally a FileType, DateRange, AdvancedSearch, Hash, Volatile, and RAM object."
+        },
+        {
+          "info": {
+            "name": "Creates a new Collection Configuration based on an existing Collection Configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/configurations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The new Collection Configuration is created with all tasks removed.\n\nTasks can be created in the new Collection Configuration by either creating a new task from scratch, or referencing an existing Task in any other Collection Configuration, which is then copied into the new Collection Configuration.\n\nCopied tasks can be used as is, or modified.\n\n**Note\\:** credentials used for the destination are stored in the task (Collect or Relocate) part of a Collection Configuration, so if credentials are n"
+        },
+        {
+          "info": {
+            "name": "Delete the Configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/configurations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Collection Configuration id"
+              }
+            ]
+          },
+          "docs": "Delete the configuration identified by `{id}`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

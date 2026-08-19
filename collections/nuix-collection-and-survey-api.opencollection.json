@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NUIX ECC REST API Command Reference Case Collection and Survey API",
+    "version": "${customer.version}"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Collection and Survey",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Lists all collections for the specified case",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/collections",
+            "params": [
+              {
+                "name": "caseId",
+                "value": "",
+                "type": "query",
+                "description": "Case identification token of the case to list collections"
+              }
+            ]
+          },
+          "docs": "Lists all collections for the specified case.\n\nNote that completed and failed collections are listed as well as currently running collections"
+        },
+        {
+          "info": {
+            "name": "Launch a new collection by Custodian",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/collections",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Launch a new collection for one or more Custodians.\n\nIf location is blank the location is determined from the specified Collection Configuration\n\nMust specify at least one Custodian ID"
+        },
+        {
+          "info": {
+            "name": "Launch a new collection explicitly defining folders and files with no custodian.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/collectionsByPath",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Launch a new collection explicitly defining folders and files with no custodian.\n\n**Note\\:** if autoDetect is used it must have the value AllLocalVolumes and when used all files and folders fields are ignored."
+        },
+        {
+          "info": {
+            "name": "Launch a new collection specifying only target and collection configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/collectionsByTarget",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Launch a new collection specifying only target and collection Configuration.\n\n**Note\\:** All other job criteria will be determined from the specified Collection Configuration"
+        },
+        {
+          "info": {
+            "name": "Launch a new collection for a specific computer and Collection Configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{protocol}://{address}:{port}/api/ecc/v2/collectionsByConfiguration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Launch a new collection for a specific computer and Collection Configuration.\n\nOptionally, the destination can be specified in the `location` field.\n\n**Note\\:** since no targets or explicit sources are defined in the API body, the specified Collection Configuration must specify the collection source(s).\n\n**Note\\:** if the specified Collection Configuration contains targets, they will be ignored in favor of the specified computer."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

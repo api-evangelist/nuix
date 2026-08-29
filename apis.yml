@@ -4,6 +4,18 @@ description: Nuix is an investigative analytics and intelligence platform provid
   REST APIs for processing unstructured data, managing forensic cases, running entity
   extraction, conducting digital investigations, and supporting eDiscovery and compliance
   workflows across legal, security, and law enforcement domains.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: enterprise
   onboarding: self-serve

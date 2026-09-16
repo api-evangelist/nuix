@@ -1,9 +1,8 @@
 aid: nuix
 name: Nuix
-description: Nuix is an investigative analytics and intelligence platform providing
-  REST APIs for processing unstructured data, managing forensic cases, running entity
-  extraction, conducting digital investigations, and supporting eDiscovery and compliance
-  workflows across legal, security, and law enforcement domains.
+description: Nuix is an investigative analytics and intelligence platform providing REST APIs for processing
+  unstructured data, managing forensic cases, running entity extraction, conducting digital investigations,
+  and supporting eDiscovery and compliance workflows across legal, security, and law enforcement domains.
 deliveryModel:
   model: saas
   open_source: false
@@ -33,7 +32,7 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/nuix.png
 url: https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/apis.yml
 created: '2026-06-13'
-modified: '2026-06-13'
+modified: '2026-09-16'
 specificationVersion: '0.23'
 type: Index
 tags:
@@ -45,38 +44,12 @@ tags:
 - Legal Technology
 - Intelligence
 apis:
-- aid: nuix:nuix-core-engine-rest-api
-  name: Nuix Core Engine REST API
-  description: >-
-    Primary RESTful service for processing unstructured data, managing forensic cases, ingesting evidence,
-    running search queries, performing OCR and entity extraction, and orchestrating asynchronous processing
-    jobs within Nuix Core Engine.
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developer.nuix.com/latest/
-  baseURL: https://localhost:4444
-  tags:
-  - Case Management
-  - Data Processing
-  - Search
-  - Forensics
-  - Evidence Ingestion
-  properties:
-  - type: Documentation
-    url: https://developer.nuix.com/latest/
-  - type: OpenAPI
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/openapi/nuix-nuix-core-engine-rest-api-openapi.yml
-  contact:
-  - FN: Nuix Developer Program
-    url: https://www.nuix.com/nuix-developer-program
 - aid: nuix:nuix-discover-connect-api
   name: Nuix Discover Connect API
-  description: >-
-    GraphQL-based API for querying and managing discovery data within Nuix Discover, supporting queries
-    and mutations for document review, production sets, and legal analytics workflows.
+  description: GraphQL-based API for querying and managing discovery data within Nuix Discover, supporting
+    queries and mutations for document review, production sets, and legal analytics workflows.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: >-
-    https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
+  humanURL: https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
   baseURL: https://discover.nuix.com/api
   tags:
   - GraphQL
@@ -85,8 +58,7 @@ apis:
   - Legal
   properties:
   - type: Documentation
-    url: >-
-      https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
+    url: https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
   - url: graphql/nuix-graphql.md
     type: GraphQL
   - url: graphql/nuix-schema.graphql
@@ -105,8 +77,7 @@ apis:
   - type: OpenAPI
     url: openapi/nuix-case-api-openapi.yml
   - type: Documentation
-    url: >-
-      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+    url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
 - aid: nuix:nuix-collection-and-survey-api
   name: Nuix Collection and Survey API
   description: The Collection and Survey API from Nuix — 4 operation(s) for collection and survey.
@@ -118,12 +89,10 @@ apis:
   - type: OpenAPI
     url: openapi/nuix-collection-and-survey-api-openapi.yml
   - type: Documentation
-    url: >-
-      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+    url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
 - aid: nuix:nuix-collection-configuration-api
   name: Nuix Collection Configuration API
-  description: >-
-    The Collection Configuration API from Nuix — 2 operation(s) for collection configuration.
+  description: The Collection Configuration API from Nuix — 2 operation(s) for collection configuration.
   humanURL: https://developer.nuix.com/latest/
   baseURL: https://localhost:4444
   tags:
@@ -132,8 +101,7 @@ apis:
   - type: OpenAPI
     url: openapi/nuix-collection-configuration-api-openapi.yml
   - type: Documentation
-    url: >-
-      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+    url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
 - aid: nuix:nuix-computer-api
   name: Nuix Computer API
   description: The Computer API from Nuix — 1 operation(s) for computer.
@@ -145,8 +113,7 @@ apis:
   - type: OpenAPI
     url: openapi/nuix-computer-api-openapi.yml
   - type: Documentation
-    url: >-
-      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+    url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
 - aid: nuix:nuix-computer-configuration-api
   name: Nuix Computer Configuration API
   description: The Computer Configuration API from Nuix — 2 operation(s) for computer configuration.
@@ -158,8 +125,7 @@ apis:
   - type: OpenAPI
     url: openapi/nuix-computer-configuration-api-openapi.yml
   - type: Documentation
-    url: >-
-      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+    url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
 - aid: nuix:nuix-custodian-api
   name: Nuix Custodian API
   description: The Custodian API from Nuix — 1 operation(s) for custodian.
@@ -171,8 +137,7 @@ apis:
   - type: OpenAPI
     url: openapi/nuix-custodian-api-openapi.yml
   - type: Documentation
-    url: >-
-      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+    url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
 - aid: nuix:nuix-group-api
   name: Nuix Group API
   description: The Group API from Nuix — 2 operation(s) for group.
@@ -184,8 +149,7 @@ apis:
   - type: OpenAPI
     url: openapi/nuix-group-api-openapi.yml
   - type: Documentation
-    url: >-
-      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+    url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
 - aid: nuix:nuix-job-api
   name: Nuix Job API
   description: The Job API from Nuix — 3 operation(s) for job.
@@ -197,8 +161,7 @@ apis:
   - type: OpenAPI
     url: openapi/nuix-job-api-openapi.yml
   - type: Documentation
-    url: >-
-      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+    url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
 - aid: nuix:nuix-log-api
   name: Nuix Log API
   description: The Log API from Nuix — 1 operation(s) for log.
@@ -210,8 +173,7 @@ apis:
   - type: OpenAPI
     url: openapi/nuix-log-api-openapi.yml
   - type: Documentation
-    url: >-
-      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+    url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
 - aid: nuix:nuix-target-api
   name: Nuix Target API
   description: The Target API from Nuix — 3 operation(s) for target.
@@ -223,8 +185,7 @@ apis:
   - type: OpenAPI
     url: openapi/nuix-target-api-openapi.yml
   - type: Documentation
-    url: >-
-      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+    url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
 - aid: nuix:nuix-utility-api
   name: Nuix Utility API
   description: The Utility API from Nuix — 3 operation(s) for utility.
@@ -236,9 +197,10 @@ apis:
   - type: OpenAPI
     url: openapi/nuix-utility-api-openapi.yml
   - type: Documentation
-    url: >-
-      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+    url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
 common:
+- type: Website
+  url: https://nuix.com
 - type: AgenticAccess
   url: agentic-access/nuix-agentic-access.yml
 - type: VulnerabilityDisclosure

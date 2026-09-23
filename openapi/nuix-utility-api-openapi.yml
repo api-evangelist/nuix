@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: NUIX ECC REST API Command Reference Case Utility API
-  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.
+  title: NUIX ECC REST API Command Reference Utility API
+  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs. You can also send REST commands to your running ECC Server, as well as view the responses.
 
 
     **Note\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.
@@ -40,7 +40,7 @@ paths:
     get:
       tags:
       - Utility
-      summary: Verify whether ECC Client or ECC Admin Console is installed on the specified computer.
+      summary: Verify whether ECC Client or ECC Admin Console is installed on the specified…
       description: 'Verify whether ECC Client or ECC Admin Console is installed on the specified computer.
 
         If ECC Client or ECC Admin Console is installed, returns the name of the specified computer.
@@ -166,18 +166,6 @@ paths:
                   Free-Space: 629.9 GB
 components:
   schemas:
-    standardResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: http response status code
-        id:
-          type: integer
-          description: id of the affected Object
-        message:
-          type: string
-          description: http status message
     systemInfoResponse:
       type: object
       properties:
@@ -223,6 +211,18 @@ components:
               Free-Space:
                 type: string
                 description: The total free space on this volume
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
     licenseResponse:
       type: object
       properties:

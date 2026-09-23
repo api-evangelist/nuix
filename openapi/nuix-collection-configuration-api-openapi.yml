@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: NUIX ECC REST API Command Reference Case Collection Configuration API
-  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.
+  title: NUIX ECC REST API Command Reference Collection…
+  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs. You can also send REST commands to your running ECC Server, as well as view the responses.
 
 
     **Note\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.
@@ -140,7 +140,7 @@ paths:
     post:
       tags:
       - Collection Configuration
-      summary: Creates a new Collection Configuration based on an existing Collection Configuration
+      summary: Creates a new Collection Configuration based on an existing Collection…
       description: 'The new Collection Configuration is created with all tasks removed.
 
 
@@ -332,166 +332,6 @@ paths:
                 message: Waiting for the model to load
 components:
   schemas:
-    standardResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: http response status code
-        id:
-          type: integer
-          description: id of the affected Object
-        message:
-          type: string
-          description: http status message
-    Hash:
-      type: object
-      properties:
-        hashValue:
-          type: string
-          description: 32-character MD5 hash value
-        fileSize:
-          type: number
-          description: 'Optional file size.
-
-
-            If provided, will be used to match before calculating hash'
-        microHash:
-          type: string
-          description: 'Optional MD5 hash value of the first 64 KB of a file.
-
-
-            Used to match before calculating a full hash'
-    createConfigurationResponse:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: id of the new Collection Configuration
-        name:
-          type: string
-          description: name of the new Collection Configuration
-        description:
-          type: string
-          description: description of the new Collection Configuration
-        template:
-          type: string
-          description: template of the new Collection Configuration
-        category:
-          type: string
-          description: Optional category of the new Collection Configuration
-        targets:
-          type: array
-          description: Array of targets specified in this Collection Configuration
-          items:
-            $ref: '#/components/schemas/Target'
-        hasInputs:
-          type: boolean
-          description: whether any input paths are specified within any of the Targets or Computers in this Collection Configuration
-        tasks:
-          type: array
-          description: Array of tasks specified in this Collection Configuration
-          items:
-            $ref: '#/components/schemas/TaskCreated'
-    Configuration:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: id of the collection configuration
-        name:
-          type: string
-          description: name of the collection configuration
-        description:
-          type: string
-          description: description of the collection configuration
-          nullable: true
-        template:
-          type: string
-          description: name of the Template used by the collection configuration
-          nullable: true
-        category:
-          type: string
-          description: name of the Category (optional value attached to a collection configuration)
-          nullable: true
-        targets:
-          type: array
-          description: array of Target IDs used in this collection configuration
-          items:
-            type: integer
-            description: Target ID
-          nullable: true
-        computers:
-          type: array
-          description: array of Computer GUIDs used in this collection configuration
-          items:
-            type: string
-            description: computer GUID
-          nullable: true
-        hasInputs:
-          type: boolean
-          description: true if any input paths exist within the targets or computers specified in this collection configuration
-        tasks:
-          type: array
-          description: array of Tasks used in this collection configuration
-          items:
-            $ref: '#/components/schemas/Task'
-    FileType:
-      type: object
-      description: describes the file type filters used in the collection (this object is optional)
-      properties:
-        analyzeSignatures:
-          type: boolean
-          description: when `true`, read the beginning of each file to determine file type.  When `false` use filename extension only to determine file type.
-        mode:
-          type: string
-          description: One of `Include` or `Exclude` - include or exclude the file types listed in the `extensions` array
-          enum:
-          - Include
-          - Exclude
-        extensions:
-          type: array
-          description: array of one or more file type extensions
-          items:
-            $ref: '#/components/schemas/Extension'
-    Evidence:
-      type: object
-      properties:
-        destination:
-          type: string
-          description: destination where evidence is to be saved
-        credentials:
-          type: boolean
-          description: Set to `true` if credentials are supplied to access the destination
-        createFileSafe:
-          type: boolean
-          description: Set to `true` to create a FileSafe, `false` save native copies of the files
-        compression:
-          type: string
-          description: Compression setting for saved data.  One of `None`, `Medium`, `High` (used only if createFileSafe = `true`)
-          enum:
-          - None
-          - Medium
-          - High
-        segmentSize:
-          type: integer
-          description: size of each FileSafe segment (used only if createFileSafe = `true`)
-        segmentSizeUnit:
-          type: string
-          description: unit of measure which applies to segmentSize.  One of `KB`, `MB`, or `GB` (used only if createFileSafe = `true`)
-          enum:
-          - KB
-          - MB
-          - GB
-        overwrite:
-          type: boolean
-          description: whether to overwrite existing files at the destination (used only if createFileSafe = `false`)
-        maintainFullPath:
-          type: boolean
-          description: whether to maintain the full path of the file at the destination (used only if createFieSafe = false)
-        validateCollection:
-          type: boolean
-          description: whether to validate the entire FileSafe after collection is completed
     TaskCreated:
       type: object
       properties:
@@ -515,137 +355,60 @@ components:
 
 
             Can be used as search criteria for jobs.'
-    Task:
+    DateCriteria:
       type: object
       properties:
-        taskNum:
+        type:
+          type: string
+          description: 'One of `From` or `Last`.
+
+
+            `From` specifies absolute start/end dates.
+
+
+            `Last` specifies last number of days back from the current date'
+          enum:
+          - From
+          - Last
+        useGMT:
+          type: boolean
+          description: '`true` specifies GMT for time, `false` specifies local time'
+        startDate:
+          type: string
+          description: inclusive start date in the format `yyyy-mm-ddThh:mm:ss` (only used if type = `From`)
+        endDate:
+          type: string
+          description: inclusive end date in the format `yyyy-mm-ddThh:mm:ss` (only used if type = `From`)
+        numDays:
           type: integer
-          description: 0-based index of tasks (jobs) to be run in this collection configuration
-        label:
-          type: string
-          description: 'user-defined label for this job.
-
-
-            Can be used as search criteria for jobs'
-        impersonation:
-          type: string
-          description: The enumeration value `None` or `Logged on User`
-          enum:
-          - None
-          - Logged on User
-        taskType:
-          type: string
-          description: 'The type of task.  One of `Collect`, `Relocate`, `Deploy` or `Launch`.
-
-            This value will determine which fields follow.'
-          enum:
-          - Collect
-          - Relocate
-          - Deploy
-          - Launch
-        Evidence:
-          $ref: '#/components/schemas/Evidence'
-        FileType:
-          $ref: '#/components/schemas/FileType'
-        DateRange:
-          type: object
-          properties:
-            dates:
-              type: array
-              description: array of one or more date criteria
-              items:
-                $ref: '#/components/schemas/DateCriteria'
-        AdvancedSearch:
-          type: object
-          properties:
-            keywords:
-              type: array
-              description: array of keywords
-              items:
-                $ref: '#/components/schemas/Keyword'
-        Hash:
-          type: object
-          properties:
-            hashType:
-              type: string
-              description: always `MD5`
-              enum:
-              - MD5
-            hashes:
-              type: array
-              description: array of hash values used to identify files to be collected
-              items:
-                $ref: '#/components/schemas/Hash'
-        Volatile:
-          type: object
-          description: Describes a volatile configuration
-          properties:
-            collectVolatile:
-              type: boolean
-              description: Whether to collect volatile information,  When `false` the remaining fields are ignored
-            collectHandles:
-              type: boolean
-              description: Whether to collect handles as part of the collection (collectVolatile must be `true`)
-            collectionScreenShots:
-              type: boolean
-              description: Whether to capture screen shots of all windows (requires impersonation, collectVolatile must be `true`)
-            screenShotFormat:
-              type: string
-              description: The graphic file format to save screen shot images.  One of `PNG` or `JPG` (collectScreenShots must be `true`)
-              enum:
-              - PNG
-              - JPG
-        RAM:
-          type: object
-          description: Describes RAM collection
-          properties:
-            collectRAM:
-              type: boolean
-              description: When `true` saves a bit-for-bit image of the RAM
-        SmartMover:
-          type: object
-          description: For a `Deploy` or `Relocate` task.  Specifies the copying or moving of files from one ECC Client to another
-          properties:
-            destinationFolder:
-              type: string
-              description: folder on the destination computer where evidence is to be copied
-            destComputerName:
-              type: string
-              description: name of the destination computer
-            destComputerId:
-              type: string
-              description: GUID of the destination computer
-            moveOrCopy:
-              type: string
-              description: '`Move` or `Copy`.
-
-
-                Either setting will copy files to the destination computer.  `Move` will delete evidence from the source after the copy is complete.'
-              enum:
-              - Move
-              - Copy
-            relocateData:
-              type: boolean
-              description: When `true` relocate the evidence (data files)
-            relocateLogs:
-              type: boolean
-              description: When `true` relocate the collection logs
-    TargetInputs:
+          description: number of days back from the current date (only used if type = `Last`)
+        checkCreation:
+          type: boolean
+          description: When `true`, apply date criteria to creation date
+        checkModification:
+          type: boolean
+          description: When `true` apply date criteria to modification date
+        checkAccess:
+          type: boolean
+          description: When `true`, apply date criteria to access date
+    Hash:
       type: object
       properties:
-        types:
+        hashValue:
           type: string
-          description: Path, Local Path, or AutoDetect
-          enum:
-          - Path
-          - Local Path
-          - AutoDetect
-        location:
+          description: 32-character MD5 hash value
+        fileSize:
+          type: number
+          description: 'Optional file size.
+
+
+            If provided, will be used to match before calculating hash'
+        microHash:
           type: string
-          description: full path or AutoDetect setting for the source
-        exclusion:
-          type: string
-          description: excluded subfolders in the location (only for Path type)
+          description: 'Optional MD5 hash value of the first 64 KB of a file.
+
+
+            Used to match before calculating a full hash'
     TaskToCreate:
       type: object
       properties:
@@ -791,6 +554,169 @@ components:
           description: array of inputs in the target
           items:
             $ref: '#/components/schemas/TargetInputs'
+    Configuration:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the collection configuration
+        name:
+          type: string
+          description: name of the collection configuration
+        description:
+          type:
+          - string
+          - 'null'
+          description: description of the collection configuration
+        template:
+          type:
+          - string
+          - 'null'
+          description: name of the Template used by the collection configuration
+        category:
+          type:
+          - string
+          - 'null'
+          description: name of the Category (optional value attached to a collection configuration)
+        targets:
+          type:
+          - array
+          - 'null'
+          description: array of Target IDs used in this collection configuration
+          items:
+            type: integer
+            description: Target ID
+        computers:
+          type:
+          - array
+          - 'null'
+          description: array of Computer GUIDs used in this collection configuration
+          items:
+            type: string
+            description: computer GUID
+        hasInputs:
+          type: boolean
+          description: true if any input paths exist within the targets or computers specified in this collection configuration
+        tasks:
+          type: array
+          description: array of Tasks used in this collection configuration
+          items:
+            $ref: '#/components/schemas/Task'
+    Task:
+      type: object
+      properties:
+        taskNum:
+          type: integer
+          description: 0-based index of tasks (jobs) to be run in this collection configuration
+        label:
+          type: string
+          description: 'user-defined label for this job.
+
+
+            Can be used as search criteria for jobs'
+        impersonation:
+          type: string
+          description: The enumeration value `None` or `Logged on User`
+          enum:
+          - None
+          - Logged on User
+        taskType:
+          type: string
+          description: 'The type of task.  One of `Collect`, `Relocate`, `Deploy` or `Launch`.
+
+            This value will determine which fields follow.'
+          enum:
+          - Collect
+          - Relocate
+          - Deploy
+          - Launch
+        Evidence:
+          $ref: '#/components/schemas/Evidence'
+        FileType:
+          $ref: '#/components/schemas/FileType'
+        DateRange:
+          type: object
+          properties:
+            dates:
+              type: array
+              description: array of one or more date criteria
+              items:
+                $ref: '#/components/schemas/DateCriteria'
+        AdvancedSearch:
+          type: object
+          properties:
+            keywords:
+              type: array
+              description: array of keywords
+              items:
+                $ref: '#/components/schemas/Keyword'
+        Hash:
+          type: object
+          properties:
+            hashType:
+              type: string
+              description: always `MD5`
+              enum:
+              - MD5
+            hashes:
+              type: array
+              description: array of hash values used to identify files to be collected
+              items:
+                $ref: '#/components/schemas/Hash'
+        Volatile:
+          type: object
+          description: Describes a volatile configuration
+          properties:
+            collectVolatile:
+              type: boolean
+              description: Whether to collect volatile information,  When `false` the remaining fields are ignored
+            collectHandles:
+              type: boolean
+              description: Whether to collect handles as part of the collection (collectVolatile must be `true`)
+            collectionScreenShots:
+              type: boolean
+              description: Whether to capture screen shots of all windows (requires impersonation, collectVolatile must be `true`)
+            screenShotFormat:
+              type: string
+              description: The graphic file format to save screen shot images.  One of `PNG` or `JPG` (collectScreenShots must be `true`)
+              enum:
+              - PNG
+              - JPG
+        RAM:
+          type: object
+          description: Describes RAM collection
+          properties:
+            collectRAM:
+              type: boolean
+              description: When `true` saves a bit-for-bit image of the RAM
+        SmartMover:
+          type: object
+          description: For a `Deploy` or `Relocate` task.  Specifies the copying or moving of files from one ECC Client to another
+          properties:
+            destinationFolder:
+              type: string
+              description: folder on the destination computer where evidence is to be copied
+            destComputerName:
+              type: string
+              description: name of the destination computer
+            destComputerId:
+              type: string
+              description: GUID of the destination computer
+            moveOrCopy:
+              type: string
+              description: '`Move` or `Copy`.
+
+
+                Either setting will copy files to the destination computer.  `Move` will delete evidence from the source after the copy is complete.'
+              enum:
+              - Move
+              - Copy
+            relocateData:
+              type: boolean
+              description: When `true` relocate the evidence (data files)
+            relocateLogs:
+              type: boolean
+              description: When `true` relocate the collection logs
     Extension:
       type: object
       description: Describes a File Extension
@@ -801,6 +727,37 @@ components:
         collectAll:
           type: boolean
           description: If `true`, collect this file type regardless of keyword search
+    createConfigurationResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the new Collection Configuration
+        name:
+          type: string
+          description: name of the new Collection Configuration
+        description:
+          type: string
+          description: description of the new Collection Configuration
+        template:
+          type: string
+          description: template of the new Collection Configuration
+        category:
+          type: string
+          description: Optional category of the new Collection Configuration
+        targets:
+          type: array
+          description: Array of targets specified in this Collection Configuration
+          items:
+            $ref: '#/components/schemas/Target'
+        hasInputs:
+          type: boolean
+          description: whether any input paths are specified within any of the Targets or Computers in this Collection Configuration
+        tasks:
+          type: array
+          description: Array of tasks specified in this Collection Configuration
+          items:
+            $ref: '#/components/schemas/TaskCreated'
     Keyword:
       type: object
       properties:
@@ -816,13 +773,6 @@ components:
         regExpression:
           type: boolean
           description: When `true` specifies the `expression` is interpreted as a Regular Expression
-    listConfigurationsResponse:
-      type: object
-      properties:
-        configurations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Configuration'
     createConfigurationRequest:
       type: object
       properties:
@@ -843,42 +793,97 @@ components:
           description: Array of new tasks to add to the new collection configuration.  At least one task must be specified.
           items:
             $ref: '#/components/schemas/TaskToCreate'
-    DateCriteria:
+    listConfigurationsResponse:
       type: object
       properties:
-        type:
+        configurations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Configuration'
+    FileType:
+      type: object
+      description: describes the file type filters used in the collection (this object is optional)
+      properties:
+        analyzeSignatures:
+          type: boolean
+          description: when `true`, read the beginning of each file to determine file type.  When `false` use filename extension only to determine file type.
+        mode:
           type: string
-          description: 'One of `From` or `Last`.
-
-
-            `From` specifies absolute start/end dates.
-
-
-            `Last` specifies last number of days back from the current date'
+          description: One of `Include` or `Exclude` - include or exclude the file types listed in the `extensions` array
           enum:
-          - From
-          - Last
-        useGMT:
-          type: boolean
-          description: '`true` specifies GMT for time, `false` specifies local time'
-        startDate:
-          type: string
-          description: inclusive start date in the format `yyyy-mm-ddThh:mm:ss` (only used if type = `From`)
-        endDate:
-          type: string
-          description: inclusive end date in the format `yyyy-mm-ddThh:mm:ss` (only used if type = `From`)
-        numDays:
+          - Include
+          - Exclude
+        extensions:
+          type: array
+          description: array of one or more file type extensions
+          items:
+            $ref: '#/components/schemas/Extension'
+    standardResponse:
+      type: object
+      properties:
+        code:
           type: integer
-          description: number of days back from the current date (only used if type = `Last`)
-        checkCreation:
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
+    TargetInputs:
+      type: object
+      properties:
+        types:
+          type: string
+          description: Path, Local Path, or AutoDetect
+          enum:
+          - Path
+          - Local Path
+          - AutoDetect
+        location:
+          type: string
+          description: full path or AutoDetect setting for the source
+        exclusion:
+          type: string
+          description: excluded subfolders in the location (only for Path type)
+    Evidence:
+      type: object
+      properties:
+        destination:
+          type: string
+          description: destination where evidence is to be saved
+        credentials:
           type: boolean
-          description: When `true`, apply date criteria to creation date
-        checkModification:
+          description: Set to `true` if credentials are supplied to access the destination
+        createFileSafe:
           type: boolean
-          description: When `true` apply date criteria to modification date
-        checkAccess:
+          description: Set to `true` to create a FileSafe, `false` save native copies of the files
+        compression:
+          type: string
+          description: Compression setting for saved data.  One of `None`, `Medium`, `High` (used only if createFileSafe = `true`)
+          enum:
+          - None
+          - Medium
+          - High
+        segmentSize:
+          type: integer
+          description: size of each FileSafe segment (used only if createFileSafe = `true`)
+        segmentSizeUnit:
+          type: string
+          description: unit of measure which applies to segmentSize.  One of `KB`, `MB`, or `GB` (used only if createFileSafe = `true`)
+          enum:
+          - KB
+          - MB
+          - GB
+        overwrite:
           type: boolean
-          description: When `true`, apply date criteria to access date
+          description: whether to overwrite existing files at the destination (used only if createFileSafe = `false`)
+        maintainFullPath:
+          type: boolean
+          description: whether to maintain the full path of the file at the destination (used only if createFieSafe = false)
+        validateCollection:
+          type: boolean
+          description: whether to validate the entire FileSafe after collection is completed
   securitySchemes:
     BasicAuth:
       type: http

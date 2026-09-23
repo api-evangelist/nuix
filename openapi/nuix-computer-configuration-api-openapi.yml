@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: NUIX ECC REST API Command Reference Case Computer Configuration API
-  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.
+  title: NUIX ECC REST API Command Reference Computer Configuration…
+  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs. You can also send REST commands to your running ECC Server, as well as view the responses.
 
 
     **Note\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.
@@ -40,8 +40,8 @@ paths:
     get:
       tags:
       - Computer Configuration
-      summary: Returns all Computer Configurations.
-      description: 'Returns all Computer Configurations.  A Computer Configuration can be
+      summary: Returns all Computer Configurations
+      description: 'Returns all Computer Configurations. A Computer Configuration can be
 
         associated with multiple Computers.'
       operationId: listComputerConfigsAll
@@ -105,7 +105,7 @@ paths:
     get:
       tags:
       - Computer Configuration
-      summary: Returns the specified Computer Configuration.
+      summary: Returns the specified Computer Configuration
       description: Returns the Computer Configuration specified in the URL by `confid`, i.e. the Computer Configuration id.
       operationId: listComputerConfigsOne
       parameters:
@@ -156,6 +156,13 @@ paths:
                     message: Computer Configuration ID was not found
 components:
   schemas:
+    listComputerConfResponse:
+      type: object
+      properties:
+        configurations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComputerConf'
     standardResponse:
       type: object
       properties:
@@ -168,13 +175,6 @@ components:
         message:
           type: string
           description: http status message
-    listComputerConfResponse:
-      type: object
-      properties:
-        configurations:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComputerConf'
     ComputerConf:
       type: object
       properties:

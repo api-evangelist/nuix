@@ -1,22 +1,12 @@
 {
   "provider": "nuix",
   "sources": [
-    "nuix-case-api-openapi.yml",
-    "nuix-collection-and-survey-api-openapi.yml",
-    "nuix-collection-configuration-api-openapi.yml",
-    "nuix-computer-api-openapi.yml",
-    "nuix-computer-configuration-api-openapi.yml",
-    "nuix-custodian-api-openapi.yml",
-    "nuix-group-api-openapi.yml",
-    "nuix-job-api-openapi.yml",
-    "nuix-log-api-openapi.yml",
-    "nuix-target-api-openapi.yml",
-    "nuix-utility-api-openapi.yml"
+    "_original/nuix-nuix-ecc-rest-api-openapi.yml"
   ],
   "outputs": [
     "nuix-case-api-openapi.yml",
-    "nuix-collection-and-survey-api-openapi.yml",
     "nuix-collection-configuration-api-openapi.yml",
+    "nuix-collection-and-survey-api-openapi.yml",
     "nuix-computer-api-openapi.yml",
     "nuix-computer-configuration-api-openapi.yml",
     "nuix-custodian-api-openapi.yml",
@@ -29,8 +19,22 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "nuix-nuix-ecc-rest-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": [
-    "nuix-nuix-core-engine-rest-api-openapi.yml: parse error ScannerError: while scanning for the next token"
+    "nuix-case-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nuix-collection-and-survey-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nuix-collection-configuration-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nuix-computer-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nuix-computer-configuration-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nuix-custodian-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nuix-group-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nuix-job-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nuix-log-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nuix-target-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nuix-utility-api-openapi.yml: previously refined output, superseded by openapi/_original/"
   ]
 }

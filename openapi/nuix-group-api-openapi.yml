@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: NUIX ECC REST API Command Reference Case Group API
-  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.
+  title: NUIX ECC REST API Command Reference Group API
+  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs. You can also send REST commands to your running ECC Server, as well as view the responses.
 
 
     **Note\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.
@@ -249,27 +249,6 @@ paths:
                     message: Group ID {} was not found.
 components:
   schemas:
-    standardResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: http response status code
-        id:
-          type: integer
-          description: id of the affected Object
-        message:
-          type: string
-          description: http status message
-    createGroupRequest:
-      type: object
-      properties:
-        groupName:
-          type: string
-          description: name of the group to be created
-        description:
-          type: string
-          description: description of the group to be created
     modifyGroupRequest:
       type: object
       properties:
@@ -300,13 +279,27 @@ components:
               custodianId:
                 type: integer
                 description: id of the custodian to be removed
-    listGroupsResponse:
+    createGroupRequest:
       type: object
       properties:
-        cases:
-          type: array
-          items:
-            $ref: '#/components/schemas/Group'
+        groupName:
+          type: string
+          description: name of the group to be created
+        description:
+          type: string
+          description: description of the group to be created
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
     Group:
       type: object
       properties:
@@ -322,6 +315,13 @@ components:
         deleted:
           type: boolean
           description: true if the group has been deleted
+    listGroupsResponse:
+      type: object
+      properties:
+        cases:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
   securitySchemes:
     BasicAuth:
       type: http

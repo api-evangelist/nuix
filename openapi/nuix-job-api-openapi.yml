@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: NUIX ECC REST API Command Reference Case Job API
-  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.
+  title: NUIX ECC REST API Command Reference Job API
+  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs. You can also send REST commands to your running ECC Server, as well as view the responses.
 
 
     **Note\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.
@@ -116,72 +116,71 @@ paths:
         ### Job fields available for filtering and sorting\:
 
 
-        | Field name        | Type    | Description / Possible Values            |
+        | Field name | Type | Description / Possible Values |
 
         | ----------------- | ------- | ---------------------------------------- |
 
-        | BeginTime         | String  | Job start date and time                  |
+        | BeginTime | String | Job start date and time |
 
-        | BytesCollected    | String  | Bytes collected so far                   |
+        | BytesCollected | String | Bytes collected so far |
 
-        | BytesToCollect    | Long    | Total bytes to be collected              |
+        | BytesToCollect | Long | Total bytes to be collected |
 
-        | CaseName          | String  | Case name                                |
+        | CaseName | String | Case name |
 
-        | CollectionID      | Long    | Collection ID number                     |
+        | CollectionID | Long | Collection ID number |
 
-        | CollectionName    | String  | Collection name                          |
+        | CollectionName | String | Collection name |
 
-        | ComputerID        | String  | Computer ID number                       |
+        | ComputerID | String | Computer ID number |
 
-        | ComputerName      | String  | Computer name                            |
+        | ComputerName | String | Computer name |
 
-        | CustodianID       | Long    | Custodian ID number                      |
+        | CustodianID | Long | Custodian ID number |
 
-        | CustodianName     | String  | Custodian name                           |
+        | CustodianName | String | Custodian name |
 
-        | Destination       | String  | Destination path                         |
+        | Destination | String | Destination path |
 
-        | DestinationType   | String  | Destination type, one of                 |
+        | DestinationType | String | Destination type, one of |
 
-        | EndTime           | String  | Job end date and time                    |
+        | EndTime | String | Job end date and time |
 
-        | ID                | Long    | Job ID number                            |
+        | ID | Long | Job ID number |
 
-        | Label             | String  | Label value associated with this Job     |
+        | Label | String | Label value associated with this Job |
 
-        | NumErrors         | Long    | Number of errors encountered so far      |
+        | NumErrors | Long | Number of errors encountered so far |
 
-        | NumFilesCollected | Long    | Number of files collected so far         |
+        | NumFilesCollected | Long | Number of files collected so far |
 
-        | NumFilesToCollect | Long    | Total number fo files to collect         |
+        | NumFilesToCollect | Long | Total number fo files to collect |
 
-        | NumWarninings     | Long    | Number of warnings encountered so far    |
+        | NumWarninings | Long | Number of warnings encountered so far |
 
-        | PausedMinutes:    | String  | Number of minutes to job has been paused |
+        | PausedMinutes: | String | Number of minutes to job has been paused |
 
-        | Priority          | String  | Job priority number                      |
+        | Priority | String | Job priority number |
 
-        | ProgramName       | String  | Name of program performing the job       |
+        | ProgramName | String | Name of program performing the job |
 
-        | ReportingTime     | String  | Date and time of last job status report  |
+        | ReportingTime | String | Date and time of last job status report |
 
-        | Stage             | String  | Job stage                                |
+        | Stage | String | Job stage |
 
-        | Status            | String  | Job status (see list below)              |
+        | Status | String | Job status (see list below) |
 
-        | SubmitTime        | String  | Date and time job was sbmitted           |
+        | SubmitTime | String | Date and time job was sbmitted |
 
-        | TargetID          | Long    | Target ID number                         |
+        | TargetID | Long | Target ID number |
 
-        | TargetName        | String  | Target name                              |
+        | TargetName | String | Target name |
 
-        | TaskName          | String  | Task name                                |
+        | TaskName | String | Task name |
 
-        | TaskNumber        | Integer | Task ID number                           |
+        | TaskNumber | Integer | Task ID number |
 
-        | TotalTasks        | Integer | Total number of tasks in this job        |
-
+        | TotalTasks | Integer | Total number of tasks in this job |
 
 
         ### Job status values\:
@@ -315,22 +314,22 @@ paths:
       tags:
       - Job
       summary: Modifies the state of the specified job
-      description: 'Modify the job state of the job identified by the id in the URL.  The `action` string in the body applies the following state change to the job\:
+      description: 'Modify the job state of the job identified by the id in the URL. The `action` string in the body applies the following state change to the job\:
 
 
-        | Action   | Description                                             |
+        | Action | Description |
 
         | -------- | ------------------------------------------------------- |
 
-        | Cancel   | cancels the job                                         |
+        | Cancel | cancels the job |
 
-        | Pause    | pause the job (can be continued)                        |
+        | Pause | pause the job (can be continued) |
 
-        | Continue | continues a paused job                                  |
+        | Continue | continues a paused job |
 
-        | Resume   | resumes a failed or stopped job from where it stopped   |
+        | Resume | resumes a failed or stopped job from where it stopped |
 
-        | Restart  | restarts a job from the beginning                       |'
+        | Restart | restarts a job from the beginning |'
       operationId: jobAction
       parameters:
       - name: id
@@ -390,75 +389,6 @@ paths:
                     message: Error changing the job state to Paused
 components:
   schemas:
-    standardResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: http response status code
-        id:
-          type: integer
-          description: id of the affected Object
-        message:
-          type: string
-          description: http status message
-    jobDetail:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: id of the job
-        taskType:
-          type: string
-          description: type of the task, one of `Collect`, `Relocate`, `Deploy` or `Launch`
-        status:
-          type: string
-          description: current status of the job (see values below)
-        warnings:
-          type: integer
-          description: current number of warnings
-        errors:
-          type: integer
-          description: current number of errors
-        bytesCollected:
-          type: integer
-          description: bytes currently collected
-        bytesToCollect:
-          type: integer
-          description: total bytes to collect in the job
-        filesCollected:
-          type: integer
-          description: files currently collected
-        filesToCollect:
-          type: integer
-          description: total files to collect in the job
-        collectionName:
-          type: string
-          description: name of the collection this job is running in
-        collectionId:
-          type: integer
-          description: id of the collection this job is running in
-        custodianName:
-          type: string
-          description: name of the custodian associated with this collection, if any
-        custodianId:
-          type: integer
-          description: id of the custodian associated with this collection, if any
-        targetName:
-          type: string
-          description: name of the target this job is collecting from
-        targetId:
-          type: integer
-          description: id of the target this job is collecting from
-        destination:
-          type: string
-          description: destination path for this job
-        startTime:
-          type: string
-          description: date/time of the start of this job
-        endTime:
-          type: string
-          description: date/time of the end of this job
     jobListDetail:
       type: object
       properties:
@@ -531,18 +461,63 @@ components:
         computerName:
           type: string
           description: name of the computer on which this job is running
-    jobActionRequest:
+    jobDetail:
       type: object
       properties:
-        action:
+        id:
+          type: integer
+          description: id of the job
+        taskType:
           type: string
-          description: action to be applied to the specified job.
-          enum:
-          - Cancel
-          - Pause
-          - Continue
-          - Resume
-          - Restart
+          description: type of the task, one of `Collect`, `Relocate`, `Deploy` or `Launch`
+        status:
+          type: string
+          description: current status of the job (see values below)
+        warnings:
+          type: integer
+          description: current number of warnings
+        errors:
+          type: integer
+          description: current number of errors
+        bytesCollected:
+          type: integer
+          description: bytes currently collected
+        bytesToCollect:
+          type: integer
+          description: total bytes to collect in the job
+        filesCollected:
+          type: integer
+          description: files currently collected
+        filesToCollect:
+          type: integer
+          description: total files to collect in the job
+        collectionName:
+          type: string
+          description: name of the collection this job is running in
+        collectionId:
+          type: integer
+          description: id of the collection this job is running in
+        custodianName:
+          type: string
+          description: name of the custodian associated with this collection, if any
+        custodianId:
+          type: integer
+          description: id of the custodian associated with this collection, if any
+        targetName:
+          type: string
+          description: name of the target this job is collecting from
+        targetId:
+          type: integer
+          description: id of the target this job is collecting from
+        destination:
+          type: string
+          description: destination path for this job
+        startTime:
+          type: string
+          description: date/time of the start of this job
+        endTime:
+          type: string
+          description: date/time of the end of this job
     listJobRequest:
       type: object
       properties:
@@ -644,6 +619,30 @@ components:
 
 
             If `where` is specified or present then the `filters` field is ignored.'
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
+    jobActionRequest:
+      type: object
+      properties:
+        action:
+          type: string
+          description: action to be applied to the specified job.
+          enum:
+          - Cancel
+          - Pause
+          - Continue
+          - Resume
+          - Restart
   securitySchemes:
     BasicAuth:
       type: http

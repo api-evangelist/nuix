@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: NUIX ECC REST API Command Reference Case Computer API
-  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.
+  title: NUIX ECC REST API Command Reference Computer API
+  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs. You can also send REST commands to your running ECC Server, as well as view the responses.
 
 
     **Note\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.
@@ -43,69 +43,69 @@ paths:
       summary: Lists computers (endpoints) with ECC installed
       description: 'Lists computers (endpoints) with ECC Client or ECC Admin Console installed.
 
-        If the `computerId` field in the JSON body is provided, all other fields are ignored, as only that single computer will be returned.  Otherwise a list of computers will be returned matching the criteria provided in the `filters` section.
+        If the `computerId` field in the JSON body is provided, all other fields are ignored, as only that single computer will be returned. Otherwise a list of computers will be returned matching the criteria provided in the `filters` section.
 
 
         Computer Fields available for filters and sorting\:
 
 
-        | Field name       | Type    | Description / Possible Values   |
+        | Field name | Type | Description / Possible Values |
 
         | ---------------- | ------- | ------------------------------- |
 
-        | ID               | long    | id of computer                  |
+        | ID | long | id of computer |
 
-        | Name             | String  | name of the computer            |
+        | Name | String | name of the computer |
 
-        | Description      | String  | computer description (may be null)                             |
+        | Description | String | computer description (may be null) |
 
-        | ConfigId         | String  | id of the Computer Configuration associated with this computer |
+        | ConfigId | String | id of the Computer Configuration associated with this computer |
 
-        | Purpose          | String  | `Client` or `Admin Console`     |
+        | Purpose | String | `Client` or `Admin Console` |
 
-        | Presence         | String  | `Online`, `Nearline` or `Offline` - see note, below            |
+        | Presence | String | `Online`, `Nearline` or `Offline` - see note, below |
 
-        | PairingState     | String  | `Paired`, `Awaiting` or `Denied`  |
+        | PairingState | String | `Paired`, `Awaiting` or `Denied` |
 
-        | Staging          | Boolean | `true` if the computer is a staging computer                   |
+        | Staging | Boolean | `true` if the computer is a staging computer |
 
-        | TimeZoneID       | String  |                                 |
+        | TimeZoneID | String | |
 
-        | TimeZoneOffset   | String  |                                 |
+        | TimeZoneOffset | String | |
 
-        | FirstContactTime | String  | date/time of first contact in the format `yyyy-mm-ddThh:mm:ss` |
+        | FirstContactTime | String | date/time of first contact in the format `yyyy-mm-ddThh:mm:ss` |
 
-        | LastContactTime  | String  | date/time of last contact in the format `yyyy-mm-ddThh:mm:ss`  |
+        | LastContactTime | String | date/time of last contact in the format `yyyy-mm-ddThh:mm:ss` |
 
-        | UUID             | String  | GUID uniquely identifying this computer                        |
+        | UUID | String | GUID uniquely identifying this computer |
 
-        | OSName           | String  | name of the OS                  |
+        | OSName | String | name of the OS |
 
-        | SearchEnabled    | Boolean | `true` specifies  Advanced Search is enabled on this computer  |
+        | SearchEnabled | Boolean | `true` specifies Advanced Search is enabled on this computer |
 
-        | ClientParameters | String  |                                 |
+        | ClientParameters | String | |
 
-        | ClientPublicKey  | String  |                                 |
+        | ClientPublicKey | String | |
 
-        | Config           | long    |                                 |
+        | Config | long | |
 
-        | ConfigName       | String  |                                 |
+        | ConfigName | String | |
 
-        | FullName         | String  | name of the computer including domain                          |
+        | FullName | String | name of the computer including domain |
 
-        | History          | String  |                                 |
+        | History | String | |
 
-        | LastUser         | String  | last logged in username         |
+        | LastUser | String | last logged in username |
 
-        | OSName           | String  | name of the OS                  |
+        | OSName | String | name of the OS |
 
-        | PeerIP           | String  |                                 |
+        | PeerIP | String | |
 
-        | ServerParameters | String  |                                 |
+        | ServerParameters | String | |
 
-        | ServerPrivateKey | String  |                                 |
+        | ServerPrivateKey | String | |
 
-        | ServerPublicKey  | String  |                                 |
+        | ServerPublicKey | String | |
 
         **Note\:** Presence values are case-sensitive: they must be `Nearline`, `Online` or `Offline` in a request body. Values returned for Presence however, are returned in ALL UPPERCASE.'
       operationId: listComputersByFilter
@@ -162,13 +162,15 @@ paths:
                     type: integer
                     description: total number of computers for this response, as if `limit` was not provided
                   startRow:
-                    type: integer
+                    type:
+                    - integer
+                    - 'null'
                     description: starting row of this response within the total count
-                    nullable: true
                   endRow:
-                    type: integer
+                    type:
+                    - integer
+                    - 'null'
                     description: ending row of this response within the total count
-                    nullable: true
                   next:
                     type: string
                     description: 'url to get the next set of responses.
@@ -202,18 +204,6 @@ paths:
                 message: Invalid Computer ID supplied
 components:
   schemas:
-    standardResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: http response status code
-        id:
-          type: integer
-          description: id of the affected Object
-        message:
-          type: string
-          description: http status message
     listComputerRequest:
       type: object
       properties:
@@ -308,6 +298,18 @@ components:
                 - ServerPublicKey
               value:
                 description: Comparison is case-sensitive.  See the list of filtering and sorting fields, above, for field types and descriptions.
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
     Computer:
       type: object
       properties:
@@ -318,9 +320,10 @@ components:
           type: string
           description: name of the computer including domain
         description:
-          type: string
+          type:
+          - string
+          - 'null'
           description: description of the computer
-          nullable: true
         UUID:
           type: string
           description: GUID uniquely identifying this computer, used in all other api functions

@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: NUIX ECC REST API Command Reference Case Custodian API
-  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.
+  title: NUIX ECC REST API Command Reference Custodian API
+  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs. You can also send REST commands to your running ECC Server, as well as view the responses.
 
 
     **Note\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.
@@ -128,9 +128,9 @@ paths:
       description: 'Delete a Custodian.
 
 
-        **Note\:**  When the option `deleteTargets` is set to `true` any targets associated with
+        **Note\:** When the option `deleteTargets` is set to `true` any targets associated with
 
-        this custodian will be deleted.  When `deleteTargets` is `false` any targets associated with
+        this custodian will be deleted. When `deleteTargets` is `false` any targets associated with
 
         this custodian will be reassigned to the "unassigned" custodian.'
       operationId: deleteCustodian

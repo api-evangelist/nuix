@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: NUIX ECC REST API Command Reference Case Target API
-  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.
+  title: NUIX ECC REST API Command Reference Target API
+  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs. You can also send REST commands to your running ECC Server, as well as view the responses.
 
 
     **Note\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.
@@ -92,7 +92,6 @@ paths:
       tags:
       - Target
       summary: Get information about the target specified by id
-      description: Get information about the target specified by id
       operationId: listTarget
       parameters:
       - name: id
@@ -266,60 +265,14 @@ paths:
                     message: No computer found with id {}
 components:
   schemas:
-    standardResponse:
+    listTargetsResponse:
       type: object
       properties:
-        code:
-          type: integer
-          description: http response status code
-        id:
-          type: integer
-          description: id of the affected Object
-        message:
-          type: string
-          description: http status message
-    createTargetRequest:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: always 0
-        name:
-          type: string
-          description: case name to set
-        targetName:
-          type: string
-          description: name of the new Target
-        description:
-          type: string
-          description: optional, description of the new Target
-        computerId:
-          type: string
-          description: GUID of the computer this Target belongs to
-        custodianId:
-          type: string
-          description: optional, id of Custodian this Target is associated with (Unassigned Custodian if omitted)
-        inputs:
+        targets:
           type: array
-          description: array of input paths
+          description: List of Targets.
           items:
-            $ref: '#/components/schemas/TargetInputs'
-    TargetInputs:
-      type: object
-      properties:
-        types:
-          type: string
-          description: Path, Local Path, or AutoDetect
-          enum:
-          - Path
-          - Local Path
-          - AutoDetect
-        location:
-          type: string
-          description: full path or AutoDetect setting for the source
-        exclusion:
-          type: string
-          description: excluded subfolders in the location (only for Path type)
+            $ref: '#/components/schemas/Target'
     Target:
       type: object
       properties:
@@ -346,14 +299,60 @@ components:
           description: array of inputs in the target
           items:
             $ref: '#/components/schemas/TargetInputs'
-    listTargetsResponse:
+    createTargetRequest:
       type: object
       properties:
-        targets:
+        id:
+          type: integer
+          description: always 0
+        name:
+          type: string
+          description: case name to set
+        targetName:
+          type: string
+          description: name of the new Target
+        description:
+          type: string
+          description: optional, description of the new Target
+        computerId:
+          type: string
+          description: GUID of the computer this Target belongs to
+        custodianId:
+          type: string
+          description: optional, id of Custodian this Target is associated with (Unassigned Custodian if omitted)
+        inputs:
           type: array
-          description: List of Targets.
+          description: array of input paths
           items:
-            $ref: '#/components/schemas/Target'
+            $ref: '#/components/schemas/TargetInputs'
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
+    TargetInputs:
+      type: object
+      properties:
+        types:
+          type: string
+          description: Path, Local Path, or AutoDetect
+          enum:
+          - Path
+          - Local Path
+          - AutoDetect
+        location:
+          type: string
+          description: full path or AutoDetect setting for the source
+        exclusion:
+          type: string
+          description: excluded subfolders in the location (only for Path type)
   securitySchemes:
     BasicAuth:
       type: http

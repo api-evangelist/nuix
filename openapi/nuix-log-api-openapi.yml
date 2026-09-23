@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: NUIX ECC REST API Command Reference Case Log API
-  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.
+  title: NUIX ECC REST API Command Reference Log API
+  description: 'Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs. You can also send REST commands to your running ECC Server, as well as view the responses.
 
 
     **Note\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.
@@ -41,7 +41,6 @@ paths:
       tags:
       - Log
       summary: Returns the log entries (errors and warnings) associated with the specified job
-      description: Returns the log entries (errors and warnings) associated with the specified job
       operationId: listLogByJob
       parameters:
       - name: jobId
@@ -112,18 +111,6 @@ paths:
                     message: Query parameter "jobId" expected, but not found.
 components:
   schemas:
-    standardResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: http response status code
-        id:
-          type: integer
-          description: id of the affected Object
-        message:
-          type: string
-          description: http status message
     LogEntry:
       type: object
       properties:
@@ -154,19 +141,33 @@ components:
           type: integer
           description: id of the job the log entry is associated with
         userId:
-          type: integer
+          type:
+          - integer
+          - 'null'
           description: id of the ECC user logged in when the log entry was created
-          nullable: true
         description:
-          type: string
+          type:
+          - string
+          - 'null'
           description: description of the event logged
-          nullable: true
         date:
           type: string
           description: date and time of the log entry
         computerId:
           type: string
           description: UUID of the computer on which the event occurred
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
   securitySchemes:
     BasicAuth:
       type: http

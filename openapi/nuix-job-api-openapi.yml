@@ -389,78 +389,18 @@ paths:
                     message: Error changing the job state to Paused
 components:
   schemas:
-    jobListDetail:
+    standardResponse:
       type: object
       properties:
+        code:
+          type: integer
+          description: http response status code
         id:
           type: integer
-          description: id of the job
-        taskName:
+          description: id of the affected Object
+        message:
           type: string
-          description: Name of task, one of `Collect`, `Relocate` `Deploy` or `Launch`.
-        label:
-          type: string
-          description: 'Optional, user-defined label for this job.
-
-
-            Can be used subsequently as search criteria for jobs.'
-        caseName:
-          type: string
-          description: name of the Case this job is running under
-        status:
-          type: string
-          description: current status of the job (see values below)
-        warnings:
-          type: integer
-          description: current number of warnings
-        errors:
-          type: integer
-          description: current number of errors
-        bytesCollected:
-          type: integer
-          description: bytes currently collected
-        bytesToCollect:
-          type: integer
-          description: total bytes to collect in the job
-        filesCollected:
-          type: integer
-          description: files currently collected
-        filesToCollect:
-          type: integer
-          description: total files to collect in the job
-        collectionId:
-          type: integer
-          description: id of the collection this job is running in
-        collectionName:
-          type: string
-          description: name of the collection this job is running in
-        custodianName:
-          type: string
-          description: name of the custodian associated with this collection, if any
-        custodianId:
-          type: integer
-          description: id of the custodian associated with this collection, if any
-        targetName:
-          type: string
-          description: name of the target this job is collecting from
-        targetId:
-          type: integer
-          description: id of the target this job is collecting from
-        destination:
-          type: string
-          description: destination path for this job
-        startTime:
-          type: string
-          description: date/time of the start of this job
-        endTime:
-          type: string
-          description: date/time of the end of this job
-        computerId:
-          type: integer
-          description: id of the computer on which this job is running
-        computerName:
-          type: string
-          description: name of the computer on which this job is running
+          description: http status message
     jobDetail:
       type: object
       properties:
@@ -518,6 +458,18 @@ components:
         endTime:
           type: string
           description: date/time of the end of this job
+    jobActionRequest:
+      type: object
+      properties:
+        action:
+          type: string
+          description: action to be applied to the specified job.
+          enum:
+          - Cancel
+          - Pause
+          - Continue
+          - Resume
+          - Restart
     listJobRequest:
       type: object
       properties:
@@ -619,30 +571,78 @@ components:
 
 
             If `where` is specified or present then the `filters` field is ignored.'
-    standardResponse:
+    jobListDetail:
       type: object
       properties:
-        code:
-          type: integer
-          description: http response status code
         id:
           type: integer
-          description: id of the affected Object
-        message:
+          description: id of the job
+        taskName:
           type: string
-          description: http status message
-    jobActionRequest:
-      type: object
-      properties:
-        action:
+          description: Name of task, one of `Collect`, `Relocate` `Deploy` or `Launch`.
+        label:
           type: string
-          description: action to be applied to the specified job.
-          enum:
-          - Cancel
-          - Pause
-          - Continue
-          - Resume
-          - Restart
+          description: 'Optional, user-defined label for this job.
+
+
+            Can be used subsequently as search criteria for jobs.'
+        caseName:
+          type: string
+          description: name of the Case this job is running under
+        status:
+          type: string
+          description: current status of the job (see values below)
+        warnings:
+          type: integer
+          description: current number of warnings
+        errors:
+          type: integer
+          description: current number of errors
+        bytesCollected:
+          type: integer
+          description: bytes currently collected
+        bytesToCollect:
+          type: integer
+          description: total bytes to collect in the job
+        filesCollected:
+          type: integer
+          description: files currently collected
+        filesToCollect:
+          type: integer
+          description: total files to collect in the job
+        collectionId:
+          type: integer
+          description: id of the collection this job is running in
+        collectionName:
+          type: string
+          description: name of the collection this job is running in
+        custodianName:
+          type: string
+          description: name of the custodian associated with this collection, if any
+        custodianId:
+          type: integer
+          description: id of the custodian associated with this collection, if any
+        targetName:
+          type: string
+          description: name of the target this job is collecting from
+        targetId:
+          type: integer
+          description: id of the target this job is collecting from
+        destination:
+          type: string
+          description: destination path for this job
+        startTime:
+          type: string
+          description: date/time of the start of this job
+        endTime:
+          type: string
+          description: date/time of the end of this job
+        computerId:
+          type: integer
+          description: id of the computer on which this job is running
+        computerName:
+          type: string
+          description: name of the computer on which this job is running
   securitySchemes:
     BasicAuth:
       type: http

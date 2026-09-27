@@ -199,24 +199,6 @@ components:
         message:
           type: string
           description: http status message
-    createCustodianRequest:
-      type: object
-      properties:
-        custodianName:
-          type: string
-          description: name of the custodian to be created
-        description:
-          type: string
-          description: optional, description of the custodian to be created
-        groups:
-          type: array
-          description: optional, array of ids(s) of group(s) this custodian will be added to
-          items:
-            type: object
-            properties:
-              groupId:
-                type: string
-                description: id of the group to add this custodian to
     listCustodianResponse:
       type: object
       properties:
@@ -244,6 +226,24 @@ components:
                     name:
                       type: string
                       description: name of the group
+    createCustodianRequest:
+      type: object
+      properties:
+        custodianName:
+          type: string
+          description: name of the custodian to be created
+        description:
+          type: string
+          description: optional, description of the custodian to be created
+        groups:
+          type: array
+          description: optional, array of ids(s) of group(s) this custodian will be added to
+          items:
+            type: object
+            properties:
+              groupId:
+                type: string
+                description: id of the group to add this custodian to
   securitySchemes:
     BasicAuth:
       type: http

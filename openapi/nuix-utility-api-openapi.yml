@@ -166,6 +166,18 @@ paths:
                   Free-Space: 629.9 GB
 components:
   schemas:
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
     systemInfoResponse:
       type: object
       properties:
@@ -211,18 +223,6 @@ components:
               Free-Space:
                 type: string
                 description: The total free space on this volume
-    standardResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: http response status code
-        id:
-          type: integer
-          description: id of the affected Object
-        message:
-          type: string
-          description: http status message
     licenseResponse:
       type: object
       properties:

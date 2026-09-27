@@ -265,40 +265,18 @@ paths:
                     message: No computer found with id {}
 components:
   schemas:
-    listTargetsResponse:
+    standardResponse:
       type: object
       properties:
-        targets:
-          type: array
-          description: List of Targets.
-          items:
-            $ref: '#/components/schemas/Target'
-    Target:
-      type: object
-      properties:
+        code:
+          type: integer
+          description: http response status code
         id:
           type: integer
-          description: id of the Target
-        name:
+          description: id of the affected Object
+        message:
           type: string
-          description: name of the target
-        description:
-          type: string
-          description: description of the target
-        custodianId:
-          type: integer
-          description: id of the Custodian this target belongs to
-        computerName:
-          type: string
-          description: name of the Computer this target belongs to
-        computerGUID:
-          type: string
-          description: GUID of the Computer this target belongs to
-        Inputs:
-          type: array
-          description: array of inputs in the target
-          items:
-            $ref: '#/components/schemas/TargetInputs'
+          description: http status message
     createTargetRequest:
       type: object
       properties:
@@ -325,18 +303,32 @@ components:
           description: array of input paths
           items:
             $ref: '#/components/schemas/TargetInputs'
-    standardResponse:
+    Target:
       type: object
       properties:
-        code:
-          type: integer
-          description: http response status code
         id:
           type: integer
-          description: id of the affected Object
-        message:
+          description: id of the Target
+        name:
           type: string
-          description: http status message
+          description: name of the target
+        description:
+          type: string
+          description: description of the target
+        custodianId:
+          type: integer
+          description: id of the Custodian this target belongs to
+        computerName:
+          type: string
+          description: name of the Computer this target belongs to
+        computerGUID:
+          type: string
+          description: GUID of the Computer this target belongs to
+        Inputs:
+          type: array
+          description: array of inputs in the target
+          items:
+            $ref: '#/components/schemas/TargetInputs'
     TargetInputs:
       type: object
       properties:
@@ -353,6 +345,14 @@ components:
         exclusion:
           type: string
           description: excluded subfolders in the location (only for Path type)
+    listTargetsResponse:
+      type: object
+      properties:
+        targets:
+          type: array
+          description: List of Targets.
+          items:
+            $ref: '#/components/schemas/Target'
   securitySchemes:
     BasicAuth:
       type: http

@@ -261,15 +261,6 @@ components:
         message:
           type: string
           description: http status message
-    createGroupRequest:
-      type: object
-      properties:
-        groupName:
-          type: string
-          description: name of the group to be created
-        description:
-          type: string
-          description: description of the group to be created
     Group:
       type: object
       properties:
@@ -292,6 +283,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Group'
+    createGroupRequest:
+      type: object
+      properties:
+        groupName:
+          type: string
+          description: name of the group to be created
+        description:
+          type: string
+          description: description of the group to be created
     modifyGroupRequest:
       type: object
       properties:

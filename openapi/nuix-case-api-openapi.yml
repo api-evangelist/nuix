@@ -272,6 +272,13 @@ components:
         status:
           type: string
           description: optional, new case status.  Either `Open` or `Closed`.
+    listCasesResponse:
+      type: object
+      properties:
+        cases:
+          type: array
+          items:
+            $ref: '#/components/schemas/Case'
     Case:
       type: object
       properties:
@@ -284,13 +291,6 @@ components:
         status:
           type: string
           description: case status, Open or Closed
-    listCasesResponse:
-      type: object
-      properties:
-        cases:
-          type: array
-          items:
-            $ref: '#/components/schemas/Case'
     createCaseRequest:
       type: object
       properties:

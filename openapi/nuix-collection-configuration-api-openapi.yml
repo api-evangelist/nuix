@@ -332,78 +332,153 @@ paths:
                 message: Waiting for the model to load
 components:
   schemas:
-    standardResponse:
+    Keyword:
       type: object
       properties:
-        code:
-          type: integer
-          description: http response status code
-        id:
-          type: integer
-          description: id of the affected Object
-        message:
+        expressionName:
           type: string
-          description: http status message
-    FileType:
-      type: object
-      description: describes the file type filters used in the collection (this object is optional)
-      properties:
-        analyzeSignatures:
+          description: human-readable description of the search expression
+        expression:
+          type: string
+          description: search expression
+        caseSensitive:
           type: boolean
-          description: when `true`, read the beginning of each file to determine file type.  When `false` use filename extension only to determine file type.
-        mode:
+          description: When `true` specifies the search should be case-sensitive
+        regExpression:
+          type: boolean
+          description: When `true` specifies the `expression` is interpreted as a Regular Expression
+    Hash:
+      type: object
+      properties:
+        hashValue:
           type: string
-          description: One of `Include` or `Exclude` - include or exclude the file types listed in the `extensions` array
-          enum:
-          - Include
-          - Exclude
-        extensions:
-          type: array
-          description: array of one or more file type extensions
-          items:
-            $ref: '#/components/schemas/Extension'
-    Target:
+          description: 32-character MD5 hash value
+        fileSize:
+          type: number
+          description: 'Optional file size.
+
+
+            If provided, will be used to match before calculating hash'
+        microHash:
+          type: string
+          description: 'Optional MD5 hash value of the first 64 KB of a file.
+
+
+            Used to match before calculating a full hash'
+    Configuration:
       type: object
       properties:
         id:
           type: integer
-          description: id of the Target
+          description: id of the collection configuration
         name:
           type: string
-          description: name of the target
+          description: name of the collection configuration
         description:
-          type: string
-          description: description of the target
-        custodianId:
-          type: integer
-          description: id of the Custodian this target belongs to
-        computerName:
-          type: string
-          description: name of the Computer this target belongs to
-        computerGUID:
-          type: string
-          description: GUID of the Computer this target belongs to
-        Inputs:
-          type: array
-          description: array of inputs in the target
+          type:
+          - string
+          - 'null'
+          description: description of the collection configuration
+        template:
+          type:
+          - string
+          - 'null'
+          description: name of the Template used by the collection configuration
+        category:
+          type:
+          - string
+          - 'null'
+          description: name of the Category (optional value attached to a collection configuration)
+        targets:
+          type:
+          - array
+          - 'null'
+          description: array of Target IDs used in this collection configuration
           items:
-            $ref: '#/components/schemas/TargetInputs'
-    TargetInputs:
+            type: integer
+            description: Target ID
+        computers:
+          type:
+          - array
+          - 'null'
+          description: array of Computer GUIDs used in this collection configuration
+          items:
+            type: string
+            description: computer GUID
+        hasInputs:
+          type: boolean
+          description: true if any input paths exist within the targets or computers specified in this collection configuration
+        tasks:
+          type: array
+          description: array of Tasks used in this collection configuration
+          items:
+            $ref: '#/components/schemas/Task'
+    createConfigurationRequest:
       type: object
       properties:
-        types:
+        baseConfigId:
+          type: integer
+          description: Id of an existing Collection Configuration to use as the basis for a new Collection Configuration, or -1 to create a new Collection Configuration from scratch
+        newConfigName:
           type: string
-          description: Path, Local Path, or AutoDetect
+          description: New Collection Configuration name
+        description:
+          type: string
+          description: New Collection Configuration description
+        category:
+          type: string
+          description: Optional. A Category associated with this Collection Configuration (a GET call can filter by Category)
+        tasks:
+          type: array
+          description: Array of new tasks to add to the new collection configuration.  At least one task must be specified.
+          items:
+            $ref: '#/components/schemas/TaskToCreate'
+    Extension:
+      type: object
+      description: Describes a File Extension
+      properties:
+        extension:
+          type: string
+          description: file type extension (do not include the preceding dot)
+        collectAll:
+          type: boolean
+          description: If `true`, collect this file type regardless of keyword search
+    DateCriteria:
+      type: object
+      properties:
+        type:
+          type: string
+          description: 'One of `From` or `Last`.
+
+
+            `From` specifies absolute start/end dates.
+
+
+            `Last` specifies last number of days back from the current date'
           enum:
-          - Path
-          - Local Path
-          - AutoDetect
-        location:
+          - From
+          - Last
+        useGMT:
+          type: boolean
+          description: '`true` specifies GMT for time, `false` specifies local time'
+        startDate:
           type: string
-          description: full path or AutoDetect setting for the source
-        exclusion:
+          description: inclusive start date in the format `yyyy-mm-ddThh:mm:ss` (only used if type = `From`)
+        endDate:
           type: string
-          description: excluded subfolders in the location (only for Path type)
+          description: inclusive end date in the format `yyyy-mm-ddThh:mm:ss` (only used if type = `From`)
+        numDays:
+          type: integer
+          description: number of days back from the current date (only used if type = `Last`)
+        checkCreation:
+          type: boolean
+          description: When `true`, apply date criteria to creation date
+        checkModification:
+          type: boolean
+          description: When `true` apply date criteria to modification date
+        checkAccess:
+          type: boolean
+          description: When `true`, apply date criteria to access date
     Task:
       type: object
       properties:
@@ -519,24 +594,177 @@ components:
             relocateLogs:
               type: boolean
               description: When `true` relocate the collection logs
-    Hash:
+    FileType:
+      type: object
+      description: describes the file type filters used in the collection (this object is optional)
+      properties:
+        analyzeSignatures:
+          type: boolean
+          description: when `true`, read the beginning of each file to determine file type.  When `false` use filename extension only to determine file type.
+        mode:
+          type: string
+          description: One of `Include` or `Exclude` - include or exclude the file types listed in the `extensions` array
+          enum:
+          - Include
+          - Exclude
+        extensions:
+          type: array
+          description: array of one or more file type extensions
+          items:
+            $ref: '#/components/schemas/Extension'
+    createConfigurationResponse:
       type: object
       properties:
-        hashValue:
+        id:
+          type: integer
+          description: id of the new Collection Configuration
+        name:
           type: string
-          description: 32-character MD5 hash value
-        fileSize:
-          type: number
-          description: 'Optional file size.
-
-
-            If provided, will be used to match before calculating hash'
-        microHash:
+          description: name of the new Collection Configuration
+        description:
           type: string
-          description: 'Optional MD5 hash value of the first 64 KB of a file.
+          description: description of the new Collection Configuration
+        template:
+          type: string
+          description: template of the new Collection Configuration
+        category:
+          type: string
+          description: Optional category of the new Collection Configuration
+        targets:
+          type: array
+          description: Array of targets specified in this Collection Configuration
+          items:
+            $ref: '#/components/schemas/Target'
+        hasInputs:
+          type: boolean
+          description: whether any input paths are specified within any of the Targets or Computers in this Collection Configuration
+        tasks:
+          type: array
+          description: Array of tasks specified in this Collection Configuration
+          items:
+            $ref: '#/components/schemas/TaskCreated'
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
+    Evidence:
+      type: object
+      properties:
+        destination:
+          type: string
+          description: destination where evidence is to be saved
+        credentials:
+          type: boolean
+          description: Set to `true` if credentials are supplied to access the destination
+        createFileSafe:
+          type: boolean
+          description: Set to `true` to create a FileSafe, `false` save native copies of the files
+        compression:
+          type: string
+          description: Compression setting for saved data.  One of `None`, `Medium`, `High` (used only if createFileSafe = `true`)
+          enum:
+          - None
+          - Medium
+          - High
+        segmentSize:
+          type: integer
+          description: size of each FileSafe segment (used only if createFileSafe = `true`)
+        segmentSizeUnit:
+          type: string
+          description: unit of measure which applies to segmentSize.  One of `KB`, `MB`, or `GB` (used only if createFileSafe = `true`)
+          enum:
+          - KB
+          - MB
+          - GB
+        overwrite:
+          type: boolean
+          description: whether to overwrite existing files at the destination (used only if createFileSafe = `false`)
+        maintainFullPath:
+          type: boolean
+          description: whether to maintain the full path of the file at the destination (used only if createFieSafe = false)
+        validateCollection:
+          type: boolean
+          description: whether to validate the entire FileSafe after collection is completed
+    listConfigurationsResponse:
+      type: object
+      properties:
+        configurations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Configuration'
+    Target:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the Target
+        name:
+          type: string
+          description: name of the target
+        description:
+          type: string
+          description: description of the target
+        custodianId:
+          type: integer
+          description: id of the Custodian this target belongs to
+        computerName:
+          type: string
+          description: name of the Computer this target belongs to
+        computerGUID:
+          type: string
+          description: GUID of the Computer this target belongs to
+        Inputs:
+          type: array
+          description: array of inputs in the target
+          items:
+            $ref: '#/components/schemas/TargetInputs'
+    TargetInputs:
+      type: object
+      properties:
+        types:
+          type: string
+          description: Path, Local Path, or AutoDetect
+          enum:
+          - Path
+          - Local Path
+          - AutoDetect
+        location:
+          type: string
+          description: full path or AutoDetect setting for the source
+        exclusion:
+          type: string
+          description: excluded subfolders in the location (only for Path type)
+    TaskCreated:
+      type: object
+      properties:
+        parentConfigId:
+          type: integer
+          description: Optional, id of the parent Collection Configuration of the new task to be copied. If omitted, the task is created from given params.
+        taskNum:
+          type: integer
+          description: Optional, id of the task to be copied (within the parent conf specified above).  Required if parentConfigId is specified.
+        taskType:
+          type: string
+          description: 'Type of task\: one of `Collect`, `Relocate`, `Deploy`, or `Launch` (currently only `Collect` and `Relocate` are supported).  NOTE\: If copying an Existing task, the `taskType` cannot be changed in the new task.'
+          enum:
+          - Collect
+          - Relocate
+          - Deploy
+          - Launch
+        label:
+          type: string
+          description: 'Optional, user-defined label for this job.
 
 
-            Used to match before calculating a full hash'
+            Can be used as search criteria for jobs.'
     TaskToCreate:
       type: object
       properties:
@@ -656,234 +884,6 @@ components:
             relocateLogs:
               type: boolean
               description: true to relocate the logs
-    createConfigurationResponse:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: id of the new Collection Configuration
-        name:
-          type: string
-          description: name of the new Collection Configuration
-        description:
-          type: string
-          description: description of the new Collection Configuration
-        template:
-          type: string
-          description: template of the new Collection Configuration
-        category:
-          type: string
-          description: Optional category of the new Collection Configuration
-        targets:
-          type: array
-          description: Array of targets specified in this Collection Configuration
-          items:
-            $ref: '#/components/schemas/Target'
-        hasInputs:
-          type: boolean
-          description: whether any input paths are specified within any of the Targets or Computers in this Collection Configuration
-        tasks:
-          type: array
-          description: Array of tasks specified in this Collection Configuration
-          items:
-            $ref: '#/components/schemas/TaskCreated'
-    Keyword:
-      type: object
-      properties:
-        expressionName:
-          type: string
-          description: human-readable description of the search expression
-        expression:
-          type: string
-          description: search expression
-        caseSensitive:
-          type: boolean
-          description: When `true` specifies the search should be case-sensitive
-        regExpression:
-          type: boolean
-          description: When `true` specifies the `expression` is interpreted as a Regular Expression
-    DateCriteria:
-      type: object
-      properties:
-        type:
-          type: string
-          description: 'One of `From` or `Last`.
-
-
-            `From` specifies absolute start/end dates.
-
-
-            `Last` specifies last number of days back from the current date'
-          enum:
-          - From
-          - Last
-        useGMT:
-          type: boolean
-          description: '`true` specifies GMT for time, `false` specifies local time'
-        startDate:
-          type: string
-          description: inclusive start date in the format `yyyy-mm-ddThh:mm:ss` (only used if type = `From`)
-        endDate:
-          type: string
-          description: inclusive end date in the format `yyyy-mm-ddThh:mm:ss` (only used if type = `From`)
-        numDays:
-          type: integer
-          description: number of days back from the current date (only used if type = `Last`)
-        checkCreation:
-          type: boolean
-          description: When `true`, apply date criteria to creation date
-        checkModification:
-          type: boolean
-          description: When `true` apply date criteria to modification date
-        checkAccess:
-          type: boolean
-          description: When `true`, apply date criteria to access date
-    Extension:
-      type: object
-      description: Describes a File Extension
-      properties:
-        extension:
-          type: string
-          description: file type extension (do not include the preceding dot)
-        collectAll:
-          type: boolean
-          description: If `true`, collect this file type regardless of keyword search
-    Configuration:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: id of the collection configuration
-        name:
-          type: string
-          description: name of the collection configuration
-        description:
-          type:
-          - string
-          - 'null'
-          description: description of the collection configuration
-        template:
-          type:
-          - string
-          - 'null'
-          description: name of the Template used by the collection configuration
-        category:
-          type:
-          - string
-          - 'null'
-          description: name of the Category (optional value attached to a collection configuration)
-        targets:
-          type:
-          - array
-          - 'null'
-          description: array of Target IDs used in this collection configuration
-          items:
-            type: integer
-            description: Target ID
-        computers:
-          type:
-          - array
-          - 'null'
-          description: array of Computer GUIDs used in this collection configuration
-          items:
-            type: string
-            description: computer GUID
-        hasInputs:
-          type: boolean
-          description: true if any input paths exist within the targets or computers specified in this collection configuration
-        tasks:
-          type: array
-          description: array of Tasks used in this collection configuration
-          items:
-            $ref: '#/components/schemas/Task'
-    Evidence:
-      type: object
-      properties:
-        destination:
-          type: string
-          description: destination where evidence is to be saved
-        credentials:
-          type: boolean
-          description: Set to `true` if credentials are supplied to access the destination
-        createFileSafe:
-          type: boolean
-          description: Set to `true` to create a FileSafe, `false` save native copies of the files
-        compression:
-          type: string
-          description: Compression setting for saved data.  One of `None`, `Medium`, `High` (used only if createFileSafe = `true`)
-          enum:
-          - None
-          - Medium
-          - High
-        segmentSize:
-          type: integer
-          description: size of each FileSafe segment (used only if createFileSafe = `true`)
-        segmentSizeUnit:
-          type: string
-          description: unit of measure which applies to segmentSize.  One of `KB`, `MB`, or `GB` (used only if createFileSafe = `true`)
-          enum:
-          - KB
-          - MB
-          - GB
-        overwrite:
-          type: boolean
-          description: whether to overwrite existing files at the destination (used only if createFileSafe = `false`)
-        maintainFullPath:
-          type: boolean
-          description: whether to maintain the full path of the file at the destination (used only if createFieSafe = false)
-        validateCollection:
-          type: boolean
-          description: whether to validate the entire FileSafe after collection is completed
-    listConfigurationsResponse:
-      type: object
-      properties:
-        configurations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Configuration'
-    createConfigurationRequest:
-      type: object
-      properties:
-        baseConfigId:
-          type: integer
-          description: Id of an existing Collection Configuration to use as the basis for a new Collection Configuration, or -1 to create a new Collection Configuration from scratch
-        newConfigName:
-          type: string
-          description: New Collection Configuration name
-        description:
-          type: string
-          description: New Collection Configuration description
-        category:
-          type: string
-          description: Optional. A Category associated with this Collection Configuration (a GET call can filter by Category)
-        tasks:
-          type: array
-          description: Array of new tasks to add to the new collection configuration.  At least one task must be specified.
-          items:
-            $ref: '#/components/schemas/TaskToCreate'
-    TaskCreated:
-      type: object
-      properties:
-        parentConfigId:
-          type: integer
-          description: Optional, id of the parent Collection Configuration of the new task to be copied. If omitted, the task is created from given params.
-        taskNum:
-          type: integer
-          description: Optional, id of the task to be copied (within the parent conf specified above).  Required if parentConfigId is specified.
-        taskType:
-          type: string
-          description: 'Type of task\: one of `Collect`, `Relocate`, `Deploy`, or `Launch` (currently only `Collect` and `Relocate` are supported).  NOTE\: If copying an Existing task, the `taskType` cannot be changed in the new task.'
-          enum:
-          - Collect
-          - Relocate
-          - Deploy
-          - Launch
-        label:
-          type: string
-          description: 'Optional, user-defined label for this job.
-
-
-            Can be used as search criteria for jobs.'
   securitySchemes:
     BasicAuth:
       type: http

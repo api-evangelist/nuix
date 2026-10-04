@@ -156,6 +156,13 @@ paths:
                     message: Computer Configuration ID was not found
 components:
   schemas:
+    listComputerConfResponse:
+      type: object
+      properties:
+        configurations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComputerConf'
     standardResponse:
       type: object
       properties:
@@ -222,13 +229,6 @@ components:
         altDestHasCredentials:
           type: boolean
           description: Whether the alternate destination requires credentials to access
-    listComputerConfResponse:
-      type: object
-      properties:
-        configurations:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComputerConf'
   securitySchemes:
     BasicAuth:
       type: http

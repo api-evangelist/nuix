@@ -111,18 +111,6 @@ paths:
                     message: Query parameter "jobId" expected, but not found.
 components:
   schemas:
-    standardResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: http response status code
-        id:
-          type: integer
-          description: id of the affected Object
-        message:
-          type: string
-          description: http status message
     LogEntry:
       type: object
       properties:
@@ -168,6 +156,18 @@ components:
         computerId:
           type: string
           description: UUID of the computer on which the event occurred
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
   securitySchemes:
     BasicAuth:
       type: http

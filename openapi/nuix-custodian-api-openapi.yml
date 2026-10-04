@@ -187,18 +187,6 @@ paths:
                     message: custodian ID {id} was not found.
 components:
   schemas:
-    standardResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: http response status code
-        id:
-          type: integer
-          description: id of the affected Object
-        message:
-          type: string
-          description: http status message
     listCustodianResponse:
       type: object
       properties:
@@ -226,6 +214,18 @@ components:
                     name:
                       type: string
                       description: name of the group
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
     createCustodianRequest:
       type: object
       properties:

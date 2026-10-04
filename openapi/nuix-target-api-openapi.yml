@@ -265,6 +265,40 @@ paths:
                     message: No computer found with id {}
 components:
   schemas:
+    createTargetRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: always 0
+        name:
+          type: string
+          description: case name to set
+        targetName:
+          type: string
+          description: name of the new Target
+        description:
+          type: string
+          description: optional, description of the new Target
+        computerId:
+          type: string
+          description: GUID of the computer this Target belongs to
+        custodianId:
+          type: string
+          description: optional, id of Custodian this Target is associated with (Unassigned Custodian if omitted)
+        inputs:
+          type: array
+          description: array of input paths
+          items:
+            $ref: '#/components/schemas/TargetInputs'
+    listTargetsResponse:
+      type: object
+      properties:
+        targets:
+          type: array
+          description: List of Targets.
+          items:
+            $ref: '#/components/schemas/Target'
     standardResponse:
       type: object
       properties:
@@ -319,40 +353,6 @@ components:
         exclusion:
           type: string
           description: excluded subfolders in the location (only for Path type)
-    listTargetsResponse:
-      type: object
-      properties:
-        targets:
-          type: array
-          description: List of Targets.
-          items:
-            $ref: '#/components/schemas/Target'
-    createTargetRequest:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: always 0
-        name:
-          type: string
-          description: case name to set
-        targetName:
-          type: string
-          description: name of the new Target
-        description:
-          type: string
-          description: optional, description of the new Target
-        computerId:
-          type: string
-          description: GUID of the computer this Target belongs to
-        custodianId:
-          type: string
-          description: optional, id of Custodian this Target is associated with (Unassigned Custodian if omitted)
-        inputs:
-          type: array
-          description: array of input paths
-          items:
-            $ref: '#/components/schemas/TargetInputs'
   securitySchemes:
     BasicAuth:
       type: http

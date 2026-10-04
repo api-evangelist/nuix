@@ -251,6 +251,24 @@ paths:
                 message: Waiting for the model to load
 components:
   schemas:
+    createCaseRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Always `0``.
+        name:
+          type: string
+          description: Name of the new case
+    modifyCaseRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: optional, new case name
+        status:
+          type: string
+          description: optional, new case status.  Either `Open` or `Closed`.
     standardResponse:
       type: object
       properties:
@@ -263,15 +281,6 @@ components:
         message:
           type: string
           description: http status message
-    modifyCaseRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          description: optional, new case name
-        status:
-          type: string
-          description: optional, new case status.  Either `Open` or `Closed`.
     listCasesResponse:
       type: object
       properties:
@@ -291,15 +300,6 @@ components:
         status:
           type: string
           description: case status, Open or Closed
-    createCaseRequest:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Always `0``.
-        name:
-          type: string
-          description: Name of the new case
   securitySchemes:
     BasicAuth:
       type: http

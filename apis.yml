@@ -32,7 +32,7 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/nuix.png
 url: https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/apis.yml
 created: '2026-06-13'
-modified: '2026-09-16'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 type: Index
 tags:
@@ -207,6 +207,8 @@ apis:
   - type: Documentation
     url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
 common:
+- url: https://www.nuix.com/rss.xml
+  type: BlogRSS
 - type: Website
   url: https://nuix.com
 - type: AgenticAccess

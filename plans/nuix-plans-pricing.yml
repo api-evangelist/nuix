@@ -76,3 +76,34 @@ notes:
     Program at nuix.com/nuix-developer-program.
   - License type is specified at REST API client initialization and determines which
     capabilities are available per session.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - negotiated
+  units: []
+  plans:
+  - name: Enterprise Workstation
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Law Enforcement Desktop
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Web Reviewer
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Workflow
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []

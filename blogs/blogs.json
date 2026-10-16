@@ -2,6 +2,20 @@
   "repo": "nuix",
   "feeds": [
     {
+      "source": "https://www.nuix.com/blog",
+      "feed_url": "https://www.nuix.com/blog",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
+      "source": "https://www.nuix.com/rss.xml",
+      "feed_url": "https://www.nuix.com/rss.xml",
+      "title": "",
+      "saved": 2,
+      "method": "feed"
+    },
+    {
       "source": "https://github.com/nuix",
       "feed_url": "https://github.com/nuix",
       "title": "",
@@ -9,8 +23,8 @@
       "method": "none"
     }
   ],
-  "post_count": 25,
-  "fetched": "2026-10-03T12:30:02Z",
+  "post_count": 27,
+  "fetched": "2026-10-10T13:15:00Z",
   "agent_pulled": "2026-07-04",
   "feed_nature": "undetermined",
   "feed_nature_basis": null,

@@ -187,33 +187,6 @@ paths:
                     message: custodian ID {id} was not found.
 components:
   schemas:
-    listCustodianResponse:
-      type: object
-      properties:
-        custodians:
-          type: array
-          description: List of Custodians.
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-                description: id of the custodian
-              name:
-                type: string
-                description: name of the custodian
-              groups:
-                type: array
-                description: array of groups that this custodian belongs to
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                      description: id of the group
-                    name:
-                      type: string
-                      description: name of the group
     standardResponse:
       type: object
       properties:
@@ -244,6 +217,33 @@ components:
               groupId:
                 type: string
                 description: id of the group to add this custodian to
+    listCustodianResponse:
+      type: object
+      properties:
+        custodians:
+          type: array
+          description: List of Custodians.
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: id of the custodian
+              name:
+                type: string
+                description: name of the custodian
+              groups:
+                type: array
+                description: array of groups that this custodian belongs to
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: id of the group
+                    name:
+                      type: string
+                      description: name of the group
   securitySchemes:
     BasicAuth:
       type: http

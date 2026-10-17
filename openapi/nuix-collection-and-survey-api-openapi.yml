@@ -340,15 +340,36 @@ paths:
                 message: No valid targets selected
 components:
   schemas:
-    launchCaseCollectionResponse:
+    standardResponse:
       type: object
       properties:
-        collectionId:
+        code:
           type: integer
-          description: id of the newly started collection
-        jobs:
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
+    launchCaseCollectionRequest:
+      type: object
+      properties:
+        caseId:
+          type: integer
+          description: id of the case within which to start a collection
+        name:
+          type: string
+          description: name of the new collection
+        configurationId:
+          type: integer
+          description: id of the collection configuration to use for collection criteria
+        location:
+          type: string
+          description: destination of the collection (if blank then destination determined by the specified collection configuration)
+        custodianIds:
           type: array
-          description: array of job IDs that have been started within the collection
+          description: id(s) of the custodian(s) for which to launch this collection
           items:
             type: integer
     launchCaseCollectionByConfigurationResponse:
@@ -362,21 +383,59 @@ components:
           description: array of computers where the job is running (there will be only one computer)
           items:
             $ref: '#/components/schemas/ComputerJobs'
-    JobCreated:
+    CollectionDetail:
       type: object
       properties:
         id:
           type: integer
-          description: ID of task
-        taskName:
+          description: id of the collection
+        caseId:
+          type: integer
+          description: id of the case that owns the collection
+        name:
           type: string
-          description: Name of task, one of `Collect`, `Relocate` `Deploy` or `Launch`.
-        taskNum:
-          type: integer
-          description: Task number, defines sequence in a multi-job collection
-        totalTasks:
-          type: integer
-          description: Total number of tasks in the collection
+          description: name of the collection
+        status:
+          type: string
+          description: status of the case
+    ComputerJobs:
+      type: object
+      properties:
+        computerName:
+          type: string
+          description: name of the computer where the job is running
+        computerId:
+          type: string
+          description: UUID of the computer
+        jobs:
+          type: array
+          description: List of tasks being run
+          items:
+            $ref: '#/components/schemas/JobCreated'
+    FolderSpec:
+      type: object
+      properties:
+        folder:
+          type: string
+          description: full path of the folder to collect from.
+        excludeFolders:
+          type: array
+          items:
+            type: string
+            description: optional, path(s) of folder(s) to exclude.  These are relative paths, relative to the `folder` to collect from.
+        excludeFiles:
+          type: array
+          items:
+            type: string
+            description: optional, path(s) of file(s) to exclude.  These are relative paths, relative to the `folder` to collect from.
+        excludeWildcards:
+          type: array
+          items:
+            type: string
+            description: 'optional, wildcard specification(s) (e.g *.pdf) specifying files to exclude from `folder` path.
+
+
+              Note that wildcard exclusions are recursive under `folder` path.'
     launchCaseCollectionByTargetRequest:
       type: object
       properties:
@@ -395,32 +454,21 @@ components:
         location:
           type: string
           description: destination of the collection (if blank uses the destination from the specified collection configuration)
-    ComputerJobs:
+    JobCreated:
       type: object
       properties:
-        computerName:
-          type: string
-          description: name of the computer where the job is running
-        computerId:
-          type: string
-          description: UUID of the computer
-        jobs:
-          type: array
-          description: List of tasks being run
-          items:
-            $ref: '#/components/schemas/JobCreated'
-    standardResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: http response status code
         id:
           type: integer
-          description: id of the affected Object
-        message:
+          description: ID of task
+        taskName:
           type: string
-          description: http status message
+          description: Name of task, one of `Collect`, `Relocate` `Deploy` or `Launch`.
+        taskNum:
+          type: integer
+          description: Task number, defines sequence in a multi-job collection
+        totalTasks:
+          type: integer
+          description: Total number of tasks in the collection
     launchCaseCollectionByConfigurationRequest:
       type: object
       properties:
@@ -439,13 +487,17 @@ components:
         location:
           type: string
           description: destination of the collection (if blank uses the location within the specified collection configuration)
-    listCaseCollectionResponse:
+    launchCaseCollectionResponse:
       type: object
       properties:
-        collections:
+        collectionId:
+          type: integer
+          description: id of the newly started collection
+        jobs:
           type: array
+          description: array of job IDs that have been started within the collection
           items:
-            $ref: '#/components/schemas/CollectionDetail'
+            type: integer
     launchCaseCollectionByPathRequest:
       type: object
       properties:
@@ -493,65 +545,13 @@ components:
           description: optional way to specify folders, allowing for exclusions within each specified folder
           items:
             $ref: '#/components/schemas/FolderSpec'
-    launchCaseCollectionRequest:
+    listCaseCollectionResponse:
       type: object
       properties:
-        caseId:
-          type: integer
-          description: id of the case within which to start a collection
-        name:
-          type: string
-          description: name of the new collection
-        configurationId:
-          type: integer
-          description: id of the collection configuration to use for collection criteria
-        location:
-          type: string
-          description: destination of the collection (if blank then destination determined by the specified collection configuration)
-        custodianIds:
-          type: array
-          description: id(s) of the custodian(s) for which to launch this collection
-          items:
-            type: integer
-    CollectionDetail:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: id of the collection
-        caseId:
-          type: integer
-          description: id of the case that owns the collection
-        name:
-          type: string
-          description: name of the collection
-        status:
-          type: string
-          description: status of the case
-    FolderSpec:
-      type: object
-      properties:
-        folder:
-          type: string
-          description: full path of the folder to collect from.
-        excludeFolders:
+        collections:
           type: array
           items:
-            type: string
-            description: optional, path(s) of folder(s) to exclude.  These are relative paths, relative to the `folder` to collect from.
-        excludeFiles:
-          type: array
-          items:
-            type: string
-            description: optional, path(s) of file(s) to exclude.  These are relative paths, relative to the `folder` to collect from.
-        excludeWildcards:
-          type: array
-          items:
-            type: string
-            description: 'optional, wildcard specification(s) (e.g *.pdf) specifying files to exclude from `folder` path.
-
-
-              Note that wildcard exclusions are recursive under `folder` path.'
+            $ref: '#/components/schemas/CollectionDetail'
   securitySchemes:
     BasicAuth:
       type: http

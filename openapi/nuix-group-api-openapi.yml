@@ -249,6 +249,40 @@ paths:
                     message: Group ID {} was not found.
 components:
   schemas:
+    listGroupsResponse:
+      type: object
+      properties:
+        cases:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
+    Group:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the group
+        name:
+          type: string
+          description: name of the group
+        description:
+          type: string
+          description: description of the group
+        deleted:
+          type: boolean
+          description: true if the group has been deleted
     modifyGroupRequest:
       type: object
       properties:
@@ -288,40 +322,6 @@ components:
         description:
           type: string
           description: description of the group to be created
-    standardResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: http response status code
-        id:
-          type: integer
-          description: id of the affected Object
-        message:
-          type: string
-          description: http status message
-    listGroupsResponse:
-      type: object
-      properties:
-        cases:
-          type: array
-          items:
-            $ref: '#/components/schemas/Group'
-    Group:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: id of the group
-        name:
-          type: string
-          description: name of the group
-        description:
-          type: string
-          description: description of the group
-        deleted:
-          type: boolean
-          description: true if the group has been deleted
   securitySchemes:
     BasicAuth:
       type: http

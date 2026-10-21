@@ -1,0 +1,79 @@
+arazzo: 1.0.1
+info:
+  title: Grant a Keycloak user Nuix ECC REST API access, then list collections
+  version: 1.0.0
+  description: >-
+    Follows the Nuix ECC Bearer Authentication docs: in Keycloak, within the client named ECC, each ECC REST API
+    user must be assigned the Role HighLevelAvailable. Step 1 lists the ECC client roles available to the user,
+    step 2 maps the role, step 3 calls the ECC REST API. Obtaining the access token (POST to the realm's
+    openid-connect/token endpoint) is not in the catalog's Keycloak specs, and the ECC OpenAPI declares only http
+    basic auth, so the bearer token is supplied as an input.
+sourceDescriptions:
+- name: keycloakRoleMappings
+  url: https://raw.githubusercontent.com/api-evangelist/keycloak/refs/heads/main/openapi/keycloak-client-role-mappings-api-openapi.yml
+  type: openapi
+- name: nuixEccCollections
+  url: https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/openapi/nuix-collection-and-survey-api-openapi.yml
+  type: openapi
+x-integration:
+  partner: keycloak
+  edge_evidence: https://developer.nuix.com/latest/ecc/auth/bearer.html
+  edge_type: claimed
+  method: generated
+  generated: '2026-10-21'
+  generator: docs module (enrich pipeline)
+  guessed_steps:
+  - step: assignHighLevelAvailable
+    cause: partner-contract
+    why: The request body is an array of RoleRepresentation; the workflow passes the role object selected from step 1 by name, which the spec does not filter server-side.
+  - step: listCollections
+    cause: provider-contract
+    why: The ECC spec declares only BasicAuth although the docs document Bearer tokens from Keycloak; the Authorization header is passed explicitly.
+  - step: (token)
+    cause: partner-contract
+    why: No Keycloak token-endpoint operation exists in the catalog's Keycloak specs, so no step obtains the JWT.
+workflows:
+- workflowId: grantEccApiAccess
+  summary: Assign HighLevelAvailable on client ECC and call the ECC REST API
+  inputs:
+    type: object
+    required: [realm, userId, eccClientId, accessToken]
+    properties:
+      realm: {type: string}
+      userId: {type: string}
+      eccClientId: {type: string, description: Keycloak internal id of the client named ECC}
+      accessToken: {type: string, description: JWT obtained from the Keycloak realm token endpoint for this user}
+      caseId: {type: string}
+  steps:
+  - stepId: listAvailableEccRoles
+    operationId: $sourceDescriptions.keycloakRoleMappings.getAdminRealmsByRealmUsersByUserIdRoleMappingsClientsByClientIdAvailable
+    parameters:
+    - {name: realm, in: path, value: $inputs.realm}
+    - {name: user-id, in: path, value: $inputs.userId}
+    - {name: client-id, in: path, value: $inputs.eccClientId}
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      availableRoles: $response.body
+  - stepId: assignHighLevelAvailable
+    operationId: $sourceDescriptions.keycloakRoleMappings.postAdminRealmsByRealmUsersByUserIdRoleMappingsClientsByClientId
+    parameters:
+    - {name: realm, in: path, value: $inputs.realm}
+    - {name: user-id, in: path, value: $inputs.userId}
+    - {name: client-id, in: path, value: $inputs.eccClientId}
+    requestBody:
+      contentType: application/json
+      payload: $steps.listAvailableEccRoles.outputs.availableRoles
+    successCriteria:
+    - condition: $statusCode == 204
+  - stepId: listCollections
+    operationId: $sourceDescriptions.nuixEccCollections.listCaseCollection
+    parameters:
+    - {name: Authorization, in: header, value: "Bearer {$inputs.accessToken}"}
+    - {name: caseId, in: query, value: $inputs.caseId}
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      collections: $response.body
+  outputs:
+    collections: $steps.listCollections.outputs.collections

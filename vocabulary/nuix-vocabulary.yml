@@ -1,0 +1,438 @@
+generated: '2026-10-21'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/nuix-case-api-openapi.yml
+- openapi/nuix-collection-and-survey-api-openapi.yml
+- openapi/nuix-collection-configuration-api-openapi.yml
+- openapi/nuix-computer-api-openapi.yml
+- openapi/nuix-computer-configuration-api-openapi.yml
+vocabulary:
+  name: Nuix Domain Vocabulary
+  description: 'Terms declared by Nuix''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions. Derived,
+    not authored.'
+  version: '2026-10-21'
+  terms:
+  - term: standardResponse
+    definition: 'Object declared by the contract with fields: code, id, message.'
+    tags:
+    - Object
+    source: openapi/nuix-case-api-openapi.yml#/components/schemas/standardResponse
+  - term: Case
+    definition: 'Object declared by the contract with fields: id, name, status.'
+    tags:
+    - Object
+    source: openapi/nuix-case-api-openapi.yml#/components/schemas/Case
+  - term: listCasesResponse
+    definition: 'Object declared by the contract with fields: cases.'
+    tags:
+    - Object
+    source: openapi/nuix-case-api-openapi.yml#/components/schemas/listCasesResponse
+  - term: createCaseRequest
+    definition: 'Object declared by the contract with fields: id, name.'
+    tags:
+    - Object
+    source: openapi/nuix-case-api-openapi.yml#/components/schemas/createCaseRequest
+  - term: modifyCaseRequest
+    definition: 'Object declared by the contract with fields: name, status.'
+    tags:
+    - Object
+    source: openapi/nuix-case-api-openapi.yml#/components/schemas/modifyCaseRequest
+  - term: launchCaseCollectionRequest
+    definition: 'Object declared by the contract with fields: caseId, name, configurationId, location, custodianIds.'
+    tags:
+    - Object
+    source: openapi/nuix-collection-and-survey-api-openapi.yml#/components/schemas/launchCaseCollectionRequest
+  - term: launchCaseCollectionByConfigurationResponse
+    definition: 'Object declared by the contract with fields: collectionId, computers.'
+    tags:
+    - Object
+    source: openapi/nuix-collection-and-survey-api-openapi.yml#/components/schemas/launchCaseCollectionByConfigurationResponse
+  - term: CollectionDetail
+    definition: 'Object declared by the contract with fields: id, caseId, name, status.'
+    tags:
+    - Object
+    source: openapi/nuix-collection-and-survey-api-openapi.yml#/components/schemas/CollectionDetail
+  - term: ComputerJobs
+    definition: 'Object declared by the contract with fields: computerName, computerId, jobs.'
+    tags:
+    - Object
+    source: openapi/nuix-collection-and-survey-api-openapi.yml#/components/schemas/ComputerJobs
+  - term: FolderSpec
+    definition: 'Object declared by the contract with fields: folder, excludeFolders, excludeFiles, excludeWildcards.'
+    tags:
+    - Object
+    source: openapi/nuix-collection-and-survey-api-openapi.yml#/components/schemas/FolderSpec
+  - term: launchCaseCollectionByTargetRequest
+    definition: 'Object declared by the contract with fields: caseId, name, targetId, configurationId, location.'
+    tags:
+    - Object
+    source: openapi/nuix-collection-and-survey-api-openapi.yml#/components/schemas/launchCaseCollectionByTargetRequest
+  - term: JobCreated
+    definition: 'Object declared by the contract with fields: id, taskName, taskNum, totalTasks.'
+    tags:
+    - Object
+    source: openapi/nuix-collection-and-survey-api-openapi.yml#/components/schemas/JobCreated
+  - term: launchCaseCollectionByConfigurationRequest
+    definition: 'Object declared by the contract with fields: caseId, name, computerId, configurationId, location.'
+    tags:
+    - Object
+    source: openapi/nuix-collection-and-survey-api-openapi.yml#/components/schemas/launchCaseCollectionByConfigurationRequest
+  - term: launchCaseCollectionResponse
+    definition: 'Object declared by the contract with fields: collectionId, jobs.'
+    tags:
+    - Object
+    source: openapi/nuix-collection-and-survey-api-openapi.yml#/components/schemas/launchCaseCollectionResponse
+  - term: launchCaseCollectionByPathRequest
+    definition: 'Object declared by the contract with fields: caseId, name, computerId, configurationId, location, label, autodetect, folders,
+      files, folderSpec.'
+    tags:
+    - Object
+    source: openapi/nuix-collection-and-survey-api-openapi.yml#/components/schemas/launchCaseCollectionByPathRequest
+  - term: listCaseCollectionResponse
+    definition: 'Object declared by the contract with fields: collections.'
+    tags:
+    - Object
+    source: openapi/nuix-collection-and-survey-api-openapi.yml#/components/schemas/listCaseCollectionResponse
+  - term: TaskCreated
+    definition: 'Object declared by the contract with fields: parentConfigId, taskNum, taskType, label.'
+    tags:
+    - Object
+    source: openapi/nuix-collection-configuration-api-openapi.yml#/components/schemas/TaskCreated
+  - term: FileType
+    definition: describes the file type filters used in the collection (this object is optional)
+    tags:
+    - Object
+    source: openapi/nuix-collection-configuration-api-openapi.yml#/components/schemas/FileType
+  - term: Keyword
+    definition: 'Object declared by the contract with fields: expressionName, expression, caseSensitive, regExpression.'
+    tags:
+    - Object
+    source: openapi/nuix-collection-configuration-api-openapi.yml#/components/schemas/Keyword
+  - term: createConfigurationRequest
+    definition: 'Object declared by the contract with fields: baseConfigId, newConfigName, description, category, tasks.'
+    tags:
+    - Object
+    source: openapi/nuix-collection-configuration-api-openapi.yml#/components/schemas/createConfigurationRequest
+  - term: Target
+    definition: 'Object declared by the contract with fields: id, name, description, custodianId, computerName, computerGUID, Inputs.'
+    tags:
+    - Object
+    source: openapi/nuix-collection-configuration-api-openapi.yml#/components/schemas/Target
+  - term: DateCriteria
+    definition: 'Object declared by the contract with fields: type, useGMT, startDate, endDate, numDays, checkCreation, checkModification, checkAccess.'
+    tags:
+    - Object
+    source: openapi/nuix-collection-configuration-api-openapi.yml#/components/schemas/DateCriteria
+  - term: createConfigurationResponse
+    definition: 'Object declared by the contract with fields: id, name, description, template, category, targets, hasInputs, tasks.'
+    tags:
+    - Object
+    source: openapi/nuix-collection-configuration-api-openapi.yml#/components/schemas/createConfigurationResponse
+  - term: Configuration
+    definition: 'Object declared by the contract with fields: id, name, description, template, category, targets, computers, hasInputs, tasks.'
+    tags:
+    - Object
+    source: openapi/nuix-collection-configuration-api-openapi.yml#/components/schemas/Configuration
+  - term: Task
+    definition: 'Object declared by the contract with fields: taskNum, label, impersonation, taskType, Evidence, FileType, DateRange, AdvancedSearch,
+      Hash, Volatile, RAM, SmartMover.'
+    tags:
+    - Object
+    source: openapi/nuix-collection-configuration-api-openapi.yml#/components/schemas/Task
+  - term: Extension
+    definition: Describes a File Extension
+    tags:
+    - Object
+    source: openapi/nuix-collection-configuration-api-openapi.yml#/components/schemas/Extension
+  - term: TaskToCreate
+    definition: 'Object declared by the contract with fields: parentConfigId, taskNum, taskType, label, impersonation, Evidence, FileType, DateRange,
+      AdvancedSearch, Hash, Volatile, RAM. (1 more)'
+    tags:
+    - Object
+    source: openapi/nuix-collection-configuration-api-openapi.yml#/components/schemas/TaskToCreate
+  - term: listConfigurationsResponse
+    definition: 'Object declared by the contract with fields: configurations.'
+    tags:
+    - Object
+    source: openapi/nuix-collection-configuration-api-openapi.yml#/components/schemas/listConfigurationsResponse
+  - term: Hash
+    definition: 'Object declared by the contract with fields: hashValue, fileSize, microHash.'
+    tags:
+    - Object
+    source: openapi/nuix-collection-configuration-api-openapi.yml#/components/schemas/Hash
+  - term: Evidence
+    definition: 'Object declared by the contract with fields: destination, credentials, createFileSafe, compression, segmentSize, segmentSizeUnit,
+      overwrite, maintainFullPath, validateCollection.'
+    tags:
+    - Object
+    source: openapi/nuix-collection-configuration-api-openapi.yml#/components/schemas/Evidence
+  - term: TargetInputs
+    definition: 'Object declared by the contract with fields: types, location, exclusion.'
+    tags:
+    - Object
+    source: openapi/nuix-collection-configuration-api-openapi.yml#/components/schemas/TargetInputs
+  - term: listComputerRequest
+    definition: 'Object declared by the contract with fields: limit, computerId, sortBy, ascending, where, filters.'
+    tags:
+    - Object
+    source: openapi/nuix-computer-api-openapi.yml#/components/schemas/listComputerRequest
+  - term: Computer
+    definition: 'Object declared by the contract with fields: name, fullName, description, UUID, presence, purpose, staging, pairingState, firstContact,
+      lastContact, osName, lastUser. (1 more)'
+    tags:
+    - Object
+    source: openapi/nuix-computer-api-openapi.yml#/components/schemas/Computer
+  - term: ComputerConf
+    definition: 'Object declared by the contract with fields: id, name, description, keepAliveInterval, keepAliveTimeout, resourceWaitTime, jobWaitTime,
+      startJobsWaitTime, statusUpdateWaitTime, systemInfoUpdateWaitTime, minPortRange, maxPortRange. (5 more)'
+    tags:
+    - Object
+    source: openapi/nuix-computer-configuration-api-openapi.yml#/components/schemas/ComputerConf
+  - term: listComputerConfResponse
+    definition: 'Object declared by the contract with fields: configurations.'
+    tags:
+    - Object
+    source: openapi/nuix-computer-configuration-api-openapi.yml#/components/schemas/listComputerConfResponse
+  - term: ClusteredRestErrorResponse
+    definition: 'Object declared by the contract with fields: serverId, developerMessage, userMessage, additionalInfo, errorCode.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/ClusteredRestErrorResponse
+  - term: TaskStatusRequest
+    definition: 'Object declared by the contract with fields: status.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/TaskStatusRequest
+  - term: AsyncFunctionStatus
+    definition: 'Object declared by the contract with fields: done, cancelled, result, token, functionKey, progress, total, percentComplete, updatedOn,
+      status, statusId, requestTime. (14 more)'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/AsyncFunctionStatus
+  - term: CustodianResponse
+    definition: 'Object declared by the contract with fields: name, description.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/CustodianResponse
+  - term: AsyncFunctionStatusObject
+    definition: 'Object declared by the contract with fields: done, cancelled, result, token, functionKey, progress, total, percentComplete, updatedOn,
+      status, statusId, requestTime. (14 more)'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/AsyncFunctionStatusObject
+  - term: AsyncFunctionStatusesResponse
+    definition: 'Object declared by the contract with fields: executeImmediate, singleItemQueue, paused, pausedBy, pausedUntil, caseQueues, totalRunningFunctions.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/AsyncFunctionStatusesResponse
+  - term: CaseFunctionQueue
+    definition: 'Object declared by the contract with fields: caseId, queue.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/CaseFunctionQueue
+  - term: AuthenticationRequest
+    definition: 'Object declared by the contract with fields: username, password, workers, licenceShortName.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/AuthenticationRequest
+  - term: AuthenticationResponse
+    definition: 'Object declared by the contract with fields: username, authToken, licenseShortName, clusterSystemLicenseShortName, workerCount,
+      workersGranted.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/AuthenticationResponse
+  - term: GenericResponse
+    definition: 'Object declared by the contract with fields: success.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/GenericResponse
+  - term: ApplyTagListRequest
+    definition: 'Object declared by the contract with fields: tagList, query, deduplication, relationType, includeFamily, familyQuery, includeDuplicates,
+      duplicatesQuery, includeNearDuplicates, nearDuplicatesQuery, nearDuplicatesThreshold, threadsQuery.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/ApplyTagListRequest
+  - term: ApplyTagListResponse
+    definition: 'Object declared by the contract with fields: tagList, successfulTags, failedTags.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/ApplyTagListResponse
+  - term: TagList
+    definition: 'Object declared by the contract with fields: tagList.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/TagList
+  - term: BulkApplyCaseTagListRequest
+    definition: 'Object declared by the contract with fields: tagList, renameMap, operationType.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/BulkApplyCaseTagListRequest
+  - term: BulkApplyItemTagListRequest
+    definition: 'Object declared by the contract with fields: tagList, query, deduplication, relationType, includeFamily, familyQuery, includeDuplicates,
+      duplicatesQuery, includeNearDuplicates, nearDuplicatesQuery, nearDuplicatesThreshold, threadsQuery. (1 more)'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/BulkApplyItemTagListRequest
+  - term: BulkApplyItemSetChangeResponse
+    definition: 'Object declared by the contract with fields: results.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/BulkApplyItemSetChangeResponse
+  - term: ItemSetItemsResponse
+    definition: 'Object declared by the contract with fields: query, itemSetName, operationType, failedItemGuidList, successfulItemGuidList.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/ItemSetItemsResponse
+  - term: BulkApplyItemCustomMetadataRequest
+    definition: 'Object declared by the contract with fields: addBulkCustomMetadata, deleteBulkCustomMetadata.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/BulkApplyItemCustomMetadataRequest
+  - term: CreateTagListResponse
+    definition: 'Object declared by the contract with fields: tagList, createdTags, failedTags.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/CreateTagListResponse
+  - term: DeleteTagListResponse
+    definition: 'Object declared by the contract with fields: tagList, deletedTags, failedTags.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/DeleteTagListResponse
+  - term: BulkExclusionRequest
+    definition: 'Object declared by the contract with fields: query, deduplication, relationType, includeFamily, familyQuery, includeDuplicates,
+      duplicatesQuery, includeNearDuplicates, nearDuplicatesQuery, nearDuplicatesThreshold, threadsQuery, reason. (1 more)'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/BulkExclusionRequest
+  - term: AsyncFunctionResponse
+    definition: 'Object declared by the contract with fields: functionKey, location.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/AsyncFunctionResponse
+  - term: BulkInclusionRequest
+    definition: 'Object declared by the contract with fields: query, deduplication, relationType, includeFamily, familyQuery, includeDuplicates,
+      duplicatesQuery, includeNearDuplicates, nearDuplicatesQuery, nearDuplicatesThreshold, threadsQuery.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/BulkInclusionRequest
+  - term: ClusterRunRequest
+    definition: 'Object declared by the contract with fields: name, query, resemblanceThreshold, useChainedNearDuplicates, useEmailThreads, saveIfEmpty.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/ClusterRunRequest
+  - term: MetadataItemDetails
+    definition: 'Object declared by the contract with fields: name, localisedName, type.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/MetadataItemDetails
+  - term: SearchNativeRequest
+    definition: 'Object declared by the contract with fields: caseId, query, sortField, sortOrder, startIndex, numberOfRecordsRequested, limit,
+      deduplication, maintainDeduplicatedSearchOrder, metadataProfile, fieldList, customMetadataList. (13 more)'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/SearchNativeRequest
+  - term: SearchNativeResult
+    definition: 'Object declared by the contract with fields: request, startedOn, completedOn, elapsedTimeForSearch, elapsedTimeForSort, elapsedTimeForMarshal,
+      elapsedTimeForDeduplicate, elapsedTotal, metadataItems, localizedMetadataItems, metadataItemDetails, resultList. (2 more)'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/SearchNativeResult
+  - term: BulkSearcherRequest
+    definition: 'Object declared by the contract with fields: includeFamilies, deduplicateFamilies, omitExcludedItems, omitImmaterialFamilyItems,
+      tagUniqueItems, matchingItemsAction, createUnusedTags, removeEmptyTags, showTagColumns, allowDuplicateTags, allowDuplicateQueries, countResponsiveItems.
+      (8 more)'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/BulkSearcherRequest
+  - term: TagExpansion
+    definition: 'Object declared by the contract with fields: directMatchPrefix, directMatchSuffix, topLevelMatchPrefix, topLevelMatchSuffix,
+      familyMatchPrefix, familyMatchSuffix, deduplicatedTopLevelMatchPrefix, deduplicatedTopLevelMatchSuffix, deduplicatedFamilyMatchPrefix, deduplicatedFamilyMatchSuffix,
+      uniqueMatchPrefix, uniqueMatchSuffix.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/TagExpansion
+  - term: TagRequest
+    definition: 'Object declared by the contract with fields: query, tag.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/TagRequest
+  - term: CaseResponse
+    definition: 'Object declared by the contract with fields: caseId, name, path, description, investigator, creationDate, compound, elastic,
+      binaryStoreLocation, indexId, caseSize, casePathParent. (10 more)'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/CaseResponse
+  - term: MarkupSet
+    definition: 'Object declared by the contract with fields: guid, name, description, redactionReason.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/MarkupSet
+  - term: ClusterRunResponse
+    definition: 'Object declared by the contract with fields: guid, clusterName, clusters, resemblanceThreshold, useChainedNearDuplicatesEnabled,
+      useEmailThreadsEnabled.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/ClusterRunResponse
+  - term: KindTypeResponse
+    definition: 'Object declared by the contract with fields: itemKind, localisedItemKind, itemTypes.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/KindTypeResponse
+  - term: NuixItemType
+    definition: 'Object declared by the contract with fields: name, localisedName, preferredExtension, kind, count.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/NuixItemType
+  - term: ReviewJobResponse
+    definition: 'Object declared by the contract with fields: name, guid.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/ReviewJobResponse
+  - term: CreateReviewJobOptions
+    definition: The review job options.
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/CreateReviewJobOptions
+  - term: CreateReviewJobRequest
+    definition: 'Object declared by the contract with fields: name, options.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/CreateReviewJobRequest
+  - term: ReviewJobAddItemsOptions
+    definition: 'Object declared by the contract with fields: user.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/ReviewJobAddItemsOptions
+  - term: ReviewJobAddItemsRequest
+    definition: 'Object declared by the contract with fields: query, options.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/ReviewJobAddItemsRequest
+  - term: NuixReviewJobItem
+    definition: 'Object declared by the contract with fields: completionDateTime, item.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/NuixReviewJobItem
+  - term: Success
+    definition: A wrapper object for a boolean.
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/Success
+  - term: ItemPropertiesRequest
+    definition: 'Object declared by the contract with fields: query, distinct.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/ItemPropertiesRequest
+  - term: CreateCaseRequest
+    definition: 'Object declared by the contract with fields: compound, location, name, description, investigator, elasticSearchSettings, binaryStoreLocation.'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/CreateCaseRequest
+  - term: ElasticSearchSettings
+    definition: 'Object declared by the contract with fields: additionalSettings, cluster.name, index.number_of_shards, index.number_of_replicas,
+      index.refresh_interval, nuix.index.auto_close, nuix.http.hosts, nuix.transport.hosts, xpack.security.user, xpack.security.password, xpack.security.transport.ssl.enabled,
+      xpack.security.transport.ssl.truststore.path. (21 more)'
+    tags:
+    - Object
+    source: openapi/nuix-core-engine-rest-api-openapi.yml#/components/schemas/ElasticSearchSettings

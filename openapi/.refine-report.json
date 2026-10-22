@@ -1,7 +1,8 @@
 {
   "provider": "nuix",
   "sources": [
-    "_original/nuix-nuix-ecc-rest-api-openapi.yml"
+    "_original/nuix-nuix-ecc-rest-api-openapi.yml",
+    "nuix-core-engine-rest-api-openapi.yml"
   ],
   "outputs": [
     "nuix-case-api-openapi.yml",
@@ -14,17 +15,36 @@
     "nuix-job-api-openapi.yml",
     "nuix-log-api-openapi.yml",
     "nuix-target-api-openapi.yml",
-    "nuix-utility-api-openapi.yml"
+    "nuix-utility-api-openapi.yml",
+    "nuix-access-api-openapi.yml",
+    "nuix-analysis-api-openapi.yml",
+    "nuix-culling-api-openapi.yml",
+    "nuix-export-api-openapi.yml",
+    "nuix-inventory-api-openapi.yml",
+    "nuix-licensing-api-openapi.yml",
+    "nuix-monitoring-api-openapi.yml",
+    "nuix-processing-api-openapi.yml",
+    "nuix-resources-api-openapi.yml",
+    "nuix-scripting-api-openapi.yml",
+    "nuix-search-api-openapi.yml",
+    "nuix-system-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
-  "warnings": [],
+  "warnings": [
+    "nuix-core-engine-rest-api-openapi.yml: previously refined output kept for 207 operation(s) no archived document covers (e.g. /about get, /asyncFunctions get, /asyncFunctions/processingJobs/{key} delete); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth."
+  ],
   "notes": [
     "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "nuix-nuix-ecc-rest-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
-    "apis.yml register: already-registered"
+    "nuix-core-engine-rest-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "superseded outputs removed: nuix-core-engine-rest-api-openapi.yml",
+    "apis.yml register: written (+12 apis, 24 total)"
   ],
   "skipped": [
+    "nuix-core-engine-rest-api-openapi.yml: parse error ScannerError: while scanning for the next token",
     "nuix-case-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "nuix-collection-and-survey-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "nuix-collection-configuration-api-openapi.yml: previously refined output, superseded by openapi/_original/",

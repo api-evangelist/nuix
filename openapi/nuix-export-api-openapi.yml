@@ -1,0 +1,1981 @@
+openapi: 3.2.0
+info:
+  title: Nuix REST-API Reference Export API
+  description: 'Welcome to the Nuix REST API documentation. From here you can access all available REST APIs and execute queries against your running REST instance.
+
+
+    # Authentication Changes
+
+
+    The `nuix-auth-token` header is being deprecated in favor of standard JWT. The header will be removed in a
+
+    future release. Until the removal of the header, the Nuix REST API will accept the JWT in either the
+
+    `nuix-auth-token` header field or the `Authorization` header field prefixed by `Bearer`.'
+  contact:
+    name: Nuix
+    url: http://forums.nuix.com/
+  license:
+    name: Licence
+    url: https://www.nuix.com/sites/default/files/2023-03/End%20User%20License%20Agreement%20%28Effective%20December%2014%2C%202022%29_1.pdf
+  version: ${customer.version}
+servers:
+- url: /nuix-restful-service/svc
+- url: http://localhost:8080/svc
+security:
+- ApiKeyAuth: []
+- bearerAuth: []
+tags:
+- name: Export
+paths:
+  /cases/{caseId}/thumbnails:
+    post:
+      tags:
+      - Export
+      summary: Generates thumbnails for a case
+      description: Use this operation to generate thumbnails for a case.
+      operationId: generateThumbnails
+      parameters:
+      - name: caseId
+        in: path
+        description: case identifier token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/ThumbnailUtilityRequest'
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+    delete:
+      tags:
+      - Export
+      summary: Deletes the case's thumbnails folder, containing all generated media
+      description: Use this operation to delete the case's thumbnails folder containing all generated media.
+      operationId: deleteCaseThumbnailFolder
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/Success'
+  /cases/{caseId}/promoteToDiscover/{discoverCaseId}:
+    post:
+      tags:
+      - Export
+      summary: Promotes a list of items to Nuix Discover®
+      description: Use this operation to promote a list of items to Nuix Discover®
+      operationId: submitPromoteToDiscoverJob
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: discoverCaseId
+        in: path
+        description: Nuix Discover Case ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/PromoteToDiscoverRequest'
+            example:
+              query: '*'
+              deduplicated: false
+              discoverDeduplication: false
+              apiAccessToken: YOUR_NUIX_DISCOVER_API_ACCESS_TOKEN
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+              examples:
+                Standard Asynchronous Function Response:
+                  value:
+                    functionKey: e0319b96-5c84-40f4-adce-2f3d6aa0465a
+                    location: http://localhost:8080/svc/v1/asyncFunctions/e0319b96-5c84-40f4-adce-2f3d6aa0465a
+                Promote To Discover Response:
+                  value:
+                    done: true
+                    cancelled: false
+                    result:
+                      totalItems: 1
+                      processedItems: 1
+                      processedBytes: 25893
+                      failedItems: 0
+                    token: 3d7c813a-9be0-4284-9e28-5c111a781ee6
+                    functionKey: e0319b96-5c84-40f4-adce-2f3d6aa0465a
+                    progress: 1
+                    total: 1
+                    percentComplete: 100.0
+                    updatedOn: 1606337690126
+                    requestTime: 1606337664447
+                    startTime: 1606337671715
+                    finishTime: 1606337692602
+                    caseId: 34625454770746279e0e21459d99d992
+                    caseName: MyDiscoverCase
+                    action: PromoteToDiscoverFunction
+                    options:
+                      deduplicated: false
+                      discoverCaseId: 1036
+                      discoverDeduplication: false
+                      query: '*'
+                      caseId: 34625454770746279e0e21459d99d992
+                    participatingInCaseFunctionQueue: true
+                    processedBy: rest-server-2
+  /cases/{caseId}/export:
+    put:
+      tags:
+      - Export
+      summary: Exports production sets and items from a case
+      description: 'Use this operation to export production sets and items from a
+
+        case. You can perform two types of exports: legal or item. Legal exports create
+
+        a load file during export.'
+      operationId: export
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/ExportRequest'
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/slipsheets:
+    put:
+      tags:
+      - Export
+      summary: Generates Slipsheets for items in a case
+      description: Use this operation to generate slipsheets for items in a case.
+      operationId: generateSlipsheets
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/SlipsheetsRequest'
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/stores:
+    put:
+      tags:
+      - Export
+      summary: Populate stores
+      description: Use this operation to populate stores for items in a case.
+      operationId: populateStores
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/PopulateStoresRequest'
+            examples:
+              Populate binary store and printed image store:
+                value:
+                  itemGuids:
+                  - 706e8a5e-3457-437a-b0c7-49d3dfa8736f
+                  - 806e8a5e-3457-437a-b0c7-49d3dfa8736g
+                  - 906e8a5e-3457-437a-b0c7-49d3dfa8736h
+                  imagingProfileName: Default
+                  overwriteExisting: true
+                  populateBinaryStores: true
+                  populatePrintedImageStores: true
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+              example:
+                Response with Zero failures:
+                  itemGuids:
+                  - 706e8a5e-3457-437a-b0c7-49d3dfa8736f
+                  - 9581abc8-4f92-4b1f-bc65-7ff6445c449b
+                  failedItemGuids: []
+                Response with some failures:
+                  itemGuids:
+                  - 706e8a5e-3457-437a-b0c7-49d3dfa8736f
+                  - 9581abc8-4f92-4b1f-bc65-7ff6445c449b
+                  failedItemGuids:
+                  - 706e8a5e-3457-437a-b0c7-49d3dfa8736f
+        '400':
+          description: Invalid Property
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: INVALID_REQUEST_FORMAT
+                developerMessage: Both 'populatePrintedImageStores' and `populateBinaryStores` can not be false.
+                userMessage: null
+                additionalInfo: null
+  /cases/{caseId}/items/{itemGuid}/download:
+    get:
+      tags:
+      - Export
+      summary: Downloads an item from a case
+      description: Use this operation to download a specific item from a case. This API uses the original file name to determine the best format to download the item. The item is downloaded by streaming its binary content using its original file name and MIME type. This content is returned in the response body.
+      operationId: downloadItem
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemGuid
+        in: path
+        description: Item GUID
+        required: true
+        schema:
+          type: string
+      - name: overwriteExisting
+        in: query
+        description: Overwrite Existing; this value is treated as always true for PDFs
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: populateBinaryStores
+        in: query
+        description: If true, the binary store will be regenerated for this item.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: populatePrintedImageStores
+        in: query
+        description: If true, the printed image store will be regenerated for this item.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: default response
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+    head:
+      tags:
+      - Export
+      summary: Downloads an item from a case
+      description: Use this operation to download a specific item from a case. This API uses the original file name to determine the best format to download the item. The item is downloaded by streaming its binary content using its original file name and MIME type. This content is returned in the response body.
+      operationId: downloadItemHead
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemGuid
+        in: path
+        description: Item GUID
+        required: true
+        schema:
+          type: string
+      - name: overwriteExisting
+        in: query
+        description: Overwrite Existing; this value is treated as always true for PDFs
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: populateBinaryStores
+        in: query
+        description: If true, the binary store will be regenerated for this item.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: populatePrintedImageStores
+        in: query
+        description: If true, the printed image store will be regenerated for this item.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: string
+  /cases/{caseId}/itemBinaries/{itemGuid}:
+    get:
+      tags:
+      - Export
+      summary: Streams an item binary from a case if it is available
+      description: Use this operation to stream a specific item binary from a case if the item binary is available.This API uses the original file name to determine the best format to download the item.The item is downloaded by streaming its binary content using its original file name and MIME type.
+      operationId: downloadItemBinary
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemGuid
+        in: path
+        description: Item GUID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '500':
+          description: error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                Source Item Not Available:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: ENGINE_EXCEPTION
+                    developerMessage: Error getting byte region
+                    userMessage: Could not export item as binary
+                    additionalInfo:
+                      rootExceptionClass: java.io.IOException
+                      rootExceptionMessage: 'Source data missing for item: 3d4ad678-4127-423a-aea1-956de9ed2d21/item.pdf/ (image/jpeg) {cd6f8bd9-3b7e-450e-afd3-2f1be82a3bdf}'
+    head:
+      tags:
+      - Export
+      summary: Streams an item binary from a case if it is available
+      description: Use this operation to stream a specific item binary from a case if the item binary is available.This API uses the original file name to determine the best format to download the item.The item is downloaded by streaming its binary content using its original file name and MIME type.
+      operationId: downloadItemBinary_1
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemGuid
+        in: path
+        description: Item GUID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+        '500':
+          description: error response
+  /cases/{caseId}/items/{itemGuid}/view:
+    get:
+      tags:
+      - Export
+      summary: Enables you to view a case item
+      description: 'Use this operation to view a case item. The REST API uses the original file name to determine the best format to view the item. This endpoint returns the binary data with the MIME type set in the Content-Type header so you are viewing the actual item.
+
+
+        For example, you can use this endpoint to view a case item in a web browser. The API will determine the best format to view this item in the browser.'
+      operationId: downloadItemBestFormat
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemGuid
+        in: path
+        description: Item GUID
+        required: true
+        schema:
+          type: string
+      - name: overwriteExisting
+        in: query
+        description: Overwrite Existing
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: default response
+          content:
+            multipart/form-data:
+              schema:
+                type: string
+                format: binary
+    head:
+      tags:
+      - Export
+      summary: Enables you to view a case item
+      description: 'Use this operation to view a case item. The REST API uses the original file name to determine the best format to view the item. This endpoint returns the binary data with the MIME type set in the Content-Type header so you are viewing the actual item.
+
+
+        For example, you can use this endpoint to view a case item in a web browser. The API will determine the best format to view this item in the browser.'
+      operationId: downloadItemBestFormatHeadRequest
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemGuid
+        in: path
+        description: Item GUID
+        required: true
+        schema:
+          type: string
+      - name: overwriteExisting
+        in: query
+        description: Overwrite Existing
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: string
+  /cases/{caseId}/productionSets:
+    get:
+      tags:
+      - Export
+      summary: Returns all production sets for a case
+      description: Use this operation to view all the production sets for a case. You can use this to see a list of which production sets are available for export.
+      operationId: getProductionSetsForCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: summary
+        in: query
+        required: false
+        description: If set to true, will only retrieve name and GUID.
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductionSetResponse'
+              examples:
+                Empty Production Set:
+                  value:
+                  - name: MyProductionSet
+                    description: This is a production set
+                    guid: 1ecbbbc9-e093-497b-a92f-e9c58f00fb2f
+                    frozen: false
+                    nextDocumentNumber: null
+                    prefix: null
+                    nextDocumentId: null
+                    firstDocumentNumber: null
+                    itemCount: 0
+                Production Set With Items:
+                  value:
+                  - name: MyProductionSet
+                    description: This is a production set
+                    guid: 1ecbbbc9-e093-497b-a92f-e9c58f00fb2f
+                    frozen: false
+                    nextDocumentNumber: nuix000000002
+                    prefix: nuix
+                    nextDocumentId: 2
+                    firstDocumentNumber: nuix000000001
+                    itemCount: 1
+                Production Set Summary Only:
+                  value:
+                  - name: MyProductionSet
+                    description: null
+                    guid: 1ecbbbc9-e093-497b-a92f-e9c58f00fb2f
+                    frozen: null
+                    nextDocumentNumber: null
+                    prefix: null
+                    nextDocumentId: null
+                    firstDocumentNumber: null
+                    itemCount: 0
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: RESOURCE_NOT_FOUND
+                developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                additionalInfo:
+                  rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                  rootExceptionMessage: null
+    post:
+      tags:
+      - Export
+      summary: Creates a production set
+      description: Use this operation to create a production set in a case. Production sets allow you to manage a set of grouped items for export.
+      operationId: createProductionSet
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/vnd.nuix.v2+json:
+            schema:
+              $ref: '#/components/schemas/BulkProductionSetWithProfilesRequest'
+            example:
+              name: MyProductionSet
+              description: This is a production set
+              query: kind:document
+              productionProfileName: Default
+              imagingProfileName: Default
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v2+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /v1/cases/{caseId}/productionSets:
+    post:
+      tags:
+      - Export
+      deprecated: true
+      summary: Creates a production set
+      description: Use this operation to create a production set in a case. Production sets allow you to manage a set of grouped items for export.
+      operationId: createProductionSetDeprecated
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/ProductionSetRequest'
+            examples:
+              Simple Production Set:
+                value:
+                  name: MyProductionSet
+                  description: This is a production set
+                  query: kind:document
+                  includeFamilies: false
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/productionSets/{productionSetId}/item/{itemGuid}/printPreview:
+    get:
+      tags:
+      - Export
+      summary: Returns a print preview for an item in the production set
+      description: Use this operation to return a print preview of the item. If a print preview isn't present on the item, it will be generated.
+      operationId: getPrintPreview
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: productionSetId
+        in: path
+        description: Production set GUID
+        required: true
+        schema:
+          type: string
+      - name: itemGuid
+        in: path
+        description: Item GUID
+        required: true
+        schema:
+          type: string
+      - name: pageNumber
+        in: query
+        description: The page number to be printed
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: generateNew
+        in: query
+        description: Force regeneration of print preview
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  format: byte
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                Case Does Not Exist:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+                Production Set Does Not Exist:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'PRODUCTION_SET' and identifier 'InvalidProductionSetGuid' could not be found.
+                    userMessage: The resource of type 'PRODUCTION_SET' and identifier 'InvalidProductionSetGuid' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+                Item Does Not Exist:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'ITEM' and identifier '96c3defc-ee21-4972-9561-d69622c25389' could not be found.
+                    userMessage: The resource of type 'ITEM' and identifier '96c3defc-ee21-4972-9561-d69622c25389' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+  /cases/{caseId}/productionSets/{productionSetId}/items:
+    get:
+      tags:
+      - Export
+      summary: Returns the items in this production set
+      description: This is a shortcut for using the search endpoint with a production-set-guid:[guid] query
+      operationId: getProductionSetItems
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: productionSetId
+        in: path
+        description: Production set GUID
+        required: true
+        schema:
+          type: string
+      - name: startIndex
+        in: query
+        description: Start index, defaults to 0
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: numberOfRecordsRequested
+        in: query
+        description: Number of records to return, defaults to 100
+        required: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/SearchNativeResult'
+              example:
+                request:
+                  caseId: 219f69f5eee14cf6b8c8c15d7cc2dd1e
+                  query: production-set-guid:1ecbbbc9-e093-497b-a92f-e9c58f00fb2f
+                  sortField: null
+                  sortOrder: null
+                  startIndex: 0
+                  numberOfRecordsRequested: 1
+                  deduplicate: null
+                  metadataProfile: null
+                  fieldList: []
+                  customMetadataList: []
+                  propertyList: []
+                  itemParameterizedFields: []
+                  showAvailableThumbnails: false
+                  useCache: false
+                  forceCacheDelete: false
+                  searchRetry: 0
+                  relationType: null
+                  entities": []
+                  s: 0
+                  p: 1
+                  customMetadataField: []
+                  property: []
+                  field: []
+                  startedOn: 1589459144928
+                  completedOn: 1589459145042
+                  elapsedTimeForSearch: 90
+                  elapsedTimeForSort: 0
+                  elapsedTimeForMarshal: 24
+                  elapsedTimeForDeduplicate: 0
+                  elapsedTotal: 114
+                  metadataItems: []
+                  localizedMetadataItems: []
+                  metadataItemDetails: []
+                  resultList:
+                  - customMetadata: {}
+                    entities: {}
+                    guid: fd772326-87f2-40d2-8d6a-b6009c79cc49
+                    properties: {}
+                    count: 1
+                    deduplicatedCount: 1
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: RESOURCE_NOT_FOUND
+                developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                additionalInfo:
+                  rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                  rootExceptionMessage: null
+    post:
+      tags:
+      - Export
+      summary: Adds items to a production set
+      description: Use this operation to add items to an existing production set in a case. Production sets allow you to manage a set of grouped items for export.
+      operationId: addItemsToProductionSet
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: productionSetId
+        in: path
+        description: Production set GUID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/ProductionSetRequest'
+            example:
+              query: kind:document
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: RESOURCE_NOT_FOUND
+                developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                additionalInfo:
+                  rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                  rootExceptionMessage: null
+  /cases/{caseId}/productionSets/{productionSetId}/printPreview:
+    post:
+      tags:
+      - Export
+      summary: Generates print previews for items in the production set
+      description: Use this operation to generate print previews for all items in the production set.
+      operationId: generatePrintPreviews
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: productionSetId
+        in: path
+        description: Production set GUID
+        required: true
+        schema:
+          type: string
+      - name: allItems
+        in: query
+        description: Generate all print previews, or only generate previews that don't already exist
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ProductionSetResponse'
+              example:
+                name: MyProductionSet
+                description: This is a production set
+                guid: 1ecbbbc9-e093-497b-a92f-e9c58f00fb2f
+                frozen: false
+                nextDocumentNumber: nuix000000002
+                prefix: nuix
+                nextDocumentId: 2,
+                firstDocumentNumber: nuix000000001
+                itemCount: 1
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                Case Does Not Exist:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+                Production Set Does Not Exist:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'PRODUCTION_SET' and identifier 'InvalidProductionSetGuid' could not be found.
+                    userMessage: The resource of type 'PRODUCTION_SET' and identifier 'InvalidProductionSetGuid' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+  /cases/{caseId}/productionSets/{productionSetId}:
+    get:
+      tags:
+      - Export
+      summary: Returns details for a specific production set
+      description: Use this operation to view information about a production set. Details include set name, item count, description, and document numbering. You can use this information to determine if this production set is ready for export.
+      operationId: getProductionSet
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: productionSetId
+        in: path
+        description: Production set GUID
+        required: true
+        schema:
+          type: string
+      - name: summary
+        in: query
+        description: If true returns a production set summary.  The summary includes guid and name of the production set only.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ProductionSetResponse'
+              examples:
+                Empty Production Set:
+                  value:
+                    name: MyProductionSet
+                    description: This is a production set
+                    guid: 1ecbbbc9-e093-497b-a92f-e9c58f00fb2f
+                    frozen: false
+                    nextDocumentNumber: null
+                    prefix: null
+                    nextDocumentId: null
+                    firstDocumentNumber: null
+                    itemCount: 0
+                Production Set With Items:
+                  value:
+                    name: MyProductionSet
+                    description: This is a production set
+                    guid: 1ecbbbc9-e093-497b-a92f-e9c58f00fb2f
+                    frozen: false
+                    nextDocumentNumber: nuix000000002
+                    prefix: nuix
+                    nextDocumentId: 2
+                    firstDocumentNumber: nuix000000001
+                    itemCount: 1
+                Production Set Summary Only:
+                  value:
+                    name: MyProductionSet
+                    description: null
+                    guid: 1ecbbbc9-e093-497b-a92f-e9c58f00fb2f
+                    frozen: null
+                    nextDocumentNumber: null
+                    prefix: null
+                    nextDocumentId: null
+                    firstDocumentNumber: null
+                    itemCount: 0
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                Case Does Not Exist:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+                Production Set Does Not Exist:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'PRODUCTION_SET' and identifier 'InvalidProductionSetGuid' could not be found.
+                    userMessage: The resource of type 'PRODUCTION_SET' and identifier 'InvalidProductionSetGuid' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+    delete:
+      tags:
+      - Export
+      summary: Deletes a production set from a case
+      description: Use this operation to delete a specific production set from a case.
+      operationId: deleteProductionSet
+      deprecated: true
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: productionSetId
+        in: path
+        description: Production set GUID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ProductionSetResponse'
+              example:
+                name: MyProductionSet
+                description: This is a production set
+                guid: 1ecbbbc9-e093-497b-a92f-e9c58f00fb2f
+                frozen: false
+                nextDocumentNumber: null
+                prefix: null
+                nextDocumentId: null
+                firstDocumentNumber: null
+                itemCount: 0
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                Case Does Not Exist:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+                Production Set Does Not Exist:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'PRODUCTION_SET' and identifier 'InvalidProductionSetGuid' could not be found.
+                    userMessage: The resource of type 'PRODUCTION_SET' and identifier 'InvalidProductionSetGuid' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+  /v2/cases/{caseId}/productionSets/{productionSetId}:
+    delete:
+      tags:
+      - Export
+      summary: Deletes a production set from a case
+      description: Use this operation to delete a specific production set from a case.
+      operationId: deleteProductionSetV2
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: productionSetId
+        in: path
+        description: Production set GUID
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: default response
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                Case Does Not Exist:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+                Production Set Does Not Exist:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'PRODUCTION_SET' and identifier 'InvalidProductionSetGuid' could not be found.
+                    userMessage: The resource of type 'PRODUCTION_SET' and identifier 'InvalidProductionSetGuid' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+components:
+  schemas:
+    PromoteToDiscoverRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Identifies what items should be promoted. If a query is not supplied it defaults to an empty string, which returns all items.
+        deduplication:
+          type: string
+          description: Deduplicate items before promotion.  Defaults to none.
+          default: none
+          enum:
+          - none
+          - md5
+          - per custodian
+        discoverDeduplication:
+          type: boolean
+          description: Whether or not Nuix Discover should perform deduplication.
+        apiAccessToken:
+          type: string
+          description: A valid Nuix Discover API Access token
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+      required:
+      - apiAccessToken
+    MetadataItemDetails:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The metadata name.
+        localisedName:
+          type: string
+          description: The localized name of the metadata.
+        type:
+          type: string
+          description: The metadata type.
+    ParallelProcessingSettings:
+      type: object
+      properties:
+        workerCount:
+          type: integer
+          description: Number of worker processes to use. This defaults to number of CPU cores on the machine. This value is also limited by settings in the current licence / session.
+          format: int32
+        workerMemory:
+          type: integer
+          description: Maximum amount of memory to allocate to each worker process in megabytes. The provided value must be >= 768. Default is calculated based on the number of workers and available machine memory.
+          format: int32
+        workerTemp:
+          type: string
+          description: Base directory that workers will use to store temporary files generated during process. Can be a string file path, File, Path or URI. The default is a directory under the case directory.
+        embedBroker:
+          type: boolean
+          description: If true, the JMS broker will be run within the current process,otherwise it will be run in a new process. Default is true.
+          default: true
+        brokerMemory:
+          type: integer
+          description: Amount of memory to allocate to the JMS broker when it is run in a separate process. The provided value must be &gt;= 768. Default is 4096.
+          format: int32
+          default: 4096
+        workerBrokerAddress:
+          type: string
+          description: 'Worker broker address in the format host:port. '
+        useRemoteWorkers:
+          description: True to use remote workers when possible, false otherwise.
+          type: boolean
+          default: false
+    SearchNativeResult:
+      type: object
+      properties:
+        request:
+          $ref: '#/components/schemas/SearchNativeRequest'
+        startedOn:
+          type: integer
+          description: Date the search started represented in milliseconds since the epoch.
+        completedOn:
+          type: integer
+          description: Date the search completed represented in milliseconds since the epoch.
+        elapsedTimeForSearch:
+          type: integer
+          description: Elapsed time to perform search.
+          format: int64
+        elapsedTimeForSort:
+          type: integer
+          format: int64
+          description: Elapsed time to perform the sort.
+        elapsedTimeForMarshal:
+          type: integer
+          format: int64
+          description: Elapsed time to perform the JSON marshalling.
+        elapsedTimeForDeduplicate:
+          type: integer
+          format: int64
+          description: Elapsed time to deduplicate items.
+        elapsedTotal:
+          type: integer
+          format: int64
+          description: Total elapsed time.
+        metadataItems:
+          type: array
+          description: The list of metadata item fields.
+          items:
+            type: string
+          deprecated: true
+        localizedMetadataItems:
+          description: The list of localized metadata item fields.
+          type: array
+          items:
+            type: string
+          deprecated: true
+        metadataItemDetails:
+          type: array
+          description: The list of metadata item details.
+          items:
+            $ref: '#/components/schemas/MetadataItemDetails'
+        resultList:
+          type: array
+          description: Results of the search
+          items:
+            type: object
+            additionalProperties:
+              type: object
+        count:
+          type: integer
+          description: Count of items in results
+          format: int32
+        deduplicatedCount:
+          type: integer
+          description: Count of deduplicated items
+          format: int32
+    ThumbnailUtilityRequestDimension:
+      type: object
+      properties:
+        height:
+          type: integer
+          description: Height of the thumbnail as an integer representing number of pixels.
+          format: int32
+        width:
+          type: integer
+          description: Width of the thumbnail as an integer representing number of pixels.
+          format: int32
+    PopulateStoresRequest:
+      type: object
+      properties:
+        itemGuids:
+          type: array
+          description: list of item GUIDs
+          items:
+            type: string
+        imagingProfileName:
+          type: string
+          description: Optional value, if not then default value is Default.
+        overwriteExisting:
+          type: boolean
+          description: If true, the items will be overwritten. Default is false.
+        populateBinaryStores:
+          type: boolean
+          description: If true, the binary store will be regenerated.  If populateBinaryStores is false, then populatePrintedImageStores must be true.
+        populatePrintedImageStores:
+          type: boolean
+          description: If true, the printed store will be regenerated.  If populatePrintedImageStores is false, then populateBinaryStores must be true.
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+    ProductionSetResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the production set.
+        description:
+          type: string
+          description: Description of the production set.
+        guid:
+          type: string
+          description: Production set GUID.
+        frozen:
+          type: boolean
+          description: Indicates whether or not the production set is frozen.
+        nextDocumentNumber:
+          type: string
+          description: Document number that will be used for the next item added to this production set.
+        prefix:
+          type: string
+          description: Prefix used for document numbering.
+        nextDocumentId:
+          type: string
+          description: Document ID that will be used for the next item added to this production set.
+        firstDocumentNumber:
+          type: string
+          description: Document number for the first item in this production set.
+        itemCount:
+          type: integer
+          description: Number of items in the production set.
+          format: int64
+    ExportOptions:
+      type: object
+      properties:
+        productOptions:
+          type: object
+          additionalProperties:
+            type: object
+          description: "Adds a new type of file to produce as part of the export.\n* `type` - The type of product to produce.\n  * `native` - Native files, including support for exporting mailboxes.\n  * `text` - Plain text files.\n  * `pdf` - PDF images.\n  * `tiff` - TIFF images.\n  * `xhtml_report` - XHTML metadata reports.\n  * `thumbnail` - Thumbnail files.\n\nSupported options common to multiple product types.\n* `naming` - Selects the type of naming to apply to the produced files\n  * `document_id` (e.g. `ABC-000000001.pdf`)\n  * `document_id_with_page` (e.g. `ABC-000000001_11.pdf`)\n  * `page_only` (e.g. `0001.pdf`)\n  * `full` (e.g. `ABC0010010001.pdf`)\n  * `full_with_periods` (e.g. `ABC.001.001.0001.pdf`)\n  * `item_name` (e.g. `original-name.pdf`)\n  * `item_name_with_path` (e.g. `mailbox/inbox/original-name.pdf`)\n  * `guid` (e.g. `04d/04dd8e72-f087-4f66-848a-6585bce732d5.pdf`)\n  * `md5` (e.g. `790/79054025255fb1a26e4bc422aef54eb4.pdf`)\n\nSupported options for native files\n* `mailFormat` - Selects the format for native exports of emails.\n  * `native` - exports emails in the format they are internally stored with no conversion.\n  * `eml` - converts all messages to RFC822 format.\n  * `html` - converts all messages to HTML format with headers written in.\n  * `mime_html` - converts all messages to MIME/HTML format with headers written in.\n  * `mime_html_mht` - converts all messages to MIME/HTML ( with extension \"mht\") format with headers written in.\n  * `msg` - converts all messages to Outlook MSG format.\n  * `dxl` - converts all messages to Lotus Notes DXL format.\n  * `mbox` - exports all messages into a single MBOX file.\n  * `pst` - exports all messages into a single PST file.\n  * `nsf` - exports all messages into a single NSF file.\n* `includeAttachments` - If true, attachments will be left on email messages. If false, attachments will be stripped off.\n* `regenerateStored` - If true, stored copies of binaries in the case will be regenerated.\n\nSupported options for text files.\n* `wrapLines` - Specifies the column to wrap text files at. If null, no wrapping will be performed.\n* `perPage` - If true, text files will be split with text for each page in a separate file. If false, the entire text for an item will be put in a single file.  Default false.\n* `lineSeparator` - Selects the separators to place between each line of the text.\n* `encoding` - The text files will be exported with the given encoding.  Default \"UTF-8\".\n\nSupported options for PDF files.\n* `regenerateStored` - If true, stored copies of PDFs in the case will be regenerated.  Default false.\n\nSupported options for TIFF files.\n* `regenerateStored` - If true, stored copies of PDFs (used as an intermediate product in order to produce the TIFF) in the case will be regenerated.  Default false.\n* `multiPageTiff` - Specifies whether to generate one TIFF file for each page (false) or all pages in one (true).  Default false.\n* `tiffDpi` - Specifies what DPI to use when generating TIFF images.  Default 300.\n  * `72` - 72 dpi.\n  * `150` - 150 dpi.\n  * `200` - 200 dpi.\n  * `300` - 300 dpi.\n* `tiffFormat` - Specifies what format the tiff files will be created in.  Default \"MONOCHROME_CCITT_T6_G4\".\n  * `MONOCHROME_CCITT_T6_G4` - Black and white, CCITT T.6 Group 4 Fax Encoding.\n  * `GREYSCALE_UNCOMPRESSED` - Greyscale, uncompressed.\n  * `GREYSCALE_DEFLATE` - Greyscale, Zip compression.\n  * `GREYSCALE_LZW` - Greyscale, LZW compression.\n  * `COLOUR_UNCOMPRESSED` - Colour, uncompressed.\n  * `COLOUR_DEFLATE` - Color, zip compression.\n  * `COLOUR_LZW` - Color, LZW compression.\n  * `JPEG` - JPEG format with default compression and quality.\n"
+        loadFileOptions:
+          type: object
+          additionalProperties:
+            type: object
+          description: "Adds a new load file as a product of the export.\n\n* `type` - The type of load file.\n  * `discover` - Discover.\n  * `ringtail` - Ringtail (MDB).\n  * `concordance` - Concordance.\n  * `summation` - Summation.\n  * `discovery_radar` - Discovery Radar.\n  * `documatrix` - DocuMatrix.\n  * `edrm_xml` - EDRM XML.\n  * `edrm_xml_zip` - EDRM v1.2 XML ZIP.\n  * `ipro` - IPRO.\n  * `xhtml_summary_report` - XHTML summary report.\n  * `csv_summary_report` - CSV summary report.\n  * `md5_digest` - MD5 digest report.\n\nSupported options common to multiple load file types\n* `metadataProfile` - Selects the metadata profile to use for additional metadata for this load file. If null, no extra metadata is used.\n* `encoding` - Selects the encoding (character set) to use when writing the load file.  Default \"UTF-8\".  Used by Concordance.\n* `lineSeparator` - Selects the separators to place between each line of text in the load file.\n* `pathSeparator` - Selects the separators to use between directories when writing paths to exported files into the load file.\n* `maxLoadFileSize` - DEPRECATED: Selects the maximum number of items written to a load file.\n* `loadFileEntryLimit` - Selects the maximum number of items written to a load file.\n* `loadFileByteLimit` - Selects the maximum size, in bytes, of each load file.\n* `addressSeparator` - The separator of multiple addresses.  Default \";\".\n* `compressOutput` - Whether the export output folder needs to be compressed.  Default false.\n\nSupported options for Ringtail (MDB)\n* `version` - Selects the version of Ringtail which the exported database will export. The default value will always be the most recent supported version of Ringtail, so explicitly setting the value is recommended if Ringtail Legal 2005 format is specifically required.  Default 2005.\n* `inheritDates` -   If true, dates of embedded items within the family will always be inherited from the top-level item in the family, instead of following the normal rules for getting the item date.  Default false.\n* `removeCommas` - If true, commas will not be used in number fields.  Default false.\n* `directParent` - If true, the direct parent will be used for the host reference.  Default false.\n* `useDocumentId` - If true, the document id will be used for the page label. It is a property for Ringtail (MDB) only.  Default false.\n* `useNativePageCount` - If true, native page counts will be used for TIFFs in num_pages. It is a property for Ringtail (MDB) only.  Default false.\n* `mappingLocation` - The location of the file mapping from the load file metadata to the Ringtail types. It is the script writer's responsibility to ensure the mapping will be valid. The file should be a CSV file with a header line consisting of \"Category,Label\". The valid categories are TEXT, MEMO, NUMB, PICK and DATE and the labels should use the same format as metadataText in the stamping options.\n* `extrasFieldSeparator` - The separator of multi-value fields.  Default \";\".\n\nSupported options for EDRM XML\n* `version` - Selects the version of the EDRM XML specification will be used for the export. The default value will always be the most recent supported version of the specification, so explicitly setting the value is recommended if version 1.1 is specifically required.  Default \"1.1\".\n"
+        imagingOptions:
+          type: object
+          additionalProperties:
+            type: object
+          description: "Sets the imaging options to use for the export.\n* `imageExcelSpreadsheets` - DEPRECATED: Specifies whether to image Excel spreadsheets, instead of generating a slip sheet. This is replaced with Imaging Profiles since Nuix 7.2.  Default false.\n* `slipSheetContainers` - DEPRECATED: - Same as exportDescendantContainers since Nuix 7.2.\n* `excelExportEngine` - Optionally select which export method to use for generating PDFs.  Default \"INTERNAL\".\n  * `MS_OFFICE` - Export Excel documents using Microsoft Office.\n  * `INTERNAL` - Export Excel documents using the built in exporter.\n* `excelPrintHiddenRows` - Optionally unhide all Excel rows.\n* `excelPrintHiddenColumns` - Optionally unhide all Excel columns.\n* `excelPrintHiddenWorksheets` - Optionally force hidden or very hidden Excel worksheets to be printed.  Default \"SHEET_VERY_HIDDEN\".\n  * `SHEET_HIDDEN` - Show hidden worksheets.\n  * `SHEET_VERY_HIDDEN` - Show hidden and very hidden worksheets.\n* `excelPrintComments` - Optionally set for Excel the way comments are printed with the sheet.\n  * `PRINT_IN_PLACE` - Print in original location.\n  * `PRINT_NO_COMMENTS` - Do not print.\n  * `PRINT_SHEETEND` - Print as end notes.\n* `excelPrintNotes` - Optionally set for Excel cell notes to be printed as end notes with the sheet.\n* excelPaperSize\n  * `PAPER_10x14` - 10 in. x 14 in.\n  * `PAPER_11x17` - 11 in. x 17 in.\n  * `PAPER_A3` - A3 (297 mm x 420 mm).\n  * `PAPER_A4` - A4 (210 mm x 297 mm).\n  * `PAPER_A4Small` - A4 Small (210 mm x 297 mm).\n  * `PAPER_A5` - A5 (148 mm x 210 mm).\n  * `PAPER_B4` - B4 (250 mm x 354 mm).\n  * `PAPER_B5` - A5 (148 mm x 210 mm).\n  * `PAPER_Csheet` - C size sheet.\n  * `PAPER_Dsheet` - D size sheet.\n  * `PAPER_Envelope10` - Envelope #10 (4-1/8 in. x 9-1/2 in.).\n  * `PAPER_Envelope11` - Envelope #11 (4-1/2 in. x 10-3/8 in.).\n  * `PAPER_Envelope12` - Envelope #12 (4-1/2 in. x 11 in.).\n  * `PAPER_Envelope14` - Envelope #14 (5 in. x 11-1/2 in.).\n  * `PAPER_Envelope9` - Envelope #9 (3-7/8 in. x 8-7/8 in.).\n  * `PAPER_EnvelopeB4` - Envelope B4 (250 mm x 353 mm).\n  * `PAPER_EnvelopeB5` - Envelope B5 (176 mm x 250 mm).\n  * `PAPER_EnvelopeB6` - Envelope B6 (176 mm x 125 mm).\n  * `PAPER_EnvelopeC3` - Envelope C3 (324 mm x 458 mm).\n  * `PAPER_EnvelopeC4` - Envelope C4 (229 mm x 324 mm).\n  * `PAPER_EnvelopeC5` - Envelope C5 (162 mm x 229 mm).\n  * `PAPER_EnvelopeC6` - Envelope C6 (114 mm x 162 mm).\n  * `PAPER_EnvelopeC65` - Envelope C65 (114 mm x 229 mm).\n  * `PAPER_EnvelopeDL` - Envelope DL (110 mm x 220 mm).\n  * `PAPER_EnvelopeItaly` - Envelope (110 mm x 230 mm).\n  * `PAPER_EnvelopeMonarch` - Envelope Monarch (3-7/8 in. x 7-1/2 in.).\n  * `PAPER_EnvelopePersonal` - Envelope (3-5/8 in. x 6-1/2 in.).\n  * `PAPER_Esheet` - E size sheet.\n  * `PAPER_Executive` - Executive (7-1/2 in. x 10-1/2 in.).\n  * `PAPER_FanfoldLegalGerman` - German Legal Fanfold (8-1/2 in. x 13 in.).\n  * `PAPER_FanfoldStdGerman` - German Legal Fanfold (8-1/2 in. x 13 in.).\n  * `PAPER_FanfoldUS` - U.S. Standard Fanfold (14-7/8 in. x 11 in.).\n  * `PAPER_Folio` - Folio (8-1/2 in. x 13 in.).\n  * `PAPER_Ledger` - Ledger (17 in. x 11 in.).\n  * `PAPER_Legal` - Legal (8-1/2 in. x 14 in.).\n  * `PAPER_Letter` - Letter (8-1/2 in. x 11 in.).\n  * `PAPER_LetterSmall` - Letter Small (8-1/2 in. x 11 in.).\n  * `PAPER_Note` - Note (8-1/2 in. x 11 in.).\n  * `PAPER_Quarto` - Quarto (215 mm x 275 mm).\n  * `PAPER_Statement` - Statement (5-1/2 in. x 8-1/2 in.).\n  * `PAPER_Tabloid` - Tabloid (11 in. x 17 in.).\n* `excelPageOrientation` - Optionally set Excel page orientation (portrait or landscape) for every worksheet.\n  * `PORTRAIT` - Portrait mode.\n  * `LANDSCAPE` - Landscape mode.\n* `excelPageZoom` - Optionally set Excel page zoom value that represents a percentage (between 10 and 400 percent) by which Microsoft Excel will scale the worksheet for printing.\n  * `PERCENT_10` - 10%.\n  * `PERCENT_25` - 25%.\n  * `PERCENT_50` - 50%.\n  * `PERCENT_75` - 75%.\n  * `PERCENT_100` - 100%.\n  * `PERCENT_125` - 125%.\n  * `PERCENT_150` - 150%.\n  * `PERCENT_200` - 200%.\n  * `PERCENT_400` - 400%.\n* `excelFitToPagesTall` - Optionally set for Excel the number of pages tall the worksheet will be scaled to when it's printed.\n* `excelFitToPagesWide` - Optionally set for Excel the number of pages wide the worksheet will be scaled to when it's printed.\n* `excelWorksheetPrintArea` - Optionally set Excel print area for every worksheet.\n* `excelPageNumberLimit` - Optionally set the page number limit for Excel. The value must be a positive number.\n* `excelPrintGridlines` - Optionally force Excel gridlines to be always shown or hidden.\n* `excelPrintHeadings` - Optionally force Excel headers to be hidden or shown.\n* `wordExportEngine` - Optionally select which export method to use for generating PDF's.\n  * `MS_OFFICE` - Export Word documents using Microsoft Office.\n  * `INTERNAL` - Export Word documents using the built in exporter.\n* `wordShowMarkup` - Optionally force Word to show markup (such as track-changes) or hide it.\n* `wordShowHiddenText` - Optionally force PowerPoint to show markup (such as track-changes or hidden text) or hide it.\n* `powerPointExportEngine` - Optionally select which export method to use for generating PDF's. Note: Only PRINT_OUTPUT_SLIDES is supported for INTERNAL.\n  * `MS_OFFICE` - Export Powerpoint documents using Microsoft Office.\n  * `INTERNAL` - Export Powerpoint documents using the built in exporter.\n* `powerPointPrintOutputType` - PRINT_OUTPUT_SLIDES  A value that indicates which component (slides, handouts, notes pages, or an outline) of the presentation is to be printed.\n  * `PRINT_OUTPUT_BUILD_SLIDES` - Build Slides.\n  * `PRINT_OUTPUT_FOUR_SLIDE_HANDOUTS` - Four Slide Handouts.\n  * `PRINT_OUTPUT_NINE_SLIDE_HANDOUTS` - Nine Slide Handouts.\n  * `PRINT_OUTPUT_NOTES_PAGES` - Notes Pages.\n  * `PRINT_OUTPUT_ONE_SLIDE_HANDOUTS` - Single Slide Handouts.\n  * `PRINT_OUTPUT_OUTLINE` - Outline.\n  * `PRINT_OUTPUT_SIX_SLIDE_HANDOUTS` - Six Slide Handouts.\n  * `PRINT_OUTPUT_SLIDES` - Slides.\n  * `PRINT_OUTPUT_THREE_SLIDE_HANDOUTS` - Three Slide Handouts.\n  * `PRINT_OUTPUT_TWO_SLIDE_HANDOUTS` - Two Slide Handouts.\n* `slipSheetMetadataProfile` - Optionally insert values from a metadata profile into generated slip-sheets.\n"
+        numberingOptions:
+          type: object
+          additionalProperties:
+            type: object
+          description: "* `createProductionSet` - Sets whether a production set should be created.  Default true.\n* `delimiter` - Selects the string to use when separating the parts of a number for writing into a load file. Note: Not supported for document ID based numbering.  Default \".\"\n* `groupDocumentPages` - If true, numbering will roll over to the next folder to avoid splitting a single document. Note: Not supported for document ID based numbering.  Default true.\n* `groupFamilyItems` - If true, numbering will roll over to the next folder to avoid splitting a family of documents. Note: Not supported for document ID based numbering.  Default false.\n* `prefix` - Specifies the prefix for numbering. If null, disables the prefix component.\n* `box`, `folder`, `page`, `documentId` - A nested map of options for the specified component. See the table below for the definition of each option in these nested maps.\n  \n  Settings for documentId components\n  * `minWidth` - Specifies the minimum width of the numbering component. If the number used for this component is shorter, it will be padded out to the specified width. However, numbering may overflow, so it is possible for a longer number to appear.  Default 9.\n  * `startAt` - Specifies the number to start at.  Default 1.\n\n  Settings for formattedDocumentId components\n  * `minWidth` - Specifies the minimum width of the numbering component. If the number used for this component is shorter, it will be padded out to the specified width. However, numbering may overflow, so it is possible for a longer number to appear.  Default 9.\n  * `startAt` - Specifies the number to start at, and includes all the formatting characters in each document ID, e.g. \"00.00.01\".  Default \"1\".\n  * `pageDelimiter` - Specifies the delimiter that will appear before individual page numbers.  Default \"_\".\n  * `labelFirstPage` - Specifies whether the page number suffix will appear on the first page of a document.  Default true.\n\n  Settings for box, folder, and page componenents\n  * `minWidth` - Specifies the minimum width of the numbering component. If the number used for this component is shorter, it will be padded out to the specified width. However, numbering may overflow, so it is possible for a longer number to appear.  Default 3.\n  * `from` - Specifies the lowest number in the sequence. When numbering wraps around, this becomes the next number.  Default 1.\n  * `to` - Specifies the highest number in the sequence. Numbering will be wrapped around the next number after this number is used.  Default 999.\n  * `startAt` - Specifies the number to start at.  Default 1.\n"
+        stampingOptions:
+          type: object
+          additionalProperties:
+            type: object
+          description: "The stamping options.  \nSpecifies the options for the respective stamping area of the page. Options supported inside the nested hash are detailed below.\n* `headerLeft`, `headerCentre`, `headerRight`, `footerLeft`, `footerCentre`, `footerRight`\n\n  Supported options for stamper areas (headerLeft, footerCentre, etc.)\n  * `type` - Specifies what type of information to write into the stamper location.\n    * `name` - The name of the item.\n    * `guid` - The GUID of the item.\n    * `document_number` - The document number of the page of the item (changes each page.)\n    * `first_document_number` - The document number of the first page of the item.\n    * `page_number` - The number of the current page within the item.\n    * `page_count` - The count of all pages within the item.\n    * `item_id` - DEPRECATED: The \"Item ID\" for the item. Deprecated in Nuix 5.2 as Item ID is being removed. As a transitional measure, this currently stamps the same as \"guid\", but support will be removed completely in the future.\n    * `produced_by` - A string indicating the software producing the export products.\n    * `md5` - The MD5 digest for the item.\n    * `sha1` - The SHA-1 digest for the item.\n    * `sha256` - The SHA-256 digest for the item.\n    * `document_id` - The document ID of the item within the production set used to export.\n    * `production_set_name` - The name of the production set used to export.\n    * `custom` - custom text which will be the same for every item. Requires the customText option to be specified as well.\n  * `metadata` - reference to a metadata column by name. Requires either the metadataItem or metadataText option to be specified as well.\n  * `customText` - Specifies the custom text to put in the header when type is \"custom\". Custom text may include other embedded fields by using %{tag} where 'tag' is one of the available type options in this section. e.g. \"Page %{page_number} of %{page_count}\" will generate \"Page 3 of 5\". You can also use this same syntax in the Nuix Legal Export Headers and Footers dialog box to produce the same effect from within the GUI. You cannot use %{custom} as a tag inside a custom text string (i.e. it cannot be recursive).\n  * `metadataItem` - Specifies the metadata column to put in the header when type is \"metadata\".\n  * `metadataText` - DEPRECATED: metadataText is deprecated and replaced with metadataItem.\n  * `font` - Specifies the font to use for stamped text. This can be used, for instance, to insert a bar code font. The support options for the font hash are documented below.\n    * `family` - Specifies the font family by name.\n    * `style` - Specifies the style to use. If null, plain style will be used.\n    * `size` - Specifies the size to draw the text at.\n* `headerLine` - Default false. Specifies whether to draw a line separating the header or footer content from the body of the document. The line will only be drawn if the values being drawn in the header or footer are non-blank.\n* `footerLine` - Default false.\n* `increasePageSize` - Default false. Specifies whether to increase the size of the page to accommodate the header and footer.\n"
+        traversalOptions:
+          type: object
+          additionalProperties:
+            type: object
+          description: "Sets the traversal options to use for the export.\n* `strategy` - Selects the method of selecting which items to export based on the items which are passed into exportItems.  Default \"items\".\n  * `items` - Exports only the items specified.\n  * `items_and_descendants` - Exports the items specified, and any descendants.\n  * `top_level_items` - Exports the top-level items for the items specified.\n  * `top_level_items_and_descendants` - Exports the top-level items for the items specified, and any descendants of the top-level items.\n  * `deduplicated_top_level_items` - DEPRECATED - Same as \"top_level_items\" with deduplicate set to \"md5\". \n  * `deduplicated_top_level_items_and_descendants` - DEPRECATED -  Same as \"top_level_items_and_descendants\" with deduplicate set to \"md5\".\n* `deduplication` - Selects the method of deduplication to use when a top-level item export is being used.  Default \"none\".\n  * `none` - Performs no deduplication.\n  * `md5` - Performs deduplication by md5.\n  * `per custodian` - Performs deduplication as md5 per custodian.\n* `sortOrder` - Selects the method of sorting items during the export.  Default \"none\" if strategy is \"items\", \"position\" otherwise.\n  * `none` - Exports the items in the original order. This order will only give sensible results if strategy is \"items\"\n  * `position` - Sorts by position.\n  * `top_level_item_date` - Sorts by top level item date.\n  * `top_level_item_date_descending` - Sorts by top level item date descending.\n  * `document_id` - Sorts items based on their document IDs for the current production set. Note:This option is only valid if exporting a production set.\n* `exportDescendantContainers` - Default false.  Specifies whether to export descendant container items, instead of omitting them. This only has an effect if \"strategy\" = \"items_and_descendants\", \"top_level_items_and_descendants\", or \"deduplicated_top_level_items_and_descendants\".\n"
+        skipNativesSlipsheetedItems:
+          type: boolean
+          description: Sets whether to skip export of natives for slip-sheeted items.
+        nearDuplicateOptions:
+          type: object
+          additionalProperties:
+            type: object
+          description: 'Sets the near-duplicate options to be used in legal export.
+
+            * `resemblanceThreshold` - Specifies the resemblance threshold to use for the export of any metadata items that require the computation of (chained) near-duplicates.
+
+            '
+        promoteToDiscoverOptions:
+          type: object
+          additionalProperties:
+            type: object
+          description: 'Sets the options to promote to Nuix Discover.
+
+            * `caseId` - REQUIRED. The unique identifier of the Discover case.
+
+            * `token` - REQUIRED.  The application token to authenticate against the Nuix Discover API v2 or newer.  Note: This field carries the Discover Instance URI and app key encoded in it.
+
+            * `jobId` - The unique identifier of the job.
+
+            * `level` - The base name of the folder where the binaries will be uploaded to.  For example, Promotions/<Case GUID>/<Job GUID>.
+
+            * `docsPerLevel` - Number of documents per level. New sub-folders under level will be created once this limit is reached.
+
+            * `deduplication` - Whether or not Nuix Discover should deduplicate imported items.
+
+            '
+    ExportRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The folder ID.  A folder with this ID will be created under the export path
+        productionSets:
+          type: array
+          description: The production set GUIDs to export
+          items:
+            type: string
+        productTypes:
+          type: array
+          description: The list of product types.  Defaults to [ "native" ].
+          items:
+            type: string
+            enum:
+            - native
+            - text
+            - pdf
+            - tiff
+            - xhtml_report
+            - thumbnail
+          default:
+          - native
+        loadFileTypes:
+          type: array
+          description: The load file types to add to the export.  By default, no load file types are selected
+          items:
+            type: string
+            enum:
+            - concordance
+            - summation
+            - discovery_radar
+            - documatrix
+            - edrm_xml
+            - ipro
+            - ringtail
+            - xhtml_summary_report
+            - csv_summary_report
+        queries:
+          type: array
+          description: The list of queries to export.  Only applicable for ITEM exports
+          items:
+            type: string
+        exportType:
+          type: string
+          description: Defaults to ITEM
+          enum:
+          - item
+          - legal
+          default: item
+        path:
+          type: string
+          description: Root export path folder
+        exportOptions:
+          $ref: '#/components/schemas/ExportOptions'
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+      required:
+      - path
+    ThumbnailUtilityRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: A Nuix query to filter items.
+        dimensions:
+          type: array
+          description: A list of dimensions for the thumbnails to be generated. No thumnails are generated if this is not set.
+          items:
+            $ref: '#/components/schemas/ThumbnailUtilityRequestDimension'
+      required:
+      - query
+    ClusteredRestErrorResponse:
+      type: object
+      properties:
+        serverId:
+          type: string
+          description: The server ID of the server reporting the error.
+        developerMessage:
+          type: string
+          description: The technical description of the error.
+        userMessage:
+          type: string
+          description: The friendly error message.
+        additionalInfo:
+          type: object
+          description: Additional information about the error.
+          additionalProperties:
+            type: object
+            description: This is a map of additional properties.
+        errorCode:
+          type: string
+          description: The specific error code for the error from the list of available error codes.
+          enum:
+          - AUTHENTICATION_FAILED
+          - CASE_ACCESS_RESTRICTED
+          - CASE_LOCKED
+          - DELETE_DENIED
+          - DUPLICATE_CASES_DETECTED
+          - ENGINE_EXCEPTION
+          - FILE_TOO_LARGE
+          - INVALID_REQUEST_FORMAT
+          - INVALID_APPLICATION_RESPONSE
+          - INVALID_ARGUMENT
+          - ITEM_ACCESS_RESTRICTED
+          - LICENSE_EXCEPTION
+          - MEDIA_TYPE_NOT_SUPPORTED
+          - MEDIA_TYPE_NOT_ACCEPTABLE
+          - METHOD_NOT_ALLOWED
+          - NOT_IMPLEMENTED
+          - PRODUCTION_SET_FROZEN
+          - REQUIRED_ARGUMENT_MISSING
+          - RESOURCE_NOT_FOUND
+          - UNAUTHORISED
+          - UNKNOWN
+          - USER_SCRIPT_NOT_PROVIDED
+          - FOLDER_ALREADY_EXISTS
+          - CASE_LOCKED_BY_FUNCTION
+          - MISSING_THUMBNAIL
+          - ITEM_SET_ALREADY_EXISTS
+          - INVALID_LICENSE_TYPE_FOR_CASE
+          - SIMPLE_CASE_REQUIRED
+          - USER_ACCOUNT_LOCKED
+          - APPLICATION_NOT_REGISTERED
+          - INVALID_TEMPLATE
+          - DUPLICATE_RECORD
+          - CASE_MIGRATION_REQUIRED
+          - SERVICE_UNAVAILABLE
+          - RESPONSE_TOO_LARGE
+          - QUERY_PARSE_ERROR
+          - REMOTE_SYSTEM_ERROR
+          - FILE_SYSTEM_ERROR
+    SlipsheetsRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Query items that should be included. If a query is not supplied it defaults to an empty string, which returns all items.
+        metadataProfile:
+          type: string
+          description: Defines the metadata profile to be used when generating slipsheets.  Defaults to no metadata profile.
+    BulkProductionSetWithProfilesRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Query items that should be included. If a query is not supplied it defaults to an empty string, which returns all items.
+        deduplication:
+          type: string
+          description: Deduplicate items. Defaults to none.
+          default: none
+          enum:
+          - none
+          - md5
+          - per custodian
+        relationType:
+          type: string
+          description: The relation to apply to the found items. For performance reasons, the family option is run against the top-level items.  Defaults to no relation.
+          enum:
+          - family
+          - topTypes
+          - descendants
+        includeFamily:
+          type: boolean
+          description: Includes families of items for results of provided query. Defaults to false.
+          default: false
+        familyQuery:
+          type: string
+          description: An optional query used to select family items.  Will not be used if includeFamily is true.  To exclude family items entirely, set includeFamily to false and either omit this entry or set its value to null.
+        includeDuplicates:
+          type: boolean
+          description: Includes duplicates of items for results of provided query. Defaults to false.
+          default: false
+        duplicatesQuery:
+          type: string
+          description: An optional query used to select duplicate items.  Will not be used if includeDuplicates is true.  To exclude duplicate items entirely, set includeDuplicates to false and either omit this entry or set its value to null.
+        includeNearDuplicates:
+          type: boolean
+          description: Includes near duplicates of items for results of provided query. Defaults to false.
+          default: false
+        nearDuplicatesQuery:
+          type: string
+          description: An optional query used to select near duplicate items.  Will not be used if includeNearDuplicates is true.  To exclude near duplicate items entirely, set includeNearDuplicates to false and either omit this entry or set its value to null.
+        nearDuplicatesThreshold:
+          type: number
+          description: The threshold used to calculate near duplicates.  Defaults to 0.5.
+          format: float
+          default: 0.5
+        threadsQuery:
+          type: string
+          description: An optional query used to select thread items.  To exclude thread items entirely, either omit this entry or set its value to null.
+        productionProfileName:
+          type: string
+          description: The name of the production profile to use.
+        imagingProfileName:
+          type: string
+          description: The name of the imaging profile to use.
+        skipNativesSlipsheetedItems:
+          type: boolean
+          description: Sets whether this production set skips export of natives for slip-sheeted items.
+        description:
+          type: string
+          description: Set the long description of the production set.
+        name:
+          type: string
+          description: The name of the production set to operate on.
+      required:
+      - name
+      - productionProfileName
+      - imagingProfileName
+    SearchNativeRequest:
+      type: object
+      properties:
+        caseId:
+          type: string
+          description: The case identification token.
+        query:
+          type: string
+          description: Identifies what items should be returned.  If a query is not supplied it defaults to an empty string, which returns all items.
+        sortField:
+          type: string
+          description: 'Any field in the metadata profile which you want to sort by.
+
+
+            Use the following supported fields in the sortFields:
+
+            position,kind,duplicates
+
+            '
+        sortOrder:
+          type: string
+          description: Sets the sort order for the results. Defaults to "ASC".
+          enum:
+          - asc
+          - desc
+          default: asc
+        startIndex:
+          type: integer
+          default: 0
+          description: The index of the first record that should be returned. Defaults to 0.
+          format: int32
+        numberOfRecordsRequested:
+          type: integer
+          description: The number of records that should be returned per page. Defaults to 100 records.
+          format: int32
+        limit:
+          type: integer
+          description: The maximum number of results to return.
+          format: int32
+        deduplication:
+          type: string
+          description: Deduplicate content based on the Value field selection.  Defaults to no deduplication.
+          enum:
+          - md5
+          - per custodian
+          - none
+        maintainDeduplicatedSearchOrder:
+          type: boolean
+          default: true
+          description: Specifies whether the original search result order based on the query should be maintained for deduplicated results.  Default is true.  Setting this field to false may improve deduplication performance especially for Elasticsearch cases.  This field is ignored if a sort field has been specified.
+        metadataProfile:
+          type: string
+          description: Defines the metadata profile to be appied to the results. Needed to get custom metadata. Defaults to no metadata profile.
+        fieldList:
+          type: array
+          description: 'List of fields to be returned for each item in the results.
+
+            Use the following supported fields in the fieldList:
+
+
+            * `all` - Returns all fields for the item.
+
+            * `auditedSize` - Returns the item''''s audited size.
+
+            * `children` - Returns a list of the item''''s children.
+
+            * `clusterPivotResemblances` - Returns a map where the keys are cluster IDs and the values are resemblances.
+
+            * `clusterPivots` - Returns a map where the keys are cluster IDs and the values are boolean flags.
+
+            * `comment` - Returns item comments.
+
+            * `communication` - If the item is a communication, this returns item communication information.
+
+            * `correctedExtension` - Returns the extension based on Nuix''''s identification of the item''''s MIME type.
+
+            * `custodian` - Returns the custodian assigned to an item.
+
+            * `customMetadata` - Returns custom metadata for the item as a map. Must provide metadataProfile to get this.
+
+            * `date` - Returns the item date.
+
+            * `descendants` - Gets the list of items which are descendants of this item.
+
+            * `digests` - Returns a map of the computed digests for an item.
+
+            * `duplicateCustodianSet` - Returns the set of custodian names associated with this item and its duplicates.
+
+            * `duplicates` - Returns duplicates of this item.
+
+            * `evidenceMetadata` - Returns custom evidence metadata for the item.
+
+            * `exclusion` - Returns the reason for an item''''s exclusion.
+
+            * `family` - Returns a list of items in the same family.
+
+            * `fileSize` - Returns the item''''s file size if it is readable, or returns null if this is not file data.
+
+            * `fileType` - Returns the name of the file type.
+
+            * `guid` - Returns the item''''s globally unique identifier (GUID).
+
+            * `history` - Returns the item''''s history in ascending order by date.
+
+            * `id` - Returns the item''''s ID.
+
+            * `isAudited` - Tests whether the item is considered audited and returns true or false.
+
+            * `isBinaryAvailable` - Tests whether the item''''s binary is available before attempting to export it.  This returns
+
+            true if the item had binary data at processing time that was not stored. This
+
+            differs from isStored() as this method returns true if the item had binary
+
+            data at processing time that was not stored.
+
+            * `isBinaryStored` - Tests whether the item has binary stored against it in the database. True is returned
+
+            if stored binary exists. In this case, the source data isn''''t required for
+
+            binary export.
+
+            * `isChatMessage` - Tests whether the item is a chat message.
+
+            * `isChatConversation` - Tests whether the item is a chat conversation.
+
+            * `isDeleted` - Tests whether the item was marked as deleted and returns true or false.
+
+            * `isEmailThreadMember` - Tests whether the item is part of an email thread.
+
+            * `isEncrypted` - Tests whether the item was marked as encrypted and returns true or false.
+
+            * `isExcluded` - Tests whether the item was marked as excluded.
+
+            * `isFamilyMember` - Tests whether the item is a member of a family (i.e. it has a top-level item).
+
+            * `isIncuded` - Tests whether the item is included and returns true or false.
+
+            * `isLooseFile` - Tests whether the item is a loose file and returns true or false.
+
+            * `isPhysicalFile` - Tests whether the item is a physical file and returns true or false.
+
+            * `isPrintedImageStored` - Tests whether the printed image is stored and returns true or false. This field
+
+            is useful when you only need to know if a printed image exists for this item.
+
+            This is faster and uses fewer resources than requesting the printedImageInfo
+
+            field.
+
+            * `isTextAvailable` - Tests whether the item''''s text is available before attempting to read or export it.
+
+            * `isTextStored` - Tests hether the item has text stored against it in the database.  In the event
+
+            where you only want to know if the item had text but didn''''t need the text
+
+            this field is considerably faster and more conservative of resources than
+
+            isTextAvailable.
+
+            * `isThumbnailStored` - Tests whether a thumbnail is stored for this item in the database and returns true or false.
+
+            * `isTopLevel` - Tests whether this is a top-level item and returns true or false.
+
+            * `itemCategory` - Returns the item category.
+
+            * `kind` - Returns the item kind.
+
+            * `language` - Returns the language identified by the item.
+
+            * `localisedName` - Returns the item name or the localised placeholder (for example, [Unnamed Image])
+
+            if the name is blank.
+
+            * `localisedPathNames` - Returns a list of item names on the path from the root evidence container to the item.
+
+            * `name` - Returns the item name.
+
+            * `originalExtension` - Returns the original extension listed on the source file.
+
+            * `parent` - Returns the parent of this item.
+
+            * `path` - Returns an item list which represents the path from the root evidence container to the item.
+
+            * `pathIDs` - Returns a list of the IDs of items on the path from the root evidence container up to the item itself.
+
+            * `pathNames` - Returns a list of item names on the path from the root evidence container to the item.
+
+            * `position` - Returns the item position number which identifies where this item exists in the tree of all ingested items.
+
+            * `printedImageInfo` - Returns information about the printed image.
+
+            * `properties` - Returns item properties.
+
+            * `root` - Returns the root item. If this item is the root, the item itself is returned.
+
+            * `rootUri` - Returns the item''''s root URI as a string.
+
+            * `tags` - Returns the item tags.
+
+            * `text` - Returns the text of the item as a string.
+
+            * `textHtml` - Returns the text of the item escaped for HTML.
+
+            * `textSummary` - Returns the stored text summary of the item if one exists, otherwise null.
+
+            * `textSummaryHtml` - Returns the stored text summary of the item escaped for HTML if one exists, otherwise null.
+
+            * `threadItems` - Returns items that are in the same discussion thread as this item.
+
+            * `topLevelItem` - Returns the associated top-level item.
+
+            * `topLevelItemDate` - Returns the associated top-level item date.
+
+            * `type` - Returns the type name.
+
+            * `typeLocalisedName` - Returns the type name, localised appropriately for display to users.
+
+            * `uri` - Returns the item''''s uniform resource identifier (URI) as a string.
+
+            '
+          items:
+            type: string
+        customMetadataList:
+          description: List of custom metadata fields to be returned for each item in the results.
+          type: array
+          items:
+            type: string
+        propertyList:
+          type: array
+          description: List of properties to be returned for each item in the results.
+          items:
+            type: string
+        itemParameterizedFields:
+          type: array
+          items:
+            type: string
+          description: Specifies parameterized fields in a key/value pair separated by a colon. * `entities` - corresponds to item.getEntities.  (e.g., "entities:company") * `serializedItem` - returns a serialized copy of the item.  (e.g., "seralizedItem:topLevelItem") * `textTruncated` - returns the item text, truncated (if needed) to the specified maximum size in bytes (e.g., "textTruncated:10000") * `thumbnail` - corresponds to an item thumbnail. The parameter specifies the thumbnail dimensions (e.g., "thumbnail:200x200") * `nearDupeThreshold` - (e.g., "nearDupeThreshold:0.9") * `emailThreadCluster` - value corresponds to a Run - Cluster (e.g., "emailThreadCluster:cluster-1")
+        showAvailableThumbnails:
+          type: boolean
+          description: Show thumbnails that have been generated
+        useCache:
+          type: boolean
+          default: false
+          description: Specifies whether the results should be loaded from and stored in cache. Defaults to false.
+        forceCacheDelete:
+          type: boolean
+          default: false
+          description: Specifies whether the cached results should be deleted before performing the search. Defaults to false.
+        searchRetry:
+          type: integer
+          format: int32
+          description: Specifies the search retry count.
+        relationType:
+          type: string
+          description: The relation to apply to the found items. For performance reasons, the family option is run against the top-level items.
+          enum:
+          - family
+          - topTypes
+          - descendants
+        entities:
+          type: array
+          description: List of entity names to include in response (e.g. company,email).  Maintained for backward compatibility.
+          items:
+            type: string
+        property:
+          type: array
+          description: List of properties to be returned for each item in the results.  Deprecated use propertyList.
+          items:
+            type: string
+          deprecated: true
+        field:
+          type: array
+          description: List of fields to be returned for each item in the results.  Deprecated use fieldList.
+          items:
+            type: string
+          deprecated: true
+        s:
+          type: integer
+          format: int32
+          description: The index of the first record that should be returned.  Deprecated use startIndex.
+          deprecated: true
+        p:
+          type: integer
+          format: int32
+          description: The number of records that should be returned.  Deprecated use numberOfRecordsRequested.
+          deprecated: true
+        customMetadataField:
+          type: array
+          description: List of custom metadata to be returned for each item in the results.  Deprecated use customMetadataList.
+          items:
+            type: string
+          deprecated: true
+    Success:
+      type: object
+      description: A wrapper object for a boolean.
+      properties:
+        success:
+          type: boolean
+          description: A boolean value true or false.
+    ProductionSetRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the production set.
+        description:
+          type: string
+          description: A description for the production set.
+        prefix:
+          type: string
+          description: Prefix used for document numbering.
+        startingNumber:
+          type: string
+          description: The first number used for document numbering.
+        query:
+          type: string
+          description: Query items that should be included. If a query is not supplied it defaults to an empty string, which returns all items.
+        includeFamilies:
+          type: boolean
+          description: If true, includes family items for the collection of items returned by the query. Default is false.
+          default: false
+        markupSets:
+          type: array
+          description: Sets the given markup sets to be used during the export.
+          items:
+            type: string
+        applyRedactions:
+          type: boolean
+          description: If true, applies redactions in the markup sets. Default is true.
+          default: true
+        applyHighlights:
+          type: boolean
+          description: If true, applies highlights in the markup sets. Default is true.
+          default: true
+        generatePdfStores:
+          type: boolean
+          description: Generates print previews for the selected items in this production set. Default is false.
+          default: false
+        pdfStoresQuery:
+          type: string
+          description: Query that identifies which production set items should have print previews generated. If a query is not supplied it defaults to an empty string, which returns all items.
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+      required:
+      - name
+    AsyncFunctionResponse:
+      type: object
+      properties:
+        functionKey:
+          type: string
+          description: The function key to use when querying status.
+        location:
+          type: string
+          description: The location URL for querying status.  (http://nuix-restful-service:8080/svc/v1/asyncFunctions/{functionKey})
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: nuix-auth-token
+      in: header
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

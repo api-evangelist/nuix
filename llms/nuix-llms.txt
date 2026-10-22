@@ -1,0 +1,95 @@
+# Nuix
+
+> Nuix is a leading global provider of investigative analytics and intelligence software. With over 25 years of experience, Nuix empowers law enforcement, legal firms, government departments, and large corporations worldwide to find truth in the digital world by transforming vast amounts of unstructured data into actionable insights with speed, scalability, and forensic accuracy.
+
+Nuix is headquartered in Australia and operates 11 offices globally across North America, EMEA, and APAC. The company has invested $200+ million in R&D since 2008, employs 170+ developers, and holds 7 key patents. Nuix is trusted by over 1,800 organizations globally, including 90+ regulators worldwide, and is supported by 150+ partners. The company is publicly listed and driven by a mission to be a "Force for Good."
+
+## Products
+
+### Nuix Neo Platform
+- [Nuix Neo Platform Overview](https://www.nuix.com/nuix-neo): The unified platform powered by the patented Nuix Engine. Processes 1,000+ file types to transform unstructured data into structured, searchable assets. Includes advanced AI for pattern recognition, automated workflows, and customizable solution modules.
+
+### Nuix Neo Solutions
+- [Nuix Neo Legal](https://www.nuix.com/solutions/neo-legal-ediscovery): eDiscovery solution for law firms, legal service providers, government, and corporates. Enables faster, easier, and smarter eDiscovery with AI-driven insights.
+- [Nuix Neo Discover](https://www.nuix.com/solutions/neo-discover): AI-powered responsive review platform. Combines Nuix Discover's industry-leading review with Nuix Neo capabilities. Powered by proprietary Cognitive AI (CogAI), AI-enabled search, and 500+ pre-built eDiscovery-tuned models. Deployable in cloud or on-premises.
+- [Nuix Neo Discover On-Premises](https://www.nuix.com/solutions/neo-discover-on-prem): Industry-leading on-premises review platform with advanced AI capabilities.
+- [Nuix Neo Investigations](https://www.nuix.com/solutions/fraud-investigations): Fraud and investigations solution for connecting the dots in complex cases. Enables rapid data ingestion and collaborative fraud analysis techniques.
+- [Nuix Neo Data Privacy](https://www.nuix.com/solutions/data-privacy): Data privacy management platform for identifying and protecting sensitive information. Handles data breach readiness, breach notifications, FOI/DSAR responses, and PII management.
+- [Nuix Neo Foundation](https://www.nuix.com/solutions/neo-foundation): Core data processing platform for mastering complex data challenges.
+
+### Nuix Components & Technology
+- [Nuix Workstation](https://www.nuix.com/technology/nuix-workstation): Desktop application for forensic data processing and analysis.
+- [Nuix Investigate](https://www.nuix.com/technology/nuix-investigate): Investigation and intelligence analysis tool.
+- [Nuix Enterprise Collection Centre](https://www.nuix.com/technology/nuix-enterprise-collection-center): Enterprise-scale data collection solution.
+- [Nuix Adaptive Security](https://www.nuix.com/solutions/adaptive-security): Security intelligence and threat detection solution.
+- [Nuix Rampiva](https://www.nuix.com/technology/nuix-rampiva): Automation and workflow management for large-scale Nuix deployments.
+
+## Use Cases
+
+### Data Privacy
+- [Data Breach Readiness](https://www.nuix.com/solutions/data-privacy/data-breach-readiness): Prepare for and respond to data breaches.
+- [Data Breach Notifications](https://www.nuix.com/solutions/data-privacy/data-breach-notifications): Automate and manage breach notification obligations.
+- [FOI & Data Subject Access Requests](https://www.nuix.com/solutions/data-privacy/foi-dsar-response): Streamline Freedom of Information and DSAR responses.
+- [PII Data Management](https://www.nuix.com/solutions/data-privacy/pinpoint-pii): Identify and manage personally identifiable information across data estates.
+
+### Investigations
+- [Fraud & Economic Crime](https://www.nuix.com/solutions/investigations/fraud-and-economic-crime): Investigate financial fraud and economic crime with advanced analytics.
+- [CSAM Investigations](https://www.nuix.com/solutions/investigations/csam-investigations): Child exploitation material detection and investigation capabilities.
+
+### Legal
+- [Legal eDiscovery](https://www.nuix.com/solutions/legal/legal-ediscovery): End-to-end eDiscovery for complex legal proceedings.
+- [Early Case Assessment](https://www.nuix.com/solutions/legal/early-case-assessment): Rapidly assess data to inform legal strategy before full review.
+
+## Industries Served
+- [Regulators](https://www.nuix.com/industry/regulators): Powers investigations for 90+ regulatory bodies worldwide.
+- [Financial Services](https://www.nuix.com/industry/financial-services): Fraud detection, compliance, and investigations for banks and financial institutions.
+- [Government](https://www.nuix.com/industry/government): Law enforcement, intelligence, and public sector investigations.
+- [Telecommunications](https://www.nuix.com/industry/telecommunications): Data investigations and compliance for telcos.
+- [Pharmaceutical](https://www.nuix.com/industry/pharmaceutical): IP protection, compliance, and investigations for pharma companies.
+- [Energy](https://www.nuix.com/industry/energy): Compliance and investigative analytics for the energy sector.
+
+## Company & Resources
+
+### About
+- [About Nuix](https://www.nuix.com/about-us): Company overview, mission, values, and history.
+- [Our History](https://www.nuix.com/our-history-0): 25+ years of global leadership in investigative software.
+- [People of Nuix](https://www.nuix.com/the-people-of-nuix): Team and leadership profiles.
+- [Careers](https://careers.nuix.com/): Job opportunities at Nuix.
+- [Investors](https://www.nuix.com/investors): Investor relations, announcements, share price, and corporate governance.
+- [Security Trust Center](https://trustcenter.nuix.com/): Information on Nuix's data security practices.
+- [Contact Us](https://www.nuix.com/contact-us): Get in touch with Nuix.
+
+### Services
+- [Nuix Advantage](https://www.nuix.com/nuix-advantage): Dedicated service packages for maximizing software value with ongoing strategic support.
+- [Nuix Certified Training](https://www.nuix.com/certified-training): Expert-led training courses and certification programs.
+
+### Developer & Technical Resources
+- [Product Documentation](https://www.nuix.com/product-documentation): Up-to-date documentation, release notes, and help guides.
+- [Nuix Developer Program](https://www.nuix.com/nuix-developer-program): SDK, APIs, and developer resources for building on the Nuix platform.
+- [Deploy It Your Way](https://www.nuix.com/deploy-it-your-way): Flexible deployment options (cloud, on-premises, hybrid).
+- [Customer Portal](https://nuix.service-now.com/support): Support portal for existing customers.
+- [Community](https://www.nuix.com/community): Nuix user community and forums.
+
+### Resources & Content
+- [Case Studies](https://www.nuix.com/case-studies): Real-world customer success stories across law enforcement, legal, and enterprise sectors.
+- [News](https://www.nuix.com/news): Latest Nuix company news and press releases.
+- [Blog](https://www.nuix.com/resources?resource_type=18): Articles and insights on investigations, eDiscovery, data privacy, and more.
+- [Webinars](https://www.nuix.com/resources?resource_type=22): On-demand and upcoming webinars.
+- [White Papers](https://www.nuix.com/resources?resource_type=23): In-depth research and thought leadership papers.
+- [Fact Sheets](https://www.nuix.com/resources?resource_type=19): Product and solution overview documents.
+- [Events](https://www.nuix.com/events): Conferences and industry events featuring Nuix.
+- [FAQs](https://www.nuix.com/faqs): Frequently asked questions about Nuix products and services.
+
+### Partners
+- [Our Partners](https://www.nuix.com/our-partners): Overview of the Nuix partner ecosystem (150+ global partners).
+- [Find a Partner](https://www.nuix.com/find-a-partner): Locate a Nuix-certified partner in your region.
+- [Become a Partner](https://www.nuix.com/become-a-partner): Information on joining the Nuix partner program.
+- [Partner Portal](https://partners.nuix.com/login): Existing partner login and resources.
+
+## Legal & Compliance
+- [Privacy Policy](https://www.nuix.com/privacy-policy)
+- [Website Terms of Service](https://www.nuix.com/nuix-website-terms-service)
+- [Agreements & Terms](https://www.nuix.com/legal)
+- [Cookie Policy](https://www.nuix.com/node/414)
+- [Patents](https://www.nuix.com/patents)
+- [Modern Slavery Act](https://www.nuix.com/modern-slavery-act)

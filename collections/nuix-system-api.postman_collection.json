@@ -1,0 +1,1460 @@
+{
+  "info": {
+    "_postman_id": "9ba6b890-50c9-45c0-bf1f-9bd339575ec3",
+    "name": "Nuix REST-API Reference System API",
+    "description": "Welcome to the Nuix REST API documentation. From here you can access all available REST APIs and execute queries against your running REST instance.\n\n# Authentication Changes\n\nThe `nuix-auth-token` header is being deprecated in favor of standard JWT. The header will be removed in a\nfuture release. Until the removal of the header, the Nuix REST API will accept the JWT in either the\n`nuix-auth-token` header field or the `Authorization` header field prefixed by `Bearer`.\n\nContact Support:\n Name: Nuix",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:22:06.000Z",
+    "updatedAt": "2026-10-21T21:22:07.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-9ba6b890-50c9-45c0-bf1f-9bd339575ec3"
+  },
+  "item": [
+    {
+      "name": "resources",
+      "item": [
+        {
+          "name": "ocr",
+          "item": [
+            {
+              "name": "Detects whether OCR functionality is available",
+              "id": "c4e0996c-6003-4a5f-a5a8-8ef33a75d2d9",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/resources/ocr",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "resources",
+                    "ocr"
+                  ]
+                },
+                "description": "Use this operation to determine whether optical character recognition (OCR) functionality is available."
+              },
+              "response": [
+                {
+                  "id": "04c852ba-2056-41fd-85bf-015cfd83873a",
+                  "name": "default response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/resources/ocr",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "resources",
+                        "ocr"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/vnd.nuix.v1+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"success\": \"<boolean>\"\n}",
+                  "createdAt": "2026-10-21T21:22:07.000Z",
+                  "updatedAt": "2026-10-21T21:22:07.000Z",
+                  "uid": "35240-04c852ba-2056-41fd-85bf-015cfd83873a"
+                }
+              ],
+              "createdAt": "2026-10-21T21:22:06.000Z",
+              "updatedAt": "2026-10-21T21:22:06.000Z",
+              "uid": "35240-c4e0996c-6003-4a5f-a5a8-8ef33a75d2d9"
+            }
+          ],
+          "id": "26d72240-19b1-48b3-96c4-476ff6c9050e",
+          "createdAt": "2026-10-21T21:22:06.000Z",
+          "updatedAt": "2026-10-21T21:22:06.000Z",
+          "uid": "35240-26d72240-19b1-48b3-96c4-476ff6c9050e"
+        },
+        {
+          "name": "ffmpeg",
+          "item": [
+            {
+              "name": "Detects whether FFmpeg/FFprobe functionality is available",
+              "id": "f7b0471e-c894-49c8-8ae8-cc26cca82f04",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/resources/ffmpeg",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "resources",
+                    "ffmpeg"
+                  ]
+                },
+                "description": "Use this operation to determine whether FFmpeg and FFprobe functionality is available."
+              },
+              "response": [
+                {
+                  "id": "c742afc2-af30-4387-9497-3a1a7388a42d",
+                  "name": "default response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/resources/ffmpeg",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "resources",
+                        "ffmpeg"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/vnd.nuix.v1+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"success\": \"<boolean>\"\n}",
+                  "createdAt": "2026-10-21T21:22:07.000Z",
+                  "updatedAt": "2026-10-21T21:22:07.000Z",
+                  "uid": "35240-c742afc2-af30-4387-9497-3a1a7388a42d"
+                }
+              ],
+              "createdAt": "2026-10-21T21:22:06.000Z",
+              "updatedAt": "2026-10-21T21:22:06.000Z",
+              "uid": "35240-f7b0471e-c894-49c8-8ae8-cc26cca82f04"
+            }
+          ],
+          "id": "2c784662-72f2-4f10-8b21-8abd21e80ea0",
+          "createdAt": "2026-10-21T21:22:06.000Z",
+          "updatedAt": "2026-10-21T21:22:06.000Z",
+          "uid": "35240-2c784662-72f2-4f10-8b21-8abd21e80ea0"
+        },
+        {
+          "name": "lotusnotes",
+          "item": [
+            {
+              "name": "Detects whether Lotus Notes functionality is available",
+              "id": "22cef9b0-9cc5-42ec-92e4-39e4b8ddbcf8",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/resources/lotusnotes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "resources",
+                    "lotusnotes"
+                  ]
+                },
+                "description": "Use this operation to determine whether Lotus Notes functionality is available."
+              },
+              "response": [
+                {
+                  "id": "7856c61f-f3b4-462e-aa4c-72e5b1bec652",
+                  "name": "default response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/resources/lotusnotes",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "resources",
+                        "lotusnotes"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/vnd.nuix.v1+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"success\": \"<boolean>\"\n}",
+                  "createdAt": "2026-10-21T21:22:07.000Z",
+                  "updatedAt": "2026-10-21T21:22:07.000Z",
+                  "uid": "35240-7856c61f-f3b4-462e-aa4c-72e5b1bec652"
+                }
+              ],
+              "createdAt": "2026-10-21T21:22:06.000Z",
+              "updatedAt": "2026-10-21T21:22:06.000Z",
+              "uid": "35240-22cef9b0-9cc5-42ec-92e4-39e4b8ddbcf8"
+            }
+          ],
+          "id": "1afae1ff-4cdf-4eca-a396-1ae482f3cb81",
+          "createdAt": "2026-10-21T21:22:06.000Z",
+          "updatedAt": "2026-10-21T21:22:06.000Z",
+          "uid": "35240-1afae1ff-4cdf-4eca-a396-1ae482f3cb81"
+        },
+        {
+          "name": "thirdparty",
+          "item": [
+            {
+              "name": "Provides a summary of third party dependencies and their availability",
+              "id": "60daff51-e276-4e56-92ce-c63a40074913",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/resources/thirdparty",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "resources",
+                    "thirdparty"
+                  ]
+                },
+                "description": "Use this operation to determine whether third party dependencies have been installed and what functionality is available."
+              },
+              "response": [
+                {
+                  "id": "f1c6dd1b-cf09-4ab5-bb3b-60b3248bb27e",
+                  "name": "default response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/resources/thirdparty",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "resources",
+                        "thirdparty"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/vnd.nuix.v1+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "[\n  {\n    \"description\": \"<string>\",\n    \"version\": \"<string>\",\n    \"message\": \"<string>\",\n    \"comment\": \"<string>\",\n    \"attentionRequired\": \"<boolean>\"\n  },\n  {\n    \"description\": \"<string>\",\n    \"version\": \"<string>\",\n    \"message\": \"<string>\",\n    \"comment\": \"<string>\",\n    \"attentionRequired\": \"<boolean>\"\n  }\n]",
+                  "createdAt": "2026-10-21T21:22:07.000Z",
+                  "updatedAt": "2026-10-21T21:22:07.000Z",
+                  "uid": "35240-f1c6dd1b-cf09-4ab5-bb3b-60b3248bb27e"
+                }
+              ],
+              "createdAt": "2026-10-21T21:22:06.000Z",
+              "updatedAt": "2026-10-21T21:22:06.000Z",
+              "uid": "35240-60daff51-e276-4e56-92ce-c63a40074913"
+            }
+          ],
+          "id": "40986531-de26-4e97-9e11-b35e6014f814",
+          "createdAt": "2026-10-21T21:22:06.000Z",
+          "updatedAt": "2026-10-21T21:22:06.000Z",
+          "uid": "35240-40986531-de26-4e97-9e11-b35e6014f814"
+        }
+      ],
+      "id": "f75d7c86-86c5-4add-ba97-dcc57cf729d2",
+      "createdAt": "2026-10-21T21:22:06.000Z",
+      "updatedAt": "2026-10-21T21:22:06.000Z",
+      "uid": "35240-f75d7c86-86c5-4add-ba97-dcc57cf729d2"
+    },
+    {
+      "name": "system",
+      "item": [
+        {
+          "name": "properties",
+          "item": [
+            {
+              "name": "{propertyName}",
+              "item": [
+                {
+                  "name": "Gets a Nuix system property",
+                  "id": "69ac5bce-1c76-46c5-bc22-a320cdc557a7",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/system/properties/:propertyName",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "system",
+                        "properties",
+                        ":propertyName"
+                      ],
+                      "variable": [
+                        {
+                          "id": "d106e12b-3947-4c97-b849-d0c0fc06480d",
+                          "key": "propertyName",
+                          "value": "<string>",
+                          "description": "(Required) The name of the system property."
+                        }
+                      ]
+                    },
+                    "description": "Use this operation to get the value of a Nuix system property. This operation is limited to Nuix system properties only and the property must start with the string \"nuix.\""
+                  },
+                  "response": [
+                    {
+                      "id": "b0c0312c-5608-4897-a0bc-bae287fa7031",
+                      "name": "default response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/system/properties/:propertyName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "system",
+                            "properties",
+                            ":propertyName"
+                          ],
+                          "variable": [
+                            {
+                              "key": "propertyName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/vnd.nuix.v1+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"name\": \"<string>\",\n  \"value\": \"<string>\",\n  \"previousValue\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:22:07.000Z",
+                      "updatedAt": "2026-10-21T21:22:07.000Z",
+                      "uid": "35240-b0c0312c-5608-4897-a0bc-bae287fa7031"
+                    },
+                    {
+                      "id": "7dfe9a38-cd4d-4728-9ef3-d3ad1272feca",
+                      "name": "Invalid Property",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/system/properties/:propertyName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "system",
+                            "properties",
+                            ":propertyName"
+                          ],
+                          "variable": [
+                            {
+                              "key": "propertyName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/vnd.nuix.v1+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"utb\": {}\n  },\n  \"errorCode\": \"RESPONSE_TOO_LARGE\"\n}",
+                      "createdAt": "2026-10-21T21:22:07.000Z",
+                      "updatedAt": "2026-10-21T21:22:07.000Z",
+                      "uid": "35240-7dfe9a38-cd4d-4728-9ef3-d3ad1272feca"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:22:06.000Z",
+                  "updatedAt": "2026-10-21T21:22:06.000Z",
+                  "uid": "35240-69ac5bce-1c76-46c5-bc22-a320cdc557a7"
+                },
+                {
+                  "name": "Sets a Nuix system property",
+                  "id": "7a71a7c3-fa71-4e7c-8722-70789d6110ee",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"value\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/system/properties/:propertyName",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "system",
+                        "properties",
+                        ":propertyName"
+                      ],
+                      "variable": [
+                        {
+                          "id": "fd78ae44-bf28-4a11-9f00-b67697c63946",
+                          "key": "propertyName",
+                          "value": "<string>",
+                          "description": "(Required) The name of the system property."
+                        }
+                      ]
+                    },
+                    "description": "Use this operation to set a Nuix system property. This operation is limited to Nuix system properties only and the value is not persisted between application restarts. You may want to do this if there is a specific Nuix system property required for an ingestion, export, or OCR operation. This is NOT threadsafe and could affect other users."
+                  },
+                  "response": [
+                    {
+                      "id": "95fcd997-47b5-4b73-b6c8-9cafb6dc1620",
+                      "name": "default response",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"value\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/system/properties/:propertyName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "system",
+                            "properties",
+                            ":propertyName"
+                          ],
+                          "variable": [
+                            {
+                              "key": "propertyName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/vnd.nuix.v1+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"name\": \"<string>\",\n  \"value\": \"<string>\",\n  \"previousValue\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:22:07.000Z",
+                      "updatedAt": "2026-10-21T21:22:07.000Z",
+                      "uid": "35240-95fcd997-47b5-4b73-b6c8-9cafb6dc1620"
+                    },
+                    {
+                      "id": "dcebfc03-88d8-41ee-a1db-e2dae82c47e7",
+                      "name": "Invalid Property",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"value\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/system/properties/:propertyName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "system",
+                            "properties",
+                            ":propertyName"
+                          ],
+                          "variable": [
+                            {
+                              "key": "propertyName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/vnd.nuix.v1+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"utb\": {}\n  },\n  \"errorCode\": \"RESPONSE_TOO_LARGE\"\n}",
+                      "createdAt": "2026-10-21T21:22:07.000Z",
+                      "updatedAt": "2026-10-21T21:22:07.000Z",
+                      "uid": "35240-dcebfc03-88d8-41ee-a1db-e2dae82c47e7"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:22:06.000Z",
+                  "updatedAt": "2026-10-21T21:22:06.000Z",
+                  "uid": "35240-7a71a7c3-fa71-4e7c-8722-70789d6110ee"
+                },
+                {
+                  "name": "Clears a Nuix system property",
+                  "id": "7b10db41-f4e4-409c-a1b2-8f1c6d6ddbc5",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/system/properties/:propertyName",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "system",
+                        "properties",
+                        ":propertyName"
+                      ],
+                      "variable": [
+                        {
+                          "id": "8cca73cf-a334-4c15-9cbe-db6136d3db4f",
+                          "key": "propertyName",
+                          "value": "<string>",
+                          "description": "(Required) The name of the system property."
+                        }
+                      ]
+                    },
+                    "description": "Use this operation to clear a Nuix system property. This operation is limited to Nuix system properties only and the value is not persisted between application restarts. You may want to do this if you previously set a specific Nuix system property required for an ingestion, export, or OCR operation. This is NOT threadsafe and could affect other users."
+                  },
+                  "response": [
+                    {
+                      "id": "34ba55bb-9d64-4ddb-a03d-38425d1c8375",
+                      "name": "default response",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/system/properties/:propertyName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "system",
+                            "properties",
+                            ":propertyName"
+                          ],
+                          "variable": [
+                            {
+                              "key": "propertyName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/vnd.nuix.v1+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"name\": \"<string>\",\n  \"value\": \"<string>\",\n  \"previousValue\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:22:07.000Z",
+                      "updatedAt": "2026-10-21T21:22:07.000Z",
+                      "uid": "35240-34ba55bb-9d64-4ddb-a03d-38425d1c8375"
+                    },
+                    {
+                      "id": "0a5a0eae-afc7-4554-94ce-b27fbfe6a294",
+                      "name": "Invalid Property",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/system/properties/:propertyName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "system",
+                            "properties",
+                            ":propertyName"
+                          ],
+                          "variable": [
+                            {
+                              "key": "propertyName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/vnd.nuix.v1+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"utb\": {}\n  },\n  \"errorCode\": \"RESPONSE_TOO_LARGE\"\n}",
+                      "createdAt": "2026-10-21T21:22:07.000Z",
+                      "updatedAt": "2026-10-21T21:22:07.000Z",
+                      "uid": "35240-0a5a0eae-afc7-4554-94ce-b27fbfe6a294"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:22:06.000Z",
+                  "updatedAt": "2026-10-21T21:22:06.000Z",
+                  "uid": "35240-7b10db41-f4e4-409c-a1b2-8f1c6d6ddbc5"
+                }
+              ],
+              "id": "be48dbd9-ccb9-4b54-8f87-d54f9c62ba80",
+              "createdAt": "2026-10-21T21:22:06.000Z",
+              "updatedAt": "2026-10-21T21:22:06.000Z",
+              "uid": "35240-be48dbd9-ccb9-4b54-8f87-d54f9c62ba80"
+            }
+          ],
+          "id": "22a89f65-dd69-47bd-9729-a7fc3884ceb5",
+          "createdAt": "2026-10-21T21:22:06.000Z",
+          "updatedAt": "2026-10-21T21:22:06.000Z",
+          "uid": "35240-22a89f65-dd69-47bd-9729-a7fc3884ceb5"
+        },
+        {
+          "name": "diagnostics",
+          "item": [
+            {
+              "name": "Generates a system diagnostics ZIP file",
+              "id": "7b6ec0dd-a78b-4a4b-8456-da9fc72b0bcd",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/system/diagnostics?includeResourceDetails=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "system",
+                    "diagnostics"
+                  ],
+                  "query": [
+                    {
+                      "description": "Creates an additional diagnostics file that includes the engine version, search cache, system resources, function queue, and active user count.",
+                      "key": "includeResourceDetails",
+                      "value": "false"
+                    }
+                  ]
+                },
+                "description": "Use this operation to create a ZIP file with system diagnostics information. The diagnostics include log files, product versions, environment variables, system properties, licence properties, drive information, process information, JVM arguments and settings, and installed and not installed dependencies. Please note that when operating in a cluster this endpoint will return system diagnostics from ALL nodes in the cluster."
+              },
+              "response": [
+                {
+                  "id": "d579c6b6-9d99-4de6-9bbd-63fbb0976788",
+                  "name": "default response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/octet-stream"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/system/diagnostics?includeResourceDetails=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "system",
+                        "diagnostics"
+                      ],
+                      "query": [
+                        {
+                          "description": "Creates an additional diagnostics file that includes the engine version, search cache, system resources, function queue, and active user count.",
+                          "key": "includeResourceDetails",
+                          "value": "false"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/octet-stream"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "<binary>",
+                  "createdAt": "2026-10-21T21:22:07.000Z",
+                  "updatedAt": "2026-10-21T21:22:07.000Z",
+                  "uid": "35240-d579c6b6-9d99-4de6-9bbd-63fbb0976788"
+                }
+              ],
+              "createdAt": "2026-10-21T21:22:06.000Z",
+              "updatedAt": "2026-10-21T21:22:06.000Z",
+              "uid": "35240-7b6ec0dd-a78b-4a4b-8456-da9fc72b0bcd"
+            },
+            {
+              "name": "Generates a system diagnostics ZIP file asyncronously",
+              "id": "6aa1a50b-4db9-48be-b82c-a73739d33ff2",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/system/diagnostics?includeResourceDetails=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "system",
+                    "diagnostics"
+                  ],
+                  "query": [
+                    {
+                      "description": "Creates an additional diagnostics file that includes the engine version, search cache, system resources, function queue, and active user count.",
+                      "key": "includeResourceDetails",
+                      "value": "false"
+                    }
+                  ]
+                },
+                "description": "Use this operation to create a ZIP file with system diagnostics information asyncronously. The diagnostics include log files, product versions, environment variables, system properties, licence properties, drive information, process information, JVM arguments and settings, and installed and not installed dependencies. The endpoint return an async function id which should be polled until complete. The result can be used to retrieve the download from the /downloads/{downloadId} endpoint. Please note that when operating in a cluster this endpoint will return diagnostics from ALL nodes in the cluster."
+              },
+              "response": [
+                {
+                  "id": "abda92f4-1363-4739-b509-1c1461efd2a8",
+                  "name": "default response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/system/diagnostics?includeResourceDetails=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "system",
+                        "diagnostics"
+                      ],
+                      "query": [
+                        {
+                          "description": "Creates an additional diagnostics file that includes the engine version, search cache, system resources, function queue, and active user count.",
+                          "key": "includeResourceDetails",
+                          "value": "false"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"functionKey\": \"<string>\",\n  \"location\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:22:07.000Z",
+                  "updatedAt": "2026-10-21T21:22:07.000Z",
+                  "uid": "35240-abda92f4-1363-4739-b509-1c1461efd2a8"
+                }
+              ],
+              "createdAt": "2026-10-21T21:22:06.000Z",
+              "updatedAt": "2026-10-21T21:22:06.000Z",
+              "uid": "35240-6aa1a50b-4db9-48be-b82c-a73739d33ff2"
+            }
+          ],
+          "id": "fefe743a-ffe2-40d8-9083-d770f6f302b0",
+          "createdAt": "2026-10-21T21:22:06.000Z",
+          "updatedAt": "2026-10-21T21:22:06.000Z",
+          "uid": "35240-fefe743a-ffe2-40d8-9083-d770f6f302b0"
+        },
+        {
+          "name": "health",
+          "item": [
+            {
+              "name": "Checks whether the REST server is running",
+              "id": "f973e057-79b9-4995-8885-519f54c48c7f",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/system/health",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "system",
+                    "health"
+                  ]
+                },
+                "description": "Use this operation to ensure the RESTful services are working. This is a heartbeat test that checks whether the REST server is up and running."
+              },
+              "response": [
+                {
+                  "id": "8dbfb167-b962-4d08-ad4b-9238c0f86c8b",
+                  "name": "default response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/system/health",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "system",
+                        "health"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/vnd.nuix.v1+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"success\": \"<boolean>\"\n}",
+                  "createdAt": "2026-10-21T21:22:07.000Z",
+                  "updatedAt": "2026-10-21T21:22:07.000Z",
+                  "uid": "35240-8dbfb167-b962-4d08-ad4b-9238c0f86c8b"
+                }
+              ],
+              "createdAt": "2026-10-21T21:22:06.000Z",
+              "updatedAt": "2026-10-21T21:22:06.000Z",
+              "uid": "35240-f973e057-79b9-4995-8885-519f54c48c7f"
+            }
+          ],
+          "id": "dcb7bdbc-ddd5-4748-a694-e9331a8ea978",
+          "createdAt": "2026-10-21T21:22:06.000Z",
+          "updatedAt": "2026-10-21T21:22:06.000Z",
+          "uid": "35240-dcb7bdbc-ddd5-4748-a694-e9331a8ea978"
+        }
+      ],
+      "id": "702ec40f-e460-465c-b3db-9313813cb3c6",
+      "createdAt": "2026-10-21T21:22:06.000Z",
+      "updatedAt": "2026-10-21T21:22:06.000Z",
+      "uid": "35240-702ec40f-e460-465c-b3db-9313813cb3c6"
+    },
+    {
+      "name": "downloads",
+      "item": [
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "Downloads a file given an id",
+              "id": "47e938ea-dcdb-43ca-9b2c-3ec8c471a733",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json,application/octet-stream"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/downloads/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "downloads",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "762910ad-c2f3-4cd7-bfbe-6642b85c71bd",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) The id of the download."
+                    }
+                  ]
+                },
+                "description": "Use this endpoint to download a file from the server given a download id."
+              },
+              "response": [
+                {
+                  "id": "c91aaf4a-9134-4cd8-84e1-cb0a3d6da4ee",
+                  "name": "default response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json,application/octet-stream"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/downloads/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "downloads",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json,application/octet-stream"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "<binary>",
+                  "createdAt": "2026-10-21T21:22:07.000Z",
+                  "updatedAt": "2026-10-21T21:22:07.000Z",
+                  "uid": "35240-c91aaf4a-9134-4cd8-84e1-cb0a3d6da4ee"
+                },
+                {
+                  "id": "11a040be-1f58-46cb-9631-98d234405d4e",
+                  "name": "Download does not exist",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/downloads/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "downloads",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/vnd.nuix.v1+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"utb\": {}\n  },\n  \"errorCode\": \"RESPONSE_TOO_LARGE\"\n}",
+                  "createdAt": "2026-10-21T21:22:07.000Z",
+                  "updatedAt": "2026-10-21T21:22:07.000Z",
+                  "uid": "35240-11a040be-1f58-46cb-9631-98d234405d4e"
+                }
+              ],
+              "createdAt": "2026-10-21T21:22:06.000Z",
+              "updatedAt": "2026-10-21T21:22:06.000Z",
+              "uid": "35240-47e938ea-dcdb-43ca-9b2c-3ec8c471a733"
+            }
+          ],
+          "id": "f92a67e5-cbdd-4845-a709-790ebf5544e3",
+          "createdAt": "2026-10-21T21:22:06.000Z",
+          "updatedAt": "2026-10-21T21:22:06.000Z",
+          "uid": "35240-f92a67e5-cbdd-4845-a709-790ebf5544e3"
+        }
+      ],
+      "id": "f6f6370e-0306-4700-8a96-83d7d1b42fb6",
+      "createdAt": "2026-10-21T21:22:06.000Z",
+      "updatedAt": "2026-10-21T21:22:06.000Z",
+      "uid": "35240-f6f6370e-0306-4700-8a96-83d7d1b42fb6"
+    },
+    {
+      "name": "about",
+      "item": [
+        {
+          "name": "Retrieves information about Nuix RESTful services",
+          "id": "462a2aff-584f-4bb6-b3ec-4b32007d0c46",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v2+json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/about",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "about"
+              ]
+            },
+            "description": "Use this operation to view version information about your Nuix RESTful services configuration. Authentication is optional for this endpoint. If the user is not authenticated then sensitive information about the service is not returned."
+          },
+          "response": [
+            {
+              "id": "0d974bbd-c784-40b4-b249-0c88b73683ea",
+              "name": "default response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v2+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/about",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "about"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v2+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"server\": \"<string>\",\n  \"nuixRestfulVersion\": \"<string>\",\n  \"engineVersion\": \"<string>\",\n  \"startupTime\": \"<string>\",\n  \"serverId\": \"<string>\"\n}",
+              "createdAt": "2026-10-21T21:22:07.000Z",
+              "updatedAt": "2026-10-21T21:22:07.000Z",
+              "uid": "35240-0d974bbd-c784-40b4-b249-0c88b73683ea"
+            }
+          ],
+          "createdAt": "2026-10-21T21:22:06.000Z",
+          "updatedAt": "2026-10-21T21:22:06.000Z",
+          "uid": "35240-462a2aff-584f-4bb6-b3ec-4b32007d0c46"
+        }
+      ],
+      "id": "20b9df7b-2428-41aa-be8e-083d88b4435b",
+      "createdAt": "2026-10-21T21:22:06.000Z",
+      "updatedAt": "2026-10-21T21:22:06.000Z",
+      "uid": "35240-20b9df7b-2428-41aa-be8e-083d88b4435b"
+    },
+    {
+      "name": "charsets",
+      "item": [
+        {
+          "name": "Returns the list of charsets on the system",
+          "id": "6c226d52-2f94-452c-bf55-3fba08a2d429",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v1+json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/charsets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "charsets"
+              ]
+            },
+            "description": "Use this operation to view the list of system charsets."
+          },
+          "response": [
+            {
+              "id": "59ae6693-d7ed-4660-adc0-3284dfe81198",
+              "name": "A list of system charsets.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/charsets",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "charsets"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"name\": \"<string>\",\n    \"displayName\": \"<string>\"\n  },\n  {\n    \"name\": \"<string>\",\n    \"displayName\": \"<string>\"\n  }\n]",
+              "createdAt": "2026-10-21T21:22:07.000Z",
+              "updatedAt": "2026-10-21T21:22:07.000Z",
+              "uid": "35240-59ae6693-d7ed-4660-adc0-3284dfe81198"
+            }
+          ],
+          "createdAt": "2026-10-21T21:22:06.000Z",
+          "updatedAt": "2026-10-21T21:22:06.000Z",
+          "uid": "35240-6c226d52-2f94-452c-bf55-3fba08a2d429"
+        }
+      ],
+      "id": "60ed0f69-3997-4ea6-9e10-5e2489599bbd",
+      "createdAt": "2026-10-21T21:22:06.000Z",
+      "updatedAt": "2026-10-21T21:22:06.000Z",
+      "uid": "35240-60ed0f69-3997-4ea6-9e10-5e2489599bbd"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "nuix-auth-token",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "/nuix-restful-service/svc"
+    }
+  ]
+}

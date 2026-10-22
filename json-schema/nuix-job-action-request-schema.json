@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/main/json-schema/nuix-job-action-request-schema.json",
+  "title": "jobActionRequest",
+  "x-generated": "2026-10-21",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/nuix-job-api-openapi.yml#/components/schemas/jobActionRequest",
+  "type": "object",
+  "properties": {
+    "action": {
+      "type": "string",
+      "description": "action to be applied to the specified job.",
+      "enum": [
+        "Cancel",
+        "Pause",
+        "Continue",
+        "Resume",
+        "Restart"
+      ]
+    }
+  }
+}

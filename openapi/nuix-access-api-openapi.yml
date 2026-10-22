@@ -1,0 +1,295 @@
+openapi: 3.2.0
+info:
+  title: Nuix REST-API Reference Access API
+  description: 'Welcome to the Nuix REST API documentation. From here you can access all available REST APIs and execute queries against your running REST instance.
+
+
+    # Authentication Changes
+
+
+    The `nuix-auth-token` header is being deprecated in favor of standard JWT. The header will be removed in a
+
+    future release. Until the removal of the header, the Nuix REST API will accept the JWT in either the
+
+    `nuix-auth-token` header field or the `Authorization` header field prefixed by `Bearer`.'
+  contact:
+    name: Nuix
+    url: http://forums.nuix.com/
+  license:
+    name: Licence
+    url: https://www.nuix.com/sites/default/files/2023-03/End%20User%20License%20Agreement%20%28Effective%20December%2014%2C%202022%29_1.pdf
+  version: ${customer.version}
+servers:
+- url: /nuix-restful-service/svc
+- url: http://localhost:8080/svc
+security:
+- ApiKeyAuth: []
+- bearerAuth: []
+tags:
+- name: Access
+paths:
+  /authenticatedUsers/login:
+    put:
+      tags:
+      - Access
+      summary: Log in and acquire a licence
+      description: Use this operation to log in and get an authentication token or licence. The authentication token gives you access to the REST API.
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/AuthenticationRequest'
+            examples:
+              Username And Password Only:
+                value:
+                  username: user1
+                  password: mysecurepassword
+              Username, Password, and License:
+                value:
+                  username: user1
+                  password: mysecurepassword
+                  licenceShortName: enterprise-workstation
+              Username, Password, License, and Requested Workers:
+                value:
+                  username: user1
+                  password: mysecurepassword
+                  licenceShortName: enterprise-workstation
+                  workers: 2
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthenticationRequest'
+      responses:
+        '201':
+          description: 'A successful login returns a response that contains the authentication token (authToken) to be submitted in the header of all subsequent requests.  Additionally, the response contains the username, the short name of the license requested, and the number of workers granted by the Nuix engine.
+
+            '
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AuthenticationResponse'
+              examples:
+                Authentication Response:
+                  value:
+                    username: user1
+                    authToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                    licenseShortName: enterprise-workstation
+                    clusterSystemLicenseShortName: null
+                    workerCount: 1
+                    workersGranted: 1
+                Authentication Response With Cluster System License:
+                  value:
+                    username: user1
+                    authToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                    licenseShortName: enterprise-workstation
+                    clusterSystemLicenseShortName: law-enforcement-desktop
+                    workerCount: 4
+                    workersGranted: 1
+        '401':
+          description: 'Invalid username and/or password.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                userMessage: Incorrect username and/or password.
+                developerMessage: The user attempted to login with a user name and password that did not match.
+                errorCode: UNAUTHORISED
+        '409':
+          description: 'Returned by the server when REST is unable to obtain the number of workers requested or the specified license type.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                AvailableWorkersException:
+                  value:
+                    serverId: nuix-restful-server-1
+                    userMessage: Unable to obtain license from Nuix server.
+                    developerMessage: Tried to acquire 8 worker(s) but only 6 are available.
+                    errorCode: LICENSE_EXCEPTION
+                    additionalInfo:
+                      availableWorkers: 6
+                      requestedWorkers: 8
+                      rootExceptionClass: com.nuix.us.ws.exception.AvailableWorkersException
+                      rootExceptionMessage: Tried to acquire 8 worker(s) but only 6 are available.
+                AcquireLicenseException:
+                  value:
+                    serverId: nuix-restful-server-1
+                    userMessage: Could not acquire license.
+                    developerMessage: Tried to acquire license enterprise-workstation.
+                    errorCode: LICENSE_EXCEPTION
+                    additionalInfo:
+                      requestedLicense: enterprise-workstation
+                      rootExceptionClass: com.nuix.us.ws.exception.AcquireLicenseException
+                      rootExceptionMessage: Tried to acquire enterprise-workstation license.
+  /authenticatedUsers/{username}:
+    delete:
+      tags:
+      - Access
+      summary: Log out
+      description: Logs out the session associated with the provided authentication token.
+      operationId: deleteEnvironment
+      parameters:
+      - name: username
+        in: path
+        description: Username associated with the licence
+        required: true
+        schema:
+          type: string
+      - name: forceSynchronous
+        in: query
+        description: 'Forces a synchronous logout. This defaults to false, which means that the user is asynchronously logged out but their token is not made invalid immediately. The session remains active if they are running any functions or have functions queued. Even when set to true, the aforementioned holds true. In that case, the server will attempt to log the user out immediately and the HTTP request will wait till that happens. The server will try three times, with a 5 second sleep in between. If the user cannot be logged out due to queued or running functions then the call returns and the user will eventually be logged out due to being idle.
+
+          '
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: ignoreCompleted
+        in: query
+        description: 'Ignores functions that have already completed.  This defaults to true. However, if set to false then the functions that recently completed but have not been cleared yet will be counted in the list of ''running or queued functions'' and so, the user''s session will not end immediately.
+
+          '
+        required: false
+        schema:
+          type: boolean
+          default: true
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+components:
+  schemas:
+    ClusteredRestErrorResponse:
+      type: object
+      properties:
+        serverId:
+          type: string
+          description: The server ID of the server reporting the error.
+        developerMessage:
+          type: string
+          description: The technical description of the error.
+        userMessage:
+          type: string
+          description: The friendly error message.
+        additionalInfo:
+          type: object
+          description: Additional information about the error.
+          additionalProperties:
+            type: object
+            description: This is a map of additional properties.
+        errorCode:
+          type: string
+          description: The specific error code for the error from the list of available error codes.
+          enum:
+          - AUTHENTICATION_FAILED
+          - CASE_ACCESS_RESTRICTED
+          - CASE_LOCKED
+          - DELETE_DENIED
+          - DUPLICATE_CASES_DETECTED
+          - ENGINE_EXCEPTION
+          - FILE_TOO_LARGE
+          - INVALID_REQUEST_FORMAT
+          - INVALID_APPLICATION_RESPONSE
+          - INVALID_ARGUMENT
+          - ITEM_ACCESS_RESTRICTED
+          - LICENSE_EXCEPTION
+          - MEDIA_TYPE_NOT_SUPPORTED
+          - MEDIA_TYPE_NOT_ACCEPTABLE
+          - METHOD_NOT_ALLOWED
+          - NOT_IMPLEMENTED
+          - PRODUCTION_SET_FROZEN
+          - REQUIRED_ARGUMENT_MISSING
+          - RESOURCE_NOT_FOUND
+          - UNAUTHORISED
+          - UNKNOWN
+          - USER_SCRIPT_NOT_PROVIDED
+          - FOLDER_ALREADY_EXISTS
+          - CASE_LOCKED_BY_FUNCTION
+          - MISSING_THUMBNAIL
+          - ITEM_SET_ALREADY_EXISTS
+          - INVALID_LICENSE_TYPE_FOR_CASE
+          - SIMPLE_CASE_REQUIRED
+          - USER_ACCOUNT_LOCKED
+          - APPLICATION_NOT_REGISTERED
+          - INVALID_TEMPLATE
+          - DUPLICATE_RECORD
+          - CASE_MIGRATION_REQUIRED
+          - SERVICE_UNAVAILABLE
+          - RESPONSE_TOO_LARGE
+          - QUERY_PARSE_ERROR
+          - REMOTE_SYSTEM_ERROR
+          - FILE_SYSTEM_ERROR
+    AuthenticationResponse:
+      type: object
+      properties:
+        username:
+          type: string
+          description: The successfully authenticated username.
+        authToken:
+          type: string
+          description: 'The authentication token to be submitted in the header of all subsequent requests to the REST service.  The token should be included in the `Authorization` header prefixed by `Bearer` and for a limited time will be accepted in the `nuix-auth-token` header field.
+
+            '
+        licenseShortName:
+          type: string
+          description: The short name of the requested license.
+        clusterSystemLicenseShortName:
+          type: string
+          description: The short name of the license acquired by the producer node when REST is configured for clustering ONLY. This license will be used for non-worker based operations and syncronous operations as defined by the `cluster.license` property and will ONLY be used when clustering is enabled.
+        workerCount:
+          type: integer
+          format: int32
+          description: The total number of workers available to the user.  This number may differ from the workers granted when operating in cluster mode.
+        workersGranted:
+          type: integer
+          format: int32
+          description: The number of workers granted by the engine.
+    GenericResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Returns true or false.
+    AuthenticationRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          description: The user requesting access to the service.
+        password:
+          type: string
+          description: The password credentials for the requesting user.
+        workers:
+          type: integer
+          format: int32
+          description: 'The number of workers being used. This field is optional and if not provided then the user will get a single worker.
+
+            '
+        licenceShortName:
+          type: string
+          description: 'The short name of the requested license. (UK Spelling).  `licenseShortName` (US Spelling) is also accepted. If the user fails to provide the licence short name, then the licence that is first in the list provided by the licence server will be used. Both the UK and US spelling of the word are accepted.
+
+            '
+      required:
+      - username
+      - password
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: nuix-auth-token
+      in: header
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -265,18 +265,14 @@ paths:
                     message: No computer found with id {}
 components:
   schemas:
-    standardResponse:
+    listTargetsResponse:
       type: object
       properties:
-        code:
-          type: integer
-          description: http response status code
-        id:
-          type: integer
-          description: id of the affected Object
-        message:
-          type: string
-          description: http status message
+        targets:
+          type: array
+          description: List of Targets.
+          items:
+            $ref: '#/components/schemas/Target'
     Target:
       type: object
       properties:
@@ -303,14 +299,18 @@ components:
           description: array of inputs in the target
           items:
             $ref: '#/components/schemas/TargetInputs'
-    listTargetsResponse:
+    standardResponse:
       type: object
       properties:
-        targets:
-          type: array
-          description: List of Targets.
-          items:
-            $ref: '#/components/schemas/Target'
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
     createTargetRequest:
       type: object
       properties:

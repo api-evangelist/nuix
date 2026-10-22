@@ -1,0 +1,19 @@
+generated: '2026-10-21'
+method: searched
+source:
+- https://developer.nuix.com/latest/engine/rest/release-notes/home.html
+- https://developer.nuix.com/
+- https://status.nuix.com/
+versioning:
+  scheme: Product-version releases of a self-hosted server (Nuix RESTful Service 9.0.x - 9.10.x), each tracking the
+    Nuix Engine version of the same number. Core Engine REST paths also carry /v1 and /v2 segments (e.g. Delete Case (V2),
+    Async V2 DELETE /cases/).
+  current: 9.10.59
+  versioned_docs: [https://developer.nuix.com/9.2.0/, https://developer.nuix.com/9.4.0/, https://developer.nuix.com/9.6.18/,
+    https://developer.nuix.com/9.8.10/, https://developer.nuix.com/latest/]
+deprecation:
+  policy: null
+  note: No deprecation or support-lifetime policy found in the developer docs; no Sunset/Deprecation headers documented.
+  deprecated_operations: []
+status_page: https://status.nuix.com/
+sla: null

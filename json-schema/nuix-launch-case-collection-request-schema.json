@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/main/json-schema/nuix-launch-case-collection-request-schema.json",
+  "title": "launchCaseCollectionRequest",
+  "x-generated": "2026-10-21",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/nuix-collection-and-survey-api-openapi.yml#/components/schemas/launchCaseCollectionRequest",
+  "type": "object",
+  "properties": {
+    "caseId": {
+      "type": "integer",
+      "description": "id of the case within which to start a collection"
+    },
+    "name": {
+      "type": "string",
+      "description": "name of the new collection"
+    },
+    "configurationId": {
+      "type": "integer",
+      "description": "id of the collection configuration to use for collection criteria"
+    },
+    "location": {
+      "type": "string",
+      "description": "destination of the collection (if blank then destination determined by the specified collection configuration)"
+    },
+    "custodianIds": {
+      "type": "array",
+      "description": "id(s) of the custodian(s) for which to launch this collection",
+      "items": {
+        "type": "integer"
+      }
+    }
+  }
+}

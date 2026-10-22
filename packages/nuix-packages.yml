@@ -1,0 +1,41 @@
+generated: '2026-10-21'
+method: searched
+source:
+- https://api.github.com/orgs/Nuix/repos
+- https://registry.npmjs.org/-/v1/search?text=nuix
+- https://search.maven.org/solrsearch/select?q=g:com.nuix
+- https://pypi.org/pypi/nuix/json
+description: Nuix publishes no client library to a public package registry. npm (no Nuix-published package; the
+  `nuix` name is an empty unrelated record and `discover-extension-sdk` / `@nuix/discover-extension-sdk` return
+  404), PyPI (`nuix` 404), RubyGems (`nuix` 404) and Maven Central (group com.nuix, 0 results) were checked on
+  2026-10-21. First-party SDK/tooling is distributed as source on GitHub (github.com/Nuix), and the Core Engine
+  REST SDK is a self-hosted server installed per the developer docs.
+packages:
+- name: discover-extension-sdk
+  registry: github
+  url: https://github.com/Nuix/discover-extension-sdk
+  language: JavaScript
+  official: true
+  version: v0.9.5
+  published: '2018-04-19'
+  description: Provides APIs for UI Extensions to communicate with Discover (Apache-2.0).
+  note: Latest GitHub release v0.9.5 dated 2018-04-19; package.json on the default branch declares 1.0.1, but no
+    npm publication exists (registry.npmjs.org/discover-extension-sdk -> 404).
+- name: Nuix-Java-Engine-Baseline
+  registry: github
+  url: https://github.com/Nuix/Nuix-Java-Engine-Baseline
+  language: Java
+  official: true
+  version: v9.10-license-shortname
+  published: '2024-04-30'
+  description: A Java project which can be adapted as a starting point for development against the Nuix Java Engine
+    API (Apache-2.0). Starter project, not a registry-published library.
+- name: discover-api-toolkit
+  registry: github
+  url: https://github.com/Nuix/discover-api-toolkit
+  language: C#
+  official: true
+  version: null
+  published: null
+  description: Tools and libraries for interacting with the Discover Connect API (Apache-2.0).
+  note: No GitHub releases or tags; last push 2022-12-07. No NuGet package found.

@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/main/json-schema/nuix-license-response-schema.json",
+  "title": "licenseResponse",
+  "x-generated": "2026-10-21",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/nuix-utility-api-openapi.yml#/components/schemas/licenseResponse",
+  "type": "object",
+  "properties": {
+    "hardwareId": {
+      "type": "string",
+      "description": "The license hardware ID"
+    },
+    "license": {
+      "type": "string",
+      "description": "The license key, as PEM-encoded text"
+    },
+    "licenseDetails": {
+      "type": "object",
+      "properties": {
+        "generatedBy": {
+          "type": "string",
+          "description": "The system which generated the license"
+        },
+        "generatedDate": {
+          "type": "string",
+          "description": "The date (as a formatted string) when the license was generated."
+        },
+        "created-at": {
+          "type": "string",
+          "description": "The date (as an unformatted string) when the license was generated."
+        },
+        "deadline": {
+          "type": "string",
+          "description": "The date (as an unformatted string) when the license expires."
+        },
+        "ecc.clients_hard_cap": {
+          "type": "string",
+          "description": "The maximum number of ECC Clients which can be associated with this ECC Server."
+        },
+        "ecc.clients_soft_cap": {
+          "type": "string",
+          "description": "The number of ECC Clients which can be associated with this ECC Server\nwithout license warnings appearing in ECC Admin Console."
+        },
+        "id": {
+          "type": "string",
+          "description": "The license ID"
+        },
+        "keyid": {
+          "type": "string",
+          "description": "The license key ID"
+        },
+        "owner": {
+          "type": "string",
+          "description": "The license owner"
+        },
+        "profile": {
+          "type": "string",
+          "description": "The license profile, typically `ecc`"
+        }
+      }
+    }
+  }
+}

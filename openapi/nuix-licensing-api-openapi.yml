@@ -1,0 +1,327 @@
+openapi: 3.2.0
+info:
+  title: Nuix REST-API Reference Licensing API
+  description: 'Welcome to the Nuix REST API documentation. From here you can access all available REST APIs and execute queries against your running REST instance.
+
+
+    # Authentication Changes
+
+
+    The `nuix-auth-token` header is being deprecated in favor of standard JWT. The header will be removed in a
+
+    future release. Until the removal of the header, the Nuix REST API will accept the JWT in either the
+
+    `nuix-auth-token` header field or the `Authorization` header field prefixed by `Bearer`.'
+  contact:
+    name: Nuix
+    url: http://forums.nuix.com/
+  license:
+    name: Licence
+    url: https://www.nuix.com/sites/default/files/2023-03/End%20User%20License%20Agreement%20%28Effective%20December%2014%2C%202022%29_1.pdf
+  version: ${customer.version}
+servers:
+- url: /nuix-restful-service/svc
+- url: http://localhost:8080/svc
+security:
+- ApiKeyAuth: []
+- bearerAuth: []
+tags:
+- name: Licensing
+paths:
+  /cases/{caseId}/auditReportFile:
+    get:
+      tags:
+      - Licensing
+      summary: Returns an audit report file
+      description: Returns an audit report file as an attachment for an audited case. The audit report file is the file that is uploaded to the Nuix portal for audited cases.
+      operationId: getAuditFile
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            text/plain:
+              schema:
+                type: string
+  /cases/{caseId}/auditVerificationFile:
+    post:
+      tags:
+      - Licensing
+      summary: Uploads an audit verification file
+      description: Use this operation to upload an audit verification file to a case. The audit verification file is the file that is downloaded from the Nuix portal after uploading an audit report.
+      operationId: uploadAuditFile
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                uploadFile:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: default response
+  /cases/{caseId}/auditFiles:
+    delete:
+      tags:
+      - Licensing
+      summary: Deletes all audit reports and audit verification files for a specified case
+      description: Use this operation to delete all audit reports and audit verification files for the specified case. You may want to do this if an incorrect audit verification file has been uploaded for a case. This will allow the Nuix Engine to generate a new audit file.
+      operationId: deleteAllAuditFiles
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+  /cases/{caseId}/auditStatus:
+    get:
+      tags:
+      - Licensing
+      summary: Returns the audit status for a case
+      description: Use this operation to check the audit status for a case.
+      operationId: checkAuditStatus
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AuditStatus'
+  /licenseServer/credentials:
+    put:
+      tags:
+      - Licensing
+      summary: Update and persist license server credentials
+      description: Updates and attempts to persist the license server credentials. This endpoint will validate the credentials provided, persist, and encrypt the user credentials.
+      operationId: setLicenseServerCredentials
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/AuthenticationRequest'
+            example:
+              username: user1
+              password: mysecurepassword
+      responses:
+        '200':
+          description: The REST configuration change response object.
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ConfigurationChangeResponse'
+              examples:
+                Persistent Successful Password Change:
+                  value:
+                    message: Success.
+                    status: PERSISTENT
+                Transient Successful Password Change:
+                  value:
+                    message: Success.
+                    status: TRANSIENT
+                Failed Password Change:
+                  value:
+                    message: Unable to verify NMS credentials. Invalid username and/or password.
+                    status: FAILED
+  /licenses:
+    get:
+      tags:
+      - Licensing
+      summary: Returns a list of available licences
+      description: Use this operation to view a list of your available licences. This information comes from the Nuix Management Server (NMS) or Cloud License Server (CLS).
+      operationId: getAvailableLicensesAus
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LicenseDescription'
+              examples:
+                Unauthenticated Response:
+                  value:
+                    shortname: enterprise-workstation
+                    count: 8
+                    configuredCount: 10
+                    description: Nuix eDiscovery Workstation
+                    workers: 6
+                    configuredWorkers: 10
+                    audited: false
+                    auditThreshold: 0
+                    source: null
+                    type: null
+                    location: null
+                    expiry: null
+                    legalHoldHoldCountLimit: null
+                    concurrentUserLimit: null
+                    canChooseWorkers: null
+                Authenticated Response:
+                  value:
+                    source: h{type=server, location=yourserver:27443}
+                    type: server
+                    location: yourserver:27443
+                    shortname: enterprise-workstation
+                    count: 8
+                    configuredCount: 10
+                    description: Nuix eDiscovery Workstation
+                    workers: 6,
+                    configuredWorkers: 10
+                    audited: false
+                    auditThreshold: 0
+                    expiry: 1602720000000
+                    legalHoldHoldCountLimit: null
+                    concurrentUserLimit: null
+                    canChooseWorkers: true
+components:
+  schemas:
+    LicenseDescription:
+      type: object
+      properties:
+        source:
+          type: string
+          description: Gets a string value identifying information about the source of the license.
+        type:
+          type: string
+          description: Gets a string value identifying the type of license source.
+        location:
+          type: string
+          description: Gets the location of the license.
+        shortname:
+          type: string
+          description: Gets the short name of this license type.
+        count:
+          type: integer
+          format: int32
+          description: Gets the number of licenses of this type which are currently available.
+        configuredCount:
+          type: integer
+          format: int32
+          description: Gets the total number of licenses of this type regardless of the state.
+        description:
+          type: string
+          description: Gets a longer description of this license type.
+        workers:
+          type: integer
+          format: int32
+          description: Gets the number of workers available for use with licenses of this type.
+        configuredWorkers:
+          type: integer
+          format: int32
+          description: Gets the total number of workers for the licenses of this type regardless of state.
+        canChooseWorkers:
+          type: boolean
+          description: Tests if the client gets a choice over the number of workers.
+        audited:
+          type: boolean
+          description: Tests if the licence is audited in any fashion.
+        auditThreshold:
+          type: integer
+          format: int64
+          description: Gets the threshold for auditing in bytes.
+        expiry:
+          type: string
+          format: integer
+          description: Gets the expiry date of the license represented in milliseconds since the epoch.
+        features:
+          type: array
+          description: A list of all enabled license features.
+          items:
+            type: string
+        legalHoldHoldCountLimit:
+          type: integer
+          format: int64
+          description: Gets the Legal Hold "hold count limit" from a license.
+        concurrentUserLimit:
+          type: integer
+          format: int64
+          description: Retrieves the concurrent user limit from a license.
+    ConfigurationChangeResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the result of the operation.
+        status:
+          type: string
+          description: The status result of the operation.
+          enum:
+          - PERSISTENT
+          - TRANSIENT
+          - FAILED
+    AuthenticationRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          description: The user requesting access to the service.
+        password:
+          type: string
+          description: The password credentials for the requesting user.
+        workers:
+          type: integer
+          format: int32
+          description: 'The number of workers being used. This field is optional and if not provided then the user will get a single worker.
+
+            '
+        licenceShortName:
+          type: string
+          description: 'The short name of the requested license. (UK Spelling).  `licenseShortName` (US Spelling) is also accepted. If the user fails to provide the licence short name, then the licence that is first in the list provided by the licence server will be used. Both the UK and US spelling of the word are accepted.
+
+            '
+      required:
+      - username
+      - password
+    AuditStatus:
+      type: object
+      properties:
+        unverifiedAuditReport:
+          type: boolean
+          description: Flag indicates whether an unverified audit report exists for the case.
+        verifiedAuditReports:
+          type: array
+          description: The list of verified audit reports if it exists.
+          items:
+            type: string
+        auditReportFilename:
+          type: string
+          description: The filename of the unverified audit report if it exists.
+        creationDate:
+          type: integer
+          description: The creation date of the unverified audit report if it exists.
+          format: int64
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: nuix-auth-token
+      in: header
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

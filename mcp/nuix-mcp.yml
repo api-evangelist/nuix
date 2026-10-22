@@ -1,0 +1,208 @@
+name: Nuix MCP server (candidate)
+type: MCPServer
+generated: '2026-10-21'
+method: derived
+status: candidate
+source: 'Derived from openapi/nuix-core-engine-rest-api-openapi.yml and the ECC per-tag specs under openapi/.
+  Searched 2026-10-21 for an official Nuix MCP server (web search "Nuix MCP server Model Context Protocol":
+  no Nuix result; https://dev.nuix.com/.well-known/mcp.json 404; https://dev.nuix.com/llms.txt (200) does
+  not mention MCP).'
+deployment:
+  mode: none
+  auth: unknown
+  verified: derived
+notes: 'Nuix publishes no MCP server. Both Nuix REST surfaces are self-hosted (Nuix REST service at /nuix-restful-service/svc
+  or localhost:8080/svc; ECC at {protocol}://{address}:{port}/api/ecc), so any server would be run by
+  the customer against their own installation. Auth per the specs: ApiKeyAuth/bearerAuth (core engine,
+  licence acquired via login) and HTTP Basic (ECC). Login/auth operations are intentionally excluded from
+  the tool list.'
+tools:
+- name: open_case
+  description: Returns the top-level information for a case
+  operationId: openCase
+  method: GET
+  path: /cases/{caseId}
+  api: openapi/nuix-core-engine-rest-api-openapi.yml
+  read_only: true
+- name: create_case
+  description: Creates a case
+  operationId: createCase
+  method: POST
+  path: /cases
+  api: openapi/nuix-core-engine-rest-api-openapi.yml
+  read_only: false
+- name: close_case
+  description: Closes a case
+  operationId: closeCase
+  method: POST
+  path: /cases/{caseId}/close
+  api: openapi/nuix-core-engine-rest-api-openapi.yml
+  read_only: false
+- name: search_items
+  description: Performs a search
+  operationId: searchNativeResult
+  method: GET
+  path: /cases/{caseId}/search
+  api: openapi/nuix-core-engine-rest-api-openapi.yml
+  read_only: true
+- name: search_items_async
+  description: Performs an asynchronous search
+  operationId: asyncSearchNative
+  method: POST
+  path: /cases/{caseId}/asyncFunctions/search
+  api: openapi/nuix-core-engine-rest-api-openapi.yml
+  read_only: false
+- name: count_items
+  description: Returns the total number of items in a case
+  operationId: count
+  method: GET
+  path: /cases/{caseId}/count
+  api: openapi/nuix-core-engine-rest-api-openapi.yml
+  read_only: true
+- name: ingest_evidence
+  description: Ingests a new repository and/or supported containers into a simple case
+  operationId: bulkIngestionIntoSimpleCase
+  method: POST
+  path: /cases/{caseId}/evidence
+  api: openapi/nuix-core-engine-rest-api-openapi.yml
+  read_only: false
+- name: ingest_s3_evidence
+  description: Ingests a new S3 target into a container in a simple case
+  operationId: ingestS3IntoSimpleCase
+  method: POST
+  path: /cases/{caseId}/evidence/s3
+  api: openapi/nuix-core-engine-rest-api-openapi.yml
+  read_only: false
+- name: ingest_ms365_evidence
+  description: Ingests a new Microsoft 365 target into a container in a simple case
+  operationId: ingestMs365IntoSimpleCase
+  method: POST
+  path: /cases/{caseId}/evidence/ms365
+  api: openapi/nuix-core-engine-rest-api-openapi.yml
+  read_only: false
+- name: bulk_tag_items
+  description: Tags query items in bulk
+  operationId: bulkTag
+  method: POST
+  path: /cases/{caseId}/itemTags
+  api: openapi/nuix-core-engine-rest-api-openapi.yml
+  read_only: false
+- name: list_tags
+  description: Returns the set of tags for a case
+  operationId: getTags
+  method: GET
+  path: /cases/{caseId}/tags
+  api: openapi/nuix-core-engine-rest-api-openapi.yml
+  read_only: true
+- name: export_items
+  description: Exports production sets and items from a case
+  operationId: export
+  method: PUT
+  path: /cases/{caseId}/export
+  api: openapi/nuix-core-engine-rest-api-openapi.yml
+  read_only: false
+- name: get_async_function_status
+  description: Returns the status of an asynchronous function
+  operationId: getAsyncFunctionStatus
+  method: GET
+  path: /asyncFunctions/{key}
+  api: openapi/nuix-core-engine-rest-api-openapi.yml
+  read_only: true
+- name: cancel_async_function
+  description: Cancels an asynchronous function.
+  operationId: cancelAsyncFunction
+  method: DELETE
+  path: /asyncFunctions/{key}
+  api: openapi/nuix-core-engine-rest-api-openapi.yml
+  read_only: false
+- name: list_custodians_in_case
+  description: Returns the set of custodians for a case
+  operationId: getCustodians
+  method: GET
+  path: /cases/{caseId}/custodians
+  api: openapi/nuix-core-engine-rest-api-openapi.yml
+  read_only: true
+- name: create_review_job
+  description: Creates a review job for a case
+  operationId: createReviewJob
+  method: POST
+  path: /cases/{caseId}/reviewJobs
+  api: openapi/nuix-core-engine-rest-api-openapi.yml
+  read_only: false
+- name: ecc_list_cases
+  description: Lists all cases
+  operationId: listCasesAll
+  method: GET
+  path: /v2/cases
+  api: openapi/nuix-case-api-openapi.yml
+  read_only: true
+- name: ecc_create_case
+  description: Create a new case
+  operationId: createCase
+  method: POST
+  path: /v2/cases
+  api: openapi/nuix-case-api-openapi.yml
+  read_only: false
+- name: ecc_create_custodian
+  description: Create a new Custodian
+  operationId: createCustodian
+  method: POST
+  path: /v2/custodians
+  api: openapi/nuix-custodian-api-openapi.yml
+  read_only: false
+- name: ecc_create_target
+  description: Add a new target
+  operationId: createTarget
+  method: POST
+  path: /v2/target
+  api: openapi/nuix-target-api-openapi.yml
+  read_only: false
+- name: ecc_launch_collection
+  description: Launch a new collection by Custodian
+  operationId: launchCaseCollection
+  method: POST
+  path: /v2/collections
+  api: openapi/nuix-collection-and-survey-api-openapi.yml
+  read_only: false
+- name: ecc_list_collections
+  description: Lists all collections for the specified case
+  operationId: listCaseCollection
+  method: GET
+  path: /v2/collections
+  api: openapi/nuix-collection-and-survey-api-openapi.yml
+  read_only: true
+- name: ecc_get_job
+  description: Display details of the specified job
+  operationId: jobDetails
+  method: GET
+  path: /v2/jobs/{id}
+  api: openapi/nuix-job-api-openapi.yml
+  read_only: true
+- name: ecc_list_jobs
+  description: Lists all jobs that match the specified filter
+  operationId: listJobsByFilter
+  method: POST
+  path: /v2/jobs
+  api: openapi/nuix-job-api-openapi.yml
+  read_only: false
+- name: ecc_job_action
+  description: Modifies the state of the specified job
+  operationId: jobAction
+  method: POST
+  path: /v2/jobAction/{id}
+  api: openapi/nuix-job-api-openapi.yml
+  read_only: false
+- name: ecc_job_logs
+  description: Returns the log entries (errors and warnings) associated with the specified job
+  operationId: listLogByJob
+  method: GET
+  path: /v2/logs
+  api: openapi/nuix-log-api-openapi.yml
+  read_only: true
+- name: ecc_server_info
+  description: Get ECC Server system information
+  operationId: getServerInfo
+  method: GET
+  path: /v2/systemInfo
+  api: openapi/nuix-utility-api-openapi.yml
+  read_only: true

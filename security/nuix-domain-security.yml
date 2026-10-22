@@ -1,30 +1,35 @@
-generated: '2026-07-11'
+generated: '2026-10-21'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
+- host: nuix.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Dec 23 02:03:25 2026 GMT
+  hsts: true
+  hsts_max_age: 31622400
 - host: developer.nuix.com
   https: true
   tls_version: TLSv1.3
-  cert_expires: Sep 26 12:27:50 2026 GMT
-  hsts: false
+  cert_expires: Apr 23 23:59:59 2027 GMT
+  hsts: true
+  hsts_max_age: 31556952
 - host: documentation.nuix.com
   https: true
   tls_version: TLSv1.3
   cert_expires: Jan  1 23:59:59 2027 GMT
   hsts: true
   hsts_max_age: 31622400
-- host: discover.nuix.com
-  https: false
 domains:
 - domain: nuix.com
   dnssec: true
   caa:
+  - 0 issue "pki.goog; cansignhttpexchanges=yes"
+  - 0 issue "rapidssl.com"
   - 0 issue "amazon.com"
   - 0 issue "amazonaws.com"
   - 0 issue "amazontrust.com"
   - 0 issue "awstrust.com"
-  - 0 issue "certainly.com"
-  - 0 issue "comodoca.com"
   spf: true
   dmarc: true
   dmarc_policy: quarantine

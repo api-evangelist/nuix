@@ -1,0 +1,1044 @@
+openapi: 3.2.0
+info:
+  title: Nuix REST-API Reference Resources API
+  description: 'Welcome to the Nuix REST API documentation. From here you can access all available REST APIs and execute queries against your running REST instance.
+
+
+    # Authentication Changes
+
+
+    The `nuix-auth-token` header is being deprecated in favor of standard JWT. The header will be removed in a
+
+    future release. Until the removal of the header, the Nuix REST API will accept the JWT in either the
+
+    `nuix-auth-token` header field or the `Authorization` header field prefixed by `Bearer`.'
+  contact:
+    name: Nuix
+    url: http://forums.nuix.com/
+  license:
+    name: Licence
+    url: https://www.nuix.com/sites/default/files/2023-03/End%20User%20License%20Agreement%20%28Effective%20December%2014%2C%202022%29_1.pdf
+  version: ${customer.version}
+servers:
+- url: /nuix-restful-service/svc
+- url: http://localhost:8080/svc
+security:
+- ApiKeyAuth: []
+- bearerAuth: []
+tags:
+- name: Resources
+paths:
+  /kinds:
+    get:
+      tags:
+      - Resources
+      summary: Returns all item kinds
+      description: Use this operation to view the item kinds currently available with this API. A kind is a collection of types which are similar and grouped together. These are not case specific. This is useful for analysis.
+      operationId: getKinds
+      responses:
+        '200':
+          description: The list of item kinds.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NuixItemKindResponse'
+              example:
+              - name: email
+                localisedName: Email
+              - name: calendar
+                localisedName: Calendar
+              - name: document
+                localisedName: Documents
+  /searchMacros:
+    get:
+      tags:
+      - Resources
+      summary: Returns all search macros names and expansions
+      description: Use this operation to view the search macros names and expansions for all cases. If there aren't any search macros available, the returned list will be empty. Macros are used to identify relevant items and screen them for information. These are useful when the screening process needs to be repeated regularly.
+      operationId: getSearchMacros
+      responses:
+        '200':
+          description: Structured search macro response.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/SearchMacroStructuredResponse'
+              example:
+                files: null
+                folders:
+                  Context Groups:
+                    files: null
+                    folders:
+                      Device Access:
+                        files:
+                        - name: USB Devices
+                          expansion: '(properties:"registryvalue friendlyname" AND (mime-type:application/vnd.ms-registry-key) AND (path-name:usb)) OR (properties:("Event ID:2100" OR "Event ID:2102" OR "Event ID:157")) '
+                        - name: Mounted Devices
+                          expansion: '((mime-type:application/vnd.ms-registry-key) AND (name:MountedDevices)) '
+  /shingleLists:
+    get:
+      tags:
+      - Resources
+      summary: Returns all shingle list names and expansions
+      description: Use this operation to view the shingle list names and expansions for all cases. If there aren't any shingle lists available in the shingle lists store, the returned list will be empty.
+      operationId: getShingleLists
+      responses:
+        '200':
+          description: An array of shingle list names.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example:
+              - MyShingleList.shlist
+  /wordLists:
+    get:
+      tags:
+      - Resources
+      summary: Returns all word list names
+      description: Use this operation to view the word list names for all cases. If there aren't any word lists available, the returned list will be empty.
+      operationId: getWordLists
+      responses:
+        '200':
+          description: An array of word lists.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example:
+              - MyWordList
+  /fuzzyHashLists:
+    get:
+      tags:
+      - Resources
+      summary: Returns all fuzzy hash list names
+      description: Use this operation to view all fuzzy hash list names. If there aren't any fuzzy hash lists available, the returned list will be empty.
+      operationId: getFuzzyHashLists
+      responses:
+        '200':
+          description: An array of fuzzy has lists.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example:
+              - MyFuzzyHashList
+  /metadataProfiles:
+    get:
+      tags:
+      - Resources
+      summary: Returns all metadata profile names
+      description: Use this operation to view the metadata profile names for all cases. These represent the item data that should be displayed in a query, including fields and properties. The metadata profile names are returned as a set of strings.
+      operationId: getMetadataProfiles
+      responses:
+        '200':
+          description: The list of metadata profile names.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  type: string
+              example:
+              - Context
+              - Default
+              - Discover
+  /types:
+    get:
+      tags:
+      - Resources
+      summary: Returns all item types
+      description: Use this operation to view the item types currently available with this API. Types correspond to MIME types where possible.
+      operationId: getTypes
+      responses:
+        '200':
+          description: An array of item types.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NuixItemTypeResponse'
+              example:
+              - name: application/vnd.ms-excel
+                localisedName: Microsoft Excel Spreadsheet
+                preferredExtension: xls
+                kind: spreadsheet
+                count: null
+              - name: application/vnd.ms-word
+                localisedName: Microsoft Word Document
+                preferredExtension: doc
+                kind: document
+                count: null
+  /configurationProfiles:
+    get:
+      tags:
+      - Resources
+      summary: Returns all configuration profile names
+      description: Use this operation to view the configuration profiles on the system.
+      operationId: getConfigurationProfiles
+      responses:
+        '200':
+          description: The list of configuration profile names.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example:
+              - MyConfigurationProfile
+      deprecated: true
+  /digestLists:
+    get:
+      tags:
+      - Resources
+      summary: Returns all digest list names
+      description: Use this operation to view all digest list names. If there aren't any digest lists available, the returned list will be empty.
+      operationId: availableDigests
+      responses:
+        '200':
+          description: The list of available digests.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example:
+              - NSRLFile
+    post:
+      tags:
+      - Resources
+      summary: Uploads a digest list to a user data directory
+      description: When no user data directory is provided, the first one found in 'nuix.engine.userDataDirs' will be used. If the file already exists in the user data directory it will be replaced.
+      operationId: addDigestListsToNuix
+      parameters:
+      - name: userDataDir
+        in: query
+        description: User data directory
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                digestList:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        '200':
+          description: File upload response.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/FileUploadResponse'
+              example:
+                fileUploads:
+                - success: true
+                  filePath: /opt/nuix/nuix-restful-service/engines/8.4.0.251/user-data/Digest Lists/NSRLFile.txt
+                  size: 875193726
+        '413':
+          description: The size of the request exceeds the maximum size.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: FILE_TOO_LARGE
+                developerMessage: 'Could not parse multipart servlet request; nested exception is java.lang.IllegalStateException: org.apache.tomcat.util.http.fileupload.FileUploadBase$SizeLimitExceededException: the request was rejected because its size (3260299650) exceeds the configured maximum (10485760)"
+
+                  '
+                userMessage: null
+                additionalInfo:
+                  rootExceptionClass: org.springframework.web.multipart.MultipartException
+                  rootExceptionMessage: 'Could not parse multipart servlet request; nested exception is java.lang.IllegalStateException: org.apache.tomcat.util.http.fileupload.FileUploadBase$SizeLimitExceededException: the request was rejected because its size (3260299650) exceeds the configured maximum (10485760)"
+
+                    '
+  /imagingProfiles:
+    get:
+      tags:
+      - Resources
+      summary: Returns all imaging profile names
+      description: Use this operation to view the imaging profiles on the system.
+      operationId: getImagingProfiles
+      responses:
+        '200':
+          description: The list of all imaging profiles
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example:
+              - Default
+              - MyImagingProfile
+    post:
+      tags:
+      - Resources
+      summary: Upload an imaging profile
+      description: Use this operation to add an imaging profile to the system. This operation will fail if a profile with the same name already exists.
+      operationId: uploadImagingProfile
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                profile:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Imaging Profile created and uploaded.
+          headers:
+            Location:
+              schema:
+                type: string
+              description: The URL of the uploaded imaging profile.
+        '409':
+          description: A imaging profile with the same filename already exists.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                userMessage: A Imaging Profile named imagingAutomation.xml already exists.
+                additionalInfo: null
+                errorCode: FOLDER_ALREADY_EXISTS
+                developerMessage: A user attempted to upload a file, while another file with this name already existed.
+        '413':
+          description: The size of the request exceeds the maximum size.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: FILE_TOO_LARGE
+                developerMessage: 'Could not parse multipart servlet request; nested exception is java.lang.IllegalStateException: org.apache.tomcat.util.http.fileupload.FileUploadBase$SizeLimitExceededException: the request was rejected because its size (3260299650) exceeds the configured maximum (10485760)"
+
+                  '
+                userMessage: null
+                additionalInfo:
+                  rootExceptionClass: org.springframework.web.multipart.MultipartException
+                  rootExceptionMessage: 'Could not parse multipart servlet request; nested exception is java.lang.IllegalStateException: org.apache.tomcat.util.http.fileupload.FileUploadBase$SizeLimitExceededException: the request was rejected because its size (3260299650) exceeds the configured maximum (10485760)"
+
+                    '
+        '415':
+          description: Unsupported file type.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                additionalInfo:
+                  supportedMediaTypes:
+                  - application/xml
+                errorCode: MEDIA_TYPE_NOT_SUPPORTED
+                developerMessage: 'The server is refusing to service the request because the entity of the request is in a format not supported by the requested resource for the requested method. See ''supportedMediaTypes'' in ''additionalInfo'' for a list of supported types
+
+                  '
+  /imagingProfiles/{name}:
+    get:
+      tags:
+      - Resources
+      summary: Downloads an imaging profile by name
+      description: Use this operation to export an imaging profile from the system.
+      operationId: downloadImagingProfile
+      parameters:
+      - name: name
+        in: path
+        description: 'The name of the imaging profile as defined in the name field of the XML file.  This should not be confused with the filename and the path value should not contain the file extension.
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The imaging profile download.
+          content:
+            application/xml:
+              schema:
+                type: string
+        '404':
+          description: A imaging profile with the name provided could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: RESOURCE_NOT_FOUND
+                developerMessage: The resource of type 'IMAGING_PROFILE' and identifier 'InvalidProfile' could not be found.
+                userMessage: The resource of type 'IMAGING_PROFILE' and identifier 'InvalidProfile' could not be found.
+                additionalInfo:
+                  rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                  rootExceptionMessage: null
+  /productionProfiles:
+    get:
+      tags:
+      - Resources
+      summary: Returns all production profile names
+      description: Use this operation to view the production profiles on the system.
+      operationId: getProductionProfiles
+      responses:
+        '200':
+          description: The list of all production profiles
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example:
+              - MyProductionProfile
+    post:
+      tags:
+      - Resources
+      summary: Upload a production profile
+      description: Use this operation to add a production profile to the system. This operation will fail if a profile with the same name already exists.
+      operationId: uploadProductionProfile
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                profile:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Production Profile created and uploaded.
+          headers:
+            Location:
+              schema:
+                type: string
+              description: The URL of the uploaded production profile.
+        '409':
+          description: A production profile with the same filename already exists.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                userMessage: A Production Profile named productionAutomation.xml already exists.
+                additionalInfo: null
+                errorCode: FOLDER_ALREADY_EXISTS
+                developerMessage: A user attempted to upload a file, while another file with this name already existed.
+        '413':
+          description: The size of the request exceeds the maximum size.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: FILE_TOO_LARGE
+                developerMessage: 'Could not parse multipart servlet request; nested exception is java.lang.IllegalStateException: org.apache.tomcat.util.http.fileupload.FileUploadBase$SizeLimitExceededException: the request was rejected because its size (3260299650) exceeds the configured maximum (10485760)"
+
+                  '
+                userMessage: null
+                additionalInfo:
+                  rootExceptionClass: org.springframework.web.multipart.MultipartException
+                  rootExceptionMessage: 'Could not parse multipart servlet request; nested exception is java.lang.IllegalStateException: org.apache.tomcat.util.http.fileupload.FileUploadBase$SizeLimitExceededException: the request was rejected because its size (3260299650) exceeds the configured maximum (10485760)"
+
+                    '
+        '415':
+          description: Unsupported file type.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                additionalInfo:
+                  supportedMediaTypes:
+                  - application/xml
+                errorCode: MEDIA_TYPE_NOT_SUPPORTED
+                developerMessage: 'The server is refusing to service the request because the entity of the request is in a format not supported by the requested resource for the requested method. See ''supportedMediaTypes'' in ''additionalInfo'' for a list of supported types
+
+                  '
+  /productionProfiles/{name}:
+    get:
+      tags:
+      - Resources
+      summary: Downloads a production profile by name
+      description: Use this operation to export a production profile from the system.
+      operationId: downloadProductionProfile
+      parameters:
+      - name: name
+        in: path
+        description: 'The name of the production profile as defined in the name field of the XML file.  This should not be confused with the filename and the path value should not contain the file extension.
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The production profile download.
+          content:
+            application/xml:
+              schema:
+                type: string
+        '404':
+          description: A production profile with the name provided could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: RESOURCE_NOT_FOUND
+                developerMessage: The resource of type 'PRODUCTION_PROFILE' and identifier 'InvalidProfile' could not be found.
+                userMessage: The resource of type 'PRODUCTION_PROFILE' and identifier 'InvalidProfile' could not be found.
+                additionalInfo:
+                  rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                  rootExceptionMessage: null
+  /processingProfiles:
+    get:
+      tags:
+      - Resources
+      summary: Returns all processing profile names
+      description: Use this operation to view the processing profiles on the system.
+      operationId: getProcessingProfiles
+      responses:
+        '200':
+          description: The list of all Processing profiles
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example:
+              - Default
+              - Default_Mobile
+              - MyProcessingProfile
+    post:
+      tags:
+      - Resources
+      summary: Upload a processing profile
+      description: Use this operation to add a processing profile to the system. This operation will fail if a profile with the same name already exists.
+      operationId: uploadProcessingProfile
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                profile:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Processing Profile created and uploaded.
+          headers:
+            Location:
+              schema:
+                type: string
+              description: The URL of the uploaded processing profile.
+        '409':
+          description: A processing profile with the same filename already exists.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                userMessage: A Processing Profile named processingAutomation.xml already exists.
+                additionalInfo: null
+                errorCode: FOLDER_ALREADY_EXISTS
+                developerMessage: A user attempted to upload a file, while another file with this name already existed.
+        '413':
+          description: The size of the request exceeds the maximum size.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: FILE_TOO_LARGE
+                developerMessage: 'Could not parse multipart servlet request; nested exception is java.lang.IllegalStateException: org.apache.tomcat.util.http.fileupload.FileUploadBase$SizeLimitExceededException: the request was rejected because its size (3260299650) exceeds the configured maximum (10485760)"
+
+                  '
+                userMessage: null
+                additionalInfo:
+                  rootExceptionClass: org.springframework.web.multipart.MultipartException
+                  rootExceptionMessage: 'Could not parse multipart servlet request; nested exception is java.lang.IllegalStateException: org.apache.tomcat.util.http.fileupload.FileUploadBase$SizeLimitExceededException: the request was rejected because its size (3260299650) exceeds the configured maximum (10485760)"
+
+                    '
+        '415':
+          description: Unsupported file type.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                additionalInfo:
+                  supportedMediaTypes:
+                  - application/xml
+                errorCode: MEDIA_TYPE_NOT_SUPPORTED
+                developerMessage: 'The server is refusing to service the request because the entity of the request is in a format not supported by the requested resource for the requested method. See ''supportedMediaTypes'' in ''additionalInfo'' for a list of supported types
+
+                  '
+  /processingProfiles/{name}:
+    get:
+      tags:
+      - Resources
+      summary: Downloads a processing profile by name
+      description: Use this operation to export a processing profile from the system.
+      operationId: downloadProcessingProfile
+      parameters:
+      - name: name
+        in: path
+        description: 'The name of the processing profile as defined in the name field of the XML file.  This should not be confused with the filename and the path value should not contain the file extension.
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The processing profile download.
+          content:
+            application/xml:
+              schema:
+                type: string
+        '404':
+          description: A processing profile with the name provided could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: RESOURCE_NOT_FOUND
+                developerMessage: The resource of type 'PROCESSING_PROFILE' and identifier 'InvalidProfile' could not be found.
+                userMessage: The resource of type 'PROCESSING_PROFILE' and identifier 'InvalidProfile' could not be found.
+                additionalInfo:
+                  rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                  rootExceptionMessage: null
+  /ocrProfiles:
+    get:
+      tags:
+      - Resources
+      summary: Returns all OCR profile names
+      description: Use this operation to view the OCR profiles on the system.
+      operationId: getOcrProfiles
+      responses:
+        '200':
+          description: The list of all OCR profiles
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example:
+              - Default
+              - MyOcrAutomation
+    post:
+      tags:
+      - Resources
+      summary: Upload an OCR profile
+      description: Use this operation to add an OCR profile to the system. This operation will fail if a profile with the same name already exists.
+      operationId: uploadOcrProfile
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                profile:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: OCR Profile created and uploaded.
+          headers:
+            Location:
+              schema:
+                type: string
+              description: The URL of the uploaded OCR profile.
+        '409':
+          description: An OCR profile with the same filename already exists.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                userMessage: An OCR Profile named ocrAutomation.xml already exists.
+                additionalInfo: null
+                errorCode: FOLDER_ALREADY_EXISTS
+                developerMessage: A user attempted to upload a file, while another file with this name already existed.
+        '413':
+          description: The size of the request exceeds the maximum size.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: FILE_TOO_LARGE
+                developerMessage: 'Could not parse multipart servlet request; nested exception is java.lang.IllegalStateException: org.apache.tomcat.util.http.fileupload.FileUploadBase$SizeLimitExceededException: the request was rejected because its size (3260299650) exceeds the configured maximum (10485760)"
+
+                  '
+                userMessage: null
+                additionalInfo:
+                  rootExceptionClass: org.springframework.web.multipart.MultipartException
+                  rootExceptionMessage: 'Could not parse multipart servlet request; nested exception is java.lang.IllegalStateException: org.apache.tomcat.util.http.fileupload.FileUploadBase$SizeLimitExceededException: the request was rejected because its size (3260299650) exceeds the configured maximum (10485760)"
+
+                    '
+        '415':
+          description: Unsupported file type.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                additionalInfo:
+                  supportedMediaTypes:
+                  - application/xml
+                errorCode: MEDIA_TYPE_NOT_SUPPORTED
+                developerMessage: 'The server is refusing to service the request because the entity of the request is in a format not supported by the requested resource for the requested method. See ''supportedMediaTypes'' in ''additionalInfo'' for a list of supported types
+
+                  '
+  /ocrProfiles/{name}:
+    get:
+      tags:
+      - Resources
+      summary: Downloads an OCR profile by name
+      description: Use this operation to export an OCR profile from the system.
+      operationId: downloadOcrProfile
+      parameters:
+      - name: name
+        in: path
+        description: 'The name of the OCR profile as defined in the name field of the XML file.  This should not be confused with the filename and the path value should not contain the file extension.
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The OCR profile download.
+          content:
+            application/xml:
+              schema:
+                type: string
+        '404':
+          description: An OCR profile with the name provided could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: RESOURCE_NOT_FOUND
+                developerMessage: The resource of type 'OCR_PROFILE' and identifier 'InvalidProfile' could not be found.
+                userMessage: The resource of type 'OCR_PROFILE' and identifier 'InvalidProfile' could not be found.
+                additionalInfo:
+                  rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                  rootExceptionMessage: null
+  /ocrProfiles/{name}/details:
+    get:
+      tags:
+      - Resources
+      summary: Returns the OCR profile template details
+      description: Use this operation to get the OCR profile template details.
+      operationId: getOcrProfileTemplateDetails
+      parameters:
+      - name: name
+        in: path
+        description: 'The name of the OCR profile as defined in the name field of the XML file.  This should not be confused with the filename and the path value should not contain the file extension.
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The OCR profile template details.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/OcrTemplateDetails'
+              example:
+                id: 1eec3145-f3a6-4cce-8e32-c07cb2141438
+                name: Default
+                description: null
+                appendText: true
+                updateText: true
+                updatePdf: true
+                pageRotation: AUTO
+                textRotations:
+                - AUTO
+                multiProcessingMode: SEQUENTIAL
+                languages:
+                - English
+                deskew: true
+                autoPageRotationEnabled: true
+                customPageRotationEnabled: false
+                noPageRotationEnabled: false
+                clockwisePageRotationEnabled: false
+                counterClockwisePageRotationEnabled: false
+                oneEightyPageRotationEnabled: false
+                ocrProcessingProfile: DOCUMENT_ARCHIVING_ACCURACY
+                timeout: 90
+                printedImageRotation: AUTO
+        '404':
+          description: An OCR profile with the name provided could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: RESOURCE_NOT_FOUND
+                developerMessage: The resource of type 'OCR_PROFILE' and identifier 'InvalidProfile' could not be found.
+                userMessage: The resource of type 'OCR_PROFILE' and identifier 'InvalidProfile' could not be found.
+                additionalInfo:
+                  rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                  rootExceptionMessage: null
+components:
+  schemas:
+    NuixItemKindResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the item kind.
+        localisedName:
+          type: string
+          description: The localized name of the item kind.
+    FileUpload:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Boolean true/false depending on whether the upload was successful.
+        filePath:
+          type: string
+          description: The physical path of the uploaded file on disk.
+        size:
+          type: integer
+          format: int64
+          description: The size of the uploaded file in bytes.
+    SearchMacroResponse:
+      description: The search macro response object which is a file name/expansion pair.
+      type: object
+      properties:
+        name:
+          type: string
+          description: The search macro file name without the extension.
+        expansion:
+          type: string
+          description: The expanded search macro text.
+    OcrTemplateDetails:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of the template.
+        name:
+          type: string
+          description: The name of the template.
+        description:
+          type: string
+          description: The template description.
+        appendText:
+          type: boolean
+          description: Gets whether to append text to item.
+        updateText:
+          type: boolean
+          description: Gets whether to update item text.
+        updatePdf:
+          type: boolean
+          description: Gets whether to update PDF.
+        pageRotation:
+          type: string
+          description: Gets the page rotation of the printed image.
+          deprecated: true
+        textRotations:
+          type: array
+          items:
+            type: string
+          description: Gets the text page rotations.
+        multiProcessingMode:
+          type: string
+          description: Gets the multi-processing mode.
+        languages:
+          type: array
+          items:
+            type: string
+          description: Gets the languages.
+        deskew:
+          type: boolean
+          description: Gets whether to deskew.
+        autoPageRotationEnabled:
+          type: boolean
+          description: Gets whether to use auto page rotation.
+        customPageRotationEnabled:
+          type: boolean
+          description: Gets whether to use custom page rotation.
+        noPageRotationEnabled:
+          type: boolean
+          description: Gets whether to OCR without rotating.
+        clockwisePageRotationEnabled:
+          type: boolean
+          description: Gets whether to run OCR with clockwise rotation.
+        counterClockwisePageRotationEnabled:
+          type: boolean
+          description: Gets whether to run OCR with counter-clockwise rotation.
+        oneEightyPageRotationEnabled:
+          type: boolean
+          description: Gets whether to run OCR with upside-down rotation.
+        ocrProcessingProfile:
+          type: string
+          description: Gets the OCR processing profile provided by Abbyy.
+        timeout:
+          type: integer
+          description: Gets the timeout duration.
+        printedImageRotation:
+          type: string
+          description: Gets the printed image rotation.
+        useNative:
+          type: boolean
+          description: Gets whether to use native item for OCR.
+    FileUploadResponse:
+      type: object
+      properties:
+        fileUploads:
+          type: array
+          description: The array of file upload results
+          items:
+            $ref: '#/components/schemas/FileUpload'
+    SearchMacroStructuredResponse:
+      type: object
+      description: A list of search macro file names without the extension and a folder map of the structured response.
+      properties:
+        files:
+          uniqueItems: true
+          type: array
+          description: A list of search macro file names without the extension.
+          items:
+            $ref: '#/components/schemas/SearchMacroResponse'
+        folders:
+          type: object
+          description: A map of folder name to a structured search macro.
+          additionalProperties:
+            $ref: '#/components/schemas/SearchMacroStructuredResponse'
+    ClusteredRestErrorResponse:
+      type: object
+      properties:
+        serverId:
+          type: string
+          description: The server ID of the server reporting the error.
+        developerMessage:
+          type: string
+          description: The technical description of the error.
+        userMessage:
+          type: string
+          description: The friendly error message.
+        additionalInfo:
+          type: object
+          description: Additional information about the error.
+          additionalProperties:
+            type: object
+            description: This is a map of additional properties.
+        errorCode:
+          type: string
+          description: The specific error code for the error from the list of available error codes.
+          enum:
+          - AUTHENTICATION_FAILED
+          - CASE_ACCESS_RESTRICTED
+          - CASE_LOCKED
+          - DELETE_DENIED
+          - DUPLICATE_CASES_DETECTED
+          - ENGINE_EXCEPTION
+          - FILE_TOO_LARGE
+          - INVALID_REQUEST_FORMAT
+          - INVALID_APPLICATION_RESPONSE
+          - INVALID_ARGUMENT
+          - ITEM_ACCESS_RESTRICTED
+          - LICENSE_EXCEPTION
+          - MEDIA_TYPE_NOT_SUPPORTED
+          - MEDIA_TYPE_NOT_ACCEPTABLE
+          - METHOD_NOT_ALLOWED
+          - NOT_IMPLEMENTED
+          - PRODUCTION_SET_FROZEN
+          - REQUIRED_ARGUMENT_MISSING
+          - RESOURCE_NOT_FOUND
+          - UNAUTHORISED
+          - UNKNOWN
+          - USER_SCRIPT_NOT_PROVIDED
+          - FOLDER_ALREADY_EXISTS
+          - CASE_LOCKED_BY_FUNCTION
+          - MISSING_THUMBNAIL
+          - ITEM_SET_ALREADY_EXISTS
+          - INVALID_LICENSE_TYPE_FOR_CASE
+          - SIMPLE_CASE_REQUIRED
+          - USER_ACCOUNT_LOCKED
+          - APPLICATION_NOT_REGISTERED
+          - INVALID_TEMPLATE
+          - DUPLICATE_RECORD
+          - CASE_MIGRATION_REQUIRED
+          - SERVICE_UNAVAILABLE
+          - RESPONSE_TOO_LARGE
+          - QUERY_PARSE_ERROR
+          - REMOTE_SYSTEM_ERROR
+          - FILE_SYSTEM_ERROR
+    NuixItemTypeResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The content type.
+        localisedName:
+          type: string
+          description: The localized type name.
+        preferredExtension:
+          type: string
+          description: The file extension of the type.
+        kind:
+          type: string
+          description: The item kind.
+        count:
+          type: integer
+          description: The count.
+          format: int64
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: nuix-auth-token
+      in: header
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

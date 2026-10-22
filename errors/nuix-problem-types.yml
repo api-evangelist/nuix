@@ -1,0 +1,110 @@
+generated: '2026-10-21'
+method: derived
+generator: derive-problem-types.py
+source:
+- openapi/nuix-case-api-openapi.yml
+- openapi/nuix-collection-and-survey-api-openapi.yml
+- openapi/nuix-collection-configuration-api-openapi.yml
+- openapi/nuix-computer-api-openapi.yml
+- openapi/nuix-computer-configuration-api-openapi.yml
+- openapi/nuix-core-engine-rest-api-openapi.yml
+- openapi/nuix-custodian-api-openapi.yml
+- openapi/nuix-group-api-openapi.yml
+- openapi/nuix-job-api-openapi.yml
+- openapi/nuix-log-api-openapi.yml
+- openapi/nuix-target-api-openapi.yml
+- openapi/nuix-utility-api-openapi.yml
+format: custom
+envelope:
+  media_type: application/json
+  schema: ClusteredRestErrorResponse
+coverage:
+  operations: 241
+  statuses_declared: 11
+problems:
+- status: 400
+  title: Bad Request
+  description: Invalid Property
+  operations: 33
+  media_types:
+  - application/json
+  - application/vnd.nuix.v1+json
+  - '*/*'
+  schema: standardResponse
+- status: 401
+  title: Unauthorized
+  description: Invalid username and/or password.
+  operations: 2
+  media_types:
+  - application/json
+  - '*/*'
+  schema: ClusteredRestErrorResponse
+- status: 404
+  title: Not Found
+  description: Case does not exist
+  operations: 45
+  media_types:
+  - application/vnd.nuix.v1+json
+  - application/json
+  schema: ClusteredRestErrorResponse
+- status: 405
+  title: Method Not Allowed
+  description: Method Not Allowed
+  operations: 1
+  media_types:
+  - '*/*'
+  schema: ClusteredRestErrorResponse
+- status: 406
+  title: Not Acceptable
+  description: Not Acceptable
+  operations: 1
+  media_types:
+  - '*/*'
+  schema: ClusteredRestErrorResponse
+- status: 409
+  title: Conflict
+  description: Returned by the server when REST is unable to obtain the number of workers requested or the specified
+    license type.
+  operations: 7
+  media_types:
+  - application/vnd.nuix.v1+json
+  - application/json
+  - '*/*'
+  schema: ClusteredRestErrorResponse
+- status: 413
+  title: Content Too Large
+  description: The size of the request exceeds the maximum size.
+  operations: 7
+  media_types:
+  - application/vnd.nuix.v1+json
+  - '*/*'
+  schema: ClusteredRestErrorResponse
+- status: 415
+  title: Unsupported Media Type
+  description: Unsupported file type.
+  operations: 5
+  media_types:
+  - application/json
+  - '*/*'
+  schema: ClusteredRestErrorResponse
+- status: 500
+  title: Internal Server Error
+  description: error response
+  operations: 3
+  media_types:
+  - application/json
+  schema: standardResponse
+- status: 502
+  title: Bad Gateway
+  description: Bad Gateway
+  operations: 1
+  media_types:
+  - '*/*'
+  schema: ClusteredRestErrorResponse
+- status: 504
+  title: Gateway Timeout
+  description: Waiting for the model to load
+  operations: 10
+  media_types:
+  - application/json
+  schema: standardResponse

@@ -1,0 +1,547 @@
+openapi: 3.2.0
+info:
+  title: Nuix REST-API Reference Monitoring API
+  description: 'Welcome to the Nuix REST API documentation. From here you can access all available REST APIs and execute queries against your running REST instance.
+
+
+    # Authentication Changes
+
+
+    The `nuix-auth-token` header is being deprecated in favor of standard JWT. The header will be removed in a
+
+    future release. Until the removal of the header, the Nuix REST API will accept the JWT in either the
+
+    `nuix-auth-token` header field or the `Authorization` header field prefixed by `Bearer`.'
+  contact:
+    name: Nuix
+    url: http://forums.nuix.com/
+  license:
+    name: Licence
+    url: https://www.nuix.com/sites/default/files/2023-03/End%20User%20License%20Agreement%20%28Effective%20December%2014%2C%202022%29_1.pdf
+  version: ${customer.version}
+servers:
+- url: /nuix-restful-service/svc
+- url: http://localhost:8080/svc
+security:
+- ApiKeyAuth: []
+- bearerAuth: []
+tags:
+- name: Monitoring
+paths:
+  /v1/asyncFunctions:
+    get:
+      tags:
+      - Monitoring
+      summary: Returns asynchronous function statuses
+      description: 'Use this operation to view the status of asynchronous functions. All asynchronous functions that have been run and that are currently running are returned.
+
+
+        NOTE: This endpoint has been deprecated and replaced with the /v1/asyncFunctionsQueue and /v2/asyncFunctions endpoints.'
+      operationId: getAsyncFunctionStatusesQueueDeprecated
+      parameters:
+      - name: activeWindowInSeconds
+        in: query
+        description: The time in seconds within which non-queue functions must have been active to be returned. Numbers less than 0 will return all windows.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionStatusesResponse'
+      deprecated: true
+  /asyncFunctionsQueue:
+    get:
+      tags:
+      - Monitoring
+      summary: Returns asynchronous function statuses
+      description: Use this operation to view the status of asynchronous functions. All asynchronous functions that have been run and that are currently running are returned.
+      operationId: getAsyncFunctionStatuses
+      parameters:
+      - name: activeWindowInSeconds
+        in: query
+        description: The time in seconds within which non-queue functions must have been active to be returned. Numbers less than 0 will return all windows.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionStatusesResponse'
+  /asyncFunctions:
+    get:
+      tags:
+      - Monitoring
+      summary: Returns asynchronous function statuses
+      description: Use this operation to view the status of asynchronous functions. Functions can be filtered based on caseId and friendlyName.
+      operationId: getAsyncFunctionStatusesQueue
+      parameters:
+      - name: caseId
+        in: query
+        description: The case to filter functions returned on.
+        required: false
+        schema:
+          type: string
+      - name: friendlyName
+        in: query
+        description: The type of function to filter on.
+        required: false
+        schema:
+          type: string
+      - name: activeWindowInSeconds
+        in: query
+        description: Unused for version 2 of the endpoint.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AsyncFunctionStatusObject'
+  /asyncFunctions/{key}:
+    get:
+      tags:
+      - Monitoring
+      summary: Returns the status of an asynchronous function
+      description: Use this operation to view the status of an asynchronous function. This is useful when you want to check on the status of a function.
+      operationId: getAsyncFunctionStatus
+      parameters:
+      - name: key
+        in: path
+        description: Async function key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionStatusObject'
+    delete:
+      tags:
+      - Monitoring
+      summary: Cancels an asynchronous function
+      description: Use this operation to cancel an asynchronous function.
+      operationId: cancelAsyncFunction
+      parameters:
+      - name: key
+        in: path
+        description: Async function key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionStatusObject'
+  /asyncFunctions/processingJobs/{key}:
+    delete:
+      tags:
+      - Monitoring
+      summary: Cancels a processing job
+      description: 'Use DELETE /asyncFunctions/{key} or PUT /asyncFunctions/{key}/status
+
+
+        ---
+
+
+        If canResume is true, any future processing jobs will finish processing the data from this job.'
+      operationId: cancelProcessingJob
+      deprecated: true
+      parameters:
+      - name: key
+        in: path
+        description: Async function key
+        required: true
+        schema:
+          type: string
+      - name: canResume
+        in: query
+        description: Can this processing job be resumed
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionStatusObject'
+  /asyncFunctions/{key}/status:
+    put:
+      tags:
+      - Monitoring
+      operationId: setAsyncFunctionStatus
+      summary: Sets the status of an asynchronous function
+      description: Use this operation to set the status of an asynchronous function. This is useful if you want to pause, resume, cancel, or stop a job.
+      parameters:
+      - name: key
+        in: path
+        description: Async function key
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskStatusRequest'
+            examples:
+              Pause a Function:
+                value:
+                  status: PAUSED
+              Resume a Function:
+                value:
+                  status: IN_PROGRESS
+              Cancel a Function:
+                value:
+                  status: CANCELLED
+              Stop a Function:
+                value:
+                  status: STOPPED
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionStatus'
+              examples:
+                Cancelled Function:
+                  value:
+                    done: true,
+                    cancelled: true,
+                    token: YOURTOKEN,
+                    functionKey: 81510747-e4e7-4ead-b9dc-6c80f05c83e8
+                    progress: 0
+                    total: 1
+                    percentComplete: 0.0000,
+                    updatedOn: 1673458472807,
+                    status: CANCELLED,
+                    hasSuccessfullyCompleted: false
+                Paused Function:
+                  value:
+                    done: false,
+                    cancelled: false,
+                    token: YOURTOKEN,
+                    functionKey: 81510747-e4e7-4ead-b9dc-6c80f05c83e8
+                    progress: 0
+                    total: 1
+                    percentComplete: 0.0000,
+                    updatedOn: 1673458472807,
+                    status: PAUSED,
+                    hasSuccessfullyCompleted: false
+components:
+  schemas:
+    AsyncFunctionStatusObject:
+      type: object
+      properties:
+        done:
+          type: boolean
+          description: True if the task is done.  False otherwise.
+        cancelled:
+          type: boolean
+          description: True if the task is cancelled.  False otherwise.
+        result:
+          type: object
+          description: The result of the task.
+        token:
+          type: string
+          description: The user token for the task.
+        functionKey:
+          type: string
+          description: The function key to use when querying status.
+        progress:
+          type: number
+          description: Progress of the Async function
+        total:
+          type: number
+          description: The total.
+        percentComplete:
+          type: number
+          description: The percent complete.
+        updatedOn:
+          type: integer
+          description: Date at which the Async function was last updated represented in milliseconds since the epoch.
+        status:
+          type: string
+          description: Status of the Async function.
+        statusId:
+          type: string
+          description: A status ID if available.
+        requestTime:
+          type: integer
+          description: Date at which the Async function request was made represented in milliseconds since the epoch.
+        startTime:
+          type: integer
+          description: Date at which the Async function request was started represented in milliseconds since the epoch.
+        finishTime:
+          type: integer
+          description: Date at which the Async function request was finished represented in milliseconds since the epoch.
+        caseId:
+          type: string
+          description: Case identification token
+        caseName:
+          type: string
+          description: Name of the case on which the Async function was performed.
+        hasSuccessfullyCompleted:
+          type: boolean
+          description: Indicated whether the Async function has successfully completed.
+        friendlyName:
+          type: string
+          description: Friendly name for the Async function.
+        caseLocation:
+          type: string
+          description: Location of the case on which the Async function was performed.
+        requestor:
+          type: string
+          description: Username for user who requested the Async function.
+        licenseShortName:
+          type: string
+          description: The license used when executing the Async fucntion.
+        action:
+          type: string
+          description: Action if available.
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: Options used during the execution of the Async function.
+        participatingInCaseFunctionQueue:
+          type: boolean
+          description: True if participating in the case function queue.  False otherwise.
+        processedBy:
+          type: string
+          description: The server ID that processed the task.
+        error:
+          $ref: '#/components/schemas/ClusteredRestErrorResponse'
+    CaseFunctionQueue:
+      type: object
+      properties:
+        caseId:
+          type: string
+          description: Case identification token
+        queue:
+          type: array
+          description: List of AsyncFunctionStatus objects for Async functions which are queued to execute.
+          items:
+            $ref: '#/components/schemas/AsyncFunctionStatus'
+    TaskStatusRequest:
+      type: object
+      properties:
+        status:
+          description: The desired status of the TaskRequest
+          type: string
+          enum:
+          - IN_PROGRESS
+          - CANCELLED
+          - STOPPED
+          - PAUSED
+    ClusteredRestErrorResponse:
+      type: object
+      properties:
+        serverId:
+          type: string
+          description: The server ID of the server reporting the error.
+        developerMessage:
+          type: string
+          description: The technical description of the error.
+        userMessage:
+          type: string
+          description: The friendly error message.
+        additionalInfo:
+          type: object
+          description: Additional information about the error.
+          additionalProperties:
+            type: object
+            description: This is a map of additional properties.
+        errorCode:
+          type: string
+          description: The specific error code for the error from the list of available error codes.
+          enum:
+          - AUTHENTICATION_FAILED
+          - CASE_ACCESS_RESTRICTED
+          - CASE_LOCKED
+          - DELETE_DENIED
+          - DUPLICATE_CASES_DETECTED
+          - ENGINE_EXCEPTION
+          - FILE_TOO_LARGE
+          - INVALID_REQUEST_FORMAT
+          - INVALID_APPLICATION_RESPONSE
+          - INVALID_ARGUMENT
+          - ITEM_ACCESS_RESTRICTED
+          - LICENSE_EXCEPTION
+          - MEDIA_TYPE_NOT_SUPPORTED
+          - MEDIA_TYPE_NOT_ACCEPTABLE
+          - METHOD_NOT_ALLOWED
+          - NOT_IMPLEMENTED
+          - PRODUCTION_SET_FROZEN
+          - REQUIRED_ARGUMENT_MISSING
+          - RESOURCE_NOT_FOUND
+          - UNAUTHORISED
+          - UNKNOWN
+          - USER_SCRIPT_NOT_PROVIDED
+          - FOLDER_ALREADY_EXISTS
+          - CASE_LOCKED_BY_FUNCTION
+          - MISSING_THUMBNAIL
+          - ITEM_SET_ALREADY_EXISTS
+          - INVALID_LICENSE_TYPE_FOR_CASE
+          - SIMPLE_CASE_REQUIRED
+          - USER_ACCOUNT_LOCKED
+          - APPLICATION_NOT_REGISTERED
+          - INVALID_TEMPLATE
+          - DUPLICATE_RECORD
+          - CASE_MIGRATION_REQUIRED
+          - SERVICE_UNAVAILABLE
+          - RESPONSE_TOO_LARGE
+          - QUERY_PARSE_ERROR
+          - REMOTE_SYSTEM_ERROR
+          - FILE_SYSTEM_ERROR
+    AsyncFunctionStatusesResponse:
+      type: object
+      properties:
+        executeImmediate:
+          type: array
+          description: List of AsyncFunctionStatus objects for Async functions which are queued to execute.
+          items:
+            $ref: '#/components/schemas/AsyncFunctionStatusObject'
+        singleItemQueue:
+          type: array
+          items:
+            $ref: '#/components/schemas/AsyncFunctionStatusObject'
+          description: List of AsyncFunctionStatus object for Async functions which are in the single item queue.
+        paused:
+          type: boolean
+          description: True if the task is paused.  False otherwise.
+        pausedBy:
+          type: string
+          description: The auth token of the user that paused the task.
+        pausedUntil:
+          type: integer
+          format: int64
+          description: The time the task is paused until.
+        caseQueues:
+          type: array
+          description: List of queued case functions.
+          items:
+            $ref: '#/components/schemas/CaseFunctionQueue'
+        totalRunningFunctions:
+          type: integer
+          format: int32
+          description: The total number of running tasks.
+    AsyncFunctionStatus:
+      type: object
+      properties:
+        done:
+          type: boolean
+          description: Indicates whether the Async function has completed.
+        cancelled:
+          type: boolean
+          description: Indicates whether the Async function has been canceled.
+        result:
+          type: object
+          description: Result of the function.
+        token:
+          type: string
+          description: Authentication token used to initiate the function.
+        functionKey:
+          type: string
+          description: Async function key
+        progress:
+          type: number
+          description: Progress of the Async function
+        total:
+          type: number
+          description: total
+        percentComplete:
+          type: number
+          description: Percent completed, if available
+        updatedOn:
+          type: integer
+          description: Date at which the Async function was last updated represented in milliseconds since the epoch.
+        status:
+          type: string
+          description: Status of the Async function.
+        statusId:
+          type: string
+          description: A status ID if available.
+        requestTime:
+          type: integer
+          description: Date at which the Async function request was made represented in milliseconds since the epoch.
+        startTime:
+          type: integer
+          description: Date at which the Async function request was started represented in milliseconds since the epoch.
+        finishTime:
+          type: integer
+          description: Date at which the Async function request was finished represented in milliseconds since the epoch.
+        caseId:
+          type: string
+          description: Case identification token for the case on which the Async function was performed.
+        caseName:
+          type: string
+          description: Name of the case on which the Async function was performed.
+        hasSuccessfullyCompleted:
+          type: boolean
+          description: Indicated whether the Async function has successfully completed.
+        friendlyName:
+          type: string
+          description: Friendly name for the Async function.
+        caseLocation:
+          type: string
+          description: Location of the case on which the Async function was performed.
+        requestor:
+          type: string
+          description: Username for user who requested the Async function.
+        licenseShortName:
+          type: string
+          description: The license used when executing the Async fucntion.
+        action:
+          type: string
+          description: action
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: Options used during the execution of the Async function.
+        participatingInCaseFunctionQueue:
+          type: boolean
+          description: True if participating in the case function queue.  False otherwise.
+        processedBy:
+          type: string
+          description: The server ID that processed the task.
+        error:
+          $ref: '#/components/schemas/ClusteredRestErrorResponse'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: nuix-auth-token
+      in: header
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

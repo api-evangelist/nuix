@@ -1,0 +1,31 @@
+generated: '2026-10-21'
+method: searched
+source: https://developer.nuix.com/latest/ecc/auth/bearer.html
+docs: https://developer.nuix.com/latest/ecc/auth/bearer.html
+description: The ECC REST API OpenAPI declares only http basic auth, but the docs document Bearer tokens from Keycloak
+  or Azure AD. With Keycloak, access is governed by Roles on the client named ECC (listed below). With Azure AD the
+  token request uses a single application scope of the pattern api://{client_id}/.default, and "no specific user is
+  granted REST API permissions". The Core Engine REST API uses a session token (nuix-auth-token) and documents no scopes.
+applies_to: Nuix Endpoint Enterprise Collection Center (ECC) REST API
+scopes:
+- name: HighLevelAvailable
+  kind: keycloak-role
+  description: Grants access to the REST API
+  required: true
+- name: CreateCollections
+  kind: keycloak-role
+  description: Grants permission to user to create new collections
+  required: false
+- name: ManageConfigurations
+  kind: keycloak-role
+  description: Grants permission to the user to manage templates and configurations
+  required: false
+- name: ManageJobs
+  kind: keycloak-role
+  description: Grants permission to the user to manage existing jobs
+  required: false
+- name: api://{client_id}/.default
+  kind: oauth2-scope
+  description: Azure AD client_credentials scope - the Application ID URI for the enterprise application representing
+    Nuix ECC (must be created in the Azure Portal; not created by default).
+  required: true

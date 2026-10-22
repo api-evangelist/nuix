@@ -1,0 +1,910 @@
+{
+  "info": {
+    "_postman_id": "5f29245c-edba-47c6-b758-3b286f35dc2d",
+    "name": "Nuix REST-API Reference Search API",
+    "description": "Welcome to the Nuix REST API documentation. From here you can access all available REST APIs and execute queries against your running REST instance.\n\n# Authentication Changes\n\nThe `nuix-auth-token` header is being deprecated in favor of standard JWT. The header will be removed in a\nfuture release. Until the removal of the header, the Nuix REST API will accept the JWT in either the\n`nuix-auth-token` header field or the `Authorization` header field prefixed by `Bearer`.\n\nContact Support:\n Name: Nuix",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:22:00.000Z",
+    "updatedAt": "2026-10-21T21:22:00.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-5f29245c-edba-47c6-b758-3b286f35dc2d"
+  },
+  "item": [
+    {
+      "name": "cases",
+      "item": [
+        {
+          "name": "{caseId}",
+          "item": [
+            {
+              "name": "itemProperties",
+              "item": [
+                {
+                  "name": "{propertyName}",
+                  "item": [
+                    {
+                      "name": "Returns a list of values for the specified property",
+                      "id": "bfffbd06-5bb0-4b5c-a858-304611b7db16",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/vnd.nuix.v1+json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"query\": \"<string>\",\n  \"distinct\": \"<boolean>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/cases/:caseId/itemProperties/:propertyName",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cases",
+                            ":caseId",
+                            "itemProperties",
+                            ":propertyName"
+                          ],
+                          "variable": [
+                            {
+                              "id": "f6405ac5-9ca0-4670-ac84-dc2b8276a695",
+                              "key": "caseId",
+                              "value": "<string>",
+                              "description": "(Required) Case identification token"
+                            },
+                            {
+                              "id": "6e22fdfa-8300-4872-8497-17b4ceeae58f",
+                              "key": "propertyName",
+                              "value": "<string>",
+                              "description": "(Required) Name of the property to retrieve values for"
+                            }
+                          ]
+                        },
+                        "description": "Use this operation to retrieve a list of values for the specified property. Property values will be returned for items matching the query."
+                      },
+                      "response": [
+                        {
+                          "id": "e5e7f711-3963-459c-aba9-72575ff04b4b",
+                          "name": "default response",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/vnd.nuix.v1+json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/vnd.nuix.v1+json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "nuix-auth-token",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"query\": \"<string>\",\n  \"distinct\": \"<boolean>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/cases/:caseId/itemProperties/:propertyName",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "cases",
+                                ":caseId",
+                                "itemProperties",
+                                ":propertyName"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "caseId"
+                                },
+                                {
+                                  "key": "propertyName"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/vnd.nuix.v1+json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "[\n  \"<string>\",\n  \"<string>\"\n]",
+                          "createdAt": "2026-10-21T21:22:00.000Z",
+                          "updatedAt": "2026-10-21T21:22:00.000Z",
+                          "uid": "35240-e5e7f711-3963-459c-aba9-72575ff04b4b"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T21:22:00.000Z",
+                      "updatedAt": "2026-10-21T21:22:00.000Z",
+                      "uid": "35240-bfffbd06-5bb0-4b5c-a858-304611b7db16"
+                    }
+                  ],
+                  "id": "6a9bc3d1-60b4-4116-b3b8-d78b8ec786c2",
+                  "createdAt": "2026-10-21T21:22:00.000Z",
+                  "updatedAt": "2026-10-21T21:22:00.000Z",
+                  "uid": "35240-6a9bc3d1-60b4-4116-b3b8-d78b8ec786c2"
+                }
+              ],
+              "id": "d491af14-190f-493b-85f2-773b8514b4b0",
+              "createdAt": "2026-10-21T21:22:00.000Z",
+              "updatedAt": "2026-10-21T21:22:00.000Z",
+              "uid": "35240-d491af14-190f-493b-85f2-773b8514b4b0"
+            },
+            {
+              "name": "search",
+              "item": [
+                {
+                  "name": "Performs a search",
+                  "id": "2d91e150-1045-4417-8d98-4dc60a87462c",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v2+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cases/:caseId/search?query=<string>&s=<integer>&p=<integer>&startIndex=<integer>&numberOfRecordsRequested=<integer>&limit=<integer>&deduplication=none&maintainDeduplicatedSearchOrder=true&metadataProfile=<string>&fieldList=<string>&fieldList=<string>&customMetadataField=<string>&customMetadataField=<string>&propertyList=<string>&propertyList=<string>&itemParameterizedFields=<string>&itemParameterizedFields=<string>&entities=<string>&entities=<string>&showAvailableThumbnails=false&useCache=false&forceCacheDelete=false&sortField=<string>&sortOrder=<string>&relationType=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cases",
+                        ":caseId",
+                        "search"
+                      ],
+                      "query": [
+                        {
+                          "description": "Identifies what items should be returned.  If a query is not supplied it defaults to an empty string, which returns all items.",
+                          "key": "query",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The index of the first record that should be returned. Defaults to 0.  Maintained for backward compatibility.",
+                          "key": "s",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The number of records that should be returned. Defaults to 100 records.  Maintained for backward compatibility.",
+                          "key": "p",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The index of the first record that should be returned. Defaults to 0.",
+                          "key": "startIndex",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The number of records that should be returned per page. Defaults to 100 records.",
+                          "key": "numberOfRecordsRequested",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The maximum number of results to return.",
+                          "key": "limit",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "Deduplicate content based on the Value field selection. The default is none, no deduplication.",
+                          "key": "deduplication",
+                          "value": "none"
+                        },
+                        {
+                          "description": "Specifies whether the original search result order based on the query should be maintained for deduplicated results.  Default is true.  Setting this field to false may improve deduplication performance especially for Elasticsearch cases.  This field is ignored if a sort field has been specified.",
+                          "key": "maintainDeduplicatedSearchOrder",
+                          "value": "true"
+                        },
+                        {
+                          "description": "Defines the metadata profile to be appied to the results. Needed to get custom metadata. Defaults to no metadata profile.",
+                          "key": "metadataProfile",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "List of fields to be returned for each item in the results.",
+                          "key": "fieldList",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "List of fields to be returned for each item in the results.",
+                          "key": "fieldList",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "List of custom metadata to be returned for each item in the results.  Maintained for backward compatibility.",
+                          "key": "customMetadataField",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "List of custom metadata to be returned for each item in the results.  Maintained for backward compatibility.",
+                          "key": "customMetadataField",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "List of properties to be returned for each item in the results.",
+                          "key": "propertyList",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "List of properties to be returned for each item in the results.",
+                          "key": "propertyList",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Specifies parameterized fields in a key/value pair separated by a colon. * `entities` - corresponds to item.getEntities.  (e.g., \"entities:company\") * `serializedItem` - returns a serialized copy of the item.  (e.g., \"seralizedItem:topLevelItem\") * `textTruncated` - returns the item text, truncated (if needed) to the specified maximum size in bytes (e.g., \"textTruncated:10000\") * `thumbnail` - corresponds to an item thumbnail. The parameter specifies the thumbnail dimensions (e.g., \"thumbnail:200x200\") * `nearDupeThreshold` - (e.g., \"nearDupeThreshold:0.9\") * `emailThreadCluster` - value corresponds to a Run - Cluster (e.g., \"emailThreadCluster:cluster-1\")",
+                          "key": "itemParameterizedFields",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Specifies parameterized fields in a key/value pair separated by a colon. * `entities` - corresponds to item.getEntities.  (e.g., \"entities:company\") * `serializedItem` - returns a serialized copy of the item.  (e.g., \"seralizedItem:topLevelItem\") * `textTruncated` - returns the item text, truncated (if needed) to the specified maximum size in bytes (e.g., \"textTruncated:10000\") * `thumbnail` - corresponds to an item thumbnail. The parameter specifies the thumbnail dimensions (e.g., \"thumbnail:200x200\") * `nearDupeThreshold` - (e.g., \"nearDupeThreshold:0.9\") * `emailThreadCluster` - value corresponds to a Run - Cluster (e.g., \"emailThreadCluster:cluster-1\")",
+                          "key": "itemParameterizedFields",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "List of entity names to include in response (e.g. company,email)",
+                          "key": "entities",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "List of entity names to include in response (e.g. company,email)",
+                          "key": "entities",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Show thumbnails that have been generated",
+                          "key": "showAvailableThumbnails",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Specifies whether the results should be loaded from and stored in cache.",
+                          "key": "useCache",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Specifies whether the cached results should be deleted before performing the search.",
+                          "key": "forceCacheDelete",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Any field in the metadata profile which you want to sort by.\n\nUse the following supported fields in the sortFields:\nposition,kind,duplicates\n",
+                          "key": "sortField",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Sets the sort order for the results.",
+                          "key": "sortOrder",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The relation to apply to the found items.",
+                          "key": "relationType",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "92f713fc-1179-4e5a-941c-f8e9fdce5c10",
+                          "key": "caseId",
+                          "value": "<string>",
+                          "description": "(Required) Case identification token"
+                        }
+                      ]
+                    },
+                    "description": "Use this operation to search a case. For large query strings, use the POST method. Use the following supported fields in the fieldList:\n\n* `all` - Returns all fields for the item. * `auditedSize` - Returns the item''s audited size. * `children` - Returns a list of the item''s children. * `clusterPivotResemblances` - Returns a map where the keys are cluster IDs and the values are resemblances. * `clusterPivots` - Returns a map where the keys are cluster IDs and the values are boolean flags. * `comment` - Returns item comments. * `communication` - If the item is a communication, this returns item communication information. * `correctedExtension` - Returns the extension based on Nuix''s identification of the item''s MIME type. * `custodian` - Returns the custodian assigned to an item. * `customMetadata` - Returns custom metadata for the item as a map. Must provide metadataProfile to get this. * `date` - Returns the item date. * `descendants` - Gets the list of items which are descendants of this item. * `digests` - Returns a map of the computed digests for an item. * `duplicateCustodianSet` - Returns the set of custodian names associated with this item and its duplicates. * `duplicates` - Returns duplicates of this item. * `evidenceMetadata` - Returns custom evidence metadata for the item. * `exclusion` - Returns the reason for an item''s exclusion. * `family` - Returns a list of items in the same family. * `fileSize` - Returns the item''s file size if it is readable, or returns null if this is not file data. * `fileType` - Returns the name of the file type. * `guid` - Returns the item''s globally unique identifier (GUID). * `history` - Returns the item''s history in ascending order by date. * `id` - Returns the item''s ID. * `isAudited` - Tests whether the item is considered audited and returns true or false. * `isBinaryAvailable` - Tests whether the item''s binary is available before attempting to export it. This returns\ntrue if the item had binary data at processing time that was not stored. This\ndiffers from isStored() as this method returns true if the item had binary\ndata at processing time that was not stored. * `isBinaryStored` - Tests whether the item has binary stored against it in the database. True is returned\nif stored binary exists. In this case, the source data isn''t required for\nbinary export. * `isChatMessage` - Tests whether the item is a chat message. * `isChatConversation` - Tests whether the item is a chat conversation. * `isDeleted` - Tests whether the item was marked as deleted and returns true or false. * `isEmailThreadMember` - Tests whether the item is part of an email thread. * `isEncrypted` - Tests whether the item was marked as encrypted and returns true or false. * `isExcluded` - Tests whether the item was marked as excluded. * `isFamilyMember` - Tests whether the item is a member of a family (i.e. it has a top-level item). * `isIncluded` - Tests whether the item is included and returns true or false. * `isLooseFile` - Tests whether the item is a loose file and returns true or false. * `isPhysicalFile` - Tests whether the item is a physical file and returns true or false. * `isPrintedImageStored` - Tests whether the printed image is stored and returns true or false. This field\nis useful when you only need to know if a printed image exists for this item. This is faster and uses fewer resources than requesting the printedImageInfo\nfield. * `isTextAvailable` - Tests whether the item''s text is available before attempting to read or export it. * `isTextStored` - Tests hether the item has text stored against it in the database. In the event\nwhere you only want to know if the item had text but didn''t need the text\nthis field is considerably faster and more conservative of resources than\nisTextAvailable. * `isThumbnailStored` - Tests whether a thumbnail is stored for this item in the database and returns true or false. * `isTopLevel` - Tests whether this is a top-level item and returns true or false."
+                  },
+                  "response": [
+                    {
+                      "id": "1418df79-929e-4312-9fa4-47b31384797b",
+                      "name": "default response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/vnd.nuix.v2+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/cases/:caseId/search?query=<string>&s=<integer>&p=<integer>&startIndex=<integer>&numberOfRecordsRequested=<integer>&limit=<integer>&deduplication=none&maintainDeduplicatedSearchOrder=true&metadataProfile=<string>&fieldList=<string>&customMetadataField=<string>&propertyList=<string>&itemParameterizedFields=<string>&entities=<string>&showAvailableThumbnails=false&useCache=false&forceCacheDelete=false&sortField=<string>&sortOrder=<string>&relationType=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cases",
+                            ":caseId",
+                            "search"
+                          ],
+                          "query": [
+                            {
+                              "description": "Identifies what items should be returned.  If a query is not supplied it defaults to an empty string, which returns all items.",
+                              "key": "query",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The index of the first record that should be returned. Defaults to 0.  Maintained for backward compatibility.",
+                              "key": "s",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "The number of records that should be returned. Defaults to 100 records.  Maintained for backward compatibility.",
+                              "key": "p",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "The index of the first record that should be returned. Defaults to 0.",
+                              "key": "startIndex",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "The number of records that should be returned per page. Defaults to 100 records.",
+                              "key": "numberOfRecordsRequested",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "The maximum number of results to return.",
+                              "key": "limit",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Deduplicate content based on the Value field selection. The default is none, no deduplication.",
+                              "key": "deduplication",
+                              "value": "none"
+                            },
+                            {
+                              "description": "Specifies whether the original search result order based on the query should be maintained for deduplicated results.  Default is true.  Setting this field to false may improve deduplication performance especially for Elasticsearch cases.  This field is ignored if a sort field has been specified.",
+                              "key": "maintainDeduplicatedSearchOrder",
+                              "value": "true"
+                            },
+                            {
+                              "description": "Defines the metadata profile to be appied to the results. Needed to get custom metadata. Defaults to no metadata profile.",
+                              "key": "metadataProfile",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "List of fields to be returned for each item in the results.",
+                              "key": "fieldList",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "List of custom metadata to be returned for each item in the results.  Maintained for backward compatibility.",
+                              "key": "customMetadataField",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "List of properties to be returned for each item in the results.",
+                              "key": "propertyList",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Specifies parameterized fields in a key/value pair separated by a colon. * `entities` - corresponds to item.getEntities.  (e.g., \"entities:company\") * `serializedItem` - returns a serialized copy of the item.  (e.g., \"seralizedItem:topLevelItem\") * `textTruncated` - returns the item text, truncated (if needed) to the specified maximum size in bytes (e.g., \"textTruncated:10000\") * `thumbnail` - corresponds to an item thumbnail. The parameter specifies the thumbnail dimensions (e.g., \"thumbnail:200x200\") * `nearDupeThreshold` - (e.g., \"nearDupeThreshold:0.9\") * `emailThreadCluster` - value corresponds to a Run - Cluster (e.g., \"emailThreadCluster:cluster-1\")",
+                              "key": "itemParameterizedFields",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "List of entity names to include in response (e.g. company,email)",
+                              "key": "entities",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Show thumbnails that have been generated",
+                              "key": "showAvailableThumbnails",
+                              "value": "false"
+                            },
+                            {
+                              "description": "Specifies whether the results should be loaded from and stored in cache.",
+                              "key": "useCache",
+                              "value": "false"
+                            },
+                            {
+                              "description": "Specifies whether the cached results should be deleted before performing the search.",
+                              "key": "forceCacheDelete",
+                              "value": "false"
+                            },
+                            {
+                              "description": "Any field in the metadata profile which you want to sort by.\n\nUse the following supported fields in the sortFields:\nposition,kind,duplicates\n",
+                              "key": "sortField",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Sets the sort order for the results.",
+                              "key": "sortOrder",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The relation to apply to the found items.",
+                              "key": "relationType",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "caseId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/vnd.nuix.v2+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"request\": {\n    \"caseId\": \"<string>\",\n    \"query\": \"<string>\",\n    \"sortField\": \"<string>\",\n    \"sortOrder\": \"asc\",\n    \"startIndex\": 0,\n    \"numberOfRecordsRequested\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"deduplication\": \"per custodian\",\n    \"maintainDeduplicatedSearchOrder\": true,\n    \"metadataProfile\": \"<string>\",\n    \"fieldList\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"customMetadataList\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"propertyList\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"itemParameterizedFields\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"showAvailableThumbnails\": \"<boolean>\",\n    \"useCache\": false,\n    \"forceCacheDelete\": false,\n    \"searchRetry\": \"<integer>\",\n    \"relationType\": \"descendants\",\n    \"entities\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"property\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"field\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"s\": \"<integer>\",\n    \"p\": \"<integer>\",\n    \"customMetadataField\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"startedOn\": \"<integer>\",\n  \"completedOn\": \"<integer>\",\n  \"elapsedTimeForSearch\": \"<long>\",\n  \"elapsedTimeForSort\": \"<long>\",\n  \"elapsedTimeForMarshal\": \"<long>\",\n  \"elapsedTimeForDeduplicate\": \"<long>\",\n  \"elapsedTotal\": \"<long>\",\n  \"metadataItems\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"localizedMetadataItems\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"metadataItemDetails\": [\n    {\n      \"name\": \"<string>\",\n      \"localisedName\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"localisedName\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ],\n  \"resultList\": [\n    {\n      \"do_0e\": {},\n      \"Excepteur_5d1\": {}\n    },\n    {\n      \"Utb1\": {}\n    }\n  ],\n  \"count\": \"<integer>\",\n  \"deduplicatedCount\": \"<integer>\"\n}",
+                      "createdAt": "2026-10-21T21:22:00.000Z",
+                      "updatedAt": "2026-10-21T21:22:00.000Z",
+                      "uid": "35240-1418df79-929e-4312-9fa4-47b31384797b"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:22:00.000Z",
+                  "updatedAt": "2026-10-21T21:22:00.000Z",
+                  "uid": "35240-2d91e150-1045-4417-8d98-4dc60a87462c"
+                },
+                {
+                  "name": "Performs a large search",
+                  "id": "6a38a315-fe09-45f6-87fd-dccf79a99288",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/vnd.nuix.v2+json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json;charset=UTF-8"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"caseId\": \"<string>\",\n  \"query\": \"<string>\",\n  \"sortField\": \"<string>\",\n  \"sortOrder\": \"asc\",\n  \"startIndex\": 0,\n  \"numberOfRecordsRequested\": \"<integer>\",\n  \"limit\": \"<integer>\",\n  \"deduplication\": \"per custodian\",\n  \"maintainDeduplicatedSearchOrder\": true,\n  \"metadataProfile\": \"<string>\",\n  \"fieldList\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"customMetadataList\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"propertyList\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"itemParameterizedFields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"showAvailableThumbnails\": \"<boolean>\",\n  \"useCache\": false,\n  \"forceCacheDelete\": false,\n  \"searchRetry\": \"<integer>\",\n  \"relationType\": \"topTypes\",\n  \"entities\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"property\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"field\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"s\": \"<integer>\",\n  \"p\": \"<integer>\",\n  \"customMetadataField\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/cases/:caseId/search",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cases",
+                        ":caseId",
+                        "search"
+                      ],
+                      "variable": [
+                        {
+                          "id": "be42489d-7c96-4761-8ea7-3fb2c707a58d",
+                          "key": "caseId",
+                          "value": "<string>",
+                          "description": "(Required) Case identification token"
+                        }
+                      ]
+                    },
+                    "description": "Use this operation to perform a large search on a case. This operation doesn't have a maximum query string length."
+                  },
+                  "response": [
+                    {
+                      "id": "c9a05246-2145-42d8-83a1-8a0187d593ff",
+                      "name": "default response",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/vnd.nuix.v2+json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json;charset=UTF-8"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"caseId\": \"<string>\",\n  \"query\": \"<string>\",\n  \"sortField\": \"<string>\",\n  \"sortOrder\": \"asc\",\n  \"startIndex\": 0,\n  \"numberOfRecordsRequested\": \"<integer>\",\n  \"limit\": \"<integer>\",\n  \"deduplication\": \"per custodian\",\n  \"maintainDeduplicatedSearchOrder\": true,\n  \"metadataProfile\": \"<string>\",\n  \"fieldList\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"customMetadataList\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"propertyList\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"itemParameterizedFields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"showAvailableThumbnails\": \"<boolean>\",\n  \"useCache\": false,\n  \"forceCacheDelete\": false,\n  \"searchRetry\": \"<integer>\",\n  \"relationType\": \"topTypes\",\n  \"entities\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"property\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"field\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"s\": \"<integer>\",\n  \"p\": \"<integer>\",\n  \"customMetadataField\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/cases/:caseId/search",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cases",
+                            ":caseId",
+                            "search"
+                          ],
+                          "variable": [
+                            {
+                              "key": "caseId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json;charset=UTF-8"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"request\": {\n    \"caseId\": \"<string>\",\n    \"query\": \"<string>\",\n    \"sortField\": \"<string>\",\n    \"sortOrder\": \"asc\",\n    \"startIndex\": 0,\n    \"numberOfRecordsRequested\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"deduplication\": \"per custodian\",\n    \"maintainDeduplicatedSearchOrder\": true,\n    \"metadataProfile\": \"<string>\",\n    \"fieldList\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"customMetadataList\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"propertyList\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"itemParameterizedFields\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"showAvailableThumbnails\": \"<boolean>\",\n    \"useCache\": false,\n    \"forceCacheDelete\": false,\n    \"searchRetry\": \"<integer>\",\n    \"relationType\": \"descendants\",\n    \"entities\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"property\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"field\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"s\": \"<integer>\",\n    \"p\": \"<integer>\",\n    \"customMetadataField\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"startedOn\": \"<integer>\",\n  \"completedOn\": \"<integer>\",\n  \"elapsedTimeForSearch\": \"<long>\",\n  \"elapsedTimeForSort\": \"<long>\",\n  \"elapsedTimeForMarshal\": \"<long>\",\n  \"elapsedTimeForDeduplicate\": \"<long>\",\n  \"elapsedTotal\": \"<long>\",\n  \"metadataItems\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"localizedMetadataItems\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"metadataItemDetails\": [\n    {\n      \"name\": \"<string>\",\n      \"localisedName\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"localisedName\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ],\n  \"resultList\": [\n    {\n      \"do_0e\": {},\n      \"Excepteur_5d1\": {}\n    },\n    {\n      \"Utb1\": {}\n    }\n  ],\n  \"count\": \"<integer>\",\n  \"deduplicatedCount\": \"<integer>\"\n}",
+                      "createdAt": "2026-10-21T21:22:00.000Z",
+                      "updatedAt": "2026-10-21T21:22:00.000Z",
+                      "uid": "35240-c9a05246-2145-42d8-83a1-8a0187d593ff"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:22:00.000Z",
+                  "updatedAt": "2026-10-21T21:22:00.000Z",
+                  "uid": "35240-6a38a315-fe09-45f6-87fd-dccf79a99288"
+                }
+              ],
+              "id": "18ce516e-5557-4f2f-9021-38dcebaa3e2a",
+              "createdAt": "2026-10-21T21:22:00.000Z",
+              "updatedAt": "2026-10-21T21:22:00.000Z",
+              "uid": "35240-18ce516e-5557-4f2f-9021-38dcebaa3e2a"
+            },
+            {
+              "name": "asyncFunctions",
+              "item": [
+                {
+                  "name": "search",
+                  "item": [
+                    {
+                      "name": "Performs an asynchronous search",
+                      "id": "04bc630e-aa6b-4351-bbb6-35534f743a30",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/vnd.nuix.v1+json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"caseId\": \"<string>\",\n  \"query\": \"<string>\",\n  \"sortField\": \"<string>\",\n  \"sortOrder\": \"asc\",\n  \"startIndex\": 0,\n  \"numberOfRecordsRequested\": \"<integer>\",\n  \"limit\": \"<integer>\",\n  \"deduplication\": \"per custodian\",\n  \"maintainDeduplicatedSearchOrder\": true,\n  \"metadataProfile\": \"<string>\",\n  \"fieldList\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"customMetadataList\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"propertyList\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"itemParameterizedFields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"showAvailableThumbnails\": \"<boolean>\",\n  \"useCache\": false,\n  \"forceCacheDelete\": false,\n  \"searchRetry\": \"<integer>\",\n  \"relationType\": \"topTypes\",\n  \"entities\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"property\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"field\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"s\": \"<integer>\",\n  \"p\": \"<integer>\",\n  \"customMetadataField\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/cases/:caseId/asyncFunctions/search",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cases",
+                            ":caseId",
+                            "asyncFunctions",
+                            "search"
+                          ],
+                          "variable": [
+                            {
+                              "id": "253b3d0f-f698-4a38-af73-0616bf2b4243",
+                              "key": "caseId",
+                              "value": "<string>",
+                              "description": "(Required) caseId"
+                            }
+                          ]
+                        },
+                        "description": "Use this operation to perform an asynchronous search."
+                      },
+                      "response": [
+                        {
+                          "id": "30260a65-9f5f-4503-8c19-6245ddca0503",
+                          "name": "default response",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/vnd.nuix.v1+json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/vnd.nuix.v1+json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "nuix-auth-token",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"caseId\": \"<string>\",\n  \"query\": \"<string>\",\n  \"sortField\": \"<string>\",\n  \"sortOrder\": \"asc\",\n  \"startIndex\": 0,\n  \"numberOfRecordsRequested\": \"<integer>\",\n  \"limit\": \"<integer>\",\n  \"deduplication\": \"per custodian\",\n  \"maintainDeduplicatedSearchOrder\": true,\n  \"metadataProfile\": \"<string>\",\n  \"fieldList\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"customMetadataList\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"propertyList\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"itemParameterizedFields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"showAvailableThumbnails\": \"<boolean>\",\n  \"useCache\": false,\n  \"forceCacheDelete\": false,\n  \"searchRetry\": \"<integer>\",\n  \"relationType\": \"topTypes\",\n  \"entities\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"property\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"field\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"s\": \"<integer>\",\n  \"p\": \"<integer>\",\n  \"customMetadataField\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/cases/:caseId/asyncFunctions/search",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "cases",
+                                ":caseId",
+                                "asyncFunctions",
+                                "search"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "caseId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/vnd.nuix.v1+json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"functionKey\": \"<string>\",\n  \"location\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T21:22:00.000Z",
+                          "updatedAt": "2026-10-21T21:22:00.000Z",
+                          "uid": "35240-30260a65-9f5f-4503-8c19-6245ddca0503"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T21:22:00.000Z",
+                      "updatedAt": "2026-10-21T21:22:00.000Z",
+                      "uid": "35240-04bc630e-aa6b-4351-bbb6-35534f743a30"
+                    }
+                  ],
+                  "id": "a76519ec-ed59-4591-b6b7-55225476d034",
+                  "createdAt": "2026-10-21T21:22:00.000Z",
+                  "updatedAt": "2026-10-21T21:22:00.000Z",
+                  "uid": "35240-a76519ec-ed59-4591-b6b7-55225476d034"
+                }
+              ],
+              "id": "11283dfa-0b76-429d-930b-fb4737f604ca",
+              "createdAt": "2026-10-21T21:22:00.000Z",
+              "updatedAt": "2026-10-21T21:22:00.000Z",
+              "uid": "35240-11283dfa-0b76-429d-930b-fb4737f604ca"
+            }
+          ],
+          "id": "ade3259d-c186-43aa-8851-387f34fb0259",
+          "createdAt": "2026-10-21T21:22:00.000Z",
+          "updatedAt": "2026-10-21T21:22:00.000Z",
+          "uid": "35240-ade3259d-c186-43aa-8851-387f34fb0259"
+        }
+      ],
+      "id": "5ea76b43-8b14-4d11-855f-b762aa9c6c3a",
+      "createdAt": "2026-10-21T21:22:00.000Z",
+      "updatedAt": "2026-10-21T21:22:00.000Z",
+      "uid": "35240-5ea76b43-8b14-4d11-855f-b762aa9c6c3a"
+    },
+    {
+      "name": "validation",
+      "item": [
+        {
+          "name": "query",
+          "item": [
+            {
+              "name": "Validates a list of queries",
+              "id": "c98171fd-27a7-4bce-9b6a-b529c30745dd",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  \"<string>\",\n  \"<string>\"\n]",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/validation/query",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "validation",
+                    "query"
+                  ]
+                },
+                "description": "Use this operation to validate queries."
+              },
+              "response": [
+                {
+                  "id": "c6d379f1-1413-488c-a7a0-134c06cb5563",
+                  "name": "default response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n  \"<string>\",\n  \"<string>\"\n]",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/validation/query",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "validation",
+                        "query"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/vnd.nuix.v1+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "[\n  {\n    \"valid\": \"<boolean>\",\n    \"query\": \"<string>\",\n    \"exception\": \"<string>\"\n  },\n  {\n    \"valid\": \"<boolean>\",\n    \"query\": \"<string>\",\n    \"exception\": \"<string>\"\n  }\n]",
+                  "createdAt": "2026-10-21T21:22:00.000Z",
+                  "updatedAt": "2026-10-21T21:22:00.000Z",
+                  "uid": "35240-c6d379f1-1413-488c-a7a0-134c06cb5563"
+                }
+              ],
+              "createdAt": "2026-10-21T21:22:00.000Z",
+              "updatedAt": "2026-10-21T21:22:00.000Z",
+              "uid": "35240-c98171fd-27a7-4bce-9b6a-b529c30745dd"
+            }
+          ],
+          "id": "552cd941-b242-474c-8d2d-b5c06b5f8028",
+          "createdAt": "2026-10-21T21:22:00.000Z",
+          "updatedAt": "2026-10-21T21:22:00.000Z",
+          "uid": "35240-552cd941-b242-474c-8d2d-b5c06b5f8028"
+        }
+      ],
+      "id": "03db07ca-8817-466d-9b0f-93b7fa9dbaa6",
+      "createdAt": "2026-10-21T21:22:00.000Z",
+      "updatedAt": "2026-10-21T21:22:00.000Z",
+      "uid": "35240-03db07ca-8817-466d-9b0f-93b7fa9dbaa6"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "nuix-auth-token",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "/nuix-restful-service/svc"
+    }
+  ]
+}

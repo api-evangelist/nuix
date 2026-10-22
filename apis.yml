@@ -1,8 +1,12 @@
 aid: nuix
+
 name: Nuix
-description: Nuix is an investigative analytics and intelligence platform providing REST APIs for processing
-  unstructured data, managing forensic cases, running entity extraction, conducting digital investigations,
-  and supporting eDiscovery and compliance workflows across legal, security, and law enforcement domains.
+
+description: Nuix is a provider of investigative analytics and intelligence software that delivers data privacy, fraud and investigations, and
+  legal eDiscovery solutions (Nuix Neo, Nuix Workstation, Nuix Discover, Nuix Adaptive Security). Developers integrate through the Nuix Engine
+  SDK documented at developer.nuix.com, the GraphQL-based Nuix Discover Connect API, and the self-hosted Nuix Adaptive Security REST API for endpoint
+  collection, cases, jobs and targets.
+
 deliveryModel:
   model: saas
   open_source: false
@@ -15,6 +19,7 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+
 accessModel:
   pricing: enterprise
   onboarding: unknown
@@ -29,12 +34,19 @@ accessModel:
   - security
   generated: '2026-09-03'
   method: derived
+
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/nuix.png
+
 url: https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/apis.yml
+
 created: '2026-06-13'
-modified: '2026-10-06'
+
+modified: '2026-10-21'
+
 specificationVersion: '0.23'
+
 type: Index
+
 tags:
 - Forensics
 - eDiscovery
@@ -43,6 +55,7 @@ tags:
 - Data Processing
 - Legal Tech
 - Intelligence
+
 tags_raw:
 - Forensics
 - eDiscovery
@@ -51,166 +64,74 @@ tags_raw:
 - Data Processing
 - Legal Technology
 - Intelligence
-apis:
-- aid: nuix:nuix-discover-connect-api
-  name: Nuix Discover Connect API
-  description: GraphQL-based API for querying and managing discovery data within Nuix Discover, supporting
-    queries and mutations for document review, production sets, and legal analytics workflows.
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
-  baseURL: https://discover.nuix.com/api
-  tags:
-  - GraphQL
-  - eDiscovery
-  - Document Review
-  - Legal
-  properties:
-  - type: Documentation
-    url: https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
-  - url: graphql/nuix-graphql.md
-    type: GraphQL
-  - url: graphql/nuix-schema.graphql
-    type: GraphQLSchema
-  contact:
-  - FN: Nuix Support
-    url: https://nuix.service-now.com/support
-- aid: nuix:nuix-case-api
-  name: Nuix Case API
-  description: The Case API from Nuix — 3 operation(s) for case.
-  humanURL: https://developer.nuix.com/latest/
-  baseURL: https://localhost:4444
-  tags:
-  - Case
-  properties:
-  - type: OpenAPI
-    url: openapi/nuix-case-api-openapi.yml
-  - type: Documentation
-    url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
-- aid: nuix:nuix-collection-and-survey-api
-  name: Nuix Collection and Survey API
-  description: The Collection and Survey API from Nuix — 4 operation(s) for collection and survey.
-  humanURL: https://developer.nuix.com/latest/
-  baseURL: https://localhost:4444
-  tags:
-  - Collection and Survey
-  properties:
-  - type: OpenAPI
-    url: openapi/nuix-collection-and-survey-api-openapi.yml
-  - type: Documentation
-    url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
-- aid: nuix:nuix-collection-configuration-api
-  name: Nuix Collection Configuration API
-  description: The Collection Configuration API from Nuix — 2 operation(s) for collection configuration.
-  humanURL: https://developer.nuix.com/latest/
-  baseURL: https://localhost:4444
-  tags:
-  - Collection Configuration
-  properties:
-  - type: OpenAPI
-    url: openapi/nuix-collection-configuration-api-openapi.yml
-  - type: Documentation
-    url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
-- aid: nuix:nuix-computer-api
-  name: Nuix Computer API
-  description: The Computer API from Nuix — 1 operation(s) for computer.
-  humanURL: https://developer.nuix.com/latest/
-  baseURL: https://localhost:4444
-  tags:
-  - Computer
-  properties:
-  - type: OpenAPI
-    url: openapi/nuix-computer-api-openapi.yml
-  - type: Documentation
-    url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
-- aid: nuix:nuix-computer-configuration-api
-  name: Nuix Computer Configuration API
-  description: The Computer Configuration API from Nuix — 2 operation(s) for computer configuration.
-  humanURL: https://developer.nuix.com/latest/
-  baseURL: https://localhost:4444
-  tags:
-  - Computer Configuration
-  properties:
-  - type: OpenAPI
-    url: openapi/nuix-computer-configuration-api-openapi.yml
-  - type: Documentation
-    url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
-- aid: nuix:nuix-custodian-api
-  name: Nuix Custodian API
-  description: The Custodian API from Nuix — 1 operation(s) for custodian.
-  humanURL: https://developer.nuix.com/latest/
-  baseURL: https://localhost:4444
-  tags:
-  - Custodian
-  properties:
-  - type: OpenAPI
-    url: openapi/nuix-custodian-api-openapi.yml
-  - type: Documentation
-    url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
-- aid: nuix:nuix-group-api
-  name: Nuix Group API
-  description: The Group API from Nuix — 2 operation(s) for group.
-  humanURL: https://developer.nuix.com/latest/
-  baseURL: https://localhost:4444
-  tags:
-  - Group
-  properties:
-  - type: OpenAPI
-    url: openapi/nuix-group-api-openapi.yml
-  - type: Documentation
-    url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
-- aid: nuix:nuix-job-api
-  name: Nuix Job API
-  description: The Job API from Nuix — 3 operation(s) for job.
-  humanURL: https://developer.nuix.com/latest/
-  baseURL: https://localhost:4444
-  tags:
-  - Job
-  properties:
-  - type: OpenAPI
-    url: openapi/nuix-job-api-openapi.yml
-  - type: Documentation
-    url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
-- aid: nuix:nuix-log-api
-  name: Nuix Log API
-  description: The Log API from Nuix — 1 operation(s) for log.
-  humanURL: https://developer.nuix.com/latest/
-  baseURL: https://localhost:4444
-  tags:
-  - Log
-  properties:
-  - type: OpenAPI
-    url: openapi/nuix-log-api-openapi.yml
-  - type: Documentation
-    url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
-- aid: nuix:nuix-target-api
-  name: Nuix Target API
-  description: The Target API from Nuix — 3 operation(s) for target.
-  humanURL: https://developer.nuix.com/latest/
-  baseURL: https://localhost:4444
-  tags:
-  - Target
-  properties:
-  - type: OpenAPI
-    url: openapi/nuix-target-api-openapi.yml
-  - type: Documentation
-    url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
-- aid: nuix:nuix-utility-api
-  name: Nuix Utility API
-  description: The Utility API from Nuix — 3 operation(s) for utility.
-  humanURL: https://developer.nuix.com/latest/
-  baseURL: https://localhost:4444
-  tags:
-  - Utility
-  properties:
-  - type: OpenAPI
-    url: openapi/nuix-utility-api-openapi.yml
-  - type: Documentation
-    url: https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/nuix/overview
+- type: FinOps
+  url: finops/nuix-finops.yml
+- type: RateLimits
+  url: rate-limits/nuix-rate-limits.yml
+- type: Plans
+  url: plans/nuix-plans-pricing.yml
+- type: Spectral
+  url: rules/nuix-rules.yml
+- type: Spectral
+  url: rules/nuix-jsonschema-spectral-rules.yml
+- type: JSONLD
+  url: json-ld/nuix-context.jsonld
+- type: Vocabulary
+  url: vocabulary/nuix-vocabulary.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DataModel
+  url: data-model/nuix-data-model.yml
+- type: ChangeLog
+  url: changelog/nuix-changelog.yml
+- type: Conventions
+  url: conventions/nuix-conventions.yml
+- type: Security
+  url: security/nuix-vulnerability-disclosure.yml
+- type: OAuthScopes
+  url: scopes/nuix-scopes.yml
+- type: Lifecycle
+  url: lifecycle/nuix-lifecycle.yml
+- type: ErrorCatalog
+  url: errors/nuix-problem-types.yml
+- type: Conformance
+  url: conformance/nuix-conformance.yml
+- type: Overlay
+  url: overlays/nuix-case-api-overlay.yaml
+- type: LLMsTxt
+  url: llms/nuix-llms.txt
+- type: SecurityTxt
+  url: well-known/nuix-status-security.txt
+- type: SecurityTxt
+  url: well-known/nuix-security.txt
+- type: SecurityTxt
+  url: well-known/nuix-dev-security.txt
+- type: WellKnown
+  url: well-known/nuix-well-known.yml
+- type: Hosts
+  url: hosts/nuix-hosts.yml
+- type: IntegrationEdges
+  url: integrations/nuix-integration-edges.yml
+- type: Vendors
+  url: vendors/nuix-vendors.yml
+- type: SDKs
+  url: packages/nuix-packages.yml
+- type: Packages
+  url: packages/nuix-packages.yml
+- type: GettingStarted
+  url: https://developer.nuix.com/latest/engine/rest/quick-start/home.html
 - url: https://www.nuix.com/rss.xml
   type: BlogRSS
 - type: Website
-  url: https://nuix.com
+  url: https://www.nuix.com/
 - type: AgenticAccess
   url: agentic-access/nuix-agentic-access.yml
 - type: VulnerabilityDisclosure
@@ -223,24 +144,713 @@ common:
   url: https://developer.nuix.com/
 - type: Documentation
   url: https://developer.nuix.com/latest/
-- type: GitHub
+- type: APIReference
+  url: https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
+- type: DeveloperProgram
+  url: https://www.nuix.com/nuix-developer-program
+- type: GitHubOrganization
   url: https://github.com/nuix
 - type: Blog
-  url: https://www.nuix.com/blog
-- type: Status
+  url: https://www.nuix.com/resources?resource_type=18
+- type: Newsroom
+  url: https://www.nuix.com/news
+- type: StatusPage
   url: https://status.nuix.com/
 - type: Support
   url: https://nuix.service-now.com/support
+- type: HelpCenter
+  url: https://www.nuix.com/customer-support-portal
+- type: Pricing
+  url: https://www.nuix.com/pricing
+- type: TrustCenter
+  url: https://trustcenter.nuix.com/
+- type: Contact
+  url: https://www.nuix.com/contact-us
 - type: TermsOfService
-  url: https://www.nuix.com/legal/eula
+  url: https://www.nuix.com/nuix-website-terms-service
+- type: Legal
+  url: https://www.nuix.com/legal
 - type: PrivacyPolicy
   url: https://www.nuix.com/privacy-policy
+- type: Careers
+  url: https://careers.nuix.com/
+- type: Investors
+  url: https://www.nuix.com/investors
+- type: Twitter
+  url: https://twitter.com/nuix
+- type: LinkedIn
+  url: https://www.linkedin.com/company/nuix
 - type: Plans
   url: https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/plans/nuix-plans-pricing.yml
 - type: RateLimits
   url: https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/rate-limits/nuix-rate-limits.yml
 - type: FinOps
   url: https://raw.githubusercontent.com/api-evangelist/nuix/refs/heads/main/finops/nuix-finops.yml
-maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+
+apis:
+- aid: nuix:nuix-discover-connect-api
+  name: Nuix Discover Connect API
+  description: >-
+    GraphQL-based API for querying and managing discovery data within Nuix Discover, supporting queries
+    and mutations for document review, production sets, and legal analytics workflows.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: >-
+    https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
+  baseURL: https://discover.nuix.com/api
+  tags:
+  - GraphQL
+  - eDiscovery
+  - Document Review
+  - Legal
+  properties:
+  - type: Documentation
+    url: >-
+      https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
+  - url: graphql/nuix-graphql.md
+    type: GraphQL
+  - url: graphql/nuix-schema.graphql
+    type: GraphQLSchema
+  contact:
+  - FN: Nuix Support
+    url: https://nuix.service-now.com/support
+- aid: nuix:nuix-case-api
+  name: Nuix Case API
+  description: The Case API from Nuix — 3 operation(s) for case.
+  humanURL: https://developer.nuix.com/latest/
+  baseURL: '{protocol}://{address}:{port}/api/ecc'
+  tags:
+  - Case
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-case-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://nuix.github.io/sdk-docs/latest/reference/eccapireference/openapi.yaml
+  - type: APIReference
+    url: https://developer.nuix.com/latest/reference/eccapireference.html
+  - type: Documentation
+    url: >-
+      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+  - type: JSONSchema
+    url: json-schema/nuix-standard-response-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-modify-case-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-create-case-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-list-cases-response-schema.json
+- aid: nuix:nuix-collection-and-survey-api
+  name: Nuix Collection and Survey API
+  description: The Collection and Survey API from Nuix — 4 operation(s) for collection and survey.
+  humanURL: https://developer.nuix.com/latest/
+  baseURL: '{protocol}://{address}:{port}/api/ecc'
+  tags:
+  - Collection and Survey
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-collection-and-survey-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://nuix.github.io/sdk-docs/latest/reference/eccapireference/openapi.yaml
+  - type: APIReference
+    url: https://developer.nuix.com/latest/reference/eccapireference.html
+  - type: Documentation
+    url: >-
+      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+  - type: JSONSchema
+    url: json-schema/nuix-launch-case-collection-by-path-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-launch-case-collection-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-launch-case-collection-by-configuration-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-launch-case-collection-by-target-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-launch-case-collection-by-configuration-response-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-launch-case-collection-response-schema.json
+- aid: nuix:nuix-collection-configuration-api
+  name: Nuix Collection Configuration API
+  description: >-
+    The Collection Configuration API from Nuix — 2 operation(s) for collection configuration.
+  humanURL: https://developer.nuix.com/latest/
+  baseURL: '{protocol}://{address}:{port}/api/ecc'
+  tags:
+  - Collection Configuration
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-collection-configuration-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://nuix.github.io/sdk-docs/latest/reference/eccapireference/openapi.yaml
+  - type: APIReference
+    url: https://developer.nuix.com/latest/reference/eccapireference.html
+  - type: Documentation
+    url: >-
+      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+  - type: JSONSchema
+    url: json-schema/nuix-create-configuration-response-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-create-configuration-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-standard-response-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-list-configurations-response-schema.json
+- aid: nuix:nuix-computer-api
+  name: Nuix Computer API
+  description: The Computer API from Nuix — 1 operation(s) for computer.
+  humanURL: https://developer.nuix.com/latest/
+  baseURL: '{protocol}://{address}:{port}/api/ecc'
+  tags:
+  - Computer
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-computer-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://nuix.github.io/sdk-docs/latest/reference/eccapireference/openapi.yaml
+  - type: APIReference
+    url: https://developer.nuix.com/latest/reference/eccapireference.html
+  - type: Documentation
+    url: >-
+      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+  - type: JSONSchema
+    url: json-schema/nuix-list-computer-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-computer-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-standard-response-schema.json
+- aid: nuix:nuix-computer-configuration-api
+  name: Nuix Computer Configuration API
+  description: The Computer Configuration API from Nuix — 2 operation(s) for computer configuration.
+  humanURL: https://developer.nuix.com/latest/
+  baseURL: '{protocol}://{address}:{port}/api/ecc'
+  tags:
+  - Computer Configuration
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-computer-configuration-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://nuix.github.io/sdk-docs/latest/reference/eccapireference/openapi.yaml
+  - type: APIReference
+    url: https://developer.nuix.com/latest/reference/eccapireference.html
+  - type: Documentation
+    url: >-
+      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+  - type: JSONSchema
+    url: json-schema/nuix-list-computer-conf-response-schema.json
+- aid: nuix:nuix-custodian-api
+  name: Nuix Custodian API
+  description: The Custodian API from Nuix — 1 operation(s) for custodian.
+  humanURL: https://developer.nuix.com/latest/
+  baseURL: '{protocol}://{address}:{port}/api/ecc'
+  tags:
+  - Custodian
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-custodian-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://nuix.github.io/sdk-docs/latest/reference/eccapireference/openapi.yaml
+  - type: APIReference
+    url: https://developer.nuix.com/latest/reference/eccapireference.html
+  - type: Documentation
+    url: >-
+      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+  - type: JSONSchema
+    url: json-schema/nuix-list-custodian-response-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-create-custodian-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-standard-response-schema.json
+- aid: nuix:nuix-group-api
+  name: Nuix Group API
+  description: The Group API from Nuix — 2 operation(s) for group.
+  humanURL: https://developer.nuix.com/latest/
+  baseURL: '{protocol}://{address}:{port}/api/ecc'
+  tags:
+  - Group
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-group-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://nuix.github.io/sdk-docs/latest/reference/eccapireference/openapi.yaml
+  - type: APIReference
+    url: https://developer.nuix.com/latest/reference/eccapireference.html
+  - type: Documentation
+    url: >-
+      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+  - type: JSONSchema
+    url: json-schema/nuix-modify-group-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-standard-response-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-create-group-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-list-groups-response-schema.json
+- aid: nuix:nuix-job-api
+  name: Nuix Job API
+  description: The Job API from Nuix — 3 operation(s) for job.
+  humanURL: https://developer.nuix.com/latest/
+  baseURL: '{protocol}://{address}:{port}/api/ecc'
+  tags:
+  - Job
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-job-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://nuix.github.io/sdk-docs/latest/reference/eccapireference/openapi.yaml
+  - type: APIReference
+    url: https://developer.nuix.com/latest/reference/eccapireference.html
+  - type: Documentation
+    url: >-
+      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+  - type: JSONSchema
+    url: json-schema/nuix-list-job-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-job-list-detail-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-job-detail-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-standard-response-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-job-action-request-schema.json
+- aid: nuix:nuix-log-api
+  name: Nuix Log API
+  description: The Log API from Nuix — 1 operation(s) for log.
+  humanURL: https://developer.nuix.com/latest/
+  baseURL: '{protocol}://{address}:{port}/api/ecc'
+  tags:
+  - Log
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-log-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://nuix.github.io/sdk-docs/latest/reference/eccapireference/openapi.yaml
+  - type: APIReference
+    url: https://developer.nuix.com/latest/reference/eccapireference.html
+  - type: Documentation
+    url: >-
+      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+  - type: JSONSchema
+    url: json-schema/nuix-log-entry-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-standard-response-schema.json
+- aid: nuix:nuix-target-api
+  name: Nuix Target API
+  description: The Target API from Nuix — 3 operation(s) for target.
+  humanURL: https://developer.nuix.com/latest/
+  baseURL: '{protocol}://{address}:{port}/api/ecc'
+  tags:
+  - Target
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-target-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://nuix.github.io/sdk-docs/latest/reference/eccapireference/openapi.yaml
+  - type: APIReference
+    url: https://developer.nuix.com/latest/reference/eccapireference.html
+  - type: Documentation
+    url: >-
+      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+  - type: JSONSchema
+    url: json-schema/nuix-create-target-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-standard-response-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-list-targets-response-schema.json
+- aid: nuix:nuix-utility-api
+  name: Nuix Utility API
+  description: The Utility API from Nuix — 3 operation(s) for utility.
+  humanURL: https://developer.nuix.com/latest/
+  baseURL: '{protocol}://{address}:{port}/api/ecc'
+  tags:
+  - Utility
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-utility-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://nuix.github.io/sdk-docs/latest/reference/eccapireference/openapi.yaml
+  - type: APIReference
+    url: https://developer.nuix.com/latest/reference/eccapireference.html
+  - type: Documentation
+    url: >-
+      https://documentation.nuix.com/en/content/server/Wales/projects_frameless/Nuix%20Adaptive%20Security%20Online%20Help/Administration/API_documentation.htm
+  - type: JSONSchema
+    url: json-schema/nuix-license-response-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-system-info-response-schema.json
+- aid: nuix:nuix-access-api
+  name: Nuix Access API
+  description: The Access API from Nuix — 2 operation(s) for access.
+  humanURL: >-
+    https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
+  baseURL: https://discover.nuix.com/api
+  tags:
+  - Access
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-access-api-openapi.yml
+  - type: APIReference
+    url: https://developer.nuix.com/latest/reference/restapireference.html
+  - type: Documentation
+    url: https://developer.nuix.com/latest/engine/rest/home.html
+  - type: PostmanCollection
+    url: collections/nuix-nuix-core-engine-rest-api.postman_collection.json
+  - type: JSONSchema
+    url: json-schema/nuix-search-native-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-searcher-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-production-set-with-profiles-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-object-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-apply-item-tag-list-request-schema.json
+- aid: nuix:nuix-analysis-api
+  name: Nuix Analysis API
+  description: The Analysis API from Nuix — 35 operation(s) for analysis.
+  humanURL: >-
+    https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
+  baseURL: https://discover.nuix.com/api
+  tags:
+  - Analysis
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-analysis-api-openapi.yml
+  - type: APIReference
+    url: https://developer.nuix.com/latest/reference/restapireference.html
+  - type: Documentation
+    url: https://developer.nuix.com/latest/engine/rest/home.html
+  - type: PostmanCollection
+    url: collections/nuix-nuix-core-engine-rest-api.postman_collection.json
+  - type: JSONSchema
+    url: json-schema/nuix-search-native-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-searcher-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-production-set-with-profiles-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-object-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-apply-item-tag-list-request-schema.json
+- aid: nuix:nuix-culling-api
+  name: Nuix Culling API
+  description: The Culling API from Nuix — 21 operation(s) for culling.
+  humanURL: >-
+    https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
+  baseURL: https://discover.nuix.com/api
+  tags:
+  - Culling
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-culling-api-openapi.yml
+  - type: APIReference
+    url: https://developer.nuix.com/latest/reference/restapireference.html
+  - type: Documentation
+    url: https://developer.nuix.com/latest/engine/rest/home.html
+  - type: PostmanCollection
+    url: collections/nuix-nuix-core-engine-rest-api.postman_collection.json
+  - type: JSONSchema
+    url: json-schema/nuix-search-native-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-searcher-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-production-set-with-profiles-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-object-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-apply-item-tag-list-request-schema.json
+- aid: nuix:nuix-export-api
+  name: Nuix Export API
+  description: The Export API from Nuix — 15 operation(s) for export.
+  humanURL: >-
+    https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
+  baseURL: https://discover.nuix.com/api
+  tags:
+  - Export
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-export-api-openapi.yml
+  - type: APIReference
+    url: https://developer.nuix.com/latest/reference/restapireference.html
+  - type: Documentation
+    url: https://developer.nuix.com/latest/engine/rest/home.html
+  - type: PostmanCollection
+    url: collections/nuix-nuix-core-engine-rest-api.postman_collection.json
+  - type: JSONSchema
+    url: json-schema/nuix-search-native-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-searcher-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-production-set-with-profiles-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-object-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-apply-item-tag-list-request-schema.json
+- aid: nuix:nuix-inventory-api
+  name: Nuix Inventory API
+  description: The Inventory API from Nuix — 13 operation(s) for inventory.
+  humanURL: >-
+    https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
+  baseURL: https://discover.nuix.com/api
+  tags:
+  - Inventory
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-inventory-api-openapi.yml
+  - type: APIReference
+    url: https://developer.nuix.com/latest/reference/restapireference.html
+  - type: Documentation
+    url: https://developer.nuix.com/latest/engine/rest/home.html
+  - type: PostmanCollection
+    url: collections/nuix-nuix-core-engine-rest-api.postman_collection.json
+  - type: JSONSchema
+    url: json-schema/nuix-search-native-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-searcher-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-production-set-with-profiles-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-object-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-apply-item-tag-list-request-schema.json
+- aid: nuix:nuix-licensing-api
+  name: Nuix Licensing API
+  description: The Licensing API from Nuix — 6 operation(s) for licensing.
+  humanURL: >-
+    https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
+  baseURL: https://discover.nuix.com/api
+  tags:
+  - Licensing
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-licensing-api-openapi.yml
+  - type: APIReference
+    url: https://developer.nuix.com/latest/reference/restapireference.html
+  - type: Documentation
+    url: https://developer.nuix.com/latest/engine/rest/home.html
+  - type: PostmanCollection
+    url: collections/nuix-nuix-core-engine-rest-api.postman_collection.json
+  - type: JSONSchema
+    url: json-schema/nuix-search-native-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-searcher-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-production-set-with-profiles-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-object-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-apply-item-tag-list-request-schema.json
+- aid: nuix:nuix-monitoring-api
+  name: Nuix Monitoring API
+  description: The Monitoring API from Nuix — 6 operation(s) for monitoring.
+  humanURL: >-
+    https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
+  baseURL: https://discover.nuix.com/api
+  tags:
+  - Monitoring
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-monitoring-api-openapi.yml
+  - type: APIReference
+    url: https://developer.nuix.com/latest/reference/restapireference.html
+  - type: Documentation
+    url: https://developer.nuix.com/latest/engine/rest/home.html
+  - type: PostmanCollection
+    url: collections/nuix-nuix-core-engine-rest-api.postman_collection.json
+  - type: JSONSchema
+    url: json-schema/nuix-search-native-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-searcher-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-production-set-with-profiles-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-object-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-apply-item-tag-list-request-schema.json
+- aid: nuix:nuix-processing-api
+  name: Nuix Processing API
+  description: The Processing API from Nuix — 22 operation(s) for processing.
+  humanURL: >-
+    https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
+  baseURL: https://discover.nuix.com/api
+  tags:
+  - Processing
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-processing-api-openapi.yml
+  - type: APIReference
+    url: https://developer.nuix.com/latest/reference/restapireference.html
+  - type: Documentation
+    url: https://developer.nuix.com/latest/engine/rest/home.html
+  - type: PostmanCollection
+    url: collections/nuix-nuix-core-engine-rest-api.postman_collection.json
+  - type: JSONSchema
+    url: json-schema/nuix-search-native-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-searcher-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-production-set-with-profiles-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-object-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-apply-item-tag-list-request-schema.json
+- aid: nuix:nuix-resources-api
+  name: Nuix Resources API
+  description: The Resources API from Nuix — 18 operation(s) for resources.
+  humanURL: >-
+    https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
+  baseURL: https://discover.nuix.com/api
+  tags:
+  - Resources
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-resources-api-openapi.yml
+  - type: APIReference
+    url: https://developer.nuix.com/latest/reference/restapireference.html
+  - type: Documentation
+    url: https://developer.nuix.com/latest/engine/rest/home.html
+  - type: PostmanCollection
+    url: collections/nuix-nuix-core-engine-rest-api.postman_collection.json
+  - type: JSONSchema
+    url: json-schema/nuix-search-native-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-searcher-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-production-set-with-profiles-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-object-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-apply-item-tag-list-request-schema.json
+- aid: nuix:nuix-scripting-api
+  name: Nuix Scripting API
+  description: The Scripting API from Nuix — 2 operation(s) for scripting.
+  humanURL: >-
+    https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
+  baseURL: https://discover.nuix.com/api
+  tags:
+  - Scripting
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-scripting-api-openapi.yml
+  - type: APIReference
+    url: https://developer.nuix.com/latest/reference/restapireference.html
+  - type: Documentation
+    url: https://developer.nuix.com/latest/engine/rest/home.html
+  - type: PostmanCollection
+    url: collections/nuix-nuix-core-engine-rest-api.postman_collection.json
+  - type: JSONSchema
+    url: json-schema/nuix-search-native-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-searcher-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-production-set-with-profiles-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-object-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-apply-item-tag-list-request-schema.json
+- aid: nuix:nuix-search-api
+  name: Nuix Search API
+  description: The Search API from Nuix — 4 operation(s) for search.
+  humanURL: >-
+    https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
+  baseURL: https://discover.nuix.com/api
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-search-api-openapi.yml
+  - type: APIReference
+    url: https://developer.nuix.com/latest/reference/restapireference.html
+  - type: Documentation
+    url: https://developer.nuix.com/latest/engine/rest/home.html
+  - type: PostmanCollection
+    url: collections/nuix-nuix-core-engine-rest-api.postman_collection.json
+  - type: JSONSchema
+    url: json-schema/nuix-search-native-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-searcher-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-production-set-with-profiles-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-object-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-apply-item-tag-list-request-schema.json
+- aid: nuix:nuix-system-api
+  name: Nuix System API
+  description: The System API from Nuix — 10 operation(s) for system.
+  humanURL: >-
+    https://documentation.nuix.com/en/content/server/DL/projects_frameless/Nuix%20Discover%2010.20%20Online%20Help/Project_Source_Files/Developer_Resources/Connect_API/API_Reference_documentation.htm
+  baseURL: https://discover.nuix.com/api
+  tags:
+  - System
+  properties:
+  - type: OpenAPI
+    url: openapi/nuix-system-api-openapi.yml
+  - type: APIReference
+    url: https://developer.nuix.com/latest/reference/restapireference.html
+  - type: Documentation
+    url: https://developer.nuix.com/latest/engine/rest/home.html
+  - type: PostmanCollection
+    url: collections/nuix-nuix-core-engine-rest-api.postman_collection.json
+  - type: JSONSchema
+    url: json-schema/nuix-search-native-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-searcher-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-production-set-with-profiles-request-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-async-function-status-object-schema.json
+  - type: JSONSchema
+    url: json-schema/nuix-bulk-apply-item-tag-list-request-schema.json
+x-coverage:
+  state: covered
+  reason: identity-verified
+  detail: Website, description and link-property pointers verified 2026-10-21 against the provider's own site (www.nuix.com homepage footer/nav).
+    Adaptive Security REST APIs are self-hosted (servers {protocol}://{address}:{port}/api/ecc), so no public production baseURL exists.
+  evidence:
+  - url: https://nuix.com
+    status: 200
+  - url: https://developer.nuix.com/latest/
+    status: 200
+  - url: https://trustcenter.nuix.com/
+    status: 200
+  - url: https://www.nuix.com/nuix-developer-program
+    status: 200
+x-enrichment:
+  date: '2026-10-21'
+  status: enriched
+  artifacts_added: 85
+  pass: modular-v1
+  engine: identity=anthropic,contract=anthropic,surfaces=anthropic,docs=anthropic,regulatory=anthropic

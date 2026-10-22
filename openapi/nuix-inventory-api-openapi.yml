@@ -1,0 +1,1120 @@
+openapi: 3.2.0
+info:
+  title: Nuix REST-API Reference Inventory API
+  description: 'Welcome to the Nuix REST API documentation. From here you can access all available REST APIs and execute queries against your running REST instance.
+
+
+    # Authentication Changes
+
+
+    The `nuix-auth-token` header is being deprecated in favor of standard JWT. The header will be removed in a
+
+    future release. Until the removal of the header, the Nuix REST API will accept the JWT in either the
+
+    `nuix-auth-token` header field or the `Authorization` header field prefixed by `Bearer`.'
+  contact:
+    name: Nuix
+    url: http://forums.nuix.com/
+  license:
+    name: Licence
+    url: https://www.nuix.com/sites/default/files/2023-03/End%20User%20License%20Agreement%20%28Effective%20December%2014%2C%202022%29_1.pdf
+  version: ${customer.version}
+servers:
+- url: /nuix-restful-service/svc
+- url: http://localhost:8080/svc
+security:
+- ApiKeyAuth: []
+- bearerAuth: []
+tags:
+- name: Inventory
+paths:
+  /cases/{caseId}:
+    get:
+      tags:
+      - Inventory
+      summary: Returns the top-level information for a case
+      description: 'Use this operation to view the top-level information associated with a case. Top-level case information returns case property content like the following: case ID, name, path, description, investigator time zone, investigator, and whether the case is simple or compound.'
+      operationId: openCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: determineAdditionalAttributes
+        in: query
+        description: Returns extended case attributes.  These attributes are hasExclusions, hasProductionSets, hasCalculatedAuditSize, and hasNuixSystemTags.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: calculateCaseSize
+        in: query
+        description: Should size of case on disk be calculated? Defaults to false
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/CaseResponse'
+    delete:
+      tags:
+      - Inventory
+      summary: Deletes a case
+      description: Use this operation to delete a case.
+      operationId: deleteCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: deleteAllDescendants
+        in: query
+        description: Delete child cases of a compound case
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/CaseDeleteResponse'
+  /cases/{caseId}/childCases/{childCaseId}:
+    put:
+      tags:
+      - Inventory
+      summary: Adds a child case to a compound case
+      description: Use this operation to add a single child case to a compound case.
+      operationId: addChildCaseToCompoundCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: childCaseId
+        in: path
+        description: Case ID for the child case
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+  /cases/{caseId}/childCases:
+    get:
+      tags:
+      - Inventory
+      summary: Returns a list of child cases for a compound case
+      description: Use this operation to view the child cases, or simple cases, associated with a compound case.
+      operationId: getChildCases
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: determineAdditionalAttributes
+        in: query
+        description: Returns extended case attributes.  These attributes are hasExclusions, hasProductionSets, hasCalculatedAuditSize, and hasNuixSystemTags.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: calculateCaseSize
+        in: query
+        description: Should size of each child case on disk be calculated? Defaults to false
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CaseResponse'
+    post:
+      tags:
+      - Inventory
+      summary: Adds child cases to a compound case
+      description: Use this operation to add multiple child cases to a compound case at once.
+      operationId: addChildCasesToCompoundCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              type: array
+              description: Case IDs for the child cases.
+              items:
+                type: string
+      responses:
+        '200':
+          description: default response
+  /cases/{caseId}/close:
+    post:
+      tags:
+      - Inventory
+      summary: Closes a case
+      description: Use this operation to close a case in a user session. Cases should be closed when not in use or they will remain locked.
+      operationId: closeCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /cases:
+    post:
+      tags:
+      - Inventory
+      summary: Creates a case
+      description: 'Use this operation to create a case. You can create a simple or
+
+        compound case, which is a collection of simple cases. You can declare that
+
+        a simple case be processed via ElasticSearch by defining the elasticSearchSettings
+
+        attribute. Compound cases cannot be processed via ElasticSearch.
+
+
+        When you create a case, the location of the CaseCreateRequest should be an inventory location (inventory0,
+
+        inventory1, inventoryx) or a path relative to an inventory location. Absolute paths within an inventory location
+
+        will be created at the desired location but absolute paths outside an inventory location will be appended
+
+        to the first inventory location.
+
+
+        The following are examples of locations and the absolute paths where those cases will be created given
+
+        two inventory locations that have been configured at /cases and /elasticsearchCases.
+
+
+        | Location | Case Name | Absolute Path |
+
+        | ----------- | --------- | ------------------- |
+
+        | inventory0 | MyCase | /cases/MyCase |
+
+        | inventory1 | MyElasticCase | /elasticsearchCases/MyElasticCase |
+
+        | /my/path | Case1 | /cases/my/path/Case1 |
+
+        | my/path | Case2 | /cases/my/path/Case2 |
+
+        | inventory0/my/path | Case3 | /cases/my/path/Case3 |
+
+        | inventory1/my/path | Case4 | /elasticsearchCases/my/path/Case4 |
+
+        | /cases | Case5 | /cases/Case5 |
+
+        | /cases/another/path | Case6 | /cases/another/path/Case6 |
+
+
+        Inventory locations let the REST server administrator control where cases are created and provide a layer
+
+        of security between the server and the user.'
+      operationId: createCase
+      requestBody:
+        content:
+          application/vnd.nuix.v2+json:
+            schema:
+              $ref: '#/components/schemas/CreateCaseRequest'
+            examples:
+              SimpleCaseCreation:
+                $ref: '#/components/examples/SimpleCaseCreation'
+              CompoundCaseCreation:
+                $ref: '#/components/examples/CompoundCaseCreation'
+              ElasticsearchCaseCreation:
+                $ref: '#/components/examples/ElasticsearchCaseCreation'
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/CreateCaseRequest'
+            examples:
+              SimpleCaseCreation:
+                $ref: '#/components/examples/SimpleCaseCreation'
+              CompoundCaseCreation:
+                $ref: '#/components/examples/CompoundCaseCreation'
+              ElasticsearchCaseCreation:
+                $ref: '#/components/examples/ElasticsearchCaseCreation'
+      responses:
+        '201':
+          description: default response
+          content:
+            application/vnd.nuix.v2+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+              examples:
+                Standard Asynchronous Function Response:
+                  value:
+                    functionKey: e0319b96-5c84-40f4-adce-2f3d6aa0465a
+                    location: http://localhost:8080/svc/v1/asyncFunctions/e0319b96-5c84-40f4-adce-2f3d6aa0465a
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/CaseResponse'
+              examples:
+                SimpleCaseCreationResponse:
+                  $ref: '#/components/examples/SimpleCaseCreationResponse'
+                CompoundCaseCreationResponse:
+                  $ref: '#/components/examples/CompoundCaseCreationResponse'
+                ElasticCaseResponse:
+                  $ref: '#/components/examples/ElasticCaseResponse'
+  /cases/{caseId}/subset:
+    post:
+      tags:
+      - Inventory
+      summary: Creates a case subset
+      description: 'Use this operation to create a case subset. When you create a case, the location must be a relative path, or an absolute path that is within
+
+        a configured inventory location. You must include the `elasticSearchSettings` field in the `caseMetadata` in order to case subset to Elasticsearch.
+
+        Otherwise, the default case subset will be a standard Lucene/Derby case.'
+      operationId: createCaseSubset
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/CreateCaseSubsetRequest'
+            examples:
+              Simple Case Subset:
+                value:
+                  query: '*'
+                  location: inventory0
+                  caseMetadata:
+                    name: MyCase
+                    description: Simple case subset
+              Elasticsearch Case Subset:
+                value:
+                  query: '*'
+                  location: inventory0
+                  caseMetadata:
+                    name: MyElasticCase
+                    description: Elasticsearch case subset
+                    elasticSearchSettings:
+                      cluster.name: elasticsearch
+                      nuix.transport.hosts:
+                      - 127.0.0.1
+                      nuix.http.hosts:
+                      - 127.0.0.1
+                      index.number_of_shards: 1
+      responses:
+        '201':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/metadataFields:
+    get:
+      tags:
+      - Inventory
+      summary: Returns metadata fields available for a case
+      description: Use this operation to view the metadata fields associated with a case.
+      operationId: getCaseMetadataFields
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CaseMetadataField'
+  /cases/{caseId}/caseFunctions:
+    get:
+      tags:
+      - Inventory
+      summary: Case functions
+      description: Use this operation to list functions that are available to be run against this case.
+      operationId: getCaseFunctions
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  enum:
+                  - MIGRATE
+    post:
+      tags:
+      - Inventory
+      summary: Perform a function against a case
+      description: Use this operation to perform some function against a case.
+      operationId: performCaseFunction
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/CaseModification'
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /inventory/locations:
+    get:
+      tags:
+      - Inventory
+      summary: Returns the set of inventory locations
+      description: Use this operation to view the list of normalized inventory locations. Any case placed in any location in this list will be added to the case inventory during the next scheduled inventory scan.
+      operationId: getInventoryLocations
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /inventory:
+    put:
+      tags:
+      - Inventory
+      summary: Rescans your inventory
+      description: Use this operation to rescan your inventory. The inventory is scanned on startup by default and at a predefined regular interval.
+      operationId: scanInventory
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  type: string
+  /inventory/{caseId}:
+    get:
+      tags:
+      - Inventory
+      summary: Returns the digest information for a case
+      description: Use this operation to view the case digest for a given case, which is obtained without opening the case.
+      operationId: getCaseDigest
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/CaseDigest'
+  /inventory/digest:
+    get:
+      tags:
+      - Inventory
+      summary: Returns the set of case digests for all inventory locations
+      description: Use this operation to view the set of case digests for all inventory locations.
+      operationId: getInventoryDigest
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  $ref: '#/components/schemas/CaseDigest'
+  /v2/cases/{caseId}:
+    delete:
+      tags:
+      - Inventory
+      summary: Deletes a case asynchronously
+      description: Use this operation to delete a case asynchronously. This operation returns immediately with an async function key that can be used to monitor the deletion progress.
+      operationId: deleteCaseAsync
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: deleteAllDescendants
+        in: query
+        description: Delete child cases of a compound case
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: Async function response with key and location for monitoring progress
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+              example:
+                functionKey: 12451c5f-eaf9-4089-9a90-3df32944e5fc
+                location: http://localhost:8080/svc/v1/asyncFunctions/12451c5f-eaf9-4089-9a90-3df32944e5fc
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                Case Not Found:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+components:
+  examples:
+    ElasticsearchCaseCreation:
+      value:
+        name: ElasticssearchCase
+        location: inventory0
+        description: About My Elasticsearch Case
+        compound: false
+        investigator: Inspector Gadget
+        elasticSearchSettings:
+          cluster.name: myClusterName
+          index.number_of_shards: 1
+          index.number_of_replicas: 0
+          nuix.transport.hosts:
+          - 127.0.0.1
+          nuix.http.hosts:
+          - 127.0.0.1
+    CompoundCaseCreationResponse:
+      value:
+        caseId: 559710fa433a44c0a8b3a5805c4c8ba0
+        name: CompoundCase
+        path: /opt/nuix/cases/CompoundCase
+        description: About My compound Case
+        investigator: Inspector Gadget
+        creationDate: 1606248486451
+        compound: true
+        elastic: false
+        binaryStoreLocation: ''
+        indexId: ''
+        caseSize: 0
+        casePathParent: /opt/nuix/cases
+        caseInvestigationTimeZone: Etc/GMT
+        hasExclusions: null
+        hasNuixSystemTags: null
+        hasProductionSets: null
+        hasCalculatedAuditSize: null
+        casePath: /opt/nuix/cases/Compound
+        caseName: CompoundCase
+        caseDescription: About My compound Case
+        caseCreationDate: 1606248486451
+        caseInvestigator: Inspector Gadget
+    ElasticCaseResponse:
+      value:
+        caseId: 058d9a61faf04e4ca320cb64a166715b
+        name: ElasticCase
+        path: /opt/nuix/cases/ElasticCase
+        description: About My Elasticsearch Case
+        investigator: Inspector Gadget
+        creationDate: 1607687810636
+        compound: false
+        elastic: true
+        binaryStoreLocation: /opt/nuix/cases/ElasticCase/Stores/BinaryStore
+        indexId: nuix-058d9a61faf04e4ca320cb64a166715b
+        caseSize: 0
+        casePathParent: /opt/nuix/cases
+        caseInvestigationTimeZone: Etc/GMT
+        hasExclusions: null
+        hasNuixSystemTags: null
+        hasProductionSets: null
+        hasCalculatedAuditSize: null
+        casePath: /opt/nuix/cases/ElasticCase
+        caseDescription: About My Elasticsearch Case
+        caseCreationDate: 1607687810636
+        caseInvestigator: Inspector Gadget
+        caseName: ElasticCase
+    SimpleCaseCreation:
+      value:
+        name: SimpleCase
+        location: inventory0
+        description: About My simple Case
+        compound: false
+        investigator: Inspector Gadget
+    CompoundCaseCreation:
+      value:
+        name: CompoundCase
+        location: inventory0
+        description: About My compound Case
+        compound: true
+        investigator: Inspector Gadget
+    SimpleCaseCreationResponse:
+      value:
+        caseId: 559710fa433a44c0a8b3a5805c4c8ba0
+        name: SimpleCase
+        path: /opt/nuix/cases/SimpleCase
+        description: About My simple Case
+        investigator: Inspector Gadget
+        creationDate: 1606248486451
+        compound: false
+        elastic: false
+        binaryStoreLocation: ''
+        indexId: ''
+        caseSize: 0
+        casePathParent: /opt/nuix/cases
+        caseInvestigationTimeZone: Etc/GMT
+        hasExclusions: null
+        hasNuixSystemTags: null
+        hasProductionSets: null
+        hasCalculatedAuditSize: null
+        casePath: /opt/nuix/cases/SimpleCase
+        caseName: SimpleCase
+        caseDescription: About My simple Case
+        caseCreationDate: 1606248486451
+        caseInvestigator: Inspector Gadget
+  schemas:
+    CaseModification:
+      type: object
+      properties:
+        method:
+          type: string
+          description: The method of case modification.  Current this is only MIGRATE.
+          enum:
+          - MIGRATE
+    GenericResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Returns true or false.
+    ClusteredRestErrorResponse:
+      type: object
+      properties:
+        serverId:
+          type: string
+          description: The server ID of the server reporting the error.
+        developerMessage:
+          type: string
+          description: The technical description of the error.
+        userMessage:
+          type: string
+          description: The friendly error message.
+        additionalInfo:
+          type: object
+          description: Additional information about the error.
+          additionalProperties:
+            type: object
+            description: This is a map of additional properties.
+        errorCode:
+          type: string
+          description: The specific error code for the error from the list of available error codes.
+          enum:
+          - AUTHENTICATION_FAILED
+          - CASE_ACCESS_RESTRICTED
+          - CASE_LOCKED
+          - DELETE_DENIED
+          - DUPLICATE_CASES_DETECTED
+          - ENGINE_EXCEPTION
+          - FILE_TOO_LARGE
+          - INVALID_REQUEST_FORMAT
+          - INVALID_APPLICATION_RESPONSE
+          - INVALID_ARGUMENT
+          - ITEM_ACCESS_RESTRICTED
+          - LICENSE_EXCEPTION
+          - MEDIA_TYPE_NOT_SUPPORTED
+          - MEDIA_TYPE_NOT_ACCEPTABLE
+          - METHOD_NOT_ALLOWED
+          - NOT_IMPLEMENTED
+          - PRODUCTION_SET_FROZEN
+          - REQUIRED_ARGUMENT_MISSING
+          - RESOURCE_NOT_FOUND
+          - UNAUTHORISED
+          - UNKNOWN
+          - USER_SCRIPT_NOT_PROVIDED
+          - FOLDER_ALREADY_EXISTS
+          - CASE_LOCKED_BY_FUNCTION
+          - MISSING_THUMBNAIL
+          - ITEM_SET_ALREADY_EXISTS
+          - INVALID_LICENSE_TYPE_FOR_CASE
+          - SIMPLE_CASE_REQUIRED
+          - USER_ACCOUNT_LOCKED
+          - APPLICATION_NOT_REGISTERED
+          - INVALID_TEMPLATE
+          - DUPLICATE_RECORD
+          - CASE_MIGRATION_REQUIRED
+          - SERVICE_UNAVAILABLE
+          - RESPONSE_TOO_LARGE
+          - QUERY_PARSE_ERROR
+          - REMOTE_SYSTEM_ERROR
+          - FILE_SYSTEM_ERROR
+    CaseSubsetProcessingSettings:
+      type: object
+      properties:
+        analysisLanguage:
+          type: string
+          description: A supported language code.  en - English, ja - Japanese. Default is "en".
+          default: en
+        stopWords:
+          type: boolean
+          description: stopWords.  Default is false.
+          default: false
+        stemming:
+          type: boolean
+          description: If true, stems words using English rules before indexing (e.g. "fishing" -> "fish".) If false, no stemming is performed. Default is false.
+          default: false
+        enableExactQueries:
+          type: boolean
+          description: enableExactQueries.  Default is false.
+          default: false
+    CaseDeleteResponse:
+      type: object
+      properties:
+        caseId:
+          type: string
+          description: caseId
+        success:
+          type: boolean
+          description: success
+        errorMessage:
+          type: string
+          description: Error message if the delete operation failed
+        childCases:
+          description: The list of child cases deleted if the deleted case was a compound case
+          type: array
+          items:
+            $ref: '#/components/schemas/CaseDeleteResponse'
+    CaseDigest:
+      type: object
+      properties:
+        caseId:
+          type: string
+          description: The case's unique identifier
+        name:
+          type: string
+          description: The case name
+        path:
+          type: string
+          description: The path to the case
+        description:
+          type: string
+          description: The case description
+        investigator:
+          type: string
+          description: The investigator for this case
+        creationDate:
+          type: integer
+          description: The date/time this case was created, in milliseconds since epoch
+          format: int64
+        compound:
+          type: boolean
+          description: Whether this case is Simple or Compound
+        elastic:
+          type: boolean
+          description: Whether this is an Elastic case
+        binaryStoreLocation:
+          type: string
+          description: The binary store location for this case, if applicable
+        indexId:
+          type: string
+          description: The index id
+        productName:
+          type: string
+          description: The name of the product that created / opened this case
+        version:
+          type: string
+          description: The version of Nuix that most recently opened this case
+        isOpen:
+          type: boolean
+          description: Whether or not this case is currently open, which means something in REST is working with this case
+        childCases:
+          type: array
+          description: The child cases of this case, when applicable.  If the child case is known to this REST instance then the value will be the child case's GUID.  Otherwise it will be the absolute path to the child case
+          items:
+            type: string
+        url:
+          type: string
+          description: The URL of the REST instance that contains this case
+        serverId:
+          type: string
+          description: The Server ID of the REST instance that contains this case
+    CaseSubsetMetadata:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the case.  If not supplied the current time in milliseconds will be used.
+        description:
+          type: string
+          description: The case description
+        investigator:
+          type: string
+          description: The case investigator
+        elasticSearchSettings:
+          $ref: '#/components/schemas/ElasticSearchSettings'
+        binaryStoreLocation:
+          type: string
+          description: The binary store location for this case, if applicable
+    CaseMetadataField:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The metadata field name
+        type:
+          type: string
+          description: 'The metadata field type. Will be one of:<br/>SPECIAL: Metadata defined by the application such as GUID, Name, etc.<br/>PROPERTY: Regular metadata which was stored within an item.<br/>DERIVED: Metadata identifier using an arbitrary expression.<br/>EVIDENCE: Metadata assigned at the evidence level at load time.<br/>SCRIPTED: Metadata using an arbitrary scripted expression.<br/>CUSTOM: User-defined custom metadata.'
+    CreateCaseSubsetRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Query items that should be included in the subset. If a query is not supplied it defaults to an empty string, which returns all items.
+        location:
+          type: string
+          description: Where the subset case should be created.  e.g. inventory0, inventory1
+          default: inventory0
+        evidenceStoreCount:
+          type: integer
+          description: Specifies the maximum number of evidence stores to create.  Default is 1
+          format: int32
+          default: 1
+        includeFamilies:
+          type: boolean
+          description: Include item families in export.  Default is false
+          default: false
+        copyTags:
+          type: boolean
+          description: Copy tags from the source case to the destination case.  Default is false
+          default: false
+        copyComments:
+          type: boolean
+          description: Copy comments from the source case to the destination case.  Default is false
+          default: false
+        copyCustodians:
+          type: boolean
+          description: Copy custodians from the source case to the destination case.  Default is false
+          default: false
+        copyItemSets:
+          type: boolean
+          description: Copy item sets from the source case to the destination case.  Default is false
+          default: false
+        copyClassifiers:
+          type: boolean
+          description: Copy classifiers from the source case to the destination case.  Default is false
+          default: false
+        copyMarkupSets:
+          type: boolean
+          description: Copy markup sets from the source case to the destination case.  Default is false
+          default: false
+        copyProductionSets:
+          type: boolean
+          description: Copy production sets from the source case to the destination case.  Default is false
+          default: false
+        copyClusters:
+          type: boolean
+          description: Copy clusters from the source case to the destination case.  Default is false
+          default: false
+        copyCustomMetadata:
+          type: boolean
+          description: Copy custom metadata from the source case to the destination case.  Default is false
+          default: false
+        caseMetadata:
+          $ref: '#/components/schemas/CaseSubsetMetadata'
+        processingSettings:
+          $ref: '#/components/schemas/CaseSubsetProcessingSettings'
+    AsyncFunctionResponse:
+      type: object
+      properties:
+        functionKey:
+          type: string
+          description: The function key to use when querying status.
+        location:
+          type: string
+          description: The location URL for querying status.  (http://nuix-restful-service:8080/svc/v1/asyncFunctions/{functionKey})
+    CaseResponse:
+      type: object
+      properties:
+        caseId:
+          type: string
+          description: The case's unique identifier
+        name:
+          type: string
+          description: The case name
+        path:
+          type: string
+          description: The path to the case
+        description:
+          type: string
+          description: The case description
+        investigator:
+          type: string
+          description: The investigator for this case
+        creationDate:
+          type: integer
+          description: The date/time this case was created, in milliseconds since epoch
+          format: int64
+        compound:
+          type: boolean
+          description: Whether this case is Simple or Compound
+        elastic:
+          type: boolean
+          description: Whether this is an Elastic case
+        binaryStoreLocation:
+          type: string
+          description: The binary store location for this case, if applicable
+        indexId:
+          type: string
+          description: The index id
+        caseSize:
+          type: integer
+          description: The size of the case on disk, in bytes
+          format: int64
+        casePathParent:
+          type: string
+          description: Path to the parent directory of the case
+        caseInvestigationTimeZone:
+          type: string
+          description: The investigation time zone, e.g. America/New_York
+        hasExclusions:
+          type: boolean
+          description: True if the case has exclusions
+        hasNuixSystemTags:
+          type: boolean
+          description: True if the case has Nuix system tags
+        hasProductionSets:
+          type: boolean
+          description: True if the case has production sets
+        hasCalculatedAuditSize:
+          type: boolean
+          description: True if the case has a calculated audit size
+        caseName:
+          type: string
+          description: Deprecated; use 'name' instead
+        casePath:
+          type: string
+          description: Deprecated; use 'path' instead
+        caseDescription:
+          type: string
+          description: Deprecated; use 'description' instead
+        caseCreationDate:
+          type: integer
+          description: Deprecated; use 'creationDate' instead
+        caseInvestigator:
+          type: string
+          description: Deprecated; use 'investigator' instead
+    ElasticSearchSettings:
+      type: object
+      properties:
+        additionalSettings:
+          type: object
+          additionalProperties:
+            type: string
+          description: Additional ElasticSearch settings to include. This is a flattened map (e.g. 'index.refresh_interval'). This is an advanced feature and should only be used by those familiar with ElasticSearch. Values that can be directly specified elsewhere in this request will be ignored if they are provided in this map. See ElasticSearch documentation for more info. This field is deprecated. Additional settings can now be passed in under ElasticSearchSettings within the same level of the other settings.
+          deprecated: true
+        cluster.name:
+          type: string
+          description: Name of the cluster to join. See ElasticSearch documentation for more info.
+        index.number_of_shards:
+          type: integer
+          description: Number of shards to allocate for the index. Must be greater than zero. Cannot be changed after creating the index. See ElasticSearch documentation for more info.
+          format: int32
+        index.number_of_replicas:
+          type: integer
+          description: Number of replicas to use. Must be a positive number. This can be modified after creation, but only through ElasticSearch APIs. See ElasticSearch documentation for more info.
+          format: int32
+        index.refresh_interval:
+          type: string
+          description: Refresh interval to use. Defaults to '60s'. See ElasticSearch documentation for more info.
+        nuix.index.auto_close:
+          type: boolean
+          description: Should closing the case via Nuix close the index in ElasticSearch? Defaults to 'false'.
+        nuix.http.hosts:
+          type: array
+          description: List of hosts (host:port) to communicate with the Elasticsearch cluster.  If not provided nuix.transport.hosts will be used.
+          items:
+            type: string
+        nuix.transport.hosts:
+          type: array
+          description: List of hosts (host:port) to communicate with the cluster. This is a round-robin, load-balanced list. Other nodes may be discovered in the cluster. If this and 'discovery.zen.ping.unicast.hosts' are not provided it defaults to localhost.
+          items:
+            type: string
+        xpack.security.user:
+          type: string
+          description: The X-pack user name for transport level credentials. Note the password is not included here as Elastic documentation recommends. Instead it is securely stored in a separate field xpack.security.password.
+        xpack.security.password:
+          type: string
+          description: The X-Pack password for the user.
+        xpack.security.transport.ssl.enabled:
+          type: boolean
+          description: Set this to true to enable SSL connections to nodes running X-pack.
+        xpack.security.transport.ssl.truststore.path:
+          type: string
+          description: The path for the keystore that contains the certificates to trust. It must be either a Java keystore (jks) or a PKCS#12 file.
+        xpack.security.transport.ssl.truststore.type:
+          type: string
+          description: Set this to PKCS12 to indicate that the truststore is a PKCS#12 file or jks for a Java keystore file.
+        xpack.security.transport.ssl.keystore.path:
+          type: string
+          description: The path for the keystore file that contains a private key and certificate. It must be either a Java keystore (jks) or a PKCS#12 file.
+        xpack.security.transport.ssl.keystore.type:
+          type: string
+          description: The format of the keystore file. It must be either jks or PKCS12. If the keystore path ends in ".p12", ".pfx", or ".pkcs12", this setting defaults to PKCS12. Otherwise, it defaults to jks.
+        xpack.security.transport.ssl.verification_mode:
+          type: string
+          description: Controls the verification of certificates.  Valid values are full, certificate, and none.
+        xpack.security.http.ssl.enabled:
+          type: boolean
+          description: Used to enable or disable TLS/SSL on the HTTP networking layer, which Elasticsearch uses to communicate with other clients. The default is false.
+        xpack.security.http.ssl.key:
+          type: string
+          description: The path to the SSL key file for this client's identity in PEM format if HTTP client authentication is required. It must be signed by the cluster's trusted CA.
+        xpack.security.http.ssl.key_passphrase:
+          type: string
+          description: The passphrase that is used to decrypt the private key. Since the key might not be encrypted, this value is optional.
+        xpack.security.http.ssl.keystore.key_password:
+          type: string
+          description: The password for the key in the keystore. The default is the keystore password
+        xpack.security.http.ssl.keystore.path:
+          type: string
+          description: The path for the keystore file that contains a private key and certificate. It must be either a Java keystore (jks) or a PKCS#12 file.
+        xpack.security.http.ssl.keystore.type:
+          type: string
+          description: The format of the keystore file. It must be either jks or PKCS12. If the keystore path ends in ".p12", ".pfx", or ".pkcs12", this setting defaults to PKCS12. Otherwise, it defaults to jks.
+        xpack.security.http.ssl.keystore.password:
+          type: string
+          description: The password for the keystore.
+        xpack.security.http.ssl.truststore.path:
+          type: string
+          description: The path for the keystore that contains the certificates to trust. It must be either a Java keystore (jks) or a PKCS#12 file.
+        xpack.security.http.ssl.truststore.type:
+          type: string
+          description: Set this to PKCS12 to indicate that the truststore is a PKCS#12 file or jks for a Java keystore file.
+        xpack.security.http.ssl.certificate:
+          type: string
+          description: Specifies the path for the PEM encoded certificate (or certificate chain) that is associated with the key.
+        xpack.security.http.ssl.certificate_authorities:
+          type: string
+          description: List of paths to PEM encoded certificate files that should be trusted.
+        nuix.auth.username:
+          type: string
+          description: The authenticated user's username. Used with X-Pack and SearchGuard, this can be different to the transport level credentials.
+        nuix.auth.password:
+          type: string
+          description: The authenticated user's password.
+        searchguard.ssl.transport.keystore_filepath:
+          type: string
+          description: The path to the SSL keystore for this client's identity in JKS format. It contains client's key and certificate signed by the cluster's trusted CA allowing the cluster to trust Nuix.
+        searchguard.ssl.transport.keystore_password:
+          type: string
+          description: The password to the keystore.
+        searchguard.ssl.transport.truststore_filepath:
+          type: string
+          description: The path to the SSL truststore for the client's trusted CAs in JKS format. It contains the CA certificate that signed the cluster's certificates allowing Nuix to trust the cluster.
+        searchguard.ssl.transport.truststore_password:
+          type: string
+          description: The password to the truststore.
+      required:
+      - cluster.name
+      - nuix.transport.hosts
+    CreateCaseRequest:
+      type: object
+      properties:
+        compound:
+          type: boolean
+          description: Determines whether the case is simple or compound.  Default is false
+          default: false
+        location:
+          type: string
+          description: Where the case should be created.  e.g. inventory0, inventory1
+          default: inventory0
+        name:
+          type: string
+          description: The name of the case.  e.g. mycase
+        description:
+          type: string
+          description: The case description
+        investigator:
+          type: string
+          description: The case investigator
+        elasticSearchSettings:
+          $ref: '#/components/schemas/ElasticSearchSettings'
+        binaryStoreLocation:
+          type: string
+          description: Path to file system binary store for this case. It can be shared by cases and should be accessible from all workers. Defaults to null, which means binary store will be within the on-disk portion of the case.
+      required:
+      - name
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: nuix-auth-token
+      in: header
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

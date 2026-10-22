@@ -1,0 +1,35 @@
+generated: '2026-10-21'
+method: searched
+source:
+- https://developer.nuix.com/latest/ecc/auth/home.html
+- https://developer.nuix.com/latest/ecc/auth/basic.html
+- https://developer.nuix.com/latest/ecc/auth/bearer.html
+standards:
+- id: rfc7235
+  conforms: claimed
+  evidence: 'ECC REST API docs: "All requests to the server must authenticate using the Authentication header as defined in RFC-7235."'
+- id: rfc7617
+  conforms: claimed
+  evidence: 'ECC Basic Authentication: "must use the ''Basic'' authentication scheme name as defined in RFC-7617".'
+- id: rfc6750
+  conforms: claimed
+  evidence: 'ECC Bearer Authentication: "must use the Bearer authentication scheme name as defined in RFC-6750, followed by an access token string."'
+- id: oauth2
+  conforms: partial
+  evidence: ECC Bearer tokens are obtained from an external IdP - Keycloak (password grant at /auth/realms/{realm}/protocol/openid-connect/token)
+    or Azure AD (client_credentials at login.microsoftonline.com/{tenantid}/oauth2/v2.0/token). The ECC OpenAPI specs declare only http basic.
+- id: openapi-3.0
+  conforms: true
+  evidence: the document declares 3.0.1
+- id: openapi-3.2
+  conforms: true
+  evidence: the document declares 3.2.0
+- id: rfc9457
+  conforms: false
+  evidence: no response declares application/problem+json
+- id: idempotency
+  conforms: false
+  evidence: no idempotency key parameter on mutating operations
+- id: pagination
+  conforms: true
+  evidence: list operations take limit

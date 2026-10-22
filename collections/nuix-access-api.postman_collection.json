@@ -1,0 +1,396 @@
+{
+  "info": {
+    "_postman_id": "e929bfaf-6359-4274-87f1-01e49533149f",
+    "name": "Nuix REST-API Reference Access API",
+    "description": "Welcome to the Nuix REST API documentation. From here you can access all available REST APIs and execute queries against your running REST instance.\n\n# Authentication Changes\n\nThe `nuix-auth-token` header is being deprecated in favor of standard JWT. The header will be removed in a\nfuture release. Until the removal of the header, the Nuix REST API will accept the JWT in either the\n`nuix-auth-token` header field or the `Authorization` header field prefixed by `Bearer`.\n\nContact Support:\n Name: Nuix",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:20:50.000Z",
+    "updatedAt": "2026-10-21T21:20:50.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-e929bfaf-6359-4274-87f1-01e49533149f"
+  },
+  "item": [
+    {
+      "name": "authenticatedUsers",
+      "item": [
+        {
+          "name": "login",
+          "item": [
+            {
+              "name": "Log in and acquire a licence",
+              "id": "f357800c-b220-4701-92aa-31063001681e",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<string>\",\n  \"workers\": \"<integer>\",\n  \"licenceShortName\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/authenticatedUsers/login",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authenticatedUsers",
+                    "login"
+                  ]
+                },
+                "description": "Use this operation to log in and get an authentication token or licence. The authentication token gives you access to the REST API."
+              },
+              "response": [
+                {
+                  "id": "06cc7f64-6432-4e64-9025-b2612463a434",
+                  "name": "A successful login returns a response that contains the authentication token (authToken) to be submitted in the header of all subsequent requests.  Additionally, the response contains the username, the short name of the license requested, and the number o",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<string>\",\n  \"workers\": \"<integer>\",\n  \"licenceShortName\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/authenticatedUsers/login",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "authenticatedUsers",
+                        "login"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/vnd.nuix.v1+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"username\": \"<string>\",\n  \"authToken\": \"<string>\",\n  \"licenseShortName\": \"<string>\",\n  \"clusterSystemLicenseShortName\": \"<string>\",\n  \"workerCount\": \"<integer>\",\n  \"workersGranted\": \"<integer>\"\n}",
+                  "createdAt": "2026-10-21T21:20:51.000Z",
+                  "updatedAt": "2026-10-21T21:20:51.000Z",
+                  "uid": "35240-06cc7f64-6432-4e64-9025-b2612463a434"
+                },
+                {
+                  "id": "a0e38a33-4f8c-4db8-82a0-b552cc62c623",
+                  "name": "Invalid username and/or password.\n",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<string>\",\n  \"workers\": \"<integer>\",\n  \"licenceShortName\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/authenticatedUsers/login",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "authenticatedUsers",
+                        "login"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"Lorem_747\": {}\n  },\n  \"errorCode\": \"REMOTE_SYSTEM_ERROR\"\n}",
+                  "createdAt": "2026-10-21T21:20:51.000Z",
+                  "updatedAt": "2026-10-21T21:20:51.000Z",
+                  "uid": "35240-a0e38a33-4f8c-4db8-82a0-b552cc62c623"
+                },
+                {
+                  "id": "8699c6d3-4da4-45f6-baa4-8142479f9b0d",
+                  "name": "Returned by the server when REST is unable to obtain the number of workers requested or the specified license type.\n",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<string>\",\n  \"workers\": \"<integer>\",\n  \"licenceShortName\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/authenticatedUsers/login",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "authenticatedUsers",
+                        "login"
+                      ]
+                    }
+                  },
+                  "status": "Conflict",
+                  "code": 409,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"Lorem_747\": {}\n  },\n  \"errorCode\": \"REMOTE_SYSTEM_ERROR\"\n}",
+                  "createdAt": "2026-10-21T21:20:51.000Z",
+                  "updatedAt": "2026-10-21T21:20:51.000Z",
+                  "uid": "35240-8699c6d3-4da4-45f6-baa4-8142479f9b0d"
+                }
+              ],
+              "createdAt": "2026-10-21T21:20:50.000Z",
+              "updatedAt": "2026-10-21T21:20:50.000Z",
+              "uid": "35240-f357800c-b220-4701-92aa-31063001681e"
+            }
+          ],
+          "id": "3e210c3d-45a5-443f-8754-e19718a641bf",
+          "createdAt": "2026-10-21T21:20:50.000Z",
+          "updatedAt": "2026-10-21T21:20:50.000Z",
+          "uid": "35240-3e210c3d-45a5-443f-8754-e19718a641bf"
+        },
+        {
+          "name": "{username}",
+          "item": [
+            {
+              "name": "Log out",
+              "id": "2d9373db-c0b1-4dac-b80d-ba4b5dce14e8",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/authenticatedUsers/:username?forceSynchronous=false&ignoreCompleted=true",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authenticatedUsers",
+                    ":username"
+                  ],
+                  "query": [
+                    {
+                      "description": "Forces a synchronous logout. This defaults to false, which means that the user is asynchronously logged out but their token is not made invalid immediately. The session remains active if they are running any functions or have functions queued. Even when set to true, the aforementioned holds true. In that case, the server will attempt to log the user out immediately and the HTTP request will wait till that happens. The server will try three times, with a 5 second sleep in between. If the user cannot be logged out due to queued or running functions then the call returns and the user will eventually be logged out due to being idle.\n",
+                      "key": "forceSynchronous",
+                      "value": "false"
+                    },
+                    {
+                      "description": "Ignores functions that have already completed.  This defaults to true. However, if set to false then the functions that recently completed but have not been cleared yet will be counted in the list of 'running or queued functions' and so, the user's session will not end immediately.\n",
+                      "key": "ignoreCompleted",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "796a2adb-1668-4c42-abba-a436f899be91",
+                      "key": "username",
+                      "value": "<string>",
+                      "description": "(Required) Username associated with the licence"
+                    }
+                  ]
+                },
+                "description": "Logs out the session associated with the provided authentication token."
+              },
+              "response": [
+                {
+                  "id": "c4c5f791-e4dc-49fb-92e1-390451728ef2",
+                  "name": "default response",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/authenticatedUsers/:username?forceSynchronous=false&ignoreCompleted=true",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "authenticatedUsers",
+                        ":username"
+                      ],
+                      "query": [
+                        {
+                          "description": "Forces a synchronous logout. This defaults to false, which means that the user is asynchronously logged out but their token is not made invalid immediately. The session remains active if they are running any functions or have functions queued. Even when set to true, the aforementioned holds true. In that case, the server will attempt to log the user out immediately and the HTTP request will wait till that happens. The server will try three times, with a 5 second sleep in between. If the user cannot be logged out due to queued or running functions then the call returns and the user will eventually be logged out due to being idle.\n",
+                          "key": "forceSynchronous",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Ignores functions that have already completed.  This defaults to true. However, if set to false then the functions that recently completed but have not been cleared yet will be counted in the list of 'running or queued functions' and so, the user's session will not end immediately.\n",
+                          "key": "ignoreCompleted",
+                          "value": "true"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "username"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/vnd.nuix.v1+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"success\": \"<boolean>\"\n}",
+                  "createdAt": "2026-10-21T21:20:51.000Z",
+                  "updatedAt": "2026-10-21T21:20:51.000Z",
+                  "uid": "35240-c4c5f791-e4dc-49fb-92e1-390451728ef2"
+                }
+              ],
+              "createdAt": "2026-10-21T21:20:50.000Z",
+              "updatedAt": "2026-10-21T21:20:50.000Z",
+              "uid": "35240-2d9373db-c0b1-4dac-b80d-ba4b5dce14e8"
+            }
+          ],
+          "id": "2f246eba-f18c-4ae3-aab1-2087ea0feabd",
+          "createdAt": "2026-10-21T21:20:50.000Z",
+          "updatedAt": "2026-10-21T21:20:50.000Z",
+          "uid": "35240-2f246eba-f18c-4ae3-aab1-2087ea0feabd"
+        }
+      ],
+      "id": "efa534fa-7186-4d5b-b529-8f04dddb82e9",
+      "createdAt": "2026-10-21T21:20:50.000Z",
+      "updatedAt": "2026-10-21T21:20:50.000Z",
+      "uid": "35240-efa534fa-7186-4d5b-b529-8f04dddb82e9"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "nuix-auth-token",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "/nuix-restful-service/svc"
+    }
+  ]
+}

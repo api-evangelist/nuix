@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/main/json-schema/nuix-launch-case-collection-by-path-request-schema.json",
+  "title": "launchCaseCollectionByPathRequest",
+  "x-generated": "2026-10-21",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/nuix-collection-and-survey-api-openapi.yml#/components/schemas/launchCaseCollectionByPathRequest",
+  "type": "object",
+  "properties": {
+    "caseId": {
+      "type": "integer",
+      "description": "id of the case within which to start a collection"
+    },
+    "name": {
+      "type": "string",
+      "description": "name of the new collection"
+    },
+    "computerId": {
+      "type": "string",
+      "description": "GUID value that identifies the computer"
+    },
+    "configurationId": {
+      "type": "integer",
+      "description": "id of the collection configuration to use for collection criteria"
+    },
+    "location": {
+      "type": "string",
+      "description": "destination of the collection (if blank uses the location defined in the specified collection configuration)"
+    },
+    "label": {
+      "type": "string",
+      "description": "optional, label to be assigned to all tasks within this collection"
+    },
+    "autodetect": {
+      "type": "string",
+      "description": "optional, auto-detect option to be used instead of files/folders.\n\nIf specified, must be `AllLocalVolumes`.\n\nNote that if autodetect is used, the folders and files fields are ignored"
+    },
+    "folders": {
+      "type": "array",
+      "description": "full path(s) of folder(s) to collect from on each target computer",
+      "items": {
+        "type": "string",
+        "description": "full path"
+      }
+    },
+    "files": {
+      "type": "array",
+      "description": "full path(s) of file(s) to collect from each target computer",
+      "items": {
+        "type": "string",
+        "description": "full path"
+      }
+    },
+    "folderSpec": {
+      "type": "array",
+      "description": "optional way to specify folders, allowing for exclusions within each specified folder",
+      "items": {
+        "$ref": "#/$defs/FolderSpec"
+      }
+    }
+  },
+  "$defs": {
+    "FolderSpec": {
+      "type": "object",
+      "properties": {
+        "folder": {
+          "type": "string",
+          "description": "full path of the folder to collect from."
+        },
+        "excludeFolders": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "optional, path(s) of folder(s) to exclude.  These are relative paths, relative to the `folder` to collect from."
+          }
+        },
+        "excludeFiles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "optional, path(s) of file(s) to exclude.  These are relative paths, relative to the `folder` to collect from."
+          }
+        },
+        "excludeWildcards": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "optional, wildcard specification(s) (e.g *.pdf) specifying files to exclude from `folder` path.\n\nNote that wildcard exclusions are recursive under `folder` path."
+          }
+        }
+      }
+    }
+  }
+}

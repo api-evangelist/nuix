@@ -1,316 +1,220 @@
 {
+  "info": {
+    "_postman_id": "7dc02643-40de-4080-81db-3161f7ca088a",
+    "name": "NUIX ECC REST API Command Reference Log API",
+    "description": "Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs. You can also send REST commands to your running ECC Server, as well as view the responses.\n\n**Note\\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.\n\n**Note\\:** This command reference has been updated for Nuix ECC version 9.12.0.\n\nContact Support:\n Name: Nuix\n Email: APISupport@nuix.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:20:31.000Z",
+    "updatedAt": "2026-10-21T21:20:31.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-7dc02643-40de-4080-81db-3161f7ca088a"
+  },
   "item": [
     {
-      "id": "b3a38763-ad28-422d-8457-4c4f7ed85a75",
-      "name": "Log",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "v2",
       "item": [
         {
-          "id": "adaa4031-3b0c-4d6f-963a-9041658b6e8b",
-          "name": "Returns the log entries (errors and warnings) associated with the specified job",
-          "request": {
-            "name": "Returns the log entries (errors and warnings) associated with the specified job",
-            "description": {
-              "content": "Returns the log entries (errors and warnings) associated with the specified job",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v2",
-                "logs"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "jobId",
-                  "value": "<integer>",
-                  "description": "(Required) ID of the job for which log information should be displayed"
-                }
-              ],
-              "variable": [
-                {
-                  "description": "protocol for communication (This can only be one of http,https)",
-                  "type": "any",
-                  "value": "{{protocol}}",
-                  "key": "protocol"
-                },
-                {
-                  "description": "The location which the ECC resides",
-                  "type": "any",
-                  "value": "{{address}}",
-                  "key": "address"
-                },
-                {
-                  "description": "80, 443 or alternative",
-                  "type": "any",
-                  "value": "{{port}}",
-                  "key": "port"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "logs",
+          "item": [
             {
-              "id": "e87b275e-60f0-41c0-a24c-b7bb3ce24969",
-              "name": "Log Listing was submitted successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "logs"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "jobId",
-                      "value": "<integer>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "description": "protocol for communication (This can only be one of http,https)",
-                      "type": "any",
-                      "value": "{{protocol}}",
-                      "key": "protocol"
-                    },
-                    {
-                      "description": "The location which the ECC resides",
-                      "type": "any",
-                      "value": "{{address}}",
-                      "key": "address"
-                    },
-                    {
-                      "description": "80, 443 or alternative",
-                      "type": "any",
-                      "value": "{{port}}",
-                      "key": "port"
-                    }
-                  ]
-                },
+              "name": "Returns the log entries (errors and warnings) associated with the specified job",
+              "id": "c4ae573a-ae4e-4018-b0a0-f405d25354ca",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"logs\": [\n    {\n      \"name\": \"Warning\",\n      \"scope\": \"Client\",\n      \"severity\": \"Warning\",\n      \"grouping\": \"\",\n      \"jobId\": 103,\n      \"userId\": null,\n      \"description\": \"Could NOT Open and Read Owner Info on First Try - Succeeded with Snapshot\",\n      \"date\": \"7/18/20 9:08 PM\",\n      \"computerId\": \"\"\n    },\n    {\n      \"name\": \"Error\",\n      \"scope\": \"Client\",\n      \"severity\": \"Error\",\n      \"grouping\": \"\",\n      \"jobId\": 103,\n      \"userId\": null,\n      \"description\": \"Job cancelled by user.\",\n      \"date\": \"7/18/20 9:09 PM\",\n      \"computerId\": \"\"\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "5011fa66-186e-452e-a475-46809907406d",
-              "name": "No Content",
-              "originalRequest": {
                 "url": {
+                  "raw": "{{baseUrl}}/v2/logs?jobId=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
                   "path": [
                     "v2",
                     "logs"
                   ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
                   "query": [
                     {
+                      "description": "(Required) ID of the job for which log information should be displayed",
                       "key": "jobId",
                       "value": "<integer>"
                     }
-                  ],
-                  "variable": [
-                    {
-                      "description": "protocol for communication (This can only be one of http,https)",
-                      "type": "any",
-                      "value": "{{protocol}}",
-                      "key": "protocol"
-                    },
-                    {
-                      "description": "The location which the ECC resides",
-                      "type": "any",
-                      "value": "{{address}}",
-                      "key": "address"
-                    },
-                    {
-                      "description": "80, 443 or alternative",
-                      "type": "any",
-                      "value": "{{port}}",
-                      "key": "port"
-                    }
                   ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                }
               },
-              "status": "No Content",
-              "code": 204,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "id": "daa3268b-230a-4bb5-99da-e022854f4e7e",
+                  "name": "Log Listing was submitted successfully",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/logs?jobId=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "logs"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) ID of the job for which log information should be displayed",
+                          "key": "jobId",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"logs\": [\n    {\n      \"name\": \"Error\",\n      \"scope\": \"Client\",\n      \"severity\": \"Error\",\n      \"grouping\": \"<string>\",\n      \"jobId\": \"<integer>\",\n      \"userId\": \"<integer,null>\",\n      \"description\": \"<string,null>\",\n      \"date\": \"<string>\",\n      \"computerId\": \"<string>\"\n    },\n    {\n      \"name\": \"Warning\",\n      \"scope\": \"Server\",\n      \"severity\": \"Warning\",\n      \"grouping\": \"<string>\",\n      \"jobId\": \"<integer>\",\n      \"userId\": \"<integer,null>\",\n      \"description\": \"<string,null>\",\n      \"date\": \"<string>\",\n      \"computerId\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-21T21:20:32.000Z",
+                  "updatedAt": "2026-10-21T21:20:32.000Z",
+                  "uid": "35240-daa3268b-230a-4bb5-99da-e022854f4e7e"
+                },
+                {
+                  "id": "7b9d9c98-ae6e-4c8c-9e44-120bf13e1452",
+                  "name": "No Content",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/logs?jobId=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "logs"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) ID of the job for which log information should be displayed",
+                          "key": "jobId",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"id\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:20:32.000Z",
+                  "updatedAt": "2026-10-21T21:20:32.000Z",
+                  "uid": "35240-7b9d9c98-ae6e-4c8c-9e44-120bf13e1452"
+                },
+                {
+                  "id": "b2cb7a04-200a-4c31-a992-7cb168abf856",
+                  "name": "error response - log entries not retrieved",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/logs?jobId=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "logs"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) ID of the job for which log information should be displayed",
+                          "key": "jobId",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"id\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:20:32.000Z",
+                  "updatedAt": "2026-10-21T21:20:32.000Z",
+                  "uid": "35240-b2cb7a04-200a-4c31-a992-7cb168abf856"
                 }
               ],
-              "body": "{\n  \"code\": 204,\n  \"message\": \"No Content.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "7897bb49-16df-42b0-87b2-68339ac55d6c",
-              "name": "error response - log entries not retrieved",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "logs"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "jobId",
-                      "value": "<integer>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "description": "protocol for communication (This can only be one of http,https)",
-                      "type": "any",
-                      "value": "{{protocol}}",
-                      "key": "protocol"
-                    },
-                    {
-                      "description": "The location which the ECC resides",
-                      "type": "any",
-                      "value": "{{address}}",
-                      "key": "address"
-                    },
-                    {
-                      "description": "80, 443 or alternative",
-                      "type": "any",
-                      "value": "{{port}}",
-                      "key": "port"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": 400,\n  \"id\": 101,\n  \"message\": \"Job ID was not found\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-21T21:20:32.000Z",
+              "updatedAt": "2026-10-21T21:20:32.000Z",
+              "uid": "35240-c4ae573a-ae4e-4018-b0a0-f405d25354ca"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "b84073cb-2005-4a73-8558-8836dbd81a61",
+          "createdAt": "2026-10-21T21:20:32.000Z",
+          "updatedAt": "2026-10-21T21:20:32.000Z",
+          "uid": "35240-b84073cb-2005-4a73-8558-8836dbd81a61"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "description": {
-        "content": "protocol for communication (This can only be one of http,https)",
-        "type": "text/plain"
-      },
-      "type": "any",
-      "value": "https",
-      "key": "protocol"
-    },
-    {
-      "description": {
-        "content": "The location which the ECC resides",
-        "type": "text/plain"
-      },
-      "type": "any",
-      "value": "127.0.0.1",
-      "key": "address"
-    },
-    {
-      "description": {
-        "content": "80, 443 or alternative",
-        "type": "text/plain"
-      },
-      "type": "any",
-      "value": "80",
-      "key": "port"
-    },
-    {
-      "type": "string",
-      "value": "{{protocol}}://{{address}}:{{port}}/api/ecc",
-      "key": "baseUrl"
+      "id": "29ae6a23-982f-4b52-aca8-cb714f64782c",
+      "createdAt": "2026-10-21T21:20:32.000Z",
+      "updatedAt": "2026-10-21T21:20:32.000Z",
+      "uid": "35240-29ae6a23-982f-4b52-aca8-cb714f64782c"
     }
   ],
   "auth": {
@@ -318,21 +222,32 @@
     "basic": [
       {
         "key": "username",
-        "value": "{{basicAuthUsername}}"
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
       },
       {
         "key": "password",
-        "value": "{{basicAuthPassword}}"
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "dfa67eae-e4fb-4d15-9c9b-2d53f86a8c24",
-    "name": "NUIX ECC REST API Command Reference Case Log API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.\n\n**Note\\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.\n\n**Note\\:** This command reference has been updated for Nuix ECC version 9.12.0.\n\nContact Support:\n Name: Nuix\n Email: APISupport@nuix.com",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "protocol",
+      "value": "https"
+    },
+    {
+      "key": "address",
+      "value": "127.0.0.1"
+    },
+    {
+      "key": "port",
+      "value": "80"
+    },
+    {
+      "key": "baseUrl",
+      "value": "{{protocol}}://{{address}}:{{port}}/api/ecc"
     }
-  }
+  ]
 }

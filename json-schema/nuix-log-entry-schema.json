@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/main/json-schema/nuix-log-entry-schema.json",
+  "title": "LogEntry",
+  "x-generated": "2026-10-21",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/nuix-log-api-openapi.yml#/components/schemas/LogEntry",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "name of entry, either `Error` or `Warning`",
+      "enum": [
+        "Error",
+        "Warning"
+      ]
+    },
+    "scope": {
+      "type": "string",
+      "description": "defines the scope of the entry, either `Client` or `Server`",
+      "enum": [
+        "Client",
+        "Server"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "description": "Log entry severity, one of `Error`, `Warning`, `Info`, or `Debug`",
+      "enum": [
+        "Error",
+        "Warning",
+        "Info",
+        "Debug"
+      ]
+    },
+    "grouping": {
+      "type": "string",
+      "description": "grouping for this log entry"
+    },
+    "jobId": {
+      "type": "integer",
+      "description": "id of the job the log entry is associated with"
+    },
+    "userId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "id of the ECC user logged in when the log entry was created"
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "description of the event logged"
+    },
+    "date": {
+      "type": "string",
+      "description": "date and time of the log entry"
+    },
+    "computerId": {
+      "type": "string",
+      "description": "UUID of the computer on which the event occurred"
+    }
+  }
+}

@@ -1,0 +1,3076 @@
+{
+  "info": {
+    "_postman_id": "fccba49b-b117-4f9d-98f7-fd71e77f5f78",
+    "name": "Nuix REST-API Reference Resources API",
+    "description": "Welcome to the Nuix REST API documentation. From here you can access all available REST APIs and execute queries against your running REST instance.\n\n# Authentication Changes\n\nThe `nuix-auth-token` header is being deprecated in favor of standard JWT. The header will be removed in a\nfuture release. Until the removal of the header, the Nuix REST API will accept the JWT in either the\n`nuix-auth-token` header field or the `Authorization` header field prefixed by `Bearer`.\n\nContact Support:\n Name: Nuix",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:21:43.000Z",
+    "updatedAt": "2026-10-21T21:21:44.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-fccba49b-b117-4f9d-98f7-fd71e77f5f78"
+  },
+  "item": [
+    {
+      "name": "kinds",
+      "item": [
+        {
+          "name": "Returns all item kinds",
+          "id": "11341d85-5630-4dc5-a423-5905e3b3f246",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v1+json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/kinds",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "kinds"
+              ]
+            },
+            "description": "Use this operation to view the item kinds currently available with this API. A kind is a collection of types which are similar and grouped together. These are not case specific. This is useful for analysis."
+          },
+          "response": [
+            {
+              "id": "fcbd042f-39b2-41c0-8b54-54875e246c2b",
+              "name": "The list of item kinds.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/kinds",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "kinds"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"name\": \"<string>\",\n    \"localisedName\": \"<string>\"\n  },\n  {\n    \"name\": \"<string>\",\n    \"localisedName\": \"<string>\"\n  }\n]",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-fcbd042f-39b2-41c0-8b54-54875e246c2b"
+            }
+          ],
+          "createdAt": "2026-10-21T21:21:44.000Z",
+          "updatedAt": "2026-10-21T21:21:44.000Z",
+          "uid": "35240-11341d85-5630-4dc5-a423-5905e3b3f246"
+        }
+      ],
+      "id": "7bffec0f-5cc9-488e-b4d8-d2d6525db46d",
+      "createdAt": "2026-10-21T21:21:44.000Z",
+      "updatedAt": "2026-10-21T21:21:44.000Z",
+      "uid": "35240-7bffec0f-5cc9-488e-b4d8-d2d6525db46d"
+    },
+    {
+      "name": "searchMacros",
+      "item": [
+        {
+          "name": "Returns all search macros names and expansions",
+          "id": "bbe39e0f-973b-4340-b74d-9313a79a695d",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v1+json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/searchMacros",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "searchMacros"
+              ]
+            },
+            "description": "Use this operation to view the search macros names and expansions for all cases. If there aren't any search macros available, the returned list will be empty. Macros are used to identify relevant items and screen them for information. These are useful when the screening process needs to be repeated regularly."
+          },
+          "response": [
+            {
+              "id": "46fb2da4-28ec-41ce-a98a-433a37a4402c",
+              "name": "Structured search macro response.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/searchMacros",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "searchMacros"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"files\": [\n    {\n      \"name\": \"<string>\",\n      \"expansion\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"expansion\": \"<string>\"\n    }\n  ],\n  \"folders\": {\n    \"nisi9\": {\n      \"value\": \"<Circular reference to #/components/schemas/SearchMacroStructuredResponse detected>\"\n    },\n    \"aute_f\": {\n      \"value\": \"<Circular reference to #/components/schemas/SearchMacroStructuredResponse detected>\"\n    }\n  }\n}",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-46fb2da4-28ec-41ce-a98a-433a37a4402c"
+            }
+          ],
+          "createdAt": "2026-10-21T21:21:44.000Z",
+          "updatedAt": "2026-10-21T21:21:44.000Z",
+          "uid": "35240-bbe39e0f-973b-4340-b74d-9313a79a695d"
+        }
+      ],
+      "id": "fd92f624-b12e-4c2e-8154-d2b813a4fa77",
+      "createdAt": "2026-10-21T21:21:44.000Z",
+      "updatedAt": "2026-10-21T21:21:44.000Z",
+      "uid": "35240-fd92f624-b12e-4c2e-8154-d2b813a4fa77"
+    },
+    {
+      "name": "shingleLists",
+      "item": [
+        {
+          "name": "Returns all shingle list names and expansions",
+          "id": "5a925b6d-f22d-487f-9361-8f936abecc3c",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v1+json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/shingleLists",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "shingleLists"
+              ]
+            },
+            "description": "Use this operation to view the shingle list names and expansions for all cases. If there aren't any shingle lists available in the shingle lists store, the returned list will be empty."
+          },
+          "response": [
+            {
+              "id": "e5850248-d32e-4386-84dd-cc4de112a13e",
+              "name": "An array of shingle list names.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/shingleLists",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "shingleLists"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  \"<string>\",\n  \"<string>\"\n]",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-e5850248-d32e-4386-84dd-cc4de112a13e"
+            }
+          ],
+          "createdAt": "2026-10-21T21:21:44.000Z",
+          "updatedAt": "2026-10-21T21:21:44.000Z",
+          "uid": "35240-5a925b6d-f22d-487f-9361-8f936abecc3c"
+        }
+      ],
+      "id": "ade1ba68-a986-4e11-aca3-f4eb17496e08",
+      "createdAt": "2026-10-21T21:21:44.000Z",
+      "updatedAt": "2026-10-21T21:21:44.000Z",
+      "uid": "35240-ade1ba68-a986-4e11-aca3-f4eb17496e08"
+    },
+    {
+      "name": "wordLists",
+      "item": [
+        {
+          "name": "Returns all word list names",
+          "id": "decf19c5-3c04-4377-8a6e-a2f6371ccbce",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v1+json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/wordLists",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "wordLists"
+              ]
+            },
+            "description": "Use this operation to view the word list names for all cases. If there aren't any word lists available, the returned list will be empty."
+          },
+          "response": [
+            {
+              "id": "b62012e0-b923-4bf8-a06f-1cd97b4e0cb1",
+              "name": "An array of word lists.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/wordLists",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "wordLists"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  \"<string>\",\n  \"<string>\"\n]",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-b62012e0-b923-4bf8-a06f-1cd97b4e0cb1"
+            }
+          ],
+          "createdAt": "2026-10-21T21:21:44.000Z",
+          "updatedAt": "2026-10-21T21:21:44.000Z",
+          "uid": "35240-decf19c5-3c04-4377-8a6e-a2f6371ccbce"
+        }
+      ],
+      "id": "4abea1a0-4fac-486d-ae89-a5057652a4d7",
+      "createdAt": "2026-10-21T21:21:44.000Z",
+      "updatedAt": "2026-10-21T21:21:44.000Z",
+      "uid": "35240-4abea1a0-4fac-486d-ae89-a5057652a4d7"
+    },
+    {
+      "name": "fuzzyHashLists",
+      "item": [
+        {
+          "name": "Returns all fuzzy hash list names",
+          "id": "39a67dec-74dd-40d1-8036-e8ae31569a0f",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v1+json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/fuzzyHashLists",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "fuzzyHashLists"
+              ]
+            },
+            "description": "Use this operation to view all fuzzy hash list names. If there aren't any fuzzy hash lists available, the returned list will be empty."
+          },
+          "response": [
+            {
+              "id": "17fb856c-1160-4a54-8338-e20dafb57e3a",
+              "name": "An array of fuzzy has lists.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/fuzzyHashLists",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "fuzzyHashLists"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  \"<string>\",\n  \"<string>\"\n]",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-17fb856c-1160-4a54-8338-e20dafb57e3a"
+            }
+          ],
+          "createdAt": "2026-10-21T21:21:44.000Z",
+          "updatedAt": "2026-10-21T21:21:44.000Z",
+          "uid": "35240-39a67dec-74dd-40d1-8036-e8ae31569a0f"
+        }
+      ],
+      "id": "ae068ab8-5fd7-48e2-ac71-058179d25933",
+      "createdAt": "2026-10-21T21:21:44.000Z",
+      "updatedAt": "2026-10-21T21:21:44.000Z",
+      "uid": "35240-ae068ab8-5fd7-48e2-ac71-058179d25933"
+    },
+    {
+      "name": "metadataProfiles",
+      "item": [
+        {
+          "name": "Returns all metadata profile names",
+          "id": "44069774-450b-43a6-9b29-064d89ea3391",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v1+json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/metadataProfiles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "metadataProfiles"
+              ]
+            },
+            "description": "Use this operation to view the metadata profile names for all cases. These represent the item data that should be displayed in a query, including fields and properties. The metadata profile names are returned as a set of strings."
+          },
+          "response": [
+            {
+              "id": "eb125da3-899a-4cb8-a4fb-765ca82a678b",
+              "name": "The list of metadata profile names.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/metadataProfiles",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "metadataProfiles"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  \"<string>\",\n  \"<string>\"\n]",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-eb125da3-899a-4cb8-a4fb-765ca82a678b"
+            }
+          ],
+          "createdAt": "2026-10-21T21:21:44.000Z",
+          "updatedAt": "2026-10-21T21:21:44.000Z",
+          "uid": "35240-44069774-450b-43a6-9b29-064d89ea3391"
+        }
+      ],
+      "id": "ad837fe3-cda2-49c2-9f08-373b25bc1d74",
+      "createdAt": "2026-10-21T21:21:44.000Z",
+      "updatedAt": "2026-10-21T21:21:44.000Z",
+      "uid": "35240-ad837fe3-cda2-49c2-9f08-373b25bc1d74"
+    },
+    {
+      "name": "types",
+      "item": [
+        {
+          "name": "Returns all item types",
+          "id": "e24457e8-93cc-4bcd-a48a-fa43bc5b38d0",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v1+json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/types",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "types"
+              ]
+            },
+            "description": "Use this operation to view the item types currently available with this API. Types correspond to MIME types where possible."
+          },
+          "response": [
+            {
+              "id": "c098fe04-743a-44b2-bee4-98f68c7fb1c9",
+              "name": "An array of item types.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/types",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "types"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"name\": \"<string>\",\n    \"localisedName\": \"<string>\",\n    \"preferredExtension\": \"<string>\",\n    \"kind\": \"<string>\",\n    \"count\": \"<long>\"\n  },\n  {\n    \"name\": \"<string>\",\n    \"localisedName\": \"<string>\",\n    \"preferredExtension\": \"<string>\",\n    \"kind\": \"<string>\",\n    \"count\": \"<long>\"\n  }\n]",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-c098fe04-743a-44b2-bee4-98f68c7fb1c9"
+            }
+          ],
+          "createdAt": "2026-10-21T21:21:44.000Z",
+          "updatedAt": "2026-10-21T21:21:44.000Z",
+          "uid": "35240-e24457e8-93cc-4bcd-a48a-fa43bc5b38d0"
+        }
+      ],
+      "id": "c4446701-46a8-4be3-88e4-6076f281dc0d",
+      "createdAt": "2026-10-21T21:21:44.000Z",
+      "updatedAt": "2026-10-21T21:21:44.000Z",
+      "uid": "35240-c4446701-46a8-4be3-88e4-6076f281dc0d"
+    },
+    {
+      "name": "configurationProfiles",
+      "item": [
+        {
+          "name": "Returns all configuration profile names",
+          "id": "aa260b6d-71cb-4f6e-969a-0cb47bae8d0b",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v1+json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/configurationProfiles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "configurationProfiles"
+              ]
+            },
+            "description": "Use this operation to view the configuration profiles on the system."
+          },
+          "response": [
+            {
+              "id": "eaebe46e-fbdd-4084-90b4-13c2f2feb18b",
+              "name": "The list of configuration profile names.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/configurationProfiles",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "configurationProfiles"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  \"<string>\",\n  \"<string>\"\n]",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-eaebe46e-fbdd-4084-90b4-13c2f2feb18b"
+            }
+          ],
+          "createdAt": "2026-10-21T21:21:44.000Z",
+          "updatedAt": "2026-10-21T21:21:44.000Z",
+          "uid": "35240-aa260b6d-71cb-4f6e-969a-0cb47bae8d0b"
+        }
+      ],
+      "id": "2d8f4480-1edb-448c-82a2-c0683b2dff45",
+      "createdAt": "2026-10-21T21:21:44.000Z",
+      "updatedAt": "2026-10-21T21:21:44.000Z",
+      "uid": "35240-2d8f4480-1edb-448c-82a2-c0683b2dff45"
+    },
+    {
+      "name": "digestLists",
+      "item": [
+        {
+          "name": "Returns all digest list names",
+          "id": "b12bbd30-8070-47bb-84f1-d5f65ac06c5e",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v1+json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/digestLists",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "digestLists"
+              ]
+            },
+            "description": "Use this operation to view all digest list names. If there aren't any digest lists available, the returned list will be empty."
+          },
+          "response": [
+            {
+              "id": "99ea5b11-d505-4b90-867e-6f4f90e3328d",
+              "name": "The list of available digests.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/digestLists",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "digestLists"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  \"<string>\",\n  \"<string>\"\n]",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-99ea5b11-d505-4b90-867e-6f4f90e3328d"
+            }
+          ],
+          "createdAt": "2026-10-21T21:21:44.000Z",
+          "updatedAt": "2026-10-21T21:21:44.000Z",
+          "uid": "35240-b12bbd30-8070-47bb-84f1-d5f65ac06c5e"
+        },
+        {
+          "name": "Uploads a digest list to a user data directory",
+          "id": "0d2a4a45-da04-440a-9ae3-64668ac59562",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v1+json"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "digestList",
+                  "value": "<binary>,<binary>",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/digestLists?userDataDir=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "digestLists"
+              ],
+              "query": [
+                {
+                  "description": "User data directory",
+                  "key": "userDataDir",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "When no user data directory is provided, the first one found in 'nuix.engine.userDataDirs' will be used. If the file already exists in the user data directory it will be replaced."
+          },
+          "response": [
+            {
+              "id": "2d40701e-589c-4cc7-afa8-f6aa8470aa0c",
+              "name": "File upload response.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "digestList",
+                      "value": "<binary>,<binary>",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/digestLists?userDataDir=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "digestLists"
+                  ],
+                  "query": [
+                    {
+                      "description": "User data directory",
+                      "key": "userDataDir",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"fileUploads\": [\n    {\n      \"success\": \"<boolean>\",\n      \"filePath\": \"<string>\",\n      \"size\": \"<long>\"\n    },\n    {\n      \"success\": \"<boolean>\",\n      \"filePath\": \"<string>\",\n      \"size\": \"<long>\"\n    }\n  ]\n}",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-2d40701e-589c-4cc7-afa8-f6aa8470aa0c"
+            },
+            {
+              "id": "d42cf8b2-fbbc-4dc1-aba6-18d7c3f3baf1",
+              "name": "The size of the request exceeds the maximum size.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "digestList",
+                      "value": "<binary>,<binary>",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/digestLists?userDataDir=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "digestLists"
+                  ],
+                  "query": [
+                    {
+                      "description": "User data directory",
+                      "key": "userDataDir",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"laboris_b_6\": {},\n    \"exercitation96\": {},\n    \"ex_c\": {},\n    \"voluptate8_\": {},\n    \"nisib\": {}\n  },\n  \"errorCode\": \"NOT_IMPLEMENTED\"\n}",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-d42cf8b2-fbbc-4dc1-aba6-18d7c3f3baf1"
+            }
+          ],
+          "createdAt": "2026-10-21T21:21:44.000Z",
+          "updatedAt": "2026-10-21T21:21:44.000Z",
+          "uid": "35240-0d2a4a45-da04-440a-9ae3-64668ac59562"
+        }
+      ],
+      "id": "36e277a2-547a-4d75-8dbb-915f2d1f2681",
+      "createdAt": "2026-10-21T21:21:44.000Z",
+      "updatedAt": "2026-10-21T21:21:44.000Z",
+      "uid": "35240-36e277a2-547a-4d75-8dbb-915f2d1f2681"
+    },
+    {
+      "name": "imagingProfiles",
+      "item": [
+        {
+          "name": "{name}",
+          "item": [
+            {
+              "name": "Downloads an imaging profile by name",
+              "id": "fa7e370d-51f3-446f-a921-b7dbfc5551ac",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/imagingProfiles/:name",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "imagingProfiles",
+                    ":name"
+                  ],
+                  "variable": [
+                    {
+                      "id": "69d37da6-7281-42dd-af93-eb3a7a1fcd75",
+                      "key": "name",
+                      "value": "<string>",
+                      "description": "(Required) The name of the imaging profile as defined in the name field of the XML file.  This should not be confused with the filename and the path value should not contain the file extension.\n"
+                    }
+                  ]
+                },
+                "description": "Use this operation to export an imaging profile from the system."
+              },
+              "response": [
+                {
+                  "id": "b327e818-80d6-4f2c-9b72-8df3092cdcb5",
+                  "name": "The imaging profile download.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/xml"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/imagingProfiles/:name",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "imagingProfiles",
+                        ":name"
+                      ],
+                      "variable": [
+                        {
+                          "key": "name"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "xml",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/xml"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>(string)</element>",
+                  "createdAt": "2026-10-21T21:21:44.000Z",
+                  "updatedAt": "2026-10-21T21:21:44.000Z",
+                  "uid": "35240-b327e818-80d6-4f2c-9b72-8df3092cdcb5"
+                },
+                {
+                  "id": "dab37b0f-6faf-441e-af5e-2e0896675c47",
+                  "name": "A imaging profile with the name provided could not be found.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/imagingProfiles/:name",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "imagingProfiles",
+                        ":name"
+                      ],
+                      "variable": [
+                        {
+                          "key": "name"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"laboris_b_6\": {},\n    \"exercitation96\": {},\n    \"ex_c\": {},\n    \"voluptate8_\": {},\n    \"nisib\": {}\n  },\n  \"errorCode\": \"NOT_IMPLEMENTED\"\n}",
+                  "createdAt": "2026-10-21T21:21:44.000Z",
+                  "updatedAt": "2026-10-21T21:21:44.000Z",
+                  "uid": "35240-dab37b0f-6faf-441e-af5e-2e0896675c47"
+                }
+              ],
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-fa7e370d-51f3-446f-a921-b7dbfc5551ac"
+            }
+          ],
+          "id": "7fe59660-1b50-4634-a485-57ab73e88624",
+          "createdAt": "2026-10-21T21:21:44.000Z",
+          "updatedAt": "2026-10-21T21:21:44.000Z",
+          "uid": "35240-7fe59660-1b50-4634-a485-57ab73e88624"
+        },
+        {
+          "name": "Returns all imaging profile names",
+          "id": "e7fb7463-8f20-4835-af5a-c64ec21fd1d4",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v1+json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/imagingProfiles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "imagingProfiles"
+              ]
+            },
+            "description": "Use this operation to view the imaging profiles on the system."
+          },
+          "response": [
+            {
+              "id": "29b71090-1bf5-4cf9-918c-8e8f7d3b363d",
+              "name": "The list of all imaging profiles",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/imagingProfiles",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "imagingProfiles"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  \"<string>\",\n  \"<string>\"\n]",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-29b71090-1bf5-4cf9-918c-8e8f7d3b363d"
+            }
+          ],
+          "createdAt": "2026-10-21T21:21:44.000Z",
+          "updatedAt": "2026-10-21T21:21:44.000Z",
+          "uid": "35240-e7fb7463-8f20-4835-af5a-c64ec21fd1d4"
+        },
+        {
+          "name": "Upload an imaging profile",
+          "id": "5857ef6b-0423-4a12-a9a9-5d50ebfb2ab1",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v1+json"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "profile",
+                  "type": "file",
+                  "value": null
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/imagingProfiles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "imagingProfiles"
+              ]
+            },
+            "description": "Use this operation to add an imaging profile to the system. This operation will fail if a profile with the same name already exists."
+          },
+          "response": [
+            {
+              "id": "d75ca3e7-cfbf-4145-a0a9-7c818a970a1a",
+              "name": "Imaging Profile created and uploaded.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "profile",
+                      "type": "file"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/imagingProfiles",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "imagingProfiles"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "text",
+              "header": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "The URL of the uploaded imaging profile.",
+                    "type": "text/plain"
+                  },
+                  "key": "Location",
+                  "value": "<string>"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-d75ca3e7-cfbf-4145-a0a9-7c818a970a1a"
+            },
+            {
+              "id": "1ac72a80-d6b4-415a-b1df-613c8d54189d",
+              "name": "A imaging profile with the same filename already exists.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "profile",
+                      "type": "file"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/imagingProfiles",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "imagingProfiles"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"laboris_b_6\": {},\n    \"exercitation96\": {},\n    \"ex_c\": {},\n    \"voluptate8_\": {},\n    \"nisib\": {}\n  },\n  \"errorCode\": \"NOT_IMPLEMENTED\"\n}",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-1ac72a80-d6b4-415a-b1df-613c8d54189d"
+            },
+            {
+              "id": "68d25914-902c-4a43-8910-09ea851b42f9",
+              "name": "The size of the request exceeds the maximum size.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "profile",
+                      "type": "file"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/imagingProfiles",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "imagingProfiles"
+                  ]
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"laboris_b_6\": {},\n    \"exercitation96\": {},\n    \"ex_c\": {},\n    \"voluptate8_\": {},\n    \"nisib\": {}\n  },\n  \"errorCode\": \"NOT_IMPLEMENTED\"\n}",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-68d25914-902c-4a43-8910-09ea851b42f9"
+            },
+            {
+              "id": "bd682481-7032-46a2-81bc-9ff26cb8d6a1",
+              "name": "Unsupported file type.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "profile",
+                      "type": "file"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/imagingProfiles",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "imagingProfiles"
+                  ]
+                }
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"laboris_b_6\": {},\n    \"exercitation96\": {},\n    \"ex_c\": {},\n    \"voluptate8_\": {},\n    \"nisib\": {}\n  },\n  \"errorCode\": \"NOT_IMPLEMENTED\"\n}",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-bd682481-7032-46a2-81bc-9ff26cb8d6a1"
+            }
+          ],
+          "createdAt": "2026-10-21T21:21:44.000Z",
+          "updatedAt": "2026-10-21T21:21:44.000Z",
+          "uid": "35240-5857ef6b-0423-4a12-a9a9-5d50ebfb2ab1"
+        }
+      ],
+      "id": "8c63d652-ab8c-499c-a52d-595ad596cf78",
+      "createdAt": "2026-10-21T21:21:44.000Z",
+      "updatedAt": "2026-10-21T21:21:44.000Z",
+      "uid": "35240-8c63d652-ab8c-499c-a52d-595ad596cf78"
+    },
+    {
+      "name": "productionProfiles",
+      "item": [
+        {
+          "name": "{name}",
+          "item": [
+            {
+              "name": "Downloads a production profile by name",
+              "id": "5311121c-5851-47b9-859c-1f81bcace707",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/productionProfiles/:name",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "productionProfiles",
+                    ":name"
+                  ],
+                  "variable": [
+                    {
+                      "id": "55894e9b-2eec-45a9-8704-5761183b3845",
+                      "key": "name",
+                      "value": "<string>",
+                      "description": "(Required) The name of the production profile as defined in the name field of the XML file.  This should not be confused with the filename and the path value should not contain the file extension.\n"
+                    }
+                  ]
+                },
+                "description": "Use this operation to export a production profile from the system."
+              },
+              "response": [
+                {
+                  "id": "989de032-afb7-4ced-80a7-059bb68f2831",
+                  "name": "The production profile download.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/xml"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/productionProfiles/:name",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "productionProfiles",
+                        ":name"
+                      ],
+                      "variable": [
+                        {
+                          "key": "name"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "xml",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/xml"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>(string)</element>",
+                  "createdAt": "2026-10-21T21:21:44.000Z",
+                  "updatedAt": "2026-10-21T21:21:44.000Z",
+                  "uid": "35240-989de032-afb7-4ced-80a7-059bb68f2831"
+                },
+                {
+                  "id": "b0ef540e-a699-4a90-b4e5-87d288aed562",
+                  "name": "A production profile with the name provided could not be found.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/productionProfiles/:name",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "productionProfiles",
+                        ":name"
+                      ],
+                      "variable": [
+                        {
+                          "key": "name"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"laboris_b_6\": {},\n    \"exercitation96\": {},\n    \"ex_c\": {},\n    \"voluptate8_\": {},\n    \"nisib\": {}\n  },\n  \"errorCode\": \"NOT_IMPLEMENTED\"\n}",
+                  "createdAt": "2026-10-21T21:21:44.000Z",
+                  "updatedAt": "2026-10-21T21:21:44.000Z",
+                  "uid": "35240-b0ef540e-a699-4a90-b4e5-87d288aed562"
+                }
+              ],
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-5311121c-5851-47b9-859c-1f81bcace707"
+            }
+          ],
+          "id": "cf4b6da8-fee9-4142-840e-9d75a52ec87f",
+          "createdAt": "2026-10-21T21:21:44.000Z",
+          "updatedAt": "2026-10-21T21:21:44.000Z",
+          "uid": "35240-cf4b6da8-fee9-4142-840e-9d75a52ec87f"
+        },
+        {
+          "name": "Returns all production profile names",
+          "id": "a0ad91be-afda-48ad-912d-de9c90ad5f70",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v1+json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/productionProfiles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "productionProfiles"
+              ]
+            },
+            "description": "Use this operation to view the production profiles on the system."
+          },
+          "response": [
+            {
+              "id": "5aa50e88-23ff-4ad3-935e-01bfd24f2260",
+              "name": "The list of all production profiles",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/productionProfiles",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "productionProfiles"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  \"<string>\",\n  \"<string>\"\n]",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-5aa50e88-23ff-4ad3-935e-01bfd24f2260"
+            }
+          ],
+          "createdAt": "2026-10-21T21:21:44.000Z",
+          "updatedAt": "2026-10-21T21:21:44.000Z",
+          "uid": "35240-a0ad91be-afda-48ad-912d-de9c90ad5f70"
+        },
+        {
+          "name": "Upload a production profile",
+          "id": "884c2d86-b610-449d-a8d5-9f2862bcabe4",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v1+json"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "profile",
+                  "type": "file",
+                  "value": null
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/productionProfiles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "productionProfiles"
+              ]
+            },
+            "description": "Use this operation to add a production profile to the system. This operation will fail if a profile with the same name already exists."
+          },
+          "response": [
+            {
+              "id": "1e8d7091-9d59-4010-b1e7-805da5bc78bd",
+              "name": "Production Profile created and uploaded.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "profile",
+                      "type": "file"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/productionProfiles",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "productionProfiles"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "text",
+              "header": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "The URL of the uploaded production profile.",
+                    "type": "text/plain"
+                  },
+                  "key": "Location",
+                  "value": "<string>"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-1e8d7091-9d59-4010-b1e7-805da5bc78bd"
+            },
+            {
+              "id": "3bf99579-1a55-4fd0-8eab-7ac6bd58b3b5",
+              "name": "A production profile with the same filename already exists.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "profile",
+                      "type": "file"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/productionProfiles",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "productionProfiles"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"laboris_b_6\": {},\n    \"exercitation96\": {},\n    \"ex_c\": {},\n    \"voluptate8_\": {},\n    \"nisib\": {}\n  },\n  \"errorCode\": \"NOT_IMPLEMENTED\"\n}",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-3bf99579-1a55-4fd0-8eab-7ac6bd58b3b5"
+            },
+            {
+              "id": "a4426d2b-05a4-4e27-af8c-d8257551366c",
+              "name": "The size of the request exceeds the maximum size.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "profile",
+                      "type": "file"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/productionProfiles",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "productionProfiles"
+                  ]
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"laboris_b_6\": {},\n    \"exercitation96\": {},\n    \"ex_c\": {},\n    \"voluptate8_\": {},\n    \"nisib\": {}\n  },\n  \"errorCode\": \"NOT_IMPLEMENTED\"\n}",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-a4426d2b-05a4-4e27-af8c-d8257551366c"
+            },
+            {
+              "id": "94299210-0b10-4cad-81e7-cf567096de83",
+              "name": "Unsupported file type.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "profile",
+                      "type": "file"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/productionProfiles",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "productionProfiles"
+                  ]
+                }
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"laboris_b_6\": {},\n    \"exercitation96\": {},\n    \"ex_c\": {},\n    \"voluptate8_\": {},\n    \"nisib\": {}\n  },\n  \"errorCode\": \"NOT_IMPLEMENTED\"\n}",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-94299210-0b10-4cad-81e7-cf567096de83"
+            }
+          ],
+          "createdAt": "2026-10-21T21:21:44.000Z",
+          "updatedAt": "2026-10-21T21:21:44.000Z",
+          "uid": "35240-884c2d86-b610-449d-a8d5-9f2862bcabe4"
+        }
+      ],
+      "id": "da4e104b-735c-403c-8ab6-cb982845f83f",
+      "createdAt": "2026-10-21T21:21:44.000Z",
+      "updatedAt": "2026-10-21T21:21:44.000Z",
+      "uid": "35240-da4e104b-735c-403c-8ab6-cb982845f83f"
+    },
+    {
+      "name": "processingProfiles",
+      "item": [
+        {
+          "name": "{name}",
+          "item": [
+            {
+              "name": "Downloads a processing profile by name",
+              "id": "4fecd927-daf1-4c81-848e-44716fefdd50",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/processingProfiles/:name",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "processingProfiles",
+                    ":name"
+                  ],
+                  "variable": [
+                    {
+                      "id": "c79b45fc-3834-4210-9e1a-0ef63c738554",
+                      "key": "name",
+                      "value": "<string>",
+                      "description": "(Required) The name of the processing profile as defined in the name field of the XML file.  This should not be confused with the filename and the path value should not contain the file extension.\n"
+                    }
+                  ]
+                },
+                "description": "Use this operation to export a processing profile from the system."
+              },
+              "response": [
+                {
+                  "id": "85e5a9bc-aac8-4663-8126-22238b1aa4db",
+                  "name": "The processing profile download.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/xml"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/processingProfiles/:name",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "processingProfiles",
+                        ":name"
+                      ],
+                      "variable": [
+                        {
+                          "key": "name"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "xml",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/xml"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>(string)</element>",
+                  "createdAt": "2026-10-21T21:21:44.000Z",
+                  "updatedAt": "2026-10-21T21:21:44.000Z",
+                  "uid": "35240-85e5a9bc-aac8-4663-8126-22238b1aa4db"
+                },
+                {
+                  "id": "5d6284a3-78cd-4bf9-b0e9-ea04a4f64c67",
+                  "name": "A processing profile with the name provided could not be found.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/processingProfiles/:name",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "processingProfiles",
+                        ":name"
+                      ],
+                      "variable": [
+                        {
+                          "key": "name"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"laboris_b_6\": {},\n    \"exercitation96\": {},\n    \"ex_c\": {},\n    \"voluptate8_\": {},\n    \"nisib\": {}\n  },\n  \"errorCode\": \"NOT_IMPLEMENTED\"\n}",
+                  "createdAt": "2026-10-21T21:21:44.000Z",
+                  "updatedAt": "2026-10-21T21:21:44.000Z",
+                  "uid": "35240-5d6284a3-78cd-4bf9-b0e9-ea04a4f64c67"
+                }
+              ],
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-4fecd927-daf1-4c81-848e-44716fefdd50"
+            }
+          ],
+          "id": "2c573dd5-e66b-411d-9682-503ed4bef7ab",
+          "createdAt": "2026-10-21T21:21:44.000Z",
+          "updatedAt": "2026-10-21T21:21:44.000Z",
+          "uid": "35240-2c573dd5-e66b-411d-9682-503ed4bef7ab"
+        },
+        {
+          "name": "Returns all processing profile names",
+          "id": "d752b484-9949-4615-a4ea-9e37b23c2490",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v1+json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/processingProfiles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "processingProfiles"
+              ]
+            },
+            "description": "Use this operation to view the processing profiles on the system."
+          },
+          "response": [
+            {
+              "id": "0752a3c7-b7c6-4997-b7e8-555d5b4a8e90",
+              "name": "The list of all Processing profiles",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/processingProfiles",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "processingProfiles"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  \"<string>\",\n  \"<string>\"\n]",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-0752a3c7-b7c6-4997-b7e8-555d5b4a8e90"
+            }
+          ],
+          "createdAt": "2026-10-21T21:21:44.000Z",
+          "updatedAt": "2026-10-21T21:21:44.000Z",
+          "uid": "35240-d752b484-9949-4615-a4ea-9e37b23c2490"
+        },
+        {
+          "name": "Upload a processing profile",
+          "id": "c4a04524-fb96-480a-a68b-cf8ae16a616e",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v1+json"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "profile",
+                  "type": "file",
+                  "value": null
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/processingProfiles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "processingProfiles"
+              ]
+            },
+            "description": "Use this operation to add a processing profile to the system. This operation will fail if a profile with the same name already exists."
+          },
+          "response": [
+            {
+              "id": "889bd06d-a520-490e-8706-a1d35f2c24b9",
+              "name": "Processing Profile created and uploaded.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "profile",
+                      "type": "file"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/processingProfiles",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "processingProfiles"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "text",
+              "header": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "The URL of the uploaded processing profile.",
+                    "type": "text/plain"
+                  },
+                  "key": "Location",
+                  "value": "<string>"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-889bd06d-a520-490e-8706-a1d35f2c24b9"
+            },
+            {
+              "id": "7d16de5b-c55e-48af-b714-6b549113af8e",
+              "name": "A processing profile with the same filename already exists.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "profile",
+                      "type": "file"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/processingProfiles",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "processingProfiles"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"laboris_b_6\": {},\n    \"exercitation96\": {},\n    \"ex_c\": {},\n    \"voluptate8_\": {},\n    \"nisib\": {}\n  },\n  \"errorCode\": \"NOT_IMPLEMENTED\"\n}",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-7d16de5b-c55e-48af-b714-6b549113af8e"
+            },
+            {
+              "id": "91030e4a-11dc-4ea7-8115-89599c4a1c09",
+              "name": "The size of the request exceeds the maximum size.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "profile",
+                      "type": "file"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/processingProfiles",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "processingProfiles"
+                  ]
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"laboris_b_6\": {},\n    \"exercitation96\": {},\n    \"ex_c\": {},\n    \"voluptate8_\": {},\n    \"nisib\": {}\n  },\n  \"errorCode\": \"NOT_IMPLEMENTED\"\n}",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-91030e4a-11dc-4ea7-8115-89599c4a1c09"
+            },
+            {
+              "id": "c3f5a8a0-2122-4007-95a6-0d040eef64de",
+              "name": "Unsupported file type.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "profile",
+                      "type": "file"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/processingProfiles",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "processingProfiles"
+                  ]
+                }
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"laboris_b_6\": {},\n    \"exercitation96\": {},\n    \"ex_c\": {},\n    \"voluptate8_\": {},\n    \"nisib\": {}\n  },\n  \"errorCode\": \"NOT_IMPLEMENTED\"\n}",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-c3f5a8a0-2122-4007-95a6-0d040eef64de"
+            }
+          ],
+          "createdAt": "2026-10-21T21:21:44.000Z",
+          "updatedAt": "2026-10-21T21:21:44.000Z",
+          "uid": "35240-c4a04524-fb96-480a-a68b-cf8ae16a616e"
+        }
+      ],
+      "id": "24dd8e06-a6bf-408f-9535-f420c44604c8",
+      "createdAt": "2026-10-21T21:21:44.000Z",
+      "updatedAt": "2026-10-21T21:21:44.000Z",
+      "uid": "35240-24dd8e06-a6bf-408f-9535-f420c44604c8"
+    },
+    {
+      "name": "ocrProfiles",
+      "item": [
+        {
+          "name": "{name}",
+          "item": [
+            {
+              "name": "details",
+              "item": [
+                {
+                  "name": "Returns the OCR profile template details",
+                  "id": "e9e620fb-1b6c-4dda-bcfb-20beb3ba38bc",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/ocrProfiles/:name/details",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "ocrProfiles",
+                        ":name",
+                        "details"
+                      ],
+                      "variable": [
+                        {
+                          "id": "503f9966-e44f-4d7d-a92f-bf9d40b25d97",
+                          "key": "name",
+                          "value": "<string>",
+                          "description": "(Required) The name of the OCR profile as defined in the name field of the XML file.  This should not be confused with the filename and the path value should not contain the file extension.\n"
+                        }
+                      ]
+                    },
+                    "description": "Use this operation to get the OCR profile template details."
+                  },
+                  "response": [
+                    {
+                      "id": "f8a1fac2-5aed-4217-82c6-52cf6ef2b229",
+                      "name": "The OCR profile template details.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/ocrProfiles/:name/details",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "ocrProfiles",
+                            ":name",
+                            "details"
+                          ],
+                          "variable": [
+                            {
+                              "key": "name"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/vnd.nuix.v1+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"appendText\": \"<boolean>\",\n  \"updateText\": \"<boolean>\",\n  \"updatePdf\": \"<boolean>\",\n  \"pageRotation\": \"<string>\",\n  \"textRotations\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"multiProcessingMode\": \"<string>\",\n  \"languages\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"deskew\": \"<boolean>\",\n  \"autoPageRotationEnabled\": \"<boolean>\",\n  \"customPageRotationEnabled\": \"<boolean>\",\n  \"noPageRotationEnabled\": \"<boolean>\",\n  \"clockwisePageRotationEnabled\": \"<boolean>\",\n  \"counterClockwisePageRotationEnabled\": \"<boolean>\",\n  \"oneEightyPageRotationEnabled\": \"<boolean>\",\n  \"ocrProcessingProfile\": \"<string>\",\n  \"timeout\": \"<integer>\",\n  \"printedImageRotation\": \"<string>\",\n  \"useNative\": \"<boolean>\"\n}",
+                      "createdAt": "2026-10-21T21:21:44.000Z",
+                      "updatedAt": "2026-10-21T21:21:44.000Z",
+                      "uid": "35240-f8a1fac2-5aed-4217-82c6-52cf6ef2b229"
+                    },
+                    {
+                      "id": "e85f282b-4872-4b16-ae7d-c9a2282d1133",
+                      "name": "An OCR profile with the name provided could not be found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/ocrProfiles/:name/details",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "ocrProfiles",
+                            ":name",
+                            "details"
+                          ],
+                          "variable": [
+                            {
+                              "key": "name"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"laboris_b_6\": {},\n    \"exercitation96\": {},\n    \"ex_c\": {},\n    \"voluptate8_\": {},\n    \"nisib\": {}\n  },\n  \"errorCode\": \"NOT_IMPLEMENTED\"\n}",
+                      "createdAt": "2026-10-21T21:21:44.000Z",
+                      "updatedAt": "2026-10-21T21:21:44.000Z",
+                      "uid": "35240-e85f282b-4872-4b16-ae7d-c9a2282d1133"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:21:44.000Z",
+                  "updatedAt": "2026-10-21T21:21:44.000Z",
+                  "uid": "35240-e9e620fb-1b6c-4dda-bcfb-20beb3ba38bc"
+                }
+              ],
+              "id": "3574459d-acec-4a18-a15f-8c891f2a66aa",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-3574459d-acec-4a18-a15f-8c891f2a66aa"
+            },
+            {
+              "name": "Downloads an OCR profile by name",
+              "id": "0c21e72f-ee80-437f-955f-9932b31fe454",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/ocrProfiles/:name",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ocrProfiles",
+                    ":name"
+                  ],
+                  "variable": [
+                    {
+                      "id": "921e81a2-c674-4aef-a522-67d864405fdb",
+                      "key": "name",
+                      "value": "<string>",
+                      "description": "(Required) The name of the OCR profile as defined in the name field of the XML file.  This should not be confused with the filename and the path value should not contain the file extension.\n"
+                    }
+                  ]
+                },
+                "description": "Use this operation to export an OCR profile from the system."
+              },
+              "response": [
+                {
+                  "id": "c1ec8246-18ca-4057-b039-0cd072532044",
+                  "name": "The OCR profile download.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/xml"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/ocrProfiles/:name",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "ocrProfiles",
+                        ":name"
+                      ],
+                      "variable": [
+                        {
+                          "key": "name"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "xml",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/xml"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>(string)</element>",
+                  "createdAt": "2026-10-21T21:21:44.000Z",
+                  "updatedAt": "2026-10-21T21:21:44.000Z",
+                  "uid": "35240-c1ec8246-18ca-4057-b039-0cd072532044"
+                },
+                {
+                  "id": "a3fb55af-98ff-43ea-85b3-c0878c437928",
+                  "name": "An OCR profile with the name provided could not be found.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/ocrProfiles/:name",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "ocrProfiles",
+                        ":name"
+                      ],
+                      "variable": [
+                        {
+                          "key": "name"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"laboris_b_6\": {},\n    \"exercitation96\": {},\n    \"ex_c\": {},\n    \"voluptate8_\": {},\n    \"nisib\": {}\n  },\n  \"errorCode\": \"NOT_IMPLEMENTED\"\n}",
+                  "createdAt": "2026-10-21T21:21:44.000Z",
+                  "updatedAt": "2026-10-21T21:21:44.000Z",
+                  "uid": "35240-a3fb55af-98ff-43ea-85b3-c0878c437928"
+                }
+              ],
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-0c21e72f-ee80-437f-955f-9932b31fe454"
+            }
+          ],
+          "id": "8a7d72db-73d5-4611-baed-a8dd98edac7b",
+          "createdAt": "2026-10-21T21:21:44.000Z",
+          "updatedAt": "2026-10-21T21:21:44.000Z",
+          "uid": "35240-8a7d72db-73d5-4611-baed-a8dd98edac7b"
+        },
+        {
+          "name": "Returns all OCR profile names",
+          "id": "38663e7b-ca9f-4e13-a866-1c483b2cc545",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v1+json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ocrProfiles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ocrProfiles"
+              ]
+            },
+            "description": "Use this operation to view the OCR profiles on the system."
+          },
+          "response": [
+            {
+              "id": "566613c9-8812-480f-94cc-3e9d0980dd7d",
+              "name": "The list of all OCR profiles",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/ocrProfiles",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ocrProfiles"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  \"<string>\",\n  \"<string>\"\n]",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-566613c9-8812-480f-94cc-3e9d0980dd7d"
+            }
+          ],
+          "createdAt": "2026-10-21T21:21:44.000Z",
+          "updatedAt": "2026-10-21T21:21:44.000Z",
+          "uid": "35240-38663e7b-ca9f-4e13-a866-1c483b2cc545"
+        },
+        {
+          "name": "Upload an OCR profile",
+          "id": "d1390277-ff61-4d5b-82bd-08614cb0ee9c",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v1+json"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "profile",
+                  "type": "file",
+                  "value": null
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ocrProfiles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ocrProfiles"
+              ]
+            },
+            "description": "Use this operation to add an OCR profile to the system. This operation will fail if a profile with the same name already exists."
+          },
+          "response": [
+            {
+              "id": "d7f7518a-9e74-40af-9ad2-0156e8e0069d",
+              "name": "OCR Profile created and uploaded.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "profile",
+                      "type": "file"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/ocrProfiles",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ocrProfiles"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "text",
+              "header": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "The URL of the uploaded OCR profile.",
+                    "type": "text/plain"
+                  },
+                  "key": "Location",
+                  "value": "<string>"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-d7f7518a-9e74-40af-9ad2-0156e8e0069d"
+            },
+            {
+              "id": "416181ba-e727-4cbb-99df-36afda92afd5",
+              "name": "An OCR profile with the same filename already exists.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "profile",
+                      "type": "file"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/ocrProfiles",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ocrProfiles"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"laboris_b_6\": {},\n    \"exercitation96\": {},\n    \"ex_c\": {},\n    \"voluptate8_\": {},\n    \"nisib\": {}\n  },\n  \"errorCode\": \"NOT_IMPLEMENTED\"\n}",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-416181ba-e727-4cbb-99df-36afda92afd5"
+            },
+            {
+              "id": "a9fa1d0b-1963-49e9-8f1e-55392c25a390",
+              "name": "The size of the request exceeds the maximum size.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "profile",
+                      "type": "file"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/ocrProfiles",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ocrProfiles"
+                  ]
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"laboris_b_6\": {},\n    \"exercitation96\": {},\n    \"ex_c\": {},\n    \"voluptate8_\": {},\n    \"nisib\": {}\n  },\n  \"errorCode\": \"NOT_IMPLEMENTED\"\n}",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-a9fa1d0b-1963-49e9-8f1e-55392c25a390"
+            },
+            {
+              "id": "e1a0e236-d086-4646-a0d5-f52521e0ae01",
+              "name": "Unsupported file type.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "profile",
+                      "type": "file"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/ocrProfiles",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ocrProfiles"
+                  ]
+                }
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"laboris_b_6\": {},\n    \"exercitation96\": {},\n    \"ex_c\": {},\n    \"voluptate8_\": {},\n    \"nisib\": {}\n  },\n  \"errorCode\": \"NOT_IMPLEMENTED\"\n}",
+              "createdAt": "2026-10-21T21:21:44.000Z",
+              "updatedAt": "2026-10-21T21:21:44.000Z",
+              "uid": "35240-e1a0e236-d086-4646-a0d5-f52521e0ae01"
+            }
+          ],
+          "createdAt": "2026-10-21T21:21:44.000Z",
+          "updatedAt": "2026-10-21T21:21:44.000Z",
+          "uid": "35240-d1390277-ff61-4d5b-82bd-08614cb0ee9c"
+        }
+      ],
+      "id": "5a693301-3c69-4614-a2f1-fb29710578c2",
+      "createdAt": "2026-10-21T21:21:44.000Z",
+      "updatedAt": "2026-10-21T21:21:44.000Z",
+      "uid": "35240-5a693301-3c69-4614-a2f1-fb29710578c2"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "nuix-auth-token",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "/nuix-restful-service/svc"
+    }
+  ]
+}

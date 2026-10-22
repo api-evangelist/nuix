@@ -1,6 +1,10 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/nuix-nuix-core-engine-rest-api-openapi.yml, openapi/nuix-nuix-ecc-rest-api-openapi.yml
+generated: '2026-10-21'
+method: searched
+source: &id001
+- https://developer.nuix.com/latest/engine/rest/examples/authentication.html
+- https://developer.nuix.com/latest/ecc/auth/home.html
+- https://developer.nuix.com/latest/ecc/auth/basic.html
+- https://developer.nuix.com/latest/ecc/auth/bearer.html
 summary:
   types:
   - apiKey
@@ -8,20 +12,48 @@ summary:
   api_key_in:
   - header
 schemes:
+- name: BasicAuth
+  type: http
+  scheme: basic
+  sources:
+  - openapi/nuix-case-api-openapi.yml
+  - openapi/nuix-collection-and-survey-api-openapi.yml
+  - openapi/nuix-collection-configuration-api-openapi.yml
+  - openapi/nuix-computer-api-openapi.yml
+  - openapi/nuix-computer-configuration-api-openapi.yml
+  - openapi/nuix-custodian-api-openapi.yml
+  - openapi/nuix-group-api-openapi.yml
+  - openapi/nuix-job-api-openapi.yml
+  - openapi/nuix-log-api-openapi.yml
+  - openapi/nuix-target-api-openapi.yml
+  - openapi/nuix-utility-api-openapi.yml
 - name: ApiKeyAuth
   type: apiKey
   in: header
   parameter: nuix-auth-token
   sources:
-  - openapi/nuix-nuix-core-engine-rest-api-openapi.yml
+  - openapi/nuix-core-engine-rest-api-openapi.yml
 - name: bearerAuth
   type: http
   scheme: bearer
   bearerFormat: JWT
   sources:
-  - openapi/nuix-nuix-core-engine-rest-api-openapi.yml
-- name: BasicAuth
-  type: http
-  scheme: basic
-  sources:
-  - openapi/nuix-nuix-ecc-rest-api-openapi.yml
+  - openapi/nuix-core-engine-rest-api-openapi.yml
+docs: https://developer.nuix.com/latest/engine/rest/examples/authentication.html
+derived_from:
+- openapi/nuix-core-engine-rest-api-openapi.yml
+- openapi/nuix-case-api-openapi.yml (and the other 10 ECC specs)
+notes:
+  core_engine_rest: Log in with PUT /v1/authenticatedUsers/login (username, password, optional licenceShortName
+    and workers); the returned authToken "will need to be submitted in the nuix-auth-token request header field
+    on all subsequent requests". If licence and workers are omitted "any license will be selected and 1 worker will
+    be granted". Release 9.10.44 added a form-encoded (application/x-www-form-urlencoded) login endpoint for passwords
+    containing special characters.
+  ecc_rest: All requests must authenticate using the Authentication header (RFC 7235). Basic (RFC 7617) against
+    ECC's internal user directory, for a user with the "Login high-level API" option and a role granting Manage
+    existing jobs / Create new collections / Manage templates and configurations; or Bearer (RFC 6750) with an access
+    token from Keycloak (password grant, client_id "ECC") or Azure AD (client_credentials, scope api://{client_id}/.default).
+    Obtaining the token is the calling application's responsibility.
+  self_hosted: Both APIs run on customer-installed servers (Core Engine REST at /nuix-restful-service/svc, ECC at
+    {protocol}://{address}:{port}/api/ecc); there is no Nuix-hosted endpoint.
+docs_pages: *id001

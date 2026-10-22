@@ -1,0 +1,793 @@
+{
+  "info": {
+    "_postman_id": "bf8d347c-2b0b-46b5-b9ec-c5912a56a841",
+    "name": "Nuix REST-API Reference Monitoring API",
+    "description": "Welcome to the Nuix REST API documentation. From here you can access all available REST APIs and execute queries against your running REST instance.\n\n# Authentication Changes\n\nThe `nuix-auth-token` header is being deprecated in favor of standard JWT. The header will be removed in a\nfuture release. Until the removal of the header, the Nuix REST API will accept the JWT in either the\n`nuix-auth-token` header field or the `Authorization` header field prefixed by `Bearer`.\n\nContact Support:\n Name: Nuix",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:21:28.000Z",
+    "updatedAt": "2026-10-21T21:21:28.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-bf8d347c-2b0b-46b5-b9ec-c5912a56a841"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "asyncFunctions",
+          "item": [
+            {
+              "name": "Returns asynchronous function statuses",
+              "id": "1c262ff9-2cef-4565-b50d-572888098f2d",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/asyncFunctions?activeWindowInSeconds=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "asyncFunctions"
+                  ],
+                  "query": [
+                    {
+                      "description": "The time in seconds within which non-queue functions must have been active to be returned. Numbers less than 0 will return all windows.",
+                      "key": "activeWindowInSeconds",
+                      "value": "0"
+                    }
+                  ]
+                },
+                "description": "Use this operation to view the status of asynchronous functions. All asynchronous functions that have been run and that are currently running are returned.\n\nNOTE: This endpoint has been deprecated and replaced with the /v1/asyncFunctionsQueue and /v2/asyncFunctions endpoints."
+              },
+              "response": [
+                {
+                  "id": "0bd91f18-8d77-4562-9dba-fd09089b740f",
+                  "name": "default response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/asyncFunctions?activeWindowInSeconds=0",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "asyncFunctions"
+                      ],
+                      "query": [
+                        {
+                          "description": "The time in seconds within which non-queue functions must have been active to be returned. Numbers less than 0 will return all windows.",
+                          "key": "activeWindowInSeconds",
+                          "value": "0"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/vnd.nuix.v1+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"executeImmediate\": [\n    {\n      \"done\": \"<boolean>\",\n      \"cancelled\": \"<boolean>\",\n      \"result\": {},\n      \"token\": \"<string>\",\n      \"functionKey\": \"<string>\",\n      \"progress\": \"<number>\",\n      \"total\": \"<number>\",\n      \"percentComplete\": \"<number>\",\n      \"updatedOn\": \"<integer>\",\n      \"status\": \"<string>\",\n      \"statusId\": \"<string>\",\n      \"requestTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"finishTime\": \"<integer>\",\n      \"caseId\": \"<string>\",\n      \"caseName\": \"<string>\",\n      \"hasSuccessfullyCompleted\": \"<boolean>\",\n      \"friendlyName\": \"<string>\",\n      \"caseLocation\": \"<string>\",\n      \"requestor\": \"<string>\",\n      \"licenseShortName\": \"<string>\",\n      \"action\": \"<string>\",\n      \"options\": {\n        \"exercitationbd\": {},\n        \"ex_804\": {},\n        \"sunt_a59\": {},\n        \"nostrudee\": {}\n      },\n      \"participatingInCaseFunctionQueue\": \"<boolean>\",\n      \"processedBy\": \"<string>\",\n      \"error\": {\n        \"serverId\": \"<string>\",\n        \"developerMessage\": \"<string>\",\n        \"userMessage\": \"<string>\",\n        \"additionalInfo\": {\n          \"veniam84f\": {},\n          \"in_\": {}\n        },\n        \"errorCode\": \"INVALID_LICENSE_TYPE_FOR_CASE\"\n      }\n    },\n    {\n      \"done\": \"<boolean>\",\n      \"cancelled\": \"<boolean>\",\n      \"result\": {},\n      \"token\": \"<string>\",\n      \"functionKey\": \"<string>\",\n      \"progress\": \"<number>\",\n      \"total\": \"<number>\",\n      \"percentComplete\": \"<number>\",\n      \"updatedOn\": \"<integer>\",\n      \"status\": \"<string>\",\n      \"statusId\": \"<string>\",\n      \"requestTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"finishTime\": \"<integer>\",\n      \"caseId\": \"<string>\",\n      \"caseName\": \"<string>\",\n      \"hasSuccessfullyCompleted\": \"<boolean>\",\n      \"friendlyName\": \"<string>\",\n      \"caseLocation\": \"<string>\",\n      \"requestor\": \"<string>\",\n      \"licenseShortName\": \"<string>\",\n      \"action\": \"<string>\",\n      \"options\": {\n        \"aliquip2\": {},\n        \"non8e\": {}\n      },\n      \"participatingInCaseFunctionQueue\": \"<boolean>\",\n      \"processedBy\": \"<string>\",\n      \"error\": {\n        \"serverId\": \"<string>\",\n        \"developerMessage\": \"<string>\",\n        \"userMessage\": \"<string>\",\n        \"additionalInfo\": {\n          \"Ut_2\": {},\n          \"nisi_0\": {}\n        },\n        \"errorCode\": \"FOLDER_ALREADY_EXISTS\"\n      }\n    }\n  ],\n  \"singleItemQueue\": [\n    {\n      \"done\": \"<boolean>\",\n      \"cancelled\": \"<boolean>\",\n      \"result\": {},\n      \"token\": \"<string>\",\n      \"functionKey\": \"<string>\",\n      \"progress\": \"<number>\",\n      \"total\": \"<number>\",\n      \"percentComplete\": \"<number>\",\n      \"updatedOn\": \"<integer>\",\n      \"status\": \"<string>\",\n      \"statusId\": \"<string>\",\n      \"requestTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"finishTime\": \"<integer>\",\n      \"caseId\": \"<string>\",\n      \"caseName\": \"<string>\",\n      \"hasSuccessfullyCompleted\": \"<boolean>\",\n      \"friendlyName\": \"<string>\",\n      \"caseLocation\": \"<string>\",\n      \"requestor\": \"<string>\",\n      \"licenseShortName\": \"<string>\",\n      \"action\": \"<string>\",\n      \"options\": {\n        \"Duis23\": {}\n      },\n      \"participatingInCaseFunctionQueue\": \"<boolean>\",\n      \"processedBy\": \"<string>\",\n      \"error\": {\n        \"serverId\": \"<string>\",\n        \"developerMessage\": \"<string>\",\n        \"userMessage\": \"<string>\",\n        \"additionalInfo\": {\n          \"cupidatat16\": {}\n        },\n        \"errorCode\": \"FILE_SYSTEM_ERROR\"\n      }\n    },\n    {\n      \"done\": \"<boolean>\",\n      \"cancelled\": \"<boolean>\",\n      \"result\": {},\n      \"token\": \"<string>\",\n      \"functionKey\": \"<string>\",\n      \"progress\": \"<number>\",\n      \"total\": \"<number>\",\n      \"percentComplete\": \"<number>\",\n      \"updatedOn\": \"<integer>\",\n      \"status\": \"<string>\",\n      \"statusId\": \"<string>\",\n      \"requestTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"finishTime\": \"<integer>\",\n      \"caseId\": \"<string>\",\n      \"caseName\": \"<string>\",\n      \"hasSuccessfullyCompleted\": \"<boolean>\",\n      \"friendlyName\": \"<string>\",\n      \"caseLocation\": \"<string>\",\n      \"requestor\": \"<string>\",\n      \"licenseShortName\": \"<string>\",\n      \"action\": \"<string>\",\n      \"options\": {\n        \"culpa_d\": {},\n        \"voluptate92a\": {},\n        \"nulla78\": {}\n      },\n      \"participatingInCaseFunctionQueue\": \"<boolean>\",\n      \"processedBy\": \"<string>\",\n      \"error\": {\n        \"serverId\": \"<string>\",\n        \"developerMessage\": \"<string>\",\n        \"userMessage\": \"<string>\",\n        \"additionalInfo\": {\n          \"aute_7\": {}\n        },\n        \"errorCode\": \"UNAUTHORISED\"\n      }\n    }\n  ],\n  \"paused\": \"<boolean>\",\n  \"pausedBy\": \"<string>\",\n  \"pausedUntil\": \"<long>\",\n  \"caseQueues\": [\n    {\n      \"caseId\": \"<string>\",\n      \"queue\": [\n        {\n          \"done\": \"<boolean>\",\n          \"cancelled\": \"<boolean>\",\n          \"result\": {},\n          \"token\": \"<string>\",\n          \"functionKey\": \"<string>\",\n          \"progress\": \"<number>\",\n          \"total\": \"<number>\",\n          \"percentComplete\": \"<number>\",\n          \"updatedOn\": \"<integer>\",\n          \"status\": \"<string>\",\n          \"statusId\": \"<string>\",\n          \"requestTime\": \"<integer>\",\n          \"startTime\": \"<integer>\",\n          \"finishTime\": \"<integer>\",\n          \"caseId\": \"<string>\",\n          \"caseName\": \"<string>\",\n          \"hasSuccessfullyCompleted\": \"<boolean>\",\n          \"friendlyName\": \"<string>\",\n          \"caseLocation\": \"<string>\",\n          \"requestor\": \"<string>\",\n          \"licenseShortName\": \"<string>\",\n          \"action\": \"<string>\",\n          \"options\": {\n            \"mollit_\": {}\n          },\n          \"participatingInCaseFunctionQueue\": \"<boolean>\",\n          \"processedBy\": \"<string>\",\n          \"error\": {\n            \"serverId\": \"<string>\",\n            \"developerMessage\": \"<string>\",\n            \"userMessage\": \"<string>\",\n            \"additionalInfo\": {\n              \"proident_0\": {}\n            },\n            \"errorCode\": \"REQUIRED_ARGUMENT_MISSING\"\n          }\n        },\n        {\n          \"done\": \"<boolean>\",\n          \"cancelled\": \"<boolean>\",\n          \"result\": {},\n          \"token\": \"<string>\",\n          \"functionKey\": \"<string>\",\n          \"progress\": \"<number>\",\n          \"total\": \"<number>\",\n          \"percentComplete\": \"<number>\",\n          \"updatedOn\": \"<integer>\",\n          \"status\": \"<string>\",\n          \"statusId\": \"<string>\",\n          \"requestTime\": \"<integer>\",\n          \"startTime\": \"<integer>\",\n          \"finishTime\": \"<integer>\",\n          \"caseId\": \"<string>\",\n          \"caseName\": \"<string>\",\n          \"hasSuccessfullyCompleted\": \"<boolean>\",\n          \"friendlyName\": \"<string>\",\n          \"caseLocation\": \"<string>\",\n          \"requestor\": \"<string>\",\n          \"licenseShortName\": \"<string>\",\n          \"action\": \"<string>\",\n          \"options\": {\n            \"doloreaf7\": {}\n          },\n          \"participatingInCaseFunctionQueue\": \"<boolean>\",\n          \"processedBy\": \"<string>\",\n          \"error\": {\n            \"serverId\": \"<string>\",\n            \"developerMessage\": \"<string>\",\n            \"userMessage\": \"<string>\",\n            \"additionalInfo\": {\n              \"fugiat_722\": {}\n            },\n            \"errorCode\": \"UNKNOWN\"\n          }\n        }\n      ]\n    },\n    {\n      \"caseId\": \"<string>\",\n      \"queue\": [\n        {\n          \"done\": \"<boolean>\",\n          \"cancelled\": \"<boolean>\",\n          \"result\": {},\n          \"token\": \"<string>\",\n          \"functionKey\": \"<string>\",\n          \"progress\": \"<number>\",\n          \"total\": \"<number>\",\n          \"percentComplete\": \"<number>\",\n          \"updatedOn\": \"<integer>\",\n          \"status\": \"<string>\",\n          \"statusId\": \"<string>\",\n          \"requestTime\": \"<integer>\",\n          \"startTime\": \"<integer>\",\n          \"finishTime\": \"<integer>\",\n          \"caseId\": \"<string>\",\n          \"caseName\": \"<string>\",\n          \"hasSuccessfullyCompleted\": \"<boolean>\",\n          \"friendlyName\": \"<string>\",\n          \"caseLocation\": \"<string>\",\n          \"requestor\": \"<string>\",\n          \"licenseShortName\": \"<string>\",\n          \"action\": \"<string>\",\n          \"options\": {\n            \"do_b1\": {},\n            \"ex_d\": {},\n            \"nisi_1\": {}\n          },\n          \"participatingInCaseFunctionQueue\": \"<boolean>\",\n          \"processedBy\": \"<string>\",\n          \"error\": {\n            \"serverId\": \"<string>\",\n            \"developerMessage\": \"<string>\",\n            \"userMessage\": \"<string>\",\n            \"additionalInfo\": {\n              \"voluptate83\": {},\n              \"Ut_34e\": {},\n              \"irurea\": {}\n            },\n            \"errorCode\": \"INVALID_TEMPLATE\"\n          }\n        },\n        {\n          \"done\": \"<boolean>\",\n          \"cancelled\": \"<boolean>\",\n          \"result\": {},\n          \"token\": \"<string>\",\n          \"functionKey\": \"<string>\",\n          \"progress\": \"<number>\",\n          \"total\": \"<number>\",\n          \"percentComplete\": \"<number>\",\n          \"updatedOn\": \"<integer>\",\n          \"status\": \"<string>\",\n          \"statusId\": \"<string>\",\n          \"requestTime\": \"<integer>\",\n          \"startTime\": \"<integer>\",\n          \"finishTime\": \"<integer>\",\n          \"caseId\": \"<string>\",\n          \"caseName\": \"<string>\",\n          \"hasSuccessfullyCompleted\": \"<boolean>\",\n          \"friendlyName\": \"<string>\",\n          \"caseLocation\": \"<string>\",\n          \"requestor\": \"<string>\",\n          \"licenseShortName\": \"<string>\",\n          \"action\": \"<string>\",\n          \"options\": {\n            \"laborisd9a\": {}\n          },\n          \"participatingInCaseFunctionQueue\": \"<boolean>\",\n          \"processedBy\": \"<string>\",\n          \"error\": {\n            \"serverId\": \"<string>\",\n            \"developerMessage\": \"<string>\",\n            \"userMessage\": \"<string>\",\n            \"additionalInfo\": {\n              \"laboreec2\": {},\n              \"velitfa\": {},\n              \"in_4\": {},\n              \"aliquip89a\": {}\n            },\n            \"errorCode\": \"CASE_LOCKED_BY_FUNCTION\"\n          }\n        }\n      ]\n    }\n  ],\n  \"totalRunningFunctions\": \"<integer>\"\n}",
+                  "createdAt": "2026-10-21T21:21:28.000Z",
+                  "updatedAt": "2026-10-21T21:21:28.000Z",
+                  "uid": "35240-0bd91f18-8d77-4562-9dba-fd09089b740f"
+                }
+              ],
+              "createdAt": "2026-10-21T21:21:28.000Z",
+              "updatedAt": "2026-10-21T21:21:28.000Z",
+              "uid": "35240-1c262ff9-2cef-4565-b50d-572888098f2d"
+            }
+          ],
+          "id": "d3790254-56c5-4032-95d8-93622c13f051",
+          "createdAt": "2026-10-21T21:21:28.000Z",
+          "updatedAt": "2026-10-21T21:21:28.000Z",
+          "uid": "35240-d3790254-56c5-4032-95d8-93622c13f051"
+        }
+      ],
+      "id": "f4e88088-1f1a-4614-b9ef-b1751e1e3c70",
+      "createdAt": "2026-10-21T21:21:28.000Z",
+      "updatedAt": "2026-10-21T21:21:28.000Z",
+      "uid": "35240-f4e88088-1f1a-4614-b9ef-b1751e1e3c70"
+    },
+    {
+      "name": "asyncFunctionsQueue",
+      "item": [
+        {
+          "name": "Returns asynchronous function statuses",
+          "id": "0eae4b87-2fd1-4fae-a564-4d70be0b69ac",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v1+json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/asyncFunctionsQueue?activeWindowInSeconds=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "asyncFunctionsQueue"
+              ],
+              "query": [
+                {
+                  "description": "The time in seconds within which non-queue functions must have been active to be returned. Numbers less than 0 will return all windows.",
+                  "key": "activeWindowInSeconds",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "Use this operation to view the status of asynchronous functions. All asynchronous functions that have been run and that are currently running are returned."
+          },
+          "response": [
+            {
+              "id": "73785238-e3f6-4ab5-a268-88bc173e7259",
+              "name": "default response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/asyncFunctionsQueue?activeWindowInSeconds=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "asyncFunctionsQueue"
+                  ],
+                  "query": [
+                    {
+                      "description": "The time in seconds within which non-queue functions must have been active to be returned. Numbers less than 0 will return all windows.",
+                      "key": "activeWindowInSeconds",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"executeImmediate\": [\n    {\n      \"done\": \"<boolean>\",\n      \"cancelled\": \"<boolean>\",\n      \"result\": {},\n      \"token\": \"<string>\",\n      \"functionKey\": \"<string>\",\n      \"progress\": \"<number>\",\n      \"total\": \"<number>\",\n      \"percentComplete\": \"<number>\",\n      \"updatedOn\": \"<integer>\",\n      \"status\": \"<string>\",\n      \"statusId\": \"<string>\",\n      \"requestTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"finishTime\": \"<integer>\",\n      \"caseId\": \"<string>\",\n      \"caseName\": \"<string>\",\n      \"hasSuccessfullyCompleted\": \"<boolean>\",\n      \"friendlyName\": \"<string>\",\n      \"caseLocation\": \"<string>\",\n      \"requestor\": \"<string>\",\n      \"licenseShortName\": \"<string>\",\n      \"action\": \"<string>\",\n      \"options\": {\n        \"exercitationbd\": {},\n        \"ex_804\": {},\n        \"sunt_a59\": {},\n        \"nostrudee\": {}\n      },\n      \"participatingInCaseFunctionQueue\": \"<boolean>\",\n      \"processedBy\": \"<string>\",\n      \"error\": {\n        \"serverId\": \"<string>\",\n        \"developerMessage\": \"<string>\",\n        \"userMessage\": \"<string>\",\n        \"additionalInfo\": {\n          \"veniam84f\": {},\n          \"in_\": {}\n        },\n        \"errorCode\": \"INVALID_LICENSE_TYPE_FOR_CASE\"\n      }\n    },\n    {\n      \"done\": \"<boolean>\",\n      \"cancelled\": \"<boolean>\",\n      \"result\": {},\n      \"token\": \"<string>\",\n      \"functionKey\": \"<string>\",\n      \"progress\": \"<number>\",\n      \"total\": \"<number>\",\n      \"percentComplete\": \"<number>\",\n      \"updatedOn\": \"<integer>\",\n      \"status\": \"<string>\",\n      \"statusId\": \"<string>\",\n      \"requestTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"finishTime\": \"<integer>\",\n      \"caseId\": \"<string>\",\n      \"caseName\": \"<string>\",\n      \"hasSuccessfullyCompleted\": \"<boolean>\",\n      \"friendlyName\": \"<string>\",\n      \"caseLocation\": \"<string>\",\n      \"requestor\": \"<string>\",\n      \"licenseShortName\": \"<string>\",\n      \"action\": \"<string>\",\n      \"options\": {\n        \"aliquip2\": {},\n        \"non8e\": {}\n      },\n      \"participatingInCaseFunctionQueue\": \"<boolean>\",\n      \"processedBy\": \"<string>\",\n      \"error\": {\n        \"serverId\": \"<string>\",\n        \"developerMessage\": \"<string>\",\n        \"userMessage\": \"<string>\",\n        \"additionalInfo\": {\n          \"Ut_2\": {},\n          \"nisi_0\": {}\n        },\n        \"errorCode\": \"FOLDER_ALREADY_EXISTS\"\n      }\n    }\n  ],\n  \"singleItemQueue\": [\n    {\n      \"done\": \"<boolean>\",\n      \"cancelled\": \"<boolean>\",\n      \"result\": {},\n      \"token\": \"<string>\",\n      \"functionKey\": \"<string>\",\n      \"progress\": \"<number>\",\n      \"total\": \"<number>\",\n      \"percentComplete\": \"<number>\",\n      \"updatedOn\": \"<integer>\",\n      \"status\": \"<string>\",\n      \"statusId\": \"<string>\",\n      \"requestTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"finishTime\": \"<integer>\",\n      \"caseId\": \"<string>\",\n      \"caseName\": \"<string>\",\n      \"hasSuccessfullyCompleted\": \"<boolean>\",\n      \"friendlyName\": \"<string>\",\n      \"caseLocation\": \"<string>\",\n      \"requestor\": \"<string>\",\n      \"licenseShortName\": \"<string>\",\n      \"action\": \"<string>\",\n      \"options\": {\n        \"Duis23\": {}\n      },\n      \"participatingInCaseFunctionQueue\": \"<boolean>\",\n      \"processedBy\": \"<string>\",\n      \"error\": {\n        \"serverId\": \"<string>\",\n        \"developerMessage\": \"<string>\",\n        \"userMessage\": \"<string>\",\n        \"additionalInfo\": {\n          \"cupidatat16\": {}\n        },\n        \"errorCode\": \"FILE_SYSTEM_ERROR\"\n      }\n    },\n    {\n      \"done\": \"<boolean>\",\n      \"cancelled\": \"<boolean>\",\n      \"result\": {},\n      \"token\": \"<string>\",\n      \"functionKey\": \"<string>\",\n      \"progress\": \"<number>\",\n      \"total\": \"<number>\",\n      \"percentComplete\": \"<number>\",\n      \"updatedOn\": \"<integer>\",\n      \"status\": \"<string>\",\n      \"statusId\": \"<string>\",\n      \"requestTime\": \"<integer>\",\n      \"startTime\": \"<integer>\",\n      \"finishTime\": \"<integer>\",\n      \"caseId\": \"<string>\",\n      \"caseName\": \"<string>\",\n      \"hasSuccessfullyCompleted\": \"<boolean>\",\n      \"friendlyName\": \"<string>\",\n      \"caseLocation\": \"<string>\",\n      \"requestor\": \"<string>\",\n      \"licenseShortName\": \"<string>\",\n      \"action\": \"<string>\",\n      \"options\": {\n        \"culpa_d\": {},\n        \"voluptate92a\": {},\n        \"nulla78\": {}\n      },\n      \"participatingInCaseFunctionQueue\": \"<boolean>\",\n      \"processedBy\": \"<string>\",\n      \"error\": {\n        \"serverId\": \"<string>\",\n        \"developerMessage\": \"<string>\",\n        \"userMessage\": \"<string>\",\n        \"additionalInfo\": {\n          \"aute_7\": {}\n        },\n        \"errorCode\": \"UNAUTHORISED\"\n      }\n    }\n  ],\n  \"paused\": \"<boolean>\",\n  \"pausedBy\": \"<string>\",\n  \"pausedUntil\": \"<long>\",\n  \"caseQueues\": [\n    {\n      \"caseId\": \"<string>\",\n      \"queue\": [\n        {\n          \"done\": \"<boolean>\",\n          \"cancelled\": \"<boolean>\",\n          \"result\": {},\n          \"token\": \"<string>\",\n          \"functionKey\": \"<string>\",\n          \"progress\": \"<number>\",\n          \"total\": \"<number>\",\n          \"percentComplete\": \"<number>\",\n          \"updatedOn\": \"<integer>\",\n          \"status\": \"<string>\",\n          \"statusId\": \"<string>\",\n          \"requestTime\": \"<integer>\",\n          \"startTime\": \"<integer>\",\n          \"finishTime\": \"<integer>\",\n          \"caseId\": \"<string>\",\n          \"caseName\": \"<string>\",\n          \"hasSuccessfullyCompleted\": \"<boolean>\",\n          \"friendlyName\": \"<string>\",\n          \"caseLocation\": \"<string>\",\n          \"requestor\": \"<string>\",\n          \"licenseShortName\": \"<string>\",\n          \"action\": \"<string>\",\n          \"options\": {\n            \"mollit_\": {}\n          },\n          \"participatingInCaseFunctionQueue\": \"<boolean>\",\n          \"processedBy\": \"<string>\",\n          \"error\": {\n            \"serverId\": \"<string>\",\n            \"developerMessage\": \"<string>\",\n            \"userMessage\": \"<string>\",\n            \"additionalInfo\": {\n              \"proident_0\": {}\n            },\n            \"errorCode\": \"REQUIRED_ARGUMENT_MISSING\"\n          }\n        },\n        {\n          \"done\": \"<boolean>\",\n          \"cancelled\": \"<boolean>\",\n          \"result\": {},\n          \"token\": \"<string>\",\n          \"functionKey\": \"<string>\",\n          \"progress\": \"<number>\",\n          \"total\": \"<number>\",\n          \"percentComplete\": \"<number>\",\n          \"updatedOn\": \"<integer>\",\n          \"status\": \"<string>\",\n          \"statusId\": \"<string>\",\n          \"requestTime\": \"<integer>\",\n          \"startTime\": \"<integer>\",\n          \"finishTime\": \"<integer>\",\n          \"caseId\": \"<string>\",\n          \"caseName\": \"<string>\",\n          \"hasSuccessfullyCompleted\": \"<boolean>\",\n          \"friendlyName\": \"<string>\",\n          \"caseLocation\": \"<string>\",\n          \"requestor\": \"<string>\",\n          \"licenseShortName\": \"<string>\",\n          \"action\": \"<string>\",\n          \"options\": {\n            \"doloreaf7\": {}\n          },\n          \"participatingInCaseFunctionQueue\": \"<boolean>\",\n          \"processedBy\": \"<string>\",\n          \"error\": {\n            \"serverId\": \"<string>\",\n            \"developerMessage\": \"<string>\",\n            \"userMessage\": \"<string>\",\n            \"additionalInfo\": {\n              \"fugiat_722\": {}\n            },\n            \"errorCode\": \"UNKNOWN\"\n          }\n        }\n      ]\n    },\n    {\n      \"caseId\": \"<string>\",\n      \"queue\": [\n        {\n          \"done\": \"<boolean>\",\n          \"cancelled\": \"<boolean>\",\n          \"result\": {},\n          \"token\": \"<string>\",\n          \"functionKey\": \"<string>\",\n          \"progress\": \"<number>\",\n          \"total\": \"<number>\",\n          \"percentComplete\": \"<number>\",\n          \"updatedOn\": \"<integer>\",\n          \"status\": \"<string>\",\n          \"statusId\": \"<string>\",\n          \"requestTime\": \"<integer>\",\n          \"startTime\": \"<integer>\",\n          \"finishTime\": \"<integer>\",\n          \"caseId\": \"<string>\",\n          \"caseName\": \"<string>\",\n          \"hasSuccessfullyCompleted\": \"<boolean>\",\n          \"friendlyName\": \"<string>\",\n          \"caseLocation\": \"<string>\",\n          \"requestor\": \"<string>\",\n          \"licenseShortName\": \"<string>\",\n          \"action\": \"<string>\",\n          \"options\": {\n            \"do_b1\": {},\n            \"ex_d\": {},\n            \"nisi_1\": {}\n          },\n          \"participatingInCaseFunctionQueue\": \"<boolean>\",\n          \"processedBy\": \"<string>\",\n          \"error\": {\n            \"serverId\": \"<string>\",\n            \"developerMessage\": \"<string>\",\n            \"userMessage\": \"<string>\",\n            \"additionalInfo\": {\n              \"voluptate83\": {},\n              \"Ut_34e\": {},\n              \"irurea\": {}\n            },\n            \"errorCode\": \"INVALID_TEMPLATE\"\n          }\n        },\n        {\n          \"done\": \"<boolean>\",\n          \"cancelled\": \"<boolean>\",\n          \"result\": {},\n          \"token\": \"<string>\",\n          \"functionKey\": \"<string>\",\n          \"progress\": \"<number>\",\n          \"total\": \"<number>\",\n          \"percentComplete\": \"<number>\",\n          \"updatedOn\": \"<integer>\",\n          \"status\": \"<string>\",\n          \"statusId\": \"<string>\",\n          \"requestTime\": \"<integer>\",\n          \"startTime\": \"<integer>\",\n          \"finishTime\": \"<integer>\",\n          \"caseId\": \"<string>\",\n          \"caseName\": \"<string>\",\n          \"hasSuccessfullyCompleted\": \"<boolean>\",\n          \"friendlyName\": \"<string>\",\n          \"caseLocation\": \"<string>\",\n          \"requestor\": \"<string>\",\n          \"licenseShortName\": \"<string>\",\n          \"action\": \"<string>\",\n          \"options\": {\n            \"laborisd9a\": {}\n          },\n          \"participatingInCaseFunctionQueue\": \"<boolean>\",\n          \"processedBy\": \"<string>\",\n          \"error\": {\n            \"serverId\": \"<string>\",\n            \"developerMessage\": \"<string>\",\n            \"userMessage\": \"<string>\",\n            \"additionalInfo\": {\n              \"laboreec2\": {},\n              \"velitfa\": {},\n              \"in_4\": {},\n              \"aliquip89a\": {}\n            },\n            \"errorCode\": \"CASE_LOCKED_BY_FUNCTION\"\n          }\n        }\n      ]\n    }\n  ],\n  \"totalRunningFunctions\": \"<integer>\"\n}",
+              "createdAt": "2026-10-21T21:21:28.000Z",
+              "updatedAt": "2026-10-21T21:21:28.000Z",
+              "uid": "35240-73785238-e3f6-4ab5-a268-88bc173e7259"
+            }
+          ],
+          "createdAt": "2026-10-21T21:21:28.000Z",
+          "updatedAt": "2026-10-21T21:21:28.000Z",
+          "uid": "35240-0eae4b87-2fd1-4fae-a564-4d70be0b69ac"
+        }
+      ],
+      "id": "b98bb0c1-c977-4c6c-b781-33f3594d961a",
+      "createdAt": "2026-10-21T21:21:28.000Z",
+      "updatedAt": "2026-10-21T21:21:28.000Z",
+      "uid": "35240-b98bb0c1-c977-4c6c-b781-33f3594d961a"
+    },
+    {
+      "name": "asyncFunctions",
+      "item": [
+        {
+          "name": "{key}",
+          "item": [
+            {
+              "name": "status",
+              "item": [
+                {
+                  "name": "Sets the status of an asynchronous function",
+                  "id": "136499ac-a09f-4305-a67d-14e6387a9905",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"status\": \"CANCELLED\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/asyncFunctions/:key/status",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "asyncFunctions",
+                        ":key",
+                        "status"
+                      ],
+                      "variable": [
+                        {
+                          "id": "62d8a690-5ed1-4380-a310-382c7fc26669",
+                          "key": "key",
+                          "value": "<string>",
+                          "description": "(Required) Async function key"
+                        }
+                      ]
+                    },
+                    "description": "Use this operation to set the status of an asynchronous function. This is useful if you want to pause, resume, cancel, or stop a job."
+                  },
+                  "response": [
+                    {
+                      "id": "4e84256a-2870-4d04-8c60-13feedbc61a3",
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"status\": \"CANCELLED\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/asyncFunctions/:key/status",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "asyncFunctions",
+                            ":key",
+                            "status"
+                          ],
+                          "variable": [
+                            {
+                              "key": "key"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/vnd.nuix.v1+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"done\": \"<boolean>\",\n  \"cancelled\": \"<boolean>\",\n  \"result\": {},\n  \"token\": \"<string>\",\n  \"functionKey\": \"<string>\",\n  \"progress\": \"<number>\",\n  \"total\": \"<number>\",\n  \"percentComplete\": \"<number>\",\n  \"updatedOn\": \"<integer>\",\n  \"status\": \"<string>\",\n  \"statusId\": \"<string>\",\n  \"requestTime\": \"<integer>\",\n  \"startTime\": \"<integer>\",\n  \"finishTime\": \"<integer>\",\n  \"caseId\": \"<string>\",\n  \"caseName\": \"<string>\",\n  \"hasSuccessfullyCompleted\": \"<boolean>\",\n  \"friendlyName\": \"<string>\",\n  \"caseLocation\": \"<string>\",\n  \"requestor\": \"<string>\",\n  \"licenseShortName\": \"<string>\",\n  \"action\": \"<string>\",\n  \"options\": {\n    \"ullamco_a\": {}\n  },\n  \"participatingInCaseFunctionQueue\": \"<boolean>\",\n  \"processedBy\": \"<string>\",\n  \"error\": {\n    \"serverId\": \"<string>\",\n    \"developerMessage\": \"<string>\",\n    \"userMessage\": \"<string>\",\n    \"additionalInfo\": {\n      \"nostrudf10\": {},\n      \"cupidatat0\": {},\n      \"etc\": {},\n      \"non_5a\": {}\n    },\n    \"errorCode\": \"CASE_LOCKED_BY_FUNCTION\"\n  }\n}",
+                      "createdAt": "2026-10-21T21:21:28.000Z",
+                      "updatedAt": "2026-10-21T21:21:28.000Z",
+                      "uid": "35240-4e84256a-2870-4d04-8c60-13feedbc61a3"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:21:28.000Z",
+                  "updatedAt": "2026-10-21T21:21:28.000Z",
+                  "uid": "35240-136499ac-a09f-4305-a67d-14e6387a9905"
+                }
+              ],
+              "id": "582cffa7-26ed-45d2-96ec-b8d48738fe62",
+              "createdAt": "2026-10-21T21:21:28.000Z",
+              "updatedAt": "2026-10-21T21:21:28.000Z",
+              "uid": "35240-582cffa7-26ed-45d2-96ec-b8d48738fe62"
+            },
+            {
+              "name": "Returns the status of an asynchronous function",
+              "id": "4a60f9ea-7bda-4fda-a5bd-3f08026ba9c5",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/asyncFunctions/:key",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "asyncFunctions",
+                    ":key"
+                  ],
+                  "variable": [
+                    {
+                      "id": "54f9b49c-7132-449c-9076-198dc46a2d7c",
+                      "key": "key",
+                      "value": "<string>",
+                      "description": "(Required) Async function key"
+                    }
+                  ]
+                },
+                "description": "Use this operation to view the status of an asynchronous function. This is useful when you want to check on the status of a function."
+              },
+              "response": [
+                {
+                  "id": "999eaa79-ca9f-4026-a54f-41e0c63301f7",
+                  "name": "default response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/asyncFunctions/:key",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "asyncFunctions",
+                        ":key"
+                      ],
+                      "variable": [
+                        {
+                          "key": "key"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/vnd.nuix.v1+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"done\": \"<boolean>\",\n  \"cancelled\": \"<boolean>\",\n  \"result\": {},\n  \"token\": \"<string>\",\n  \"functionKey\": \"<string>\",\n  \"progress\": \"<number>\",\n  \"total\": \"<number>\",\n  \"percentComplete\": \"<number>\",\n  \"updatedOn\": \"<integer>\",\n  \"status\": \"<string>\",\n  \"statusId\": \"<string>\",\n  \"requestTime\": \"<integer>\",\n  \"startTime\": \"<integer>\",\n  \"finishTime\": \"<integer>\",\n  \"caseId\": \"<string>\",\n  \"caseName\": \"<string>\",\n  \"hasSuccessfullyCompleted\": \"<boolean>\",\n  \"friendlyName\": \"<string>\",\n  \"caseLocation\": \"<string>\",\n  \"requestor\": \"<string>\",\n  \"licenseShortName\": \"<string>\",\n  \"action\": \"<string>\",\n  \"options\": {\n    \"aliqua6\": {},\n    \"ametd\": {}\n  },\n  \"participatingInCaseFunctionQueue\": \"<boolean>\",\n  \"processedBy\": \"<string>\",\n  \"error\": {\n    \"serverId\": \"<string>\",\n    \"developerMessage\": \"<string>\",\n    \"userMessage\": \"<string>\",\n    \"additionalInfo\": {\n      \"ipsum_d\": {}\n    },\n    \"errorCode\": \"INVALID_TEMPLATE\"\n  }\n}",
+                  "createdAt": "2026-10-21T21:21:28.000Z",
+                  "updatedAt": "2026-10-21T21:21:28.000Z",
+                  "uid": "35240-999eaa79-ca9f-4026-a54f-41e0c63301f7"
+                }
+              ],
+              "createdAt": "2026-10-21T21:21:28.000Z",
+              "updatedAt": "2026-10-21T21:21:28.000Z",
+              "uid": "35240-4a60f9ea-7bda-4fda-a5bd-3f08026ba9c5"
+            },
+            {
+              "name": "Cancels an asynchronous function",
+              "id": "8e1e47cf-57bb-429e-a7f7-52acaeedf875",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/asyncFunctions/:key",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "asyncFunctions",
+                    ":key"
+                  ],
+                  "variable": [
+                    {
+                      "id": "ef00ad68-d478-4b57-a436-b008f752b860",
+                      "key": "key",
+                      "value": "<string>",
+                      "description": "(Required) Async function key"
+                    }
+                  ]
+                },
+                "description": "Use this operation to cancel an asynchronous function."
+              },
+              "response": [
+                {
+                  "id": "95131f15-174d-4b2b-8c94-85848e9c1e87",
+                  "name": "default response",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/asyncFunctions/:key",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "asyncFunctions",
+                        ":key"
+                      ],
+                      "variable": [
+                        {
+                          "key": "key"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/vnd.nuix.v1+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"done\": \"<boolean>\",\n  \"cancelled\": \"<boolean>\",\n  \"result\": {},\n  \"token\": \"<string>\",\n  \"functionKey\": \"<string>\",\n  \"progress\": \"<number>\",\n  \"total\": \"<number>\",\n  \"percentComplete\": \"<number>\",\n  \"updatedOn\": \"<integer>\",\n  \"status\": \"<string>\",\n  \"statusId\": \"<string>\",\n  \"requestTime\": \"<integer>\",\n  \"startTime\": \"<integer>\",\n  \"finishTime\": \"<integer>\",\n  \"caseId\": \"<string>\",\n  \"caseName\": \"<string>\",\n  \"hasSuccessfullyCompleted\": \"<boolean>\",\n  \"friendlyName\": \"<string>\",\n  \"caseLocation\": \"<string>\",\n  \"requestor\": \"<string>\",\n  \"licenseShortName\": \"<string>\",\n  \"action\": \"<string>\",\n  \"options\": {\n    \"aliqua6\": {},\n    \"ametd\": {}\n  },\n  \"participatingInCaseFunctionQueue\": \"<boolean>\",\n  \"processedBy\": \"<string>\",\n  \"error\": {\n    \"serverId\": \"<string>\",\n    \"developerMessage\": \"<string>\",\n    \"userMessage\": \"<string>\",\n    \"additionalInfo\": {\n      \"ipsum_d\": {}\n    },\n    \"errorCode\": \"INVALID_TEMPLATE\"\n  }\n}",
+                  "createdAt": "2026-10-21T21:21:28.000Z",
+                  "updatedAt": "2026-10-21T21:21:28.000Z",
+                  "uid": "35240-95131f15-174d-4b2b-8c94-85848e9c1e87"
+                }
+              ],
+              "createdAt": "2026-10-21T21:21:28.000Z",
+              "updatedAt": "2026-10-21T21:21:28.000Z",
+              "uid": "35240-8e1e47cf-57bb-429e-a7f7-52acaeedf875"
+            }
+          ],
+          "id": "65b64841-f24c-41e9-86b8-79a79ee1921a",
+          "createdAt": "2026-10-21T21:21:28.000Z",
+          "updatedAt": "2026-10-21T21:21:28.000Z",
+          "uid": "35240-65b64841-f24c-41e9-86b8-79a79ee1921a"
+        },
+        {
+          "name": "processingJobs",
+          "item": [
+            {
+              "name": "{key}",
+              "item": [
+                {
+                  "name": "Cancels a processing job",
+                  "id": "6d3c4e9c-c924-4cc7-ba59-8e2de4be1596",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/asyncFunctions/processingJobs/:key?canResume=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "asyncFunctions",
+                        "processingJobs",
+                        ":key"
+                      ],
+                      "query": [
+                        {
+                          "description": "Can this processing job be resumed",
+                          "key": "canResume",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "d0f1703c-ef40-4ab3-a9a0-80bb72106901",
+                          "key": "key",
+                          "value": "<string>",
+                          "description": "(Required) Async function key"
+                        }
+                      ]
+                    },
+                    "description": "Use DELETE /asyncFunctions/{key} or PUT /asyncFunctions/{key}/status\n\n---\n\nIf canResume is true, any future processing jobs will finish processing the data from this job."
+                  },
+                  "response": [
+                    {
+                      "id": "aa7b6230-9959-493c-9717-b1b081b59290",
+                      "name": "default response",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/asyncFunctions/processingJobs/:key?canResume=false",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "asyncFunctions",
+                            "processingJobs",
+                            ":key"
+                          ],
+                          "query": [
+                            {
+                              "description": "Can this processing job be resumed",
+                              "key": "canResume",
+                              "value": "false"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "key"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/vnd.nuix.v1+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"done\": \"<boolean>\",\n  \"cancelled\": \"<boolean>\",\n  \"result\": {},\n  \"token\": \"<string>\",\n  \"functionKey\": \"<string>\",\n  \"progress\": \"<number>\",\n  \"total\": \"<number>\",\n  \"percentComplete\": \"<number>\",\n  \"updatedOn\": \"<integer>\",\n  \"status\": \"<string>\",\n  \"statusId\": \"<string>\",\n  \"requestTime\": \"<integer>\",\n  \"startTime\": \"<integer>\",\n  \"finishTime\": \"<integer>\",\n  \"caseId\": \"<string>\",\n  \"caseName\": \"<string>\",\n  \"hasSuccessfullyCompleted\": \"<boolean>\",\n  \"friendlyName\": \"<string>\",\n  \"caseLocation\": \"<string>\",\n  \"requestor\": \"<string>\",\n  \"licenseShortName\": \"<string>\",\n  \"action\": \"<string>\",\n  \"options\": {\n    \"aliqua6\": {},\n    \"ametd\": {}\n  },\n  \"participatingInCaseFunctionQueue\": \"<boolean>\",\n  \"processedBy\": \"<string>\",\n  \"error\": {\n    \"serverId\": \"<string>\",\n    \"developerMessage\": \"<string>\",\n    \"userMessage\": \"<string>\",\n    \"additionalInfo\": {\n      \"ipsum_d\": {}\n    },\n    \"errorCode\": \"INVALID_TEMPLATE\"\n  }\n}",
+                      "createdAt": "2026-10-21T21:21:28.000Z",
+                      "updatedAt": "2026-10-21T21:21:28.000Z",
+                      "uid": "35240-aa7b6230-9959-493c-9717-b1b081b59290"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:21:28.000Z",
+                  "updatedAt": "2026-10-21T21:21:28.000Z",
+                  "uid": "35240-6d3c4e9c-c924-4cc7-ba59-8e2de4be1596"
+                }
+              ],
+              "id": "3132d949-2b44-4fd7-8e30-b70d2dcb5151",
+              "createdAt": "2026-10-21T21:21:28.000Z",
+              "updatedAt": "2026-10-21T21:21:28.000Z",
+              "uid": "35240-3132d949-2b44-4fd7-8e30-b70d2dcb5151"
+            }
+          ],
+          "id": "5d131029-db7f-4f15-b144-5bbd5f0d17fc",
+          "createdAt": "2026-10-21T21:21:28.000Z",
+          "updatedAt": "2026-10-21T21:21:28.000Z",
+          "uid": "35240-5d131029-db7f-4f15-b144-5bbd5f0d17fc"
+        },
+        {
+          "name": "Returns asynchronous function statuses",
+          "id": "547a7efd-c677-4108-9353-0258818ad5fe",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v2+json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/asyncFunctions?caseId=<string>&friendlyName=<string>&activeWindowInSeconds=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "asyncFunctions"
+              ],
+              "query": [
+                {
+                  "description": "The case to filter functions returned on.",
+                  "key": "caseId",
+                  "value": "<string>"
+                },
+                {
+                  "description": "The type of function to filter on.",
+                  "key": "friendlyName",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Unused for version 2 of the endpoint.",
+                  "key": "activeWindowInSeconds",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "Use this operation to view the status of asynchronous functions. Functions can be filtered based on caseId and friendlyName."
+          },
+          "response": [
+            {
+              "id": "165a13dc-bb1e-404c-8e51-ae53e0fc7d1d",
+              "name": "default response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v2+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/asyncFunctions?caseId=<string>&friendlyName=<string>&activeWindowInSeconds=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "asyncFunctions"
+                  ],
+                  "query": [
+                    {
+                      "description": "The case to filter functions returned on.",
+                      "key": "caseId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The type of function to filter on.",
+                      "key": "friendlyName",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Unused for version 2 of the endpoint.",
+                      "key": "activeWindowInSeconds",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v2+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"done\": \"<boolean>\",\n    \"cancelled\": \"<boolean>\",\n    \"result\": {},\n    \"token\": \"<string>\",\n    \"functionKey\": \"<string>\",\n    \"progress\": \"<number>\",\n    \"total\": \"<number>\",\n    \"percentComplete\": \"<number>\",\n    \"updatedOn\": \"<integer>\",\n    \"status\": \"<string>\",\n    \"statusId\": \"<string>\",\n    \"requestTime\": \"<integer>\",\n    \"startTime\": \"<integer>\",\n    \"finishTime\": \"<integer>\",\n    \"caseId\": \"<string>\",\n    \"caseName\": \"<string>\",\n    \"hasSuccessfullyCompleted\": \"<boolean>\",\n    \"friendlyName\": \"<string>\",\n    \"caseLocation\": \"<string>\",\n    \"requestor\": \"<string>\",\n    \"licenseShortName\": \"<string>\",\n    \"action\": \"<string>\",\n    \"options\": {\n      \"officia_a\": {},\n      \"fugiat58f\": {}\n    },\n    \"participatingInCaseFunctionQueue\": \"<boolean>\",\n    \"processedBy\": \"<string>\",\n    \"error\": {\n      \"serverId\": \"<string>\",\n      \"developerMessage\": \"<string>\",\n      \"userMessage\": \"<string>\",\n      \"additionalInfo\": {\n        \"ipsum_b1\": {},\n        \"in8a_\": {},\n        \"do__4b\": {}\n      },\n      \"errorCode\": \"NOT_IMPLEMENTED\"\n    }\n  },\n  {\n    \"done\": \"<boolean>\",\n    \"cancelled\": \"<boolean>\",\n    \"result\": {},\n    \"token\": \"<string>\",\n    \"functionKey\": \"<string>\",\n    \"progress\": \"<number>\",\n    \"total\": \"<number>\",\n    \"percentComplete\": \"<number>\",\n    \"updatedOn\": \"<integer>\",\n    \"status\": \"<string>\",\n    \"statusId\": \"<string>\",\n    \"requestTime\": \"<integer>\",\n    \"startTime\": \"<integer>\",\n    \"finishTime\": \"<integer>\",\n    \"caseId\": \"<string>\",\n    \"caseName\": \"<string>\",\n    \"hasSuccessfullyCompleted\": \"<boolean>\",\n    \"friendlyName\": \"<string>\",\n    \"caseLocation\": \"<string>\",\n    \"requestor\": \"<string>\",\n    \"licenseShortName\": \"<string>\",\n    \"action\": \"<string>\",\n    \"options\": {\n      \"labore_e\": {}\n    },\n    \"participatingInCaseFunctionQueue\": \"<boolean>\",\n    \"processedBy\": \"<string>\",\n    \"error\": {\n      \"serverId\": \"<string>\",\n      \"developerMessage\": \"<string>\",\n      \"userMessage\": \"<string>\",\n      \"additionalInfo\": {\n        \"dolor__63\": {},\n        \"veniamc\": {}\n      },\n      \"errorCode\": \"RESOURCE_NOT_FOUND\"\n    }\n  }\n]",
+              "createdAt": "2026-10-21T21:21:28.000Z",
+              "updatedAt": "2026-10-21T21:21:28.000Z",
+              "uid": "35240-165a13dc-bb1e-404c-8e51-ae53e0fc7d1d"
+            }
+          ],
+          "createdAt": "2026-10-21T21:21:28.000Z",
+          "updatedAt": "2026-10-21T21:21:28.000Z",
+          "uid": "35240-547a7efd-c677-4108-9353-0258818ad5fe"
+        }
+      ],
+      "id": "8ad86c2f-c72c-48ed-b90a-1daa62ba8617",
+      "createdAt": "2026-10-21T21:21:28.000Z",
+      "updatedAt": "2026-10-21T21:21:28.000Z",
+      "uid": "35240-8ad86c2f-c72c-48ed-b90a-1daa62ba8617"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "nuix-auth-token",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "/nuix-restful-service/svc"
+    }
+  ]
+}

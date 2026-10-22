@@ -1,798 +1,596 @@
 {
+  "info": {
+    "_postman_id": "7c5bf4e0-d8a5-4db0-9c7f-c120f072f9f2",
+    "name": "NUIX ECC REST API Command Reference Group API",
+    "description": "Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs. You can also send REST commands to your running ECC Server, as well as view the responses.\n\n**Note\\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.\n\n**Note\\:** This command reference has been updated for Nuix ECC version 9.12.0.\n\nContact Support:\n Name: Nuix\n Email: APISupport@nuix.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:20:19.000Z",
+    "updatedAt": "2026-10-21T21:20:19.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-7c5bf4e0-d8a5-4db0-9c7f-c120f072f9f2"
+  },
   "item": [
     {
-      "id": "97c4ab6b-9867-4550-b633-583a67f19c8c",
-      "name": "Group",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "v2",
       "item": [
         {
-          "id": "9c95c7fe-90a9-4782-8757-7559695b67b2",
-          "name": "Lists all Groups",
-          "request": {
-            "name": "Lists all Groups",
-            "description": {
-              "content": "Lists all custodian groups defined on the connected server.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v2",
-                "groups"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "description": "protocol for communication (This can only be one of http,https)",
-                  "type": "any",
-                  "value": "{{protocol}}",
-                  "key": "protocol"
-                },
-                {
-                  "description": "The location which the ECC resides",
-                  "type": "any",
-                  "value": "{{address}}",
-                  "key": "address"
-                },
-                {
-                  "description": "80, 443 or alternative",
-                  "type": "any",
-                  "value": "{{port}}",
-                  "key": "port"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "groups",
+          "item": [
             {
-              "id": "52f07d9d-de1f-4638-b3bf-df0e3a9f40ff",
-              "name": "Successful Listing of groups",
-              "originalRequest": {
+              "name": "Lists all Groups",
+              "id": "278c5065-6117-4b96-84d1-21c2ca155052",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
                 "url": {
+                  "raw": "{{baseUrl}}/v2/groups",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
                   "path": [
                     "v2",
                     "groups"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "protocol for communication (This can only be one of http,https)",
-                      "type": "any",
-                      "value": "{{protocol}}",
-                      "key": "protocol"
-                    },
-                    {
-                      "description": "The location which the ECC resides",
-                      "type": "any",
-                      "value": "{{address}}",
-                      "key": "address"
-                    },
-                    {
-                      "description": "80, 443 or alternative",
-                      "type": "any",
-                      "value": "{{port}}",
-                      "key": "port"
-                    }
                   ]
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                "description": "Lists all custodian groups defined on the connected server."
               },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "id": "cd737f2d-719e-43b7-bfb5-e921ddb4e4b6",
+                  "name": "Successful Listing of groups",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/groups",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "groups"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"cases\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"deleted\": \"<boolean>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"deleted\": \"<boolean>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-21T21:20:20.000Z",
+                  "updatedAt": "2026-10-21T21:20:20.000Z",
+                  "uid": "35240-cd737f2d-719e-43b7-bfb5-e921ddb4e4b6"
                 }
               ],
-              "body": "{\n  \"cases\": [\n    {\n      \"id\": 8,\n      \"name\": \"Accounting\",\n      \"description\": \"Accounting department\",\n      \"deleted\": false\n    },\n    {\n      \"id\": 10,\n      \"name\": \"Marketing\",\n      \"description\": \"Marketing department\",\n      \"deleted\": false\n    },\n    {\n      \"id\": 12,\n      \"name\": \"IT\",\n      \"description\": \"IT department\",\n      \"deleted\": false\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-21T21:20:20.000Z",
+              "updatedAt": "2026-10-21T21:20:20.000Z",
+              "uid": "35240-278c5065-6117-4b96-84d1-21c2ca155052"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "e8a50fa2-a5ab-4650-a620-02b8f67a1ddf",
+          "createdAt": "2026-10-21T21:20:20.000Z",
+          "updatedAt": "2026-10-21T21:20:20.000Z",
+          "uid": "35240-e8a50fa2-a5ab-4650-a620-02b8f67a1ddf"
         },
         {
-          "id": "dbea7e7d-832c-429b-9dd2-b32f2aa6d7e2",
-          "name": "Create a new group",
-          "request": {
-            "name": "Create a new group",
-            "description": {
-              "content": "Create a new group.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v2",
-                "group"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "description": "protocol for communication (This can only be one of http,https)",
-                  "type": "any",
-                  "value": "{{protocol}}",
-                  "key": "protocol"
-                },
-                {
-                  "description": "The location which the ECC resides",
-                  "type": "any",
-                  "value": "{{address}}",
-                  "key": "address"
-                },
-                {
-                  "description": "80, 443 or alternative",
-                  "type": "any",
-                  "value": "{{port}}",
-                  "key": "port"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"groupName\": \"<string>\",\n  \"description\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
+          "name": "group",
+          "item": [
             {
-              "id": "e4986532-1a9d-4930-a00e-ccf6591855c6",
-              "name": "Group was created successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "group"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "protocol for communication (This can only be one of http,https)",
-                      "type": "any",
-                      "value": "{{protocol}}",
-                      "key": "protocol"
-                    },
-                    {
-                      "description": "The location which the ECC resides",
-                      "type": "any",
-                      "value": "{{address}}",
-                      "key": "address"
-                    },
-                    {
-                      "description": "80, 443 or alternative",
-                      "type": "any",
-                      "value": "{{port}}",
-                      "key": "port"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
+              "name": "Create a new group",
+              "id": "feedb743-831b-4b09-9010-752b2328a53b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
                 "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"groupName\": \"Administration\",\n  \"description\": \"Administration Department\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": 200,\n  \"id\": 100,\n  \"message\": \"GROUP added: Name={group-name}, ID={group-id}, REST=POST api/ecc/v2/group\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "50a23a35-1f66-46f1-af7f-73845fe41e3c",
-              "name": "General error.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "group"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "protocol for communication (This can only be one of http,https)",
-                      "type": "any",
-                      "value": "{{protocol}}",
-                      "key": "protocol"
-                    },
-                    {
-                      "description": "The location which the ECC resides",
-                      "type": "any",
-                      "value": "{{address}}",
-                      "key": "address"
-                    },
-                    {
-                      "description": "80, 443 or alternative",
-                      "type": "any",
-                      "value": "{{port}}",
-                      "key": "port"
-                    }
-                  ]
-                },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"groupName\": \"Administration\",\n  \"description\": \"Administration Department\"\n}",
+                  "raw": "{\n  \"groupName\": \"<string>\",\n  \"description\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": 400,\n  \"id\": 101,\n  \"message\": \"groupName field is missing.  A new group name must be provided\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "046daec6-5c71-4bae-94b6-f23dbad315e1",
-          "name": "Modify a group",
-          "request": {
-            "name": "Modify a group",
-            "description": {
-              "content": "Modifies or renames a new group.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v2",
-                "group"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "description": "protocol for communication (This can only be one of http,https)",
-                  "type": "any",
-                  "value": "{{protocol}}",
-                  "key": "protocol"
                 },
-                {
-                  "description": "The location which the ECC resides",
-                  "type": "any",
-                  "value": "{{address}}",
-                  "key": "address"
-                },
-                {
-                  "description": "80, 443 or alternative",
-                  "type": "any",
-                  "value": "{{port}}",
-                  "key": "port"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "PUT",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"groupId\": \"<integer>\",\n  \"groupName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"addCustodians\": [\n    {\n      \"custodianId\": \"<integer>\"\n    },\n    {\n      \"custodianId\": \"<integer>\"\n    }\n  ],\n  \"removeCustodians\": [\n    {\n      \"custodianId\": \"<integer>\"\n    },\n    {\n      \"custodianId\": \"<integer>\"\n    }\n  ]\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "0e4dd9c5-6dcc-4398-96ba-8e269d2cfc4f",
-              "name": "Group was modified successfully",
-              "originalRequest": {
                 "url": {
-                  "path": [
-                    "v2",
-                    "group"
-                  ],
+                  "raw": "{{baseUrl}}/v2/group",
                   "host": [
                     "{{baseUrl}}"
                   ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "protocol for communication (This can only be one of http,https)",
-                      "type": "any",
-                      "value": "{{protocol}}",
-                      "key": "protocol"
-                    },
-                    {
-                      "description": "The location which the ECC resides",
-                      "type": "any",
-                      "value": "{{address}}",
-                      "key": "address"
-                    },
-                    {
-                      "description": "80, 443 or alternative",
-                      "type": "any",
-                      "value": "{{port}}",
-                      "key": "port"
-                    }
+                  "path": [
+                    "v2",
+                    "group"
                   ]
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
+                "description": "Create a new group."
+              },
+              "response": [
+                {
+                  "id": "cf673434-ccdb-4abf-8c99-649360a2dbd9",
+                  "name": "Group was created successfully",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"groupName\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
                     },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/group",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "group"
+                      ]
+                    }
                   },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"id\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:20:20.000Z",
+                  "updatedAt": "2026-10-21T21:20:20.000Z",
+                  "uid": "35240-cf673434-ccdb-4abf-8c99-649360a2dbd9"
+                },
+                {
+                  "id": "8303949f-98fe-4779-946f-5a1fa391b0e6",
+                  "name": "General error.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"groupName\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/group",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "group"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"id\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:20:20.000Z",
+                  "updatedAt": "2026-10-21T21:20:20.000Z",
+                  "uid": "35240-8303949f-98fe-4779-946f-5a1fa391b0e6"
+                }
+              ],
+              "createdAt": "2026-10-21T21:20:20.000Z",
+              "updatedAt": "2026-10-21T21:20:20.000Z",
+              "uid": "35240-feedb743-831b-4b09-9010-752b2328a53b"
+            },
+            {
+              "name": "Modify a group",
+              "id": "6a2dd425-f79f-4819-bcc5-6596d19c2fad",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
                 "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"groupId\": 16,\n  \"groupName\": \"Executive (revised group name for group #16)\",\n  \"description\": \"The new description for the Executive group\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": 200,\n  \"id\": 100,\n  \"message\": \"OK\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "e7d1949a-c2d1-4983-a2df-d9d03ab25e61",
-              "name": "Failed to modify group",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "group"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "protocol for communication (This can only be one of http,https)",
-                      "type": "any",
-                      "value": "{{protocol}}",
-                      "key": "protocol"
-                    },
-                    {
-                      "description": "The location which the ECC resides",
-                      "type": "any",
-                      "value": "{{address}}",
-                      "key": "address"
-                    },
-                    {
-                      "description": "80, 443 or alternative",
-                      "type": "any",
-                      "value": "{{port}}",
-                      "key": "port"
-                    }
-                  ]
-                },
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "PUT",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"groupId\": 16,\n  \"groupName\": \"Executive (revised group name for group #16)\",\n  \"description\": \"The new description for the Executive group\"\n}",
+                  "raw": "{\n  \"groupId\": \"<integer>\",\n  \"groupName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"addCustodians\": [\n    {\n      \"custodianId\": \"<integer>\"\n    },\n    {\n      \"custodianId\": \"<integer>\"\n    }\n  ],\n  \"removeCustodians\": [\n    {\n      \"custodianId\": \"<integer>\"\n    },\n    {\n      \"custodianId\": \"<integer>\"\n    }\n  ]\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
-                }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v2/group",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "group"
+                  ]
+                },
+                "description": "Modifies or renames a new group."
               },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "id": "15d7d89f-310a-4d79-829c-b82ba3adb4a7",
+                  "name": "Group was modified successfully",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"groupId\": \"<integer>\",\n  \"groupName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"addCustodians\": [\n    {\n      \"custodianId\": \"<integer>\"\n    },\n    {\n      \"custodianId\": \"<integer>\"\n    }\n  ],\n  \"removeCustodians\": [\n    {\n      \"custodianId\": \"<integer>\"\n    },\n    {\n      \"custodianId\": \"<integer>\"\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/group",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "group"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"id\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:20:20.000Z",
+                  "updatedAt": "2026-10-21T21:20:20.000Z",
+                  "uid": "35240-15d7d89f-310a-4d79-829c-b82ba3adb4a7"
+                },
+                {
+                  "id": "ae803fe4-eb90-4ae7-b26d-a231f6469b43",
+                  "name": "Failed to modify group",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"groupId\": \"<integer>\",\n  \"groupName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"addCustodians\": [\n    {\n      \"custodianId\": \"<integer>\"\n    },\n    {\n      \"custodianId\": \"<integer>\"\n    }\n  ],\n  \"removeCustodians\": [\n    {\n      \"custodianId\": \"<integer>\"\n    },\n    {\n      \"custodianId\": \"<integer>\"\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/group",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "group"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"id\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:20:20.000Z",
+                  "updatedAt": "2026-10-21T21:20:20.000Z",
+                  "uid": "35240-ae803fe4-eb90-4ae7-b26d-a231f6469b43"
                 }
               ],
-              "body": "{\n  \"code\": 400,\n  \"id\": 101,\n  \"message\": \"No json body was provided.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-21T21:20:20.000Z",
+              "updatedAt": "2026-10-21T21:20:20.000Z",
+              "uid": "35240-6a2dd425-f79f-4819-bcc5-6596d19c2fad"
+            },
+            {
+              "name": "Delete a group",
+              "id": "e8fc802c-d73e-4f99-8fe5-1c2e5226dedc",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"groupId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v2/group",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "group"
+                  ]
+                },
+                "description": "Delete a group specified by groupId in the request body.\n\n**Note\\:** once a group is deleted any custodians which (1) previously belonged to the deleted\ngroup, and (2) which do not belong to another group will be added to the \"unassigned\" group."
+              },
+              "response": [
+                {
+                  "id": "620041b1-2aab-411c-8a06-b2d44dee60ac",
+                  "name": "Group was deleted successfully",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"groupId\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/group",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "group"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"id\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:20:20.000Z",
+                  "updatedAt": "2026-10-21T21:20:20.000Z",
+                  "uid": "35240-620041b1-2aab-411c-8a06-b2d44dee60ac"
+                },
+                {
+                  "id": "21227c7d-48bb-498c-a724-49d7a4f3bcdc",
+                  "name": "Failed to delete group",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"groupId\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/group",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "group"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"id\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:20:20.000Z",
+                  "updatedAt": "2026-10-21T21:20:20.000Z",
+                  "uid": "35240-21227c7d-48bb-498c-a724-49d7a4f3bcdc"
+                }
+              ],
+              "createdAt": "2026-10-21T21:20:20.000Z",
+              "updatedAt": "2026-10-21T21:20:20.000Z",
+              "uid": "35240-e8fc802c-d73e-4f99-8fe5-1c2e5226dedc"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "5901b1f3-4c5c-4e67-ae91-3ede4a765e50",
-          "name": "Delete a group",
-          "request": {
-            "name": "Delete a group",
-            "description": {
-              "content": "Delete a group specified by groupId in the request body.\n\n**Note\\:** once a group is deleted any custodians which (1) previously belonged to the deleted\ngroup, and (2) which do not belong to another group will be added to the \"unassigned\" group.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v2",
-                "group"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "description": "protocol for communication (This can only be one of http,https)",
-                  "type": "any",
-                  "value": "{{protocol}}",
-                  "key": "protocol"
-                },
-                {
-                  "description": "The location which the ECC resides",
-                  "type": "any",
-                  "value": "{{address}}",
-                  "key": "address"
-                },
-                {
-                  "description": "80, 443 or alternative",
-                  "type": "any",
-                  "value": "{{port}}",
-                  "key": "port"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "DELETE",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"groupId\": \"<integer>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "f1df5ca8-d68d-450b-99b6-cf42114d59fb",
-              "name": "Group was deleted successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "group"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "protocol for communication (This can only be one of http,https)",
-                      "type": "any",
-                      "value": "{{protocol}}",
-                      "key": "protocol"
-                    },
-                    {
-                      "description": "The location which the ECC resides",
-                      "type": "any",
-                      "value": "{{address}}",
-                      "key": "address"
-                    },
-                    {
-                      "description": "80, 443 or alternative",
-                      "type": "any",
-                      "value": "{{port}}",
-                      "key": "port"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"groupId\": 15\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": 200,\n  \"id\": 100,\n  \"message\": \"OK\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "2ef6517b-671d-4c7e-ab17-edf293d3a121",
-              "name": "Failed to delete group",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v2",
-                    "group"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "description": "protocol for communication (This can only be one of http,https)",
-                      "type": "any",
-                      "value": "{{protocol}}",
-                      "key": "protocol"
-                    },
-                    {
-                      "description": "The location which the ECC resides",
-                      "type": "any",
-                      "value": "{{address}}",
-                      "key": "address"
-                    },
-                    {
-                      "description": "80, 443 or alternative",
-                      "type": "any",
-                      "value": "{{port}}",
-                      "key": "port"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: basic",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Basic <credentials>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"groupId\": 15\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": 400,\n  \"id\": 101,\n  \"message\": \"No json body was provided.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "8b0acfc9-9526-4a1b-9747-352bba9f155a",
+          "createdAt": "2026-10-21T21:20:20.000Z",
+          "updatedAt": "2026-10-21T21:20:20.000Z",
+          "uid": "35240-8b0acfc9-9526-4a1b-9747-352bba9f155a"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "description": {
-        "content": "protocol for communication (This can only be one of http,https)",
-        "type": "text/plain"
-      },
-      "type": "any",
-      "value": "https",
-      "key": "protocol"
-    },
-    {
-      "description": {
-        "content": "The location which the ECC resides",
-        "type": "text/plain"
-      },
-      "type": "any",
-      "value": "127.0.0.1",
-      "key": "address"
-    },
-    {
-      "description": {
-        "content": "80, 443 or alternative",
-        "type": "text/plain"
-      },
-      "type": "any",
-      "value": "80",
-      "key": "port"
-    },
-    {
-      "type": "string",
-      "value": "{{protocol}}://{{address}}:{{port}}/api/ecc",
-      "key": "baseUrl"
+      "id": "b5d97eae-e3a2-4753-9652-31a248e59281",
+      "createdAt": "2026-10-21T21:20:20.000Z",
+      "updatedAt": "2026-10-21T21:20:20.000Z",
+      "uid": "35240-b5d97eae-e3a2-4753-9652-31a248e59281"
     }
   ],
   "auth": {
@@ -800,21 +598,32 @@
     "basic": [
       {
         "key": "username",
-        "value": "{{basicAuthUsername}}"
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
       },
       {
         "key": "password",
-        "value": "{{basicAuthPassword}}"
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "cde17d92-b5c5-401e-bc24-cad631356e5c",
-    "name": "NUIX ECC REST API Command Reference Case Group API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "Welcome to the Nuix ECC REST API command reference. From here you can access all available ECC REST APIs.  You can also send REST commands to your running ECC Server, as well as view the responses.\n\n**Note\\:** The Nuix ECC User Guide includes a gloassary which defines specialized terms such as `Case`, `Custodian` and `Target` which are mentioned throughout this command reference.\n\n**Note\\:** This command reference has been updated for Nuix ECC version 9.12.0.\n\nContact Support:\n Name: Nuix\n Email: APISupport@nuix.com",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "protocol",
+      "value": "https"
+    },
+    {
+      "key": "address",
+      "value": "127.0.0.1"
+    },
+    {
+      "key": "port",
+      "value": "80"
+    },
+    {
+      "key": "baseUrl",
+      "value": "{{protocol}}://{{address}}:{{port}}/api/ecc"
     }
-  }
+  ]
 }

@@ -1,0 +1,3147 @@
+openapi: 3.2.0
+info:
+  title: Nuix REST-API Reference Culling API
+  description: 'Welcome to the Nuix REST API documentation. From here you can access all available REST APIs and execute queries against your running REST instance.
+
+
+    # Authentication Changes
+
+
+    The `nuix-auth-token` header is being deprecated in favor of standard JWT. The header will be removed in a
+
+    future release. Until the removal of the header, the Nuix REST API will accept the JWT in either the
+
+    `nuix-auth-token` header field or the `Authorization` header field prefixed by `Bearer`.'
+  contact:
+    name: Nuix
+    url: http://forums.nuix.com/
+  license:
+    name: Licence
+    url: https://www.nuix.com/sites/default/files/2023-03/End%20User%20License%20Agreement%20%28Effective%20December%2014%2C%202022%29_1.pdf
+  version: ${customer.version}
+servers:
+- url: /nuix-restful-service/svc
+- url: http://localhost:8080/svc
+security:
+- ApiKeyAuth: []
+- bearerAuth: []
+tags:
+- name: Culling
+paths:
+  /cases/{caseId}/itemTags:
+    post:
+      tags:
+      - Culling
+      summary: Tags query items in bulk
+      description: Use this operation to tag all items returned by a query.
+      operationId: bulkTag
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v2+json:
+            schema:
+              $ref: '#/components/schemas/ApplyTagListRequest'
+            example:
+              query: kind:document
+              tagList:
+              - mytag1
+              - mytag2
+      responses:
+        '201':
+          description: default response
+          content:
+            application/vnd.nuix.v2+json:
+              schema:
+                $ref: '#/components/schemas/ApplyTagListResponse'
+              example:
+                tagList:
+                - mytag1
+                - mytag2
+                successfulTags:
+                - mytag1
+                - mytag2
+                failedTags: []
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: RESOURCE_NOT_FOUND
+                developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                additionalInfo:
+                  rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                  rootExceptionMessage: null
+    delete:
+      tags:
+      - Culling
+      summary: Removes tags from query items in bulk
+      description: Use this operation to remove tags from all the items returned by a query.
+      operationId: bulkRemoveTag
+      deprecated: true
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v2+json:
+            schema:
+              $ref: '#/components/schemas/ApplyTagListRequest'
+            example:
+              query: kind:document
+              tagList:
+              - mytag1
+              - mytag2
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v2+json:
+              schema:
+                $ref: '#/components/schemas/ApplyTagListResponse'
+              example:
+                tagList:
+                - mytag1
+                - mytag2
+                successfulTags:
+                - mytag1
+                - mytag2
+                failedTags: []
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: RESOURCE_NOT_FOUND
+                developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                additionalInfo:
+                  rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                  rootExceptionMessage: null
+    patch:
+      tags:
+      - Culling
+      summary: Create or remove tags from query items in bulk
+      description: Use this operation to create or remove tags in bulk from all the items returned by a query.
+      operationId: patchItemTags
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/BulkApplyItemTagListRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ApplyTagListResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplyTagListResponse'
+  /cases/{caseId}/tags:
+    get:
+      tags:
+      - Culling
+      summary: Returns the set of tags for a case
+      description: Use this operation to view the set of tags associated with a case. This is useful when you want to find a group of items that you've tagged or when you want to include the tags as metadata when exporting items. The tag names are returned as a set of strings.
+      operationId: getTags
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  type: string
+              example:
+              - For Review
+              - myCaseTag1
+              - myCaseTag2
+              - myTag1
+              - myTag2
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: RESOURCE_NOT_FOUND
+                developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                additionalInfo:
+                  rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                  rootExceptionMessage: null
+    post:
+      tags:
+      - Culling
+      summary: Creates new tags for a case
+      description: Use this operation to create new tags for a case.
+      operationId: createTagsForCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v2+json:
+            schema:
+              $ref: '#/components/schemas/TagList'
+            example:
+              tagList:
+              - myCaseTag1
+              - myCaseTag2
+      responses:
+        '201':
+          description: default response
+          content:
+            application/vnd.nuix.v2+json:
+              schema:
+                $ref: '#/components/schemas/CreateTagListResponse'
+              example:
+                tagList:
+                - myCaseTag1
+                - myCaseTag2
+                createdTags:
+                - myCaseTag1
+                - myCaseTag2
+                failedTags: []
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: RESOURCE_NOT_FOUND
+                developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                additionalInfo:
+                  rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                  rootExceptionMessage: null
+    delete:
+      tags:
+      - Culling
+      summary: Deletes tags for a case
+      description: Use this operation to delete tags for a case. If tags are still applied to an item, the delete operation will fail.
+      operationId: deleteTagsForCase
+      deprecated: true
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v2+json:
+            schema:
+              $ref: '#/components/schemas/TagList'
+            example:
+            - myTag1
+            - myTag2
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v2+json:
+              schema:
+                $ref: '#/components/schemas/DeleteTagListResponse'
+              examples:
+                Tag Delete Success:
+                  value:
+                    tagList:
+                    - mytag1
+                    deletedTags:
+                    - mytag1
+                    failedTags: []
+                Tag Delete Failure:
+                  value:
+                    tagList:
+                    - mytag1
+                    deletedTags: []
+                    failedTags:
+                    - mytag1
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: RESOURCE_NOT_FOUND
+                developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                additionalInfo:
+                  rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                  rootExceptionMessage: null
+    patch:
+      tags:
+      - Culling
+      summary: Create or delete tags for a case in bulk
+      description: Use this operation to create, rename, or delete case tags in bulk. If tags are still applied to an item, the delete operation will fail.
+      operationId: patchCaseTags
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/BulkApplyCaseTagListRequest'
+            examples:
+              Create Tags:
+                value:
+                  operationType: ADD
+                  tagList:
+                  - MyFirstCaseTag
+              Rename Tags:
+                value:
+                  operationType: RENAME
+                  tagList:
+                  - MyFirstCaseTag
+                  renameMap:
+                    MyFirstCaseTag: MyNewCaseTag
+              Delete Tags:
+                value:
+                  operationType: DELETE
+                  tagList:
+                  - MyNewCaseTag
+        required: true
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ApplyTagListResponse'
+              examples:
+                Create Tags Response:
+                  value:
+                    tagList:
+                    - MyFirstCaseTag
+                    successfulTags:
+                    - MyFirstCaseTag
+                    failedTags: []
+                Rename Tags Response:
+                  value:
+                    tagList:
+                    - MyFirstCaseTag
+                    successfulTags:
+                    - MyNewCaseTag
+                    failedTags: []
+                Delete Tags Response:
+                  value:
+                    tagList:
+                    - MyNewCaseTag
+                    successfulTags:
+                    - MyNewCaseTag
+                    failedTags: []
+  /cases/{caseId}/excludedItems:
+    put:
+      tags:
+      - Culling
+      summary: Excludes items in bulk
+      description: Use this operation to flag items as excluded using the exclusion query. Items are tagged with the exclusion reason you provide in the request body as part of the BulkExclusionRequest.
+      operationId: bulkExcludeAsFunction
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/BulkExclusionRequest'
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/includedItems:
+    put:
+      tags:
+      - Culling
+      summary: Includes items in bulk
+      description: Use this operation to remove the exclusion flag from all the items returned by a query.
+      operationId: bulkIncludeAsFunction
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/BulkInclusionRequest'
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/clusterRuns:
+    post:
+      tags:
+      - Culling
+      summary: Creates a cluster run based on the query provided
+      description: 'Use this operation to create a cluster run in a case.
+
+
+        A cluster run is a group of documents that have been associated based on their
+
+        near-duplicate similarity. Using cluster runs to group similar or related
+
+        documents enables your team to perform a more efficient analysis on an item
+
+        set. For example, you can have the same reviewer examine documents that are
+
+        the most similar or related.'
+      operationId: createClusterRun
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterRunRequest'
+            example:
+              name: MyClusterRun
+              query: ''
+              resemblanceThreshold: 0.85
+              useChainedNearDuplicates: true
+              useEmailThreads: false
+              saveIfEmpty: true
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/clusterRuns/{clusterRunNameOrGuid}/items:
+    get:
+      tags:
+      - Culling
+      summary: Lists items in this cluster run
+      description: 'Use this operation to list items in the cluster run. Optional parameters for which cluster, and whether or not the item is a pivot item. Note you may only specify one of the following: clusterNumber, isUnclustered, or isIgnored if any. This is a shortcut operation for querying with the cluster: field.'
+      operationId: getClusterRunItems
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: clusterRunNameOrGuid
+        in: path
+        description: Cluster run name or guid
+        required: true
+        schema:
+          type: string
+      - name: startIndex
+        in: query
+        description: Start index, defaults to 0
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: numberOfRecordsRequested
+        in: query
+        description: Number of records to return, defaults to 100.
+        required: false
+        schema:
+          type: integer
+          format: int32
+        example: 100
+      - name: clusterNumber
+        in: query
+        description: Cluster number.
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: isPivot
+        in: query
+        description: Match pivot items, defaults to all
+        required: false
+        schema:
+          type: boolean
+      - name: isUnclustered
+        in: query
+        description: Matches items that did not cluster, despite being eligible to exist in a cluster.
+        required: false
+        schema:
+          type: boolean
+      - name: isIgnored
+        in: query
+        description: Matches items that were ignored because they were ineligible to exist in a cluster.
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/SearchNativeResult'
+              example:
+                request:
+                  caseId: 219f69f5eee14cf6b8c8c15d7cc2dd1e
+                  query: cluster:"cluster-run-1;5"
+                  sortField: null
+                  sortOrder: null
+                  startIndex: 0
+                  numberOfRecordsRequested: 1
+                  deduplicate: null
+                  metadataProfile: null
+                  fieldList: []
+                  customMetadataList: []
+                  propertyList: []
+                  itemParameterizedFields: []
+                  showAvailableThumbnails: false
+                  useCache: false
+                  forceCacheDelete: false
+                  searchRetry: 0
+                  relationType: null
+                  entities: []
+                  p: 1
+                  s: 0
+                  customMetadataField: []
+                  field: []
+                  property: []
+                startedOn: 1588859051337
+                completedOn: 1588859051383
+                elapsedTimeForSearch: 41
+                elapsedTimeForSort: 0
+                elapsedTimeForMarshal: 5
+                elapsedTimeForDeduplicate: 0
+                elapsedTotal: 46
+                metadataItems: []
+                localizedMetadataItems: []
+                metadataItemDetails: []
+                resultList:
+                - customMetadata: {}
+                  entities: {}
+                  guid: 1e623d0a-6c6f-45b2-9931-fb4a49ca4c3d
+                  properties: {}
+        '400':
+          description: 'Bad Request. Note you may only specify one of the following: clusterNumber, isUnclustered, or isIgnored.'
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: INVALID_REQUEST_FORMAT
+                developerMessage: 'You may only specify one of the following: clusterNumber, isUnclustered, or isIgnored if any.'
+                userMessage: null
+                additionalInfo: {}
+  /cases/{caseId}/clusterRuns/{clusterRunNameOrGuid}:
+    delete:
+      tags:
+      - Culling
+      summary: Delete a cluster run
+      description: Use this operation to delete a cluster run.
+      operationId: deleteClusterRun
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: clusterRunNameOrGuid
+        in: path
+        description: Cluster run name or guid.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: default response.
+        '404':
+          description: Case or cluster run resource not found.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                Case Not Found:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+                Cluster Run Not Found:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'CLUSTER_RUN' and identifier 'unknownClusterRun' could not be found.
+                    userMessage: The resource of type 'CLUSTER_RUN' and identifier 'unknownClusterRun' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+  /cases/{caseId}/bulkSearchers:
+    post:
+      tags:
+      - Culling
+      summary: Generate a count report and optionally tag items
+      description: Use this operation to create a count report and optionally tag individual items.
+      operationId: bulkSearchers
+      parameters:
+      - name: caseId
+        in: path
+        description: caseId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/BulkSearcherRequest'
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+        '400':
+          description: Bad Request. A list of tag requests are required to use bulk search.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: INVALID_REQUEST_FORMAT
+                developerMessage: A list of tag requests are required to use bulk search.
+                userMessage: null
+                additionalInfo: {}
+  /cases/{caseId}/exclusions:
+    get:
+      tags:
+      - Culling
+      summary: Returns exclusions for a case
+      description: Use this operation to view the set of exclusions associated with a case.
+      operationId: getExclusions
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  type: string
+  /cases/{caseId}/items/{itemGuid}/customMetadata:
+    get:
+      tags:
+      - Culling
+      summary: Returns custom metadata for an item
+      description: Use this operation to retrieve custom metadata from an item in a case.
+      operationId: getCustomMetadata
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemGuid
+        in: path
+        description: Item GUID
+        required: true
+        schema:
+          type: string
+      - name: fieldNameFilter
+        in: query
+        description: Field name filter.  Filters metadata fields that are returned.  Fields that do not match the regular expression are removed by the filter.
+        required: false
+        schema:
+          type: string
+      - name: typeFilter
+        in: query
+        description: Type filter.  Filters metadata fields that are returned.  Fields that do not match the type are removed by the filter.
+        required: false
+        schema:
+          type: string
+      - name: modeFilter
+        in: query
+        description: Mode filter.  Filters metadata fields that are returned.  Fields that do not match the mode are removed by the filter.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomMetadataResponse'
+    put:
+      tags:
+      - Culling
+      summary: Applies custom metadata to an item
+      description: 'Use this operation to apply custom metadata to an item.
+
+
+        Most custom metadata is put with a mode of "user", indicating that it is user-level. Mode "api" should only be used where you are setting system-level specific metadata, which is not visible in the GUI by default. If using "api" mode we strongly recommend you include a unique prefix to your fieldname to avoid possible collisions with user-level custom metadata, e.g. "com.your-company.rule-set.fieldName".
+
+
+        This subclass additionally supports binary custom metadata fields. To store binary custom metadata:
+
+
+        type must be "binary".
+
+        mode must be "api" (only API mode is currently supported).
+
+        params must contain a key "mimeType" with value being the MIME type of the binary data being stored.'
+      operationId: addCustomMetadata
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemGuid
+        in: path
+        description: Item GUID
+        required: true
+        schema:
+          type: string
+      - name: applyToFamily
+        in: query
+        description: Apply metadata to family items
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: applyToDuplicates
+        in: query
+        description: Apply metadata to duplicates
+        required: false
+        schema:
+          type: boolean
+          default: false
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/CustomMetadataRequest'
+      responses:
+        '200':
+          description: default response
+    delete:
+      tags:
+      - Culling
+      summary: Removes custom metadata on an item
+      description: Use this operation to remove custom metadata from an item.
+      operationId: deleteCustomMetadata
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemGuid
+        in: path
+        description: Item GUID
+        required: true
+        schema:
+          type: string
+      - name: applyToFamily
+        in: query
+        description: Remove metadata from family items
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: applyToDuplicates
+        in: query
+        description: Remove metadata from duplicates
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: fieldName
+        in: query
+        description: Field name
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: default response
+  /cases/{caseId}/itemCustomMetadata:
+    post:
+      tags:
+      - Culling
+      summary: Applies custom metadata to items in bulk
+      description: 'Use this operation to apply custom metadata to items in.
+
+
+        Most custom metadata is put with a mode of "user", indicating that it is user-level. Mode "api" should only be used where you are setting system-level specific metadata, which is not visible in the GUI by default. If using "api" mode we strongly recommend you include a unique prefix to your fieldname to avoid possible collisions with user-level custom metadata, e.g. "com.your-company.rule-set.fieldName".
+
+
+        This subclass additionally supports binary custom metadata fields. To store binary custom metadata:
+
+
+        type must be "binary".
+
+        mode must be "api" (only API mode is currently supported).
+
+        params must contain a key "mimeType" with value being the MIME type of the binary data being stored.'
+      operationId: bulkAddCustomMetadata
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/BulkItemCustomMetadataRequest'
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ApplyCustomMetadataResponse'
+    delete:
+      tags:
+      - Culling
+      summary: Removes custom metadata on items in bulk
+      description: Use this operation to remove custom metadata from items in bulk.
+      operationId: bulkDeleteCustomMetadata
+      deprecated: true
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/BulkItemCustomMetadataDeleteRequest'
+      responses:
+        '204':
+          description: default response
+    patch:
+      tags:
+      - Culling
+      operationId: patchItemCustomMetadata
+      summary: Adds or removes custom metadata on items in bulk
+      description: Use this operation to add or remove custom metadata from items in bulk.
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/BulkApplyItemCustomMetadataRequest'
+            example:
+              addBulkCustomMetadata:
+              - query: guid:dd62afab-83d9-4b18-b94b-264755085216
+                mode: user
+                fieldName: MyCustomMetadata
+                value: MyValue
+                type: text
+        required: true
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/BulkApplyCustomMetadataResponse'
+              example:
+              - query: guid:dd62afab-83d9-4b18-b94b-264755085216
+                operation: ADD
+                fieldName: MyCustomMetadata
+                results:
+                  successfulItems:
+                  - dd62afab-83d9-4b18-b94b-264755085216
+                  failedItems: []
+  /cases/{caseId}/tags/{tagName}:
+    put:
+      tags:
+      - Culling
+      operationId: renameTagsForCase
+      summary: Rename a case tag
+      description: Use this operation to rename an existing case tag.
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: tagName
+        in: path
+        description: The current tag name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/TagRequest'
+            examples:
+              Simple Rename Tag Request:
+                value:
+                  tag: newTagName
+        required: true
+      responses:
+        '204':
+          description: default response
+  /cases/{caseId}/items/{itemGuid}/tags:
+    get:
+      tags:
+      - Culling
+      summary: Returns the list of tags for an item
+      description: Use this operation to get the list of tags that have been assigned to the given item
+      operationId: getItemTags
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemGuid
+        in: path
+        description: Item GUID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/TagList'
+  /cases/{caseId}/items/{itemGuid}/tags/{tagName}:
+    put:
+      tags:
+      - Culling
+      summary: Tags an item in a case
+      description: Use this operation to tag an item in a case. Tags are a type of user-defined data that you can use to classify an item or group of items. If the tag doesn't already exist, this operation creates it.
+      operationId: tagItem
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemGuid
+        in: path
+        description: Item GUID
+        required: true
+        schema:
+          type: string
+      - name: tagName
+        in: path
+        description: Tag name
+        required: true
+        schema:
+          type: string
+      - name: applyToFamily
+        in: query
+        description: Tag family items
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: applyToDuplicates
+        in: query
+        description: Tag duplicates
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+    delete:
+      tags:
+      - Culling
+      summary: Removes a tag from an item
+      description: Use this operation to remove a tag from an item in a case.
+      operationId: removeTagFromItem
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemGuid
+        in: path
+        description: Item GUID
+        required: true
+        schema:
+          type: string
+      - name: tagName
+        in: path
+        description: Tag name
+        required: true
+        schema:
+          type: string
+      - name: applyToFamily
+        in: query
+        description: Removes tags from family items. Defaults to false.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: applyToDuplicates
+        in: query
+        description: Removes tags from the item's duplicates. Defaults to false.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /cases/{caseId}/itemSets/{itemSetNameOrGuid}:
+    get:
+      tags:
+      - Culling
+      summary: Returns details for an item set
+      description: 'Use this operation to view details for an item set in a case.
+
+
+        This endpoint returns an AsyncFunctionResponse.'
+      operationId: getItemSet
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemSetNameOrGuid
+        in: path
+        description: The item set name or GUID.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ItemSetResponse'
+              examples:
+                Item Set Details:
+                  value:
+                    guid: 0d2e7cc9-8e6d-4f44-9054-3c0d8642acbc
+                    name: MyItemSet
+                    description: The item set description.
+                    batches:
+                    - batchName: 22/06/28 14:30:25 EDT
+                      createdOn: 1656441025778
+    put:
+      tags:
+      - Culling
+      summary: Renames an item set
+      description: Use this operation to rename an item set associated with a case.
+      operationId: renameItemSet
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemSetNameOrGuid
+        in: path
+        description: The item set name or GUID.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/ItemSetNameChangeRequest'
+            examples:
+              Rename an Item Set:
+                value:
+                  newName: MyNewItemSetName
+      responses:
+        '204':
+          description: default response
+    delete:
+      tags:
+      - Culling
+      summary: Deletes an item set from a case
+      description: Use this operation to delete a specific item set associated with a case.
+      operationId: deleteItemSet
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemSetNameOrGuid
+        in: path
+        description: The item set name or GUID.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+              example:
+                functionKey: 12451c5f-eaf9-4089-9a90-3df32944e5fc
+                location: http://localhost:8080/svc/v1/asyncFunctions/12451c5f-eaf9-4089-9a90-3df32944e5fc
+  /cases/{caseId}/itemSets:
+    get:
+      tags:
+      - Culling
+      summary: Returns item sets associated with a case
+      description: Use this operation to view the names and descriptions for each item set in a case.
+      operationId: getItemSets
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ItemSetResponse'
+              examples:
+                Get Item Sets:
+                  value:
+                  - guid: d2e331a8-9228-45b4-ae73-6313574fab8e
+                    name: MyItemSet
+                    description: A description of the item set
+                    batches:
+                    - batchName: 22/06/28 10:41:01 EDT
+                      createdOn: 1656427261910
+    post:
+      tags:
+      - Culling
+      summary: Creates an item set within a case
+      description: Use this operation to create an item set in a case. Creating an item set enables you to deduplicate content by removing duplicate copies.
+      operationId: asyncCreateItemSet
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v2+json:
+            schema:
+              $ref: '#/components/schemas/ItemSetCreateRequest'
+            examples:
+              Simple Item Set Create Request:
+                value:
+                  name: MyItemSet
+                  description: My item set description
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/ItemSetRequest'
+            examples:
+              Simple Item Set Create Request:
+                value:
+                  name: MyItemSet
+                  description: My item set description
+      responses:
+        '201':
+          description: default response
+          content:
+            application/vnd.nuix.v2+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+              examples:
+                Standard Asynchronous Function Response:
+                  value:
+                    functionKey: 1aea3a2c-889c-4670-8779-7334089025cb
+                    location: http://localhost:8080/nuix-restful-service/svc/v1/asyncFunctions/1aea3a2c-889c-4670-8779-7334089025cb
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+              examples:
+                Standard Asynchronous Function Response:
+                  value:
+                    functionKey: 1aea3a2c-889c-4670-8779-7334089025cb
+                    location: http://localhost:8080/nuix-restful-service/svc/v1/asyncFunctions/1aea3a2c-889c-4670-8779-7334089025cb
+  /cases/{caseId}/itemSets/{itemSetNameOrGuid}/duplicates:
+    get:
+      tags:
+      - Culling
+      summary: Returns the duplicate items in this set
+      description: Gets the items that are deemed duplicates in the context of this set after deduplication. Returns a list of GUIDs of each duplicate item.
+      operationId: getItemSetDuplicates
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemSetNameOrGuid
+        in: path
+        description: The item set name or GUID.
+        required: true
+        schema:
+          type: string
+      - name: batch
+        in: query
+        description: Item set batch name, defaults to all batches
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ItemSetDuplicatesResponse'
+              examples:
+                Duplicates:
+                  value:
+                    duplicates:
+                    - d3d63fe9-14f1-4cd8-a66a-64f9f6479c27
+                    - 95aaf52a-1051-43f5-801a-9dc49414fe99
+  /cases/{caseId}/itemSets/{itemSetNameOrGuid}/{itemGuid}/duplicates:
+    get:
+      tags:
+      - Culling
+      summary: Returns duplicates for an item in an item set
+      description: Finds items classified as duplicates of an item within an item set. If the item is original, all of its duplicates within the item set will be returned. If the item is classified as a duplicate within the item set the original and all other duplicates within the item set will be returned. If the item set was deduplicated by family, duplicates will be restricted to items within duplicate families. Sets of type SCRIPTED are not supported by this method. Returns a list of GUIDs of each duplicate item.
+      operationId: findItemSetItemDuplicates
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemSetNameOrGuid
+        in: path
+        description: The item set name or GUID.
+        required: true
+        schema:
+          type: string
+      - name: itemGuid
+        in: path
+        description: Item guid to find duplicates of
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ItemSetDuplicatesResponse'
+              examples:
+                Duplicates:
+                  value:
+                    duplicates:
+                    - 0e4be68b-96a3-43e0-96fc-f6098b04c6b4
+                    - f43a0419-2d88-4914-87ff-7d6aec511868
+  /cases/{caseId}/itemSets/{itemSetNameOrGuid}/originals:
+    get:
+      tags:
+      - Culling
+      summary: Returns the original items in this set
+      description: Gets the items that are deemed originals in the context of this set after deduplication.
+      operationId: getOriginals
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemSetNameOrGuid
+        in: path
+        description: The item set name or GUID.
+        required: true
+        schema:
+          type: string
+      - name: batch
+        in: query
+        description: Item set batch name, defaults to all batches
+        required: false
+        schema:
+          type: string
+      - name: startIndex
+        in: query
+        description: The index of the first record that should be returned. Defaults to 0.
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: numberOfRecordsRequested
+        in: query
+        description: The number of records that should be returned. Defaults to 100 records.
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: metadataProfile
+        in: query
+        description: Defines the metadata profile to be appied to the results. Needed to get custom metadata. Defaults to no metadata profile.
+        required: false
+        schema:
+          type: string
+      - name: fieldList
+        in: query
+        description: List of fields to be returned for each item in the results.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: customMetadataList
+        in: query
+        description: List of custom metadata to be returned for each item in the results.  Maintained for backward compatibility.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: propertyList
+        in: query
+        description: List of properties to be returned for each item in the results.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: itemParameterizedFields
+        in: query
+        description: Specifies parameterized fields in a key/value pair separated by a colon. * `entities` - corresponds to item.getEntities.  (e.g., "entities:company") * `serializedItem` - returns a serialized copy of the item.  (e.g., "seralizedItem:topLevelItem") * `textTruncated` - returns the item text, truncated (if needed) to the specified maximum size in bytes (e.g., "textTruncated:10000") * `thumbnail` - corresponds to an item thumbnail. The parameter specifies the thumbnail dimensions (e.g., "thumbnail:200x200") * `nearDupeThreshold` - (e.g., "nearDupeThreshold:0.9") * `emailThreadCluster` - value corresponds to a Run - Cluster (e.g., "emailThreadCluster:cluster-1")
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: sortField
+        in: query
+        description: 'Any field in the metadata profile which you want to sort by.
+
+
+          Use the following supported fields in the sortFields:
+
+          position,kind,duplicates
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: sortOrder
+        in: query
+        description: Sets the sort order for the results. Possible values are [asc,desc]
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/MarshalledItems'
+  /cases/{caseId}/itemSets/{itemSetNameOrGuid}/items:
+    get:
+      tags:
+      - Culling
+      summary: Returns items in an item set
+      description: Use this operation to view the items associated with an item set in a case.
+      operationId: getItemSetItems
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemSetNameOrGuid
+        in: path
+        description: The item set name or GUID.
+        required: true
+        schema:
+          type: string
+      - name: batchName
+        in: query
+        description: Batch name (null for all batches)
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/SearchNativeResult'
+              examples:
+                Item Set Items Response:
+                  value:
+                    request:
+                      caseId: 09f166a30f5e430db01d2f7b67f5ec27
+                      query: item-set:0d2e7cc9-8e6d-4f44-9054-3c0d8642acbc
+                      startIndex: 0
+                      numberOfRecordsRequested: 2
+                      deduplicate: null
+                      metadataProfile: Default
+                      fieldList: []
+                      customMetadataList: null
+                      propertyList: null
+                      itemParameterizedFields: null
+                      sortField: null
+                      sortOrder: null
+                      s: 0
+                      p: 2
+                    metadataItems:
+                    - Name
+                    - File Type
+                    - Path Name
+                    localizedMetadataItems:
+                    - Name
+                    - File Type
+                    - Path Name
+                    metadataItemDetails:
+                    - name: Name
+                      localisedName: Name
+                      type: String
+                    - name: File Type
+                      localisedName: File Type
+                      type: String
+                    - name: Path Name
+                      localisedName: Path Name
+                      type: String
+                    resultList:
+                    - File Type: Zip-Compressed File
+                      Name: first-zip.zip
+                      Path Name: /4c8c2d2c-2fa3-476f-ac61-77631c370219/api
+                      guid: dc8cceb2-45df-4914-859e-8453e11a01ba
+                    - File Type: Directory
+                      Name: jquery
+                      Path Name: /4c8c2d2c-2fa3-476f-ac61-77631c370219/api
+                      guid: 269f78c6-bcc2-4805-ad32-28b826b8df22
+                    count: 204566
+                    deduplicatedCount: 204566
+    post:
+      tags:
+      - Culling
+      summary: Adds items to an item set
+      description: 'Use this operation to add items to an existing item set in a case.
+
+        Each addition of items to the set is classified as a batch which facilitates
+
+        rolling deduplication, whereby more items are added to a set and deduplicated
+
+        against the existing set members.'
+      operationId: addItemsToItemSet
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemSetNameOrGuid
+        in: path
+        description: The item set name or GUID.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/ItemSetAddItemsRequest'
+            examples:
+              Add Items to an Item Set:
+                value:
+                  batchName: MyBatchName
+                  query: file-extension:html
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+              examples:
+                Standard Asynchronous Function Response:
+                  value:
+                    functionKey: c2b5a20b-3cd1-4eb3-b600-6fa909ba0949
+                    location: http://localhost:8080/nuix-restful-service/svc/v1/asyncFunctions/c2b5a20b-3cd1-4eb3-b600-6fa909ba0949
+    delete:
+      tags:
+      - Culling
+      summary: Removes items from an item set
+      deprecated: true
+      description: Use this operation to remove items from an existing item set in a case. When removing items from an item set with family-level deduplication, operations on top-level originals are applied to their families (removal or re-assignment) but operations on individual descendants and duplicates are applied to those items only.
+      operationId: removeItemsFromItemSet
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemSetNameOrGuid
+        in: path
+        description: The item set name or GUID.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/ItemSetRemoveItemsRequest'
+      responses:
+        '204':
+          description: default response
+    patch:
+      tags:
+      - Culling
+      description: Use this operation to add items to or delete items from an existing item set in a case.
+      summary: Add or delete items to an item set in bulk
+      operationId: patchItemsFromItemSet
+      parameters:
+      - name: caseId
+        in: path
+        required: true
+        description: Case identification token
+        schema:
+          type: string
+      - name: itemSetNameOrGuid
+        in: path
+        required: true
+        description: The item set name or GUID.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkItemSetItemsRequest'
+            examples:
+              Bulk Add Items to ItemSet:
+                value:
+                  addItems:
+                  - batchName: myBatch
+                    query: '*'
+                  removeItems: []
+              Bulk Remove Items From ItemSet:
+                value:
+                  removeItems:
+                  - query: '*'
+                  addItems: []
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/BulkApplyItemSetChangeResponse'
+              examples:
+                Bulk Add Items to ItemSet:
+                  value:
+                    results:
+                    - query: '*'
+                      itemSetName: MyItemSet
+                      operationType: ADD
+                      failedItemGuidList: []
+                      successfulItemGuidList:
+                      - d7f6abcd-0555-4a4f-ad52-09a27490061f
+                Bulk Remove Items from ItemSet:
+                  value:
+                    results:
+                    - query: '*'
+                      itemSetName: MyItemSet
+                      operationType: DELETE
+                      failedItemGuidList: []
+                      successfulItemGuidList:
+                      - d7f6abcd-0555-4a4f-ad52-09a27490061f
+  /cases/{caseId}/itemSets/{itemSetNameOrGuid}/batches:
+    get:
+      tags:
+      - Culling
+      summary: Returns the batches in this item set
+      description: 'Use this operation to view batches associated with this item set. Batches are a subset of items within an item set that were added to the set at the same time. Item sets are grouped in a batch by date.
+
+
+        Batch load details objects store the settings and items from a processing session. These include the operating system, architecture, case evidence settings, data processing settings, parallel processing settings, batch load items, and the date and time the batch was loaded.'
+      operationId: getItemSetBatches
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemSetNameOrGuid
+        in: path
+        description: The item set name or GUID.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ItemSetBatchResponse'
+              examples:
+                Item Set Batches:
+                  value:
+                  - batchName: MyBatchName
+                    createdOn: 1656442334287
+                  - batchName: 22/06/28 14:30:25 EDT
+                    createdOn: 1656441025778
+components:
+  schemas:
+    CustomMetadataFieldResponse:
+      type: object
+      properties:
+        fieldName:
+          type: string
+          description: fieldName
+        options:
+          type: array
+          description: The allowable option values
+          items:
+            type: object
+        type:
+          type: string
+          description: type
+        mode:
+          type: string
+          description: mode
+        defaultValue:
+          type: object
+          description: The default value
+        isNullAllowed:
+          type: boolean
+          description: true if a null value is allowed, false otherwise
+    TagRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: The query to use to find matching items to tag.
+        tag:
+          type: string
+          description: The name of the tag to apply or create.
+    GenericResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Returns true or false.
+    ItemSetRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Query items that should be included. If a query is not supplied it defaults to an empty string, which returns all items.
+        batchName:
+          type: string
+          description: Defaults to date in format yy/MM/dd kk:mm:ss z
+        name:
+          type: string
+          description: name
+        deduplication:
+          type: string
+          description: How the deduplication is applied.  None returns all items matching the query including duplicates.  Other options return deduplicated items based on the deduplication methods used.  Defaults to None
+          enum:
+          - md5
+          - per custodian
+          - md5 ranked custodian
+          - none
+          default: none
+        description:
+          type: string
+          description: The itemset description.
+        deduplicateBy:
+          type: string
+          description: deduplicateBy.  Defaults to INDIVIDUAL
+          enum:
+          - individual
+          - family
+          default: individual
+        custodianRanking:
+          type: array
+          description: List of custodian names ordered from highest ranked to lowest ranked.  If this parameter is present and the deduplication parameter has not been specified, MD5 Randed Custodian is assumed.  If deduplication is any value other than MD5 Randed Custodian this list is ignored.
+          items:
+            type: string
+      required:
+      - name
+    ClusteredRestErrorResponse:
+      type: object
+      properties:
+        serverId:
+          type: string
+          description: The server ID of the server reporting the error.
+        developerMessage:
+          type: string
+          description: The technical description of the error.
+        userMessage:
+          type: string
+          description: The friendly error message.
+        additionalInfo:
+          type: object
+          description: Additional information about the error.
+          additionalProperties:
+            type: object
+            description: This is a map of additional properties.
+        errorCode:
+          type: string
+          description: The specific error code for the error from the list of available error codes.
+          enum:
+          - AUTHENTICATION_FAILED
+          - CASE_ACCESS_RESTRICTED
+          - CASE_LOCKED
+          - DELETE_DENIED
+          - DUPLICATE_CASES_DETECTED
+          - ENGINE_EXCEPTION
+          - FILE_TOO_LARGE
+          - INVALID_REQUEST_FORMAT
+          - INVALID_APPLICATION_RESPONSE
+          - INVALID_ARGUMENT
+          - ITEM_ACCESS_RESTRICTED
+          - LICENSE_EXCEPTION
+          - MEDIA_TYPE_NOT_SUPPORTED
+          - MEDIA_TYPE_NOT_ACCEPTABLE
+          - METHOD_NOT_ALLOWED
+          - NOT_IMPLEMENTED
+          - PRODUCTION_SET_FROZEN
+          - REQUIRED_ARGUMENT_MISSING
+          - RESOURCE_NOT_FOUND
+          - UNAUTHORISED
+          - UNKNOWN
+          - USER_SCRIPT_NOT_PROVIDED
+          - FOLDER_ALREADY_EXISTS
+          - CASE_LOCKED_BY_FUNCTION
+          - MISSING_THUMBNAIL
+          - ITEM_SET_ALREADY_EXISTS
+          - INVALID_LICENSE_TYPE_FOR_CASE
+          - SIMPLE_CASE_REQUIRED
+          - USER_ACCOUNT_LOCKED
+          - APPLICATION_NOT_REGISTERED
+          - INVALID_TEMPLATE
+          - DUPLICATE_RECORD
+          - CASE_MIGRATION_REQUIRED
+          - SERVICE_UNAVAILABLE
+          - RESPONSE_TOO_LARGE
+          - QUERY_PARSE_ERROR
+          - REMOTE_SYSTEM_ERROR
+          - FILE_SYSTEM_ERROR
+    BulkApplyCaseTagListRequest:
+      type: object
+      properties:
+        tagList:
+          type: array
+          description: List of tags used during the operation.  The tag list is optional for a `RENAME` operation.
+          items:
+            type: string
+        renameMap:
+          type: object
+          additionalProperties:
+            type: object
+          description: A map of tags where the key is the current tag name and the value is the new tag name.
+        operationType:
+          type: string
+          description: The operation to perform on the tag.
+          enum:
+          - ADD
+          - DELETE
+          - RENAME
+    BulkApplyCustomMetadataResponse:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Query items that should be included. If a query is not supplied it defaults to an empty string, which returns all items.
+        operation:
+          type: string
+          description: The bulk operation that was performed.
+          enum:
+          - ADD
+          - DELETE
+        fieldName:
+          type: string
+          description: The custom metadata field name that was operated on.
+        results:
+          $ref: '#/components/schemas/ApplyCustomMetadataResponse'
+    BulkApplyItemCustomMetadataRequest:
+      type: object
+      properties:
+        addBulkCustomMetadata:
+          type: array
+          description: The array of bulk custom metadata to add to the item.
+          items:
+            $ref: '#/components/schemas/BulkItemCustomMetadataRequest'
+        deleteBulkCustomMetadata:
+          type: array
+          description: The array of the bulk custom metadata to remove from the item.
+          items:
+            $ref: '#/components/schemas/BulkItemCustomMetadataDeleteRequest'
+    BulkInclusionRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Query items that should be included. If a query is not supplied it defaults to an empty string, which returns all items.
+        deduplication:
+          type: string
+          description: Deduplication content.  Defaults to no deduplication.
+          enum:
+          - md5
+          - per custodian
+          - none
+        relationType:
+          type: string
+          description: The relation to apply to the found items. For performance reasons, the family option is run against the top-level items.  Defaults to no relation.
+          enum:
+          - family
+          - topTypes
+          - descendants
+        includeFamily:
+          type: boolean
+          description: Includes families of items for results of provided query. Defaults to false.
+          default: false
+        familyQuery:
+          type: string
+          description: An optional query used to select family items.  Will not be used if includeFamily is true.  To exclude family items entirely, set includeFamily to false and either omit this entry or set its value to null.
+        includeDuplicates:
+          type: boolean
+          description: Includes duplicates of items for results of provided query. Defaults to false.
+          default: false
+        duplicatesQuery:
+          type: string
+          description: An optional query used to select duplicate items.  Will not be used if includeDuplicates is true.  To exclude duplicate items entirely, set includeDuplicates to false and either omit this entry or set its value to null.
+        includeNearDuplicates:
+          type: boolean
+          description: Includes near duplicates of items for results of provided query. Defaults to false.
+          default: false
+        nearDuplicatesQuery:
+          type: string
+          description: An optional query used to select near duplicate items.  Will not be used if includeNearDuplicates is true.  To exclude near duplicate items entirely, set includeNearDuplicates to false and either omit this entry or set its value to null.
+        nearDuplicatesThreshold:
+          type: number
+          description: The threshold used to calculate near duplicates.  Defaults to 0.5.
+          format: float
+          default: 0.5
+        threadsQuery:
+          type: string
+          description: An optional query used to select thread items.  To exclude thread items entirely, either omit this entry or set its value to null.
+    ItemSetCreateRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Query items that should be included. If a query is not supplied it defaults to an empty string, which returns all items.
+        batchName:
+          type: string
+          description: Defaults to date in format yy/MM/dd kk:mm:ss z
+        name:
+          type: string
+          description: name
+        deduplication:
+          type: string
+          description: How the deduplication is applied.  None returns all items matching the query including duplicates.  Other options return deduplicated items based on the deduplication methods used.  Defaults to None
+          enum:
+          - md5
+          - per custodian
+          - md5 ranked custodian
+          - none
+          default: none
+        description:
+          type: string
+          description: The itemset description.
+        deduplicateBy:
+          type: string
+          description: deduplicateBy.  Defaults to INDIVIDUAL
+          enum:
+          - individual
+          - family
+          default: individual
+        custodianRanking:
+          type: array
+          description: List of custodian names ordered from highest ranked to lowest ranked.  If this parameter is present and the deduplication parameter has not been specified, MD5 Randed Custodian is assumed.  If deduplication is any value other than MD5 Randed Custodian this list is ignored.
+          items:
+            type: string
+      required:
+      - name
+    BulkExclusionRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Query items that should be included. If a query is not supplied it defaults to an empty string, which returns all items.
+        deduplication:
+          type: string
+          description: Deduplication content.  Defaults to no deduplication.
+          enum:
+          - md5
+          - per custodian
+          - none
+        relationType:
+          type: string
+          description: The relation to apply to the found items. For performance reasons, the family option is run against the top-level items.  Defaults to no relation.
+          enum:
+          - family
+          - topTypes
+          - descendants
+        includeFamily:
+          type: boolean
+          description: Includes families of items for results of provided query. Defaults to false.
+          default: false
+        familyQuery:
+          type: string
+          description: An optional query used to select family items.  Will not be used if includeFamily is true.  To exclude family items entirely, set includeFamily to false and either omit this entry or set its value to null.
+        includeDuplicates:
+          type: boolean
+          description: Includes duplicates of items for results of provided query. Defaults to false.
+          default: false
+        duplicatesQuery:
+          type: string
+          description: An optional query used to select duplicate items.  Will not be used if includeDuplicates is true.  To exclude duplicate items entirely, set includeDuplicates to false and either omit this entry or set its value to null.
+        includeNearDuplicates:
+          type: boolean
+          description: Includes near duplicates of items for results of provided query. Defaults to false.
+          default: false
+        nearDuplicatesQuery:
+          type: string
+          description: An optional query used to select near duplicate items.  Will not be used if includeNearDuplicates is true.  To exclude near duplicate items entirely, set includeNearDuplicates to false and either omit this entry or set its value to null.
+        nearDuplicatesThreshold:
+          type: number
+          description: The threshold used to calculate near duplicates.  Defaults to 0.5.
+          format: float
+          default: 0.5
+        threadsQuery:
+          type: string
+          description: An optional query used to select thread items.  To exclude thread items entirely, either omit this entry or set its value to null.
+        reason:
+          type: string
+          description: The reason for the exclusion.
+        excludeDescendants:
+          type: boolean
+          description: Whether or not to also exclude descendants.
+          default: false
+      required:
+      - reason
+    MetadataItemDetails:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The metadata name.
+        localisedName:
+          type: string
+          description: The localized name of the metadata.
+        type:
+          type: string
+          description: The metadata type.
+    ApplyTagListRequest:
+      type: object
+      properties:
+        tagList:
+          type: array
+          description: List of tags used during the operation
+          items:
+            type: string
+        query:
+          type: string
+          description: Query items that should be included.  If a query is not supplied it defaults to an empty string, which returns all items.
+        deduplication:
+          type: string
+          description: Deduplicate items. Defaults to none.
+          default: none
+          enum:
+          - none
+          - md5
+          - per custodian
+        relationType:
+          type: string
+          description: The relation to apply to the found items. For performance reasons, the family option is run against the top-level items.  Defaults to no relation.
+          enum:
+          - family
+          - topTypes
+          - descendants
+        includeFamily:
+          type: boolean
+          description: Includes families of items for results of provided query. Defaults to false.
+          default: false
+        familyQuery:
+          type: string
+          description: An optional query used to select family items.  Will not be used if includeFamily is true.  To exclude family items entirely, set includeFamily to false and either omit this entry or set its value to null.
+        includeDuplicates:
+          type: boolean
+          description: Includes duplicates of items for results of provided query. Defaults to false.
+          default: false
+        duplicatesQuery:
+          type: string
+          description: An optional query used to select duplicate items.  Will not be used if includeDuplicates is true.  To exclude duplicate items entirely, set includeDuplicates to false and either omit this entry or set its value to null.
+        includeNearDuplicates:
+          type: boolean
+          description: Includes near duplicates of items for results of provided query. Defaults to false.
+          default: false
+        nearDuplicatesQuery:
+          type: string
+          description: An optional query used to select near duplicate items.  Will not be used if includeNearDuplicates is true.  To exclude near duplicate items entirely, set includeNearDuplicates to false and either omit this entry or set its value to null.
+        nearDuplicatesThreshold:
+          type: number
+          description: The threshold used to calculate near duplicates.  Defaults to 0.5.
+          format: float
+          default: 0.5
+        threadsQuery:
+          type: string
+          description: An optional query used to select thread items.  To exclude thread items entirely, either omit this entry or set its value to null.
+      required:
+      - tagList
+    ApplyCustomMetadataResponse:
+      type: object
+      properties:
+        failedItems:
+          type: array
+          description: List of item GUIDs that failed the operation
+          items:
+            type: string
+        successfulItems:
+          type: array
+          description: List of item GUIDs that succeeded during operation
+          items:
+            type: string
+    BulkApplyItemTagListRequest:
+      type: object
+      properties:
+        tagList:
+          type: array
+          description: List of tags used during the operation
+          items:
+            type: string
+        query:
+          type: string
+          description: Query items that should be included.  If a query is not supplied it defaults to an empty string, which returns all items.
+        deduplication:
+          type: string
+          description: Deduplicate content. Defaults to none.
+          default: none
+          enum:
+          - none
+          - md5
+          - per custodian
+        relationType:
+          type: string
+          description: The relation to apply to the found items. For performance reasons, the family option is run against the top-level items.  Defaults to no relation.
+          enum:
+          - family
+          - topTypes
+          - descendants
+        includeFamily:
+          type: boolean
+          description: Includes families of items for results of provided query. Defaults to false.
+          default: false
+        familyQuery:
+          type: string
+          description: An optional query used to select family items.  Will not be used if includeFamily is true.  To exclude family items entirely, set includeFamily to false and either omit this entry or set its value to null.
+        includeDuplicates:
+          type: boolean
+          description: Includes duplicates of items for results of provided query. Defaults to false.
+          default: false
+        duplicatesQuery:
+          type: string
+          description: An optional query used to select duplicate items.  Will not be used if includeDuplicates is true.  To exclude duplicate items entirely, set includeDuplicates to false and either omit this entry or set its value to null.
+        includeNearDuplicates:
+          type: boolean
+          description: Includes near duplicates of items for results of provided query. Defaults to false.
+          default: false
+        nearDuplicatesQuery:
+          type: string
+          description: An optional query used to select near duplicate items.  Will not be used if includeNearDuplicates is true.  To exclude near duplicate items entirely, set includeNearDuplicates to false and either omit this entry or set its value to null.
+        nearDuplicatesThreshold:
+          type: number
+          format: float
+          description: The threshold used to calculate near duplicates.  Defaults to 0.5.
+          default: 0.5
+        threadsQuery:
+          type: string
+          description: An optional query used to select thread items.  To exclude thread items entirely, either omit this entry or set its value to null.
+        operationType:
+          type: string
+          description: The operation to perform on the tag.
+          enum:
+          - ADD
+          - DELETE
+    AsyncFunctionResponse:
+      type: object
+      properties:
+        functionKey:
+          type: string
+          description: The function key to use when querying status.
+        location:
+          type: string
+          description: The location URL for querying status.  (http://nuix-restful-service:8080/svc/v1/asyncFunctions/{functionKey})
+    TagExpansion:
+      type: object
+      properties:
+        directMatchPrefix:
+          type: string
+          description: A prefix to apply to direct matches, i.e. items that match the given query, or null not to apply a prefix. Defaults to null.
+        directMatchSuffix:
+          type: string
+          description: A suffix to apply to direct matches, i.e. items that match the given query, or null not to apply a suffix. Defaults to null.
+        topLevelMatchPrefix:
+          type: string
+          description: A prefix to apply to top-level item matches, or null not to apply a prefix. Only has an effect if includeFamilies == true. Defaults to null.
+        topLevelMatchSuffix:
+          type: string
+          description: A suffix to apply to top-level item matches, or null not to apply a suffix. Only has an effect if includeFamilies == true. Defaults to null.
+        familyMatchPrefix:
+          type: string
+          description: A prefix to apply to family item matches, or null not to apply a prefix. Only has an effect if includeFamilies == true. Defaults to null.
+        familyMatchSuffix:
+          type: string
+          description: A suffix to apply to family item matches, or null not to apply a suffix. Only has an effect if includeFamilies == true. Defaults to null.
+        deduplicatedTopLevelMatchPrefix:
+          type: string
+          description: A prefix to apply to deduplicated top-level item matches, or null not to apply a prefix. Only has an effect if deduplicateFamilies == true. Defaults to null.
+        deduplicatedTopLevelMatchSuffix:
+          type: string
+          description: A suffix to apply to deduplicated top-level item matches, or null not to apply a suffix. Only has an effect if deduplicateFamilies == true. Defaults to null.
+        deduplicatedFamilyMatchPrefix:
+          type: string
+          description: A prefix to apply to deduplicated family item matches, or null not to apply a prefix. Only has an effect if deduplicateFamilies == true. Defaults to null.
+        deduplicatedFamilyMatchSuffix:
+          type: string
+          description: A suffix to apply to deduplicated family item matches, or null not to apply a suffix. Only has an effect if deduplicateFamilies == true. Defaults to null.
+        uniqueMatchPrefix:
+          type: string
+          description: A prefix to apply to unique item matches, or null not to apply a prefix. Only has an effect if tagUniqueItems == true. Defaults to null.
+        uniqueMatchSuffix:
+          type: string
+          description: A suffix to apply to unique item matches, or null not to apply a prefix. Only has an effect if tagUniqueItems == true. Defaults to null.
+    CustomMetadataRequest:
+      type: object
+      properties:
+        fieldName:
+          type: string
+          description: The name of the custom metadata field
+        value:
+          type: object
+          description: The value of the custom metadata field
+        type:
+          type: string
+          description: The data type of the field
+          enum:
+          - integer
+          - float
+          - date-time
+          - text
+          - boolean
+          - binary
+        mode:
+          type: string
+          description: The custom metadata mode
+          enum:
+          - user
+          - api
+        params:
+          type: object
+          additionalProperties:
+            type: object
+          description: Any parameters required to parse the value field.  params must contain a key "mimeType" with value being the MIME type of the binary data being stored. The value must be a valid MIME type name known to Nuix.
+      required:
+      - fieldName
+      - value
+      - type
+    BulkApplyItemSetChangeResponse:
+      type: object
+      properties:
+        results:
+          description: The list of item set change responses.
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemSetItemsResponse'
+    CustomMetadataResponse:
+      type: object
+      properties:
+        fieldName:
+          type: string
+          description: The name of the custom metadata field
+        value:
+          type: object
+          description: The value of the custom metadata field
+        type:
+          type: string
+          description: The data type of the field
+        mode:
+          type: string
+          description: The custom metadata mode
+        template:
+          type: string
+          description: The name of the custom metadata template that applies to the given custom metadata field
+        fieldTemplate:
+          $ref: '#/components/schemas/CustomMetadataFieldResponse'
+    ClusterRunRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name to give the cluster run.
+        query:
+          type: string
+          description: A query that selects the items to perform cluster analysis on.
+        resemblanceThreshold:
+          type: number
+          format: float
+          description: The resemblance threshold used for computing chained near-duplicates.
+        useChainedNearDuplicates:
+          type: boolean
+          description: Whether or not the clustering algorithm should use chained near-deduplication.
+        useEmailThreads:
+          type: boolean
+          description: Whether or not the clustering algorithm should use email threads.
+        saveIfEmpty:
+          type: boolean
+          description: Only create the cluster run if near-duplicates are found.
+      required:
+      - name
+      - query
+    SearchNativeRequest:
+      type: object
+      properties:
+        caseId:
+          type: string
+          description: The case identification token.
+        query:
+          type: string
+          description: Identifies what items should be returned.  If a query is not supplied it defaults to an empty string, which returns all items.
+        sortField:
+          type: string
+          description: 'Any field in the metadata profile which you want to sort by.
+
+
+            Use the following supported fields in the sortFields:
+
+            position,kind,duplicates
+
+            '
+        sortOrder:
+          type: string
+          description: Sets the sort order for the results. Defaults to "ASC".
+          enum:
+          - asc
+          - desc
+          default: asc
+        startIndex:
+          type: integer
+          default: 0
+          description: The index of the first record that should be returned. Defaults to 0.
+          format: int32
+        numberOfRecordsRequested:
+          type: integer
+          description: The number of records that should be returned per page. Defaults to 100 records.
+          format: int32
+        limit:
+          type: integer
+          description: The maximum number of results to return.
+          format: int32
+        deduplication:
+          type: string
+          description: Deduplicate content based on the Value field selection.  Defaults to no deduplication.
+          enum:
+          - md5
+          - per custodian
+          - none
+        maintainDeduplicatedSearchOrder:
+          type: boolean
+          default: true
+          description: Specifies whether the original search result order based on the query should be maintained for deduplicated results.  Default is true.  Setting this field to false may improve deduplication performance especially for Elasticsearch cases.  This field is ignored if a sort field has been specified.
+        metadataProfile:
+          type: string
+          description: Defines the metadata profile to be appied to the results. Needed to get custom metadata. Defaults to no metadata profile.
+        fieldList:
+          type: array
+          description: 'List of fields to be returned for each item in the results.
+
+            Use the following supported fields in the fieldList:
+
+
+            * `all` - Returns all fields for the item.
+
+            * `auditedSize` - Returns the item''''s audited size.
+
+            * `children` - Returns a list of the item''''s children.
+
+            * `clusterPivotResemblances` - Returns a map where the keys are cluster IDs and the values are resemblances.
+
+            * `clusterPivots` - Returns a map where the keys are cluster IDs and the values are boolean flags.
+
+            * `comment` - Returns item comments.
+
+            * `communication` - If the item is a communication, this returns item communication information.
+
+            * `correctedExtension` - Returns the extension based on Nuix''''s identification of the item''''s MIME type.
+
+            * `custodian` - Returns the custodian assigned to an item.
+
+            * `customMetadata` - Returns custom metadata for the item as a map. Must provide metadataProfile to get this.
+
+            * `date` - Returns the item date.
+
+            * `descendants` - Gets the list of items which are descendants of this item.
+
+            * `digests` - Returns a map of the computed digests for an item.
+
+            * `duplicateCustodianSet` - Returns the set of custodian names associated with this item and its duplicates.
+
+            * `duplicates` - Returns duplicates of this item.
+
+            * `evidenceMetadata` - Returns custom evidence metadata for the item.
+
+            * `exclusion` - Returns the reason for an item''''s exclusion.
+
+            * `family` - Returns a list of items in the same family.
+
+            * `fileSize` - Returns the item''''s file size if it is readable, or returns null if this is not file data.
+
+            * `fileType` - Returns the name of the file type.
+
+            * `guid` - Returns the item''''s globally unique identifier (GUID).
+
+            * `history` - Returns the item''''s history in ascending order by date.
+
+            * `id` - Returns the item''''s ID.
+
+            * `isAudited` - Tests whether the item is considered audited and returns true or false.
+
+            * `isBinaryAvailable` - Tests whether the item''''s binary is available before attempting to export it.  This returns
+
+            true if the item had binary data at processing time that was not stored. This
+
+            differs from isStored() as this method returns true if the item had binary
+
+            data at processing time that was not stored.
+
+            * `isBinaryStored` - Tests whether the item has binary stored against it in the database. True is returned
+
+            if stored binary exists. In this case, the source data isn''''t required for
+
+            binary export.
+
+            * `isChatMessage` - Tests whether the item is a chat message.
+
+            * `isChatConversation` - Tests whether the item is a chat conversation.
+
+            * `isDeleted` - Tests whether the item was marked as deleted and returns true or false.
+
+            * `isEmailThreadMember` - Tests whether the item is part of an email thread.
+
+            * `isEncrypted` - Tests whether the item was marked as encrypted and returns true or false.
+
+            * `isExcluded` - Tests whether the item was marked as excluded.
+
+            * `isFamilyMember` - Tests whether the item is a member of a family (i.e. it has a top-level item).
+
+            * `isIncuded` - Tests whether the item is included and returns true or false.
+
+            * `isLooseFile` - Tests whether the item is a loose file and returns true or false.
+
+            * `isPhysicalFile` - Tests whether the item is a physical file and returns true or false.
+
+            * `isPrintedImageStored` - Tests whether the printed image is stored and returns true or false. This field
+
+            is useful when you only need to know if a printed image exists for this item.
+
+            This is faster and uses fewer resources than requesting the printedImageInfo
+
+            field.
+
+            * `isTextAvailable` - Tests whether the item''''s text is available before attempting to read or export it.
+
+            * `isTextStored` - Tests hether the item has text stored against it in the database.  In the event
+
+            where you only want to know if the item had text but didn''''t need the text
+
+            this field is considerably faster and more conservative of resources than
+
+            isTextAvailable.
+
+            * `isThumbnailStored` - Tests whether a thumbnail is stored for this item in the database and returns true or false.
+
+            * `isTopLevel` - Tests whether this is a top-level item and returns true or false.
+
+            * `itemCategory` - Returns the item category.
+
+            * `kind` - Returns the item kind.
+
+            * `language` - Returns the language identified by the item.
+
+            * `localisedName` - Returns the item name or the localised placeholder (for example, [Unnamed Image])
+
+            if the name is blank.
+
+            * `localisedPathNames` - Returns a list of item names on the path from the root evidence container to the item.
+
+            * `name` - Returns the item name.
+
+            * `originalExtension` - Returns the original extension listed on the source file.
+
+            * `parent` - Returns the parent of this item.
+
+            * `path` - Returns an item list which represents the path from the root evidence container to the item.
+
+            * `pathIDs` - Returns a list of the IDs of items on the path from the root evidence container up to the item itself.
+
+            * `pathNames` - Returns a list of item names on the path from the root evidence container to the item.
+
+            * `position` - Returns the item position number which identifies where this item exists in the tree of all ingested items.
+
+            * `printedImageInfo` - Returns information about the printed image.
+
+            * `properties` - Returns item properties.
+
+            * `root` - Returns the root item. If this item is the root, the item itself is returned.
+
+            * `rootUri` - Returns the item''''s root URI as a string.
+
+            * `tags` - Returns the item tags.
+
+            * `text` - Returns the text of the item as a string.
+
+            * `textHtml` - Returns the text of the item escaped for HTML.
+
+            * `textSummary` - Returns the stored text summary of the item if one exists, otherwise null.
+
+            * `textSummaryHtml` - Returns the stored text summary of the item escaped for HTML if one exists, otherwise null.
+
+            * `threadItems` - Returns items that are in the same discussion thread as this item.
+
+            * `topLevelItem` - Returns the associated top-level item.
+
+            * `topLevelItemDate` - Returns the associated top-level item date.
+
+            * `type` - Returns the type name.
+
+            * `typeLocalisedName` - Returns the type name, localised appropriately for display to users.
+
+            * `uri` - Returns the item''''s uniform resource identifier (URI) as a string.
+
+            '
+          items:
+            type: string
+        customMetadataList:
+          description: List of custom metadata fields to be returned for each item in the results.
+          type: array
+          items:
+            type: string
+        propertyList:
+          type: array
+          description: List of properties to be returned for each item in the results.
+          items:
+            type: string
+        itemParameterizedFields:
+          type: array
+          items:
+            type: string
+          description: Specifies parameterized fields in a key/value pair separated by a colon. * `entities` - corresponds to item.getEntities.  (e.g., "entities:company") * `serializedItem` - returns a serialized copy of the item.  (e.g., "seralizedItem:topLevelItem") * `textTruncated` - returns the item text, truncated (if needed) to the specified maximum size in bytes (e.g., "textTruncated:10000") * `thumbnail` - corresponds to an item thumbnail. The parameter specifies the thumbnail dimensions (e.g., "thumbnail:200x200") * `nearDupeThreshold` - (e.g., "nearDupeThreshold:0.9") * `emailThreadCluster` - value corresponds to a Run - Cluster (e.g., "emailThreadCluster:cluster-1")
+        showAvailableThumbnails:
+          type: boolean
+          description: Show thumbnails that have been generated
+        useCache:
+          type: boolean
+          default: false
+          description: Specifies whether the results should be loaded from and stored in cache. Defaults to false.
+        forceCacheDelete:
+          type: boolean
+          default: false
+          description: Specifies whether the cached results should be deleted before performing the search. Defaults to false.
+        searchRetry:
+          type: integer
+          format: int32
+          description: Specifies the search retry count.
+        relationType:
+          type: string
+          description: The relation to apply to the found items. For performance reasons, the family option is run against the top-level items.
+          enum:
+          - family
+          - topTypes
+          - descendants
+        entities:
+          type: array
+          description: List of entity names to include in response (e.g. company,email).  Maintained for backward compatibility.
+          items:
+            type: string
+        property:
+          type: array
+          description: List of properties to be returned for each item in the results.  Deprecated use propertyList.
+          items:
+            type: string
+          deprecated: true
+        field:
+          type: array
+          description: List of fields to be returned for each item in the results.  Deprecated use fieldList.
+          items:
+            type: string
+          deprecated: true
+        s:
+          type: integer
+          format: int32
+          description: The index of the first record that should be returned.  Deprecated use startIndex.
+          deprecated: true
+        p:
+          type: integer
+          format: int32
+          description: The number of records that should be returned.  Deprecated use numberOfRecordsRequested.
+          deprecated: true
+        customMetadataField:
+          type: array
+          description: List of custom metadata to be returned for each item in the results.  Deprecated use customMetadataList.
+          items:
+            type: string
+          deprecated: true
+    MarshalledItems:
+      type: object
+      properties:
+        request:
+          $ref: '#/components/schemas/ItemMarshallingOptions'
+        metadataItems:
+          type: array
+          description: The list of metadata item fields.
+          items:
+            type: string
+        localizedMetadataItems:
+          type: array
+          description: The list of localized metadata item fields.
+          items:
+            type: string
+        metadataItemDetails:
+          type: array
+          description: The list of metadata item details.
+          items:
+            $ref: '#/components/schemas/MetadataItemDetails'
+        resultList:
+          type: array
+          description: The list of items.
+          items:
+            type: object
+            additionalProperties:
+              type: object
+        count:
+          type: integer
+          description: The total item count.  This may differ from the size of the items list depending on paging settings.
+          format: int32
+        deduplicatedCount:
+          type: integer
+          description: The deduplicated item count.  This may differ from the size of the items list depending on paging settings.
+          format: int32
+    ItemSetResponse:
+      type: object
+      properties:
+        guid:
+          type: string
+          description: The item set guid
+        name:
+          type: string
+          description: name
+        description:
+          type: string
+          description: description
+        batches:
+          type: array
+          description: A list of batches for the item set
+          items:
+            $ref: '#/components/schemas/ItemSetBatchResponse'
+    SearchNativeResult:
+      type: object
+      properties:
+        request:
+          $ref: '#/components/schemas/SearchNativeRequest'
+        startedOn:
+          type: integer
+          description: Date the search started represented in milliseconds since the epoch.
+        completedOn:
+          type: integer
+          description: Date the search completed represented in milliseconds since the epoch.
+        elapsedTimeForSearch:
+          type: integer
+          description: Elapsed time to perform search.
+          format: int64
+        elapsedTimeForSort:
+          type: integer
+          format: int64
+          description: Elapsed time to perform the sort.
+        elapsedTimeForMarshal:
+          type: integer
+          format: int64
+          description: Elapsed time to perform the JSON marshalling.
+        elapsedTimeForDeduplicate:
+          type: integer
+          format: int64
+          description: Elapsed time to deduplicate items.
+        elapsedTotal:
+          type: integer
+          format: int64
+          description: Total elapsed time.
+        metadataItems:
+          type: array
+          description: The list of metadata item fields.
+          items:
+            type: string
+          deprecated: true
+        localizedMetadataItems:
+          description: The list of localized metadata item fields.
+          type: array
+          items:
+            type: string
+          deprecated: true
+        metadataItemDetails:
+          type: array
+          description: The list of metadata item details.
+          items:
+            $ref: '#/components/schemas/MetadataItemDetails'
+        resultList:
+          type: array
+          description: Results of the search
+          items:
+            type: object
+            additionalProperties:
+              type: object
+        count:
+          type: integer
+          description: Count of items in results
+          format: int32
+        deduplicatedCount:
+          type: integer
+          description: Count of deduplicated items
+          format: int32
+    BulkItemCustomMetadataRequest:
+      type: object
+      properties:
+        fieldName:
+          type: string
+          description: The name of the custom metadata field
+        value:
+          type: object
+          description: The value of the custom metadata field
+        type:
+          type: string
+          description: The data type of the field
+          enum:
+          - integer
+          - float
+          - date-time
+          - text
+          - boolean
+          - binary
+        mode:
+          type: string
+          description: The custom metadata mode
+          enum:
+          - user
+          - api
+        params:
+          type: object
+          additionalProperties:
+            type: object
+          description: Any parameters required to parse the value field.  params must contain a key "mimeType" with value being the MIME type of the binary data being stored. The value must be a valid MIME type name known to Nuix.
+        query:
+          type: string
+          description: Query items that should be included. If a query is not supplied it defaults to an empty string, which returns all items.
+      required:
+      - fieldName
+      - value
+      - type
+    ItemSetRemoveItemsRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Query items that should be included. If a query is not supplied it defaults to an empty string, which returns all items.
+        deduplication:
+          type: string
+          description: Deduplicate content. Defaults to none.
+          default: none
+          enum:
+          - none
+          - md5
+          - per custodian
+        relationType:
+          type: string
+          description: The relation to apply to the found items. For performance reasons, the family option is run against the top-level items.  Defaults to no relation.
+          enum:
+          - family
+          - topTypes
+          - descendants
+        removeDuplicates:
+          type: boolean
+          description: removeDuplicates.  Default is true.
+          default: true
+    ItemSetBatchResponse:
+      type: object
+      properties:
+        batchName:
+          type: string
+          description: Defaults to date in format yy/MM/dd kk:mm:ss z
+        createdOn:
+          type: integer
+          description: The created date for the batch
+          format: int64
+    ItemSetAddItemsRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Query items that should be included. If a query is not supplied it defaults to an empty string, which returns all items.
+        batchName:
+          type: string
+          description: Defaults to date in format yy/MM/dd kk:mm:ss z
+    BulkItemSetItemsRequest:
+      type: object
+      properties:
+        addItems:
+          type: array
+          description: The items to add to the itemset.
+          items:
+            $ref: '#/components/schemas/ItemSetAddItemsRequest'
+        removeItems:
+          type: array
+          description: The items to remove from the itemset.
+          items:
+            $ref: '#/components/schemas/ItemSetRemoveItemsRequest'
+    ItemSetDuplicatesResponse:
+      type: object
+      properties:
+        duplicates:
+          type: array
+          description: The list of GUIDs representing duplicate items
+          items:
+            type: string
+    BulkItemCustomMetadataDeleteRequest:
+      type: object
+      properties:
+        fieldName:
+          type: string
+          description: The name of the custom metadata field
+        query:
+          type: string
+          description: Query items that should be included. If a query is not supplied it defaults to an empty string, which returns all items.
+        deduplication:
+          type: string
+          description: Deduplicate content. Defaults to none.
+          default: none
+          enum:
+          - none
+          - md5
+          - per custodian
+        relationType:
+          type: string
+          description: Result of the deduplicated query can be applied to related items of the items.  Options are 'topTypes', 'family', and 'descendants'
+          enum:
+          - family
+          - topTypes
+          - descendants
+    DeleteTagListResponse:
+      type: object
+      properties:
+        tagList:
+          type: array
+          description: List of tags used during the operation
+          items:
+            type: string
+        deletedTags:
+          type: array
+          description: List of tags that were successfully deleted
+          items:
+            type: string
+        failedTags:
+          type: array
+          description: List of tags that failed deletion
+          items:
+            type: string
+    ItemSetNameChangeRequest:
+      type: object
+      properties:
+        newName:
+          type: string
+          description: New name for the Item Set
+      required:
+      - newName
+    TagList:
+      type: object
+      properties:
+        tagList:
+          type: array
+          description: List of tags used during the operation
+          items:
+            type: string
+      required:
+      - tagList
+    ItemMarshallingOptions:
+      type: object
+      properties:
+        caseId:
+          type: string
+          description: The case identification token.
+        query:
+          type: string
+          description: Identifies what items should be returned if the endpoint can make use of a query.
+        startIndex:
+          type: integer
+          description: The index of the first record that should be returned. Defaults to 0.
+          format: int32
+          default: 0
+        numberOfRecordsRequested:
+          type: integer
+          description: Number of records to return, defaults to 100.
+          format: int32
+          default: 100
+        deduplication:
+          type: string
+          description: Deduplicate content. Defaults to none.
+          default: none
+          enum:
+          - none
+          - md5
+          - per custodian
+        metadataProfile:
+          type: string
+          description: Defines the metadata profile to be appied to the results. Needed to get custom metadata. Defaults to no metadata profile.
+        fieldList:
+          type: array
+          description: "Use this operation to search a case.  For large query strings, use the POST method.\n\nUse the following supported fields in the fieldList:\n\n* `all` - Returns all fields for the item.\n* `auditedSize` - Returns the item''s audited size.\n* `children` - Returns a list of the item''s children.\n* `clusterPivotResemblances` - Returns a map where the keys are cluster IDs and the values are resemblances.\n* `clusterPivots` - Returns a map where the keys are cluster IDs and the values are boolean flags.\n* `comment` - Returns item comments.\n* `communication` - If the item is a communication, this returns item communication information.\n* `correctedExtension` - Returns the extension based on Nuix''s identification of the item''s MIME type.\n* `custodian` - Returns the custodian assigned to an item.\n* `customMetadata` - Returns custom metadata for the item as a map. Must provide metadataProfile to get this.\n* `date` - Returns the item date.\n* `descendants` - Gets the list of items which are descendants of this item.\n* `digests` - Returns a map of the computed digests for an item.\n* `duplicateCustodianSet` - Returns the set of custodian names associated with this item and its duplicates.\n* `duplicates` - Returns duplicates of this item.\n* `evidenceMetadata` - Returns custom evidence metadata for the item.\n* `exclusion` - Returns the reason for an item''s exclusion.\n* `family` - Returns a list of items in the same family.\n* `fileSize` - Returns the item''s file size if it is readable, or returns null if this is not file data.\n* `fileType` - Returns the name of the file type.\n* `guid` - Returns the item''s globally unique identifier (GUID).\n* `history` - Returns the item''s history in ascending order by date.\n* `id` - Returns the item''s ID.\n* `isAudited` - Tests whether the item is considered audited and returns true or false.\n* `isBinaryAvailable` - Tests whether the item''s binary is available before attempting to export it.  This returns\n          true if the item had binary data at processing time that was not stored. This\n          differs from isStored() as this method returns true if the item had binary\n          data at processing time that was not stored.\n* `isBinaryStored` - Tests whether the item has binary stored against it in the database. True is returned\n          if stored binary exists. In this case, the source data isn''t required for\n          binary export.\n* `isChatMessage` - Tests whether the item is a chat message.\n* `isChatConversation` - Tests whether the item is a chat conversation.\n* `isDeleted` - Tests whether the item was marked as deleted and returns true or false.\n* `isEmailThreadMember` - Tests whether the item is part of an email thread.\n* `isEncrypted` - Tests whether the item was marked as encrypted and returns true or false.\n* `isExcluded` - Tests whether the item was marked as excluded.\n* `isFamilyMember` - Tests whether the item is a member of a family (i.e. it has a top-level item).\n* `isIncuded` - Tests whether the item is included and returns true or false.\n* `isLooseFile` - Tests whether the item is a loose file and returns true or false.\n* `isPhysicalFile` - Tests whether the item is a physical file and returns true or false.\n* `isPrintedImageStored` - Tests whether the printed image is stored and returns true or false. This field\n          is useful when you only need to know if a printed image exists for this item.\n          This is faster and uses fewer resources than requesting the printedImageInfo\n          field.\n* `isTextAvailable` - Tests whether the item''s text is available before attempting to read or export it.\n* `isTextStored` - Tests hether the item has text stored against it in the database.  In the event\n          where you only want to know if the item had text but didn''t need the text\n          this field is considerably faster and more conservative of resources than\n          isTextAvailable.\n* `isThumbnailStored` - Tests whether a thumbnail is stored for this item in the database and returns true or false.\n* `isTopLevel` - Tests whether this is a top-level item and returns true or false.\n* `itemCategory` - Returns the item category.\n* `kind` - Returns the item kind.\n* `language` - Returns the language identified by the item.\n* `localisedName` - Returns the item name or the localised placeholder (for example, [Unnamed Image])\n          if the name is blank.\n* `localisedPathNames` - Returns a list of item names on the path from the root evidence container to the item.\n* `name` - Returns the item name.\n* `originalExtension` - Returns the original extension listed on the source file.\n* `parent` - Returns the parent of this item.\n* `path` - Returns an item list which represents the path from the root evidence container to the item.\n* `pathIDs` - Returns a list of the IDs of items on the path from the root evidence container up to the item itself.\n* `pathNames` - Returns a list of item names on the path from the root evidence container to the item.\n* `position` - Returns the item position number which identifies where this item exists in the tree of all ingested items.\n* `printedImageInfo` - Returns information about the printed image.\n* `properties` - Returns item properties.\n* `root` - Returns the root item. If this item is the root, the item itself is returned.\n* `rootUri` - Returns the item''s root URI as a string.\n* `tags` - Returns the item tags.\n* `text` - Returns the text of the item as a string.\n* `textHtml` - Returns the text of the item escaped for HTML.\n* `textSummary` - Returns the stored text summary of the item if one exists, otherwise null.\n* `textSummaryHtml` - Returns the stored text summary of the item escaped for HTML if one exists, otherwise null.\n* `threadItems` - Returns items that are in the same discussion thread as this item.\n* `topLevelItem` - Returns the associated top-level item.\n* `topLevelItemDate` - Returns the associated top-level item date.\n* `type` - Returns the type name.\n* `typeLocalisedName` - Returns the type name, localised appropriately for display to users.\n* `uri` - Returns the item''s uniform resource identifier (URI) as a string.\n"
+          items:
+            type: string
+        customMetadataList:
+          type: array
+          description: List of custom metadata fields to be returned for each item in the results.
+          items:
+            type: string
+        propertyList:
+          type: array
+          description: List of properties to be returned for each item in the results.
+          items:
+            type: string
+        itemParameterizedFields:
+          type: array
+          description: Specifies parameterized fields in a key/value pair separated by a colon. * `entities` - corresponds to item.getEntities.  (e.g., "entities:company") * `serializedItem` - returns a serialized copy of the item.  (e.g., "seralizedItem:topLevelItem") * `textTruncated` - returns the item text, truncated (if needed) to the specified maximum size in bytes (e.g., "textTruncated:10000") * `thumbnail` - corresponds to an item thumbnail. The parameter specifies the thumbnail dimensions (e.g., "thumbnail:200x200") * `nearDupeThreshold` - (e.g., "nearDupeThreshold:0.9") * `emailThreadCluster` - value corresponds to a Run - Cluster (e.g., "emailThreadCluster:cluster-1")
+          items:
+            type: string
+        sortField:
+          type: string
+          description: Any field in the metadata profile which you want to sort by.
+        sortOrder:
+          type: string
+          description: Sets the sort order for the results. Defaults to "ASC".
+          enum:
+          - asc
+          - desc
+          default: asc
+        s:
+          type: integer
+          description: The index of the first record that should be returned.  Maintained for backward compatibility.
+          format: int32
+          deprecated: true
+        p:
+          type: integer
+          description: The number of records that should be returned. Defaults to 100 records.  Maintained for backward compatibility.
+          format: int32
+          deprecated: true
+    ItemSetItemsResponse:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Query items that should be included.  If a query is not supplied it defaults to an empty string, which returns all items.
+        itemSetName:
+          type: string
+          description: The item set name.
+        operationType:
+          type: string
+          description: The operation to perform on the item set.
+          enum:
+          - ADD
+          - DELETE
+        failedItemGuidList:
+          type: array
+          description: The list of failed item guids.
+          items:
+            type: string
+        successfulItemGuidList:
+          type: array
+          description: The list of successful item guids.
+          items:
+            type: string
+    ApplyTagListResponse:
+      type: object
+      properties:
+        tagList:
+          type: array
+          description: List of tags used during the operation
+          items:
+            type: string
+        successfulTags:
+          type: array
+          description: List of tags that successfully completed the operation
+          items:
+            type: string
+        failedTags:
+          type: array
+          description: List of tags that failed the operation
+          items:
+            type: string
+    BulkSearcherRequest:
+      type: object
+      properties:
+        includeFamilies:
+          type: boolean
+          description: Whether item families should also be matched. Defaults to false.
+          default: false
+        deduplicateFamilies:
+          type: boolean
+          description: Whether deduplicated item families should also be matched. Defaults to false.
+          default: false
+        omitExcludedItems:
+          type: boolean
+          description: Whether excluded items should be excluded from matches. Defaults to true.
+          default: true
+        omitImmaterialFamilyItems:
+          type: boolean
+          description: Whether immaterial family items should be excluded from family item and deduplicated family item matches. Defaults to true.
+          default: true
+        tagUniqueItems:
+          type: boolean
+          description: Whether to record items that only matched a single query. Defaults to false.
+          default: false
+        matchingItemsAction:
+          type: string
+          description: Action to take when a matching item is found. Tagging is performed when this option is "ADD_TAGS". Defaults to "ADD_TAGS".
+          enum:
+          - addTags
+          - removeTags
+          - none
+          default: addTags
+        createUnusedTags:
+          type: boolean
+          description: Whether to create tags even if no items match them. Only has effect if matchingItemsAction == "addTags". Defaults to false.
+          default: false
+        removeEmptyTags:
+          type: boolean
+          description: Whether to remove tags from the case if there are no longer any items that match them. Only has effect if matchingItemsAction == "removeTags". Defaults to false.
+          default: false
+        showTagColumns:
+          type: boolean
+          description: Whether to show the tag name columns in the results table. Defaults to true.
+          default: true
+        allowDuplicateTags:
+          type: boolean
+          description: Whether the same tag can be applied on more than one row with different queries. Defaults to true.
+          default: true
+        allowDuplicateQueries:
+          type: boolean
+          description: Whether the same query can be applied on more than one row with different tags. Defaults to true.
+          default: true
+        countResponsiveItems:
+          type: boolean
+          description: Whether to compile counts for responsive items.
+          default: false
+        tagResponsiveItemsEnabled:
+          type: boolean
+          description: Whether to apply tags to responsive items. Only has an effect if countResponsiveItems is true and tagResponsiveItemsTag is non-null.
+          default: false
+        tagResponsiveItemsTag:
+          type: string
+          description: What tag to apply to responsive items. Only has an effect if both countResponsiveItems and tagResponsiveItemsEnabled are true.
+          default: null
+        missingTagsAction:
+          type: string
+          description: What to do when a tag is missing in a table row. Does not affect blank rows. Defaults to FILL_WITH_QUERY.
+          enum:
+          - fillWithQuery
+          - fillWithRowNumber
+          - showValidationError
+          default: fillWithQuery
+        expandTags:
+          type: boolean
+          description: Whether tags for top-level item matches and family item matches should be expanded according to the tagExpansion map. Defaults to true.
+          default: true
+        tagExpansion:
+          $ref: '#/components/schemas/TagExpansion'
+        scopingQuery:
+          type: string
+          description: A query that restricts the scope of all queries in the file. i.e. a common query that is joined with every individual query to limit the items that it can match. Defaults to an empty string.
+          default: ''
+        searchFields:
+          type: array
+          description: A list of fields to search. If null is passed in or this field is not set or empty then a list of default search fields is used (which consists of "CONTENT", "PROPERTIES", "NAME" and "PATH_NAME").
+          items:
+            type: string
+            enum:
+            - content
+            - properties
+            - name
+            - path-name
+            - evidence-metadata
+        tagRequests:
+          type: array
+          description: A list of tag requests to perform.
+          items:
+            $ref: '#/components/schemas/TagRequest'
+      required:
+      - tagRequests
+    CreateTagListResponse:
+      type: object
+      properties:
+        tagList:
+          type: array
+          description: List of tags used during the operation
+          items:
+            type: string
+        createdTags:
+          type: array
+          description: List of tags that were succuessfully created
+          items:
+            type: string
+        failedTags:
+          type: array
+          description: List of tags that failed to be created
+          items:
+            type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: nuix-auth-token
+      in: header
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

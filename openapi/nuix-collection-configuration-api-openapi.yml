@@ -332,120 +332,6 @@ paths:
                 message: Waiting for the model to load
 components:
   schemas:
-    TaskCreated:
-      type: object
-      properties:
-        parentConfigId:
-          type: integer
-          description: Optional, id of the parent Collection Configuration of the new task to be copied. If omitted, the task is created from given params.
-        taskNum:
-          type: integer
-          description: Optional, id of the task to be copied (within the parent conf specified above).  Required if parentConfigId is specified.
-        taskType:
-          type: string
-          description: 'Type of task\: one of `Collect`, `Relocate`, `Deploy`, or `Launch` (currently only `Collect` and `Relocate` are supported).  NOTE\: If copying an Existing task, the `taskType` cannot be changed in the new task.'
-          enum:
-          - Collect
-          - Relocate
-          - Deploy
-          - Launch
-        label:
-          type: string
-          description: 'Optional, user-defined label for this job.
-
-
-            Can be used as search criteria for jobs.'
-    FileType:
-      type: object
-      description: describes the file type filters used in the collection (this object is optional)
-      properties:
-        analyzeSignatures:
-          type: boolean
-          description: when `true`, read the beginning of each file to determine file type.  When `false` use filename extension only to determine file type.
-        mode:
-          type: string
-          description: One of `Include` or `Exclude` - include or exclude the file types listed in the `extensions` array
-          enum:
-          - Include
-          - Exclude
-        extensions:
-          type: array
-          description: array of one or more file type extensions
-          items:
-            $ref: '#/components/schemas/Extension'
-    Keyword:
-      type: object
-      properties:
-        expressionName:
-          type: string
-          description: human-readable description of the search expression
-        expression:
-          type: string
-          description: search expression
-        caseSensitive:
-          type: boolean
-          description: When `true` specifies the search should be case-sensitive
-        regExpression:
-          type: boolean
-          description: When `true` specifies the `expression` is interpreted as a Regular Expression
-    standardResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: http response status code
-        id:
-          type: integer
-          description: id of the affected Object
-        message:
-          type: string
-          description: http status message
-    createConfigurationRequest:
-      type: object
-      properties:
-        baseConfigId:
-          type: integer
-          description: Id of an existing Collection Configuration to use as the basis for a new Collection Configuration, or -1 to create a new Collection Configuration from scratch
-        newConfigName:
-          type: string
-          description: New Collection Configuration name
-        description:
-          type: string
-          description: New Collection Configuration description
-        category:
-          type: string
-          description: Optional. A Category associated with this Collection Configuration (a GET call can filter by Category)
-        tasks:
-          type: array
-          description: Array of new tasks to add to the new collection configuration.  At least one task must be specified.
-          items:
-            $ref: '#/components/schemas/TaskToCreate'
-    Target:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: id of the Target
-        name:
-          type: string
-          description: name of the target
-        description:
-          type: string
-          description: description of the target
-        custodianId:
-          type: integer
-          description: id of the Custodian this target belongs to
-        computerName:
-          type: string
-          description: name of the Computer this target belongs to
-        computerGUID:
-          type: string
-          description: GUID of the Computer this target belongs to
-        Inputs:
-          type: array
-          description: array of inputs in the target
-          items:
-            $ref: '#/components/schemas/TargetInputs'
     DateCriteria:
       type: object
       properties:
@@ -482,37 +368,29 @@ components:
         checkAccess:
           type: boolean
           description: When `true`, apply date criteria to access date
-    createConfigurationResponse:
+    TaskCreated:
       type: object
       properties:
-        id:
+        parentConfigId:
           type: integer
-          description: id of the new Collection Configuration
-        name:
+          description: Optional, id of the parent Collection Configuration of the new task to be copied. If omitted, the task is created from given params.
+        taskNum:
+          type: integer
+          description: Optional, id of the task to be copied (within the parent conf specified above).  Required if parentConfigId is specified.
+        taskType:
           type: string
-          description: name of the new Collection Configuration
-        description:
+          description: 'Type of task\: one of `Collect`, `Relocate`, `Deploy`, or `Launch` (currently only `Collect` and `Relocate` are supported).  NOTE\: If copying an Existing task, the `taskType` cannot be changed in the new task.'
+          enum:
+          - Collect
+          - Relocate
+          - Deploy
+          - Launch
+        label:
           type: string
-          description: description of the new Collection Configuration
-        template:
-          type: string
-          description: template of the new Collection Configuration
-        category:
-          type: string
-          description: Optional category of the new Collection Configuration
-        targets:
-          type: array
-          description: Array of targets specified in this Collection Configuration
-          items:
-            $ref: '#/components/schemas/Target'
-        hasInputs:
-          type: boolean
-          description: whether any input paths are specified within any of the Targets or Computers in this Collection Configuration
-        tasks:
-          type: array
-          description: Array of tasks specified in this Collection Configuration
-          items:
-            $ref: '#/components/schemas/TaskCreated'
+          description: 'Optional, user-defined label for this job.
+
+
+            Can be used as search criteria for jobs.'
     Configuration:
       type: object
       properties:
@@ -561,6 +439,37 @@ components:
           description: array of Tasks used in this collection configuration
           items:
             $ref: '#/components/schemas/Task'
+    createConfigurationResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the new Collection Configuration
+        name:
+          type: string
+          description: name of the new Collection Configuration
+        description:
+          type: string
+          description: description of the new Collection Configuration
+        template:
+          type: string
+          description: template of the new Collection Configuration
+        category:
+          type: string
+          description: Optional category of the new Collection Configuration
+        targets:
+          type: array
+          description: Array of targets specified in this Collection Configuration
+          items:
+            $ref: '#/components/schemas/Target'
+        hasInputs:
+          type: boolean
+          description: whether any input paths are specified within any of the Targets or Computers in this Collection Configuration
+        tasks:
+          type: array
+          description: Array of tasks specified in this Collection Configuration
+          items:
+            $ref: '#/components/schemas/TaskCreated'
     Task:
       type: object
       properties:
@@ -676,16 +585,21 @@ components:
             relocateLogs:
               type: boolean
               description: When `true` relocate the collection logs
-    Extension:
+    Keyword:
       type: object
-      description: Describes a File Extension
       properties:
-        extension:
+        expressionName:
           type: string
-          description: file type extension (do not include the preceding dot)
-        collectAll:
+          description: human-readable description of the search expression
+        expression:
+          type: string
+          description: search expression
+        caseSensitive:
           type: boolean
-          description: If `true`, collect this file type regardless of keyword search
+          description: When `true` specifies the search should be case-sensitive
+        regExpression:
+          type: boolean
+          description: When `true` specifies the `expression` is interpreted as a Regular Expression
     TaskToCreate:
       type: object
       properties:
@@ -805,6 +719,50 @@ components:
             relocateLogs:
               type: boolean
               description: true to relocate the logs
+    Target:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id of the Target
+        name:
+          type: string
+          description: name of the target
+        description:
+          type: string
+          description: description of the target
+        custodianId:
+          type: integer
+          description: id of the Custodian this target belongs to
+        computerName:
+          type: string
+          description: name of the Computer this target belongs to
+        computerGUID:
+          type: string
+          description: GUID of the Computer this target belongs to
+        Inputs:
+          type: array
+          description: array of inputs in the target
+          items:
+            $ref: '#/components/schemas/TargetInputs'
+    FileType:
+      type: object
+      description: describes the file type filters used in the collection (this object is optional)
+      properties:
+        analyzeSignatures:
+          type: boolean
+          description: when `true`, read the beginning of each file to determine file type.  When `false` use filename extension only to determine file type.
+        mode:
+          type: string
+          description: One of `Include` or `Exclude` - include or exclude the file types listed in the `extensions` array
+          enum:
+          - Include
+          - Exclude
+        extensions:
+          type: array
+          description: array of one or more file type extensions
+          items:
+            $ref: '#/components/schemas/Extension'
     listConfigurationsResponse:
       type: object
       properties:
@@ -812,6 +770,36 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Configuration'
+    createConfigurationRequest:
+      type: object
+      properties:
+        baseConfigId:
+          type: integer
+          description: Id of an existing Collection Configuration to use as the basis for a new Collection Configuration, or -1 to create a new Collection Configuration from scratch
+        newConfigName:
+          type: string
+          description: New Collection Configuration name
+        description:
+          type: string
+          description: New Collection Configuration description
+        category:
+          type: string
+          description: Optional. A Category associated with this Collection Configuration (a GET call can filter by Category)
+        tasks:
+          type: array
+          description: Array of new tasks to add to the new collection configuration.  At least one task must be specified.
+          items:
+            $ref: '#/components/schemas/TaskToCreate'
+    Extension:
+      type: object
+      description: Describes a File Extension
+      properties:
+        extension:
+          type: string
+          description: file type extension (do not include the preceding dot)
+        collectAll:
+          type: boolean
+          description: If `true`, collect this file type regardless of keyword search
     Hash:
       type: object
       properties:
@@ -830,6 +818,18 @@ components:
 
 
             Used to match before calculating a full hash'
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
     Evidence:
       type: object
       properties:

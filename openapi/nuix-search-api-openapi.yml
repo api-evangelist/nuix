@@ -1,0 +1,831 @@
+openapi: 3.2.0
+info:
+  title: Nuix REST-API Reference Search API
+  description: 'Welcome to the Nuix REST API documentation. From here you can access all available REST APIs and execute queries against your running REST instance.
+
+
+    # Authentication Changes
+
+
+    The `nuix-auth-token` header is being deprecated in favor of standard JWT. The header will be removed in a
+
+    future release. Until the removal of the header, the Nuix REST API will accept the JWT in either the
+
+    `nuix-auth-token` header field or the `Authorization` header field prefixed by `Bearer`.'
+  contact:
+    name: Nuix
+    url: http://forums.nuix.com/
+  license:
+    name: Licence
+    url: https://www.nuix.com/sites/default/files/2023-03/End%20User%20License%20Agreement%20%28Effective%20December%2014%2C%202022%29_1.pdf
+  version: ${customer.version}
+servers:
+- url: /nuix-restful-service/svc
+- url: http://localhost:8080/svc
+security:
+- ApiKeyAuth: []
+- bearerAuth: []
+tags:
+- name: Search
+paths:
+  /cases/{caseId}/itemProperties/{propertyName}:
+    post:
+      tags:
+      - Search
+      summary: Returns a list of values for the specified property
+      description: Use this operation to retrieve a list of values for the specified property. Property values will be returned for items matching the query.
+      operationId: getItemProperties
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: propertyName
+        in: path
+        description: Name of the property to retrieve values for
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/ItemPropertiesRequest'
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /cases/{caseId}/search:
+    get:
+      tags:
+      - Search
+      summary: Performs a search
+      description: 'Use this operation to search a case. For large query strings, use the POST method. Use the following supported fields in the fieldList:
+
+
+        * `all` - Returns all fields for the item. * `auditedSize` - Returns the item''''s audited size. * `children` - Returns a list of the item''''s children. * `clusterPivotResemblances` - Returns a map where the keys are cluster IDs and the values are resemblances. * `clusterPivots` - Returns a map where the keys are cluster IDs and the values are boolean flags. * `comment` - Returns item comments. * `communication` - If the item is a communication, this returns item communication information. * `correctedExtension` - Returns the extension based on Nuix''''s identification of the item''''s MIME type. * `custodian` - Returns the custodian assigned to an item. * `customMetadata` - Returns custom metadata for the item as a map. Must provide metadataProfile to get this. * `date` - Returns the item date. * `descendants` - Gets the list of items which are descendants of this item. * `digests` - Returns a map of the computed digests for an item. * `duplicateCustodianSet` - Returns the set of custodian names associated with this item and its duplicates. * `duplicates` - Returns duplicates of this item. * `evidenceMetadata` - Returns custom evidence metadata for the item. * `exclusion` - Returns the reason for an item''''s exclusion. * `family` - Returns a list of items in the same family. * `fileSize` - Returns the item''''s file size if it is readable, or returns null if this is not file data. * `fileType` - Returns the name of the file type. * `guid` - Returns the item''''s globally unique identifier (GUID). * `history` - Returns the item''''s history in ascending order by date. * `id` - Returns the item''''s ID. * `isAudited` - Tests whether the item is considered audited and returns true or false. * `isBinaryAvailable` - Tests whether the item''''s binary is available before attempting to export it. This returns
+
+        true if the item had binary data at processing time that was not stored. This
+
+        differs from isStored() as this method returns true if the item had binary
+
+        data at processing time that was not stored. * `isBinaryStored` - Tests whether the item has binary stored against it in the database. True is returned
+
+        if stored binary exists. In this case, the source data isn''''t required for
+
+        binary export. * `isChatMessage` - Tests whether the item is a chat message. * `isChatConversation` - Tests whether the item is a chat conversation. * `isDeleted` - Tests whether the item was marked as deleted and returns true or false. * `isEmailThreadMember` - Tests whether the item is part of an email thread. * `isEncrypted` - Tests whether the item was marked as encrypted and returns true or false. * `isExcluded` - Tests whether the item was marked as excluded. * `isFamilyMember` - Tests whether the item is a member of a family (i.e. it has a top-level item). * `isIncluded` - Tests whether the item is included and returns true or false. * `isLooseFile` - Tests whether the item is a loose file and returns true or false. * `isPhysicalFile` - Tests whether the item is a physical file and returns true or false. * `isPrintedImageStored` - Tests whether the printed image is stored and returns true or false. This field
+
+        is useful when you only need to know if a printed image exists for this item. This is faster and uses fewer resources than requesting the printedImageInfo
+
+        field. * `isTextAvailable` - Tests whether the item''''s text is available before attempting to read or export it. * `isTextStored` - Tests hether the item has text stored against it in the database. In the event
+
+        where you only want to know if the item had text but didn''''t need the text
+
+        this field is considerably faster and more conservative of resources than
+
+        isTextAvailable. * `isThumbnailStored` - Tests whether a thumbnail is stored for this item in the database and returns true or false. * `isTopLevel` - Tests whether this is a top-level item and returns true or false.'
+      operationId: searchNativeResult
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: query
+        in: query
+        description: Identifies what items should be returned.  If a query is not supplied it defaults to an empty string, which returns all items.
+        required: false
+        schema:
+          type: string
+      - name: s
+        in: query
+        description: The index of the first record that should be returned. Defaults to 0.  Maintained for backward compatibility.
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: p
+        in: query
+        description: The number of records that should be returned. Defaults to 100 records.  Maintained for backward compatibility.
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: startIndex
+        in: query
+        description: The index of the first record that should be returned. Defaults to 0.
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: numberOfRecordsRequested
+        in: query
+        description: The number of records that should be returned per page. Defaults to 100 records.
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: limit
+        in: query
+        description: The maximum number of results to return.
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: deduplication
+        in: query
+        description: Deduplicate content based on the Value field selection. The default is none, no deduplication.
+        required: false
+        schema:
+          type: string
+          enum:
+          - md5
+          - per custodian
+          - none
+      - name: maintainDeduplicatedSearchOrder
+        in: query
+        description: Specifies whether the original search result order based on the query should be maintained for deduplicated results.  Default is true.  Setting this field to false may improve deduplication performance especially for Elasticsearch cases.  This field is ignored if a sort field has been specified.
+        required: false
+        schema:
+          type: boolean
+          default: true
+      - name: metadataProfile
+        in: query
+        description: Defines the metadata profile to be appied to the results. Needed to get custom metadata. Defaults to no metadata profile.
+        required: false
+        schema:
+          type: string
+      - name: fieldList
+        in: query
+        description: List of fields to be returned for each item in the results.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: customMetadataField
+        in: query
+        description: List of custom metadata to be returned for each item in the results.  Maintained for backward compatibility.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: propertyList
+        in: query
+        description: List of properties to be returned for each item in the results.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: itemParameterizedFields
+        in: query
+        description: Specifies parameterized fields in a key/value pair separated by a colon. * `entities` - corresponds to item.getEntities.  (e.g., "entities:company") * `serializedItem` - returns a serialized copy of the item.  (e.g., "seralizedItem:topLevelItem") * `textTruncated` - returns the item text, truncated (if needed) to the specified maximum size in bytes (e.g., "textTruncated:10000") * `thumbnail` - corresponds to an item thumbnail. The parameter specifies the thumbnail dimensions (e.g., "thumbnail:200x200") * `nearDupeThreshold` - (e.g., "nearDupeThreshold:0.9") * `emailThreadCluster` - value corresponds to a Run - Cluster (e.g., "emailThreadCluster:cluster-1")
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: entities
+        in: query
+        description: List of entity names to include in response (e.g. company,email)
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: showAvailableThumbnails
+        in: query
+        description: Show thumbnails that have been generated
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: useCache
+        in: query
+        description: Specifies whether the results should be loaded from and stored in cache.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: forceCacheDelete
+        in: query
+        description: Specifies whether the cached results should be deleted before performing the search.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: sortField
+        in: query
+        description: 'Any field in the metadata profile which you want to sort by.
+
+
+          Use the following supported fields in the sortFields:
+
+          position,kind,duplicates
+
+          '
+        required: false
+        schema:
+          type: string
+      - name: sortOrder
+        in: query
+        description: Sets the sort order for the results.
+        required: false
+        schema:
+          type: string
+      - name: relationType
+        in: query
+        description: The relation to apply to the found items.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v2+json:
+              schema:
+                $ref: '#/components/schemas/SearchNativeResult'
+    post:
+      tags:
+      - Search
+      summary: Performs a large search
+      description: Use this operation to perform a large search on a case. This operation doesn't have a maximum query string length.
+      operationId: searchNativeResultPost
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v2+json:
+            schema:
+              $ref: '#/components/schemas/SearchNativeRequest'
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/SearchNativeResult'
+  /cases/{caseId}/asyncFunctions/search:
+    post:
+      tags:
+      - Search
+      summary: Performs an asynchronous search
+      description: Use this operation to perform an asynchronous search.
+      operationId: asyncSearchNative
+      parameters:
+      - name: caseId
+        in: path
+        description: caseId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/SearchNativeRequest'
+            examples:
+              Asynchronous Search:
+                value:
+                  query: ''
+                  fieldList:
+                  - name
+                  - guid
+                  - date
+                  - fileSize
+                  - isBinaryAvailable
+                  - kind
+                  - fileType
+                  - pathNames
+                  useCache: false
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+              examples:
+                Standard Asynchronous Function Response:
+                  value:
+                    functionKey: c2b5a20b-3cd1-4eb3-b600-6fa909ba0949
+                    location: http://localhost:8080/svc/v1/asyncFunctions/c2b5a20b-3cd1-4eb3-b600-6fa909ba0949
+                Asynchronous Search Result:
+                  value:
+                    done: true
+                    cancelled: false
+                    result:
+                      request:
+                        caseId: 058d9a61faf04e4ca320cb64a166715b
+                        query: ''
+                        sortField: null
+                        sortOrder: null
+                        startIndex: 0
+                        numberOfRecordsRequested: 100
+                        deduplicate: null
+                        metadataProfile: null
+                        fieldList:
+                        - name
+                        - guid
+                        - date
+                        - digest
+                        - fileSize
+                        - isBinaryAvailable
+                        - kind
+                        - fileType
+                        - pathNames
+                        customMetadataList: []
+                        propertyList: []
+                        itemParameterizedFields: []
+                        showAvailableThumbnails: false
+                        useCache: false
+                        forceCacheDelete: false
+                        searchRetry: 0
+                        relationType: null
+                        entities: []
+                        s: 0
+                        p: 100
+                        customMetadataField: []
+                        property: []
+                        field:
+                        - name
+                        - guid
+                        - date
+                        - digest
+                        - fileSize
+                        - isBinaryAvailable
+                        - kind
+                        - fileType
+                        - pathNames
+                      startedOn: 1607707917841
+                      completedOn: 1607707920476
+                      elapsedTimeForSearch: 2413
+                      elapsedTimeForSort: 0
+                      elapsedTimeForMarshal: 192
+                      elapsedTimeForDeduplicate: 0
+                      elapsedTotal: 2635
+                      metadataItems: []
+                      localizedMetadataItems: []
+                      metadataItemDetails: []
+                      resultList:
+                      - File Type: application/vnd.nuix-evidence
+                        customMetadata: {}
+                        entities: {}
+                        fileSize: null
+                        fileType: application/vnd.nuix-evidence
+                        guid: c9fbe0c7-bba8-48f2-ae6e-3dd7b68c5885
+                        isBinaryAvailable: false
+                        kind: container
+                        name: 63ec0e62-2687-4e00-8b47-6110039e8bd4
+                        pathNames:
+                        - 63ec0e62-2687-4e00-8b47-6110039e8bd4
+                        properties: {}
+  /validation/query:
+    post:
+      tags:
+      - Search
+      summary: Validates a list of queries
+      description: Use this operation to validate queries.
+      operationId: validateQueryPost
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              type: array
+              description: List of queries to validate
+              items:
+                type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueryValidationResponse'
+components:
+  schemas:
+    MetadataItemDetails:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The metadata name.
+        localisedName:
+          type: string
+          description: The localized name of the metadata.
+        type:
+          type: string
+          description: The metadata type.
+    SearchNativeRequest:
+      type: object
+      properties:
+        caseId:
+          type: string
+          description: The case identification token.
+        query:
+          type: string
+          description: Identifies what items should be returned.  If a query is not supplied it defaults to an empty string, which returns all items.
+        sortField:
+          type: string
+          description: 'Any field in the metadata profile which you want to sort by.
+
+
+            Use the following supported fields in the sortFields:
+
+            position,kind,duplicates
+
+            '
+        sortOrder:
+          type: string
+          description: Sets the sort order for the results. Defaults to "ASC".
+          enum:
+          - asc
+          - desc
+          default: asc
+        startIndex:
+          type: integer
+          default: 0
+          description: The index of the first record that should be returned. Defaults to 0.
+          format: int32
+        numberOfRecordsRequested:
+          type: integer
+          description: The number of records that should be returned per page. Defaults to 100 records.
+          format: int32
+        limit:
+          type: integer
+          description: The maximum number of results to return.
+          format: int32
+        deduplication:
+          type: string
+          description: Deduplicate content based on the Value field selection.  Defaults to no deduplication.
+          enum:
+          - md5
+          - per custodian
+          - none
+        maintainDeduplicatedSearchOrder:
+          type: boolean
+          default: true
+          description: Specifies whether the original search result order based on the query should be maintained for deduplicated results.  Default is true.  Setting this field to false may improve deduplication performance especially for Elasticsearch cases.  This field is ignored if a sort field has been specified.
+        metadataProfile:
+          type: string
+          description: Defines the metadata profile to be appied to the results. Needed to get custom metadata. Defaults to no metadata profile.
+        fieldList:
+          type: array
+          description: 'List of fields to be returned for each item in the results.
+
+            Use the following supported fields in the fieldList:
+
+
+            * `all` - Returns all fields for the item.
+
+            * `auditedSize` - Returns the item''''s audited size.
+
+            * `children` - Returns a list of the item''''s children.
+
+            * `clusterPivotResemblances` - Returns a map where the keys are cluster IDs and the values are resemblances.
+
+            * `clusterPivots` - Returns a map where the keys are cluster IDs and the values are boolean flags.
+
+            * `comment` - Returns item comments.
+
+            * `communication` - If the item is a communication, this returns item communication information.
+
+            * `correctedExtension` - Returns the extension based on Nuix''''s identification of the item''''s MIME type.
+
+            * `custodian` - Returns the custodian assigned to an item.
+
+            * `customMetadata` - Returns custom metadata for the item as a map. Must provide metadataProfile to get this.
+
+            * `date` - Returns the item date.
+
+            * `descendants` - Gets the list of items which are descendants of this item.
+
+            * `digests` - Returns a map of the computed digests for an item.
+
+            * `duplicateCustodianSet` - Returns the set of custodian names associated with this item and its duplicates.
+
+            * `duplicates` - Returns duplicates of this item.
+
+            * `evidenceMetadata` - Returns custom evidence metadata for the item.
+
+            * `exclusion` - Returns the reason for an item''''s exclusion.
+
+            * `family` - Returns a list of items in the same family.
+
+            * `fileSize` - Returns the item''''s file size if it is readable, or returns null if this is not file data.
+
+            * `fileType` - Returns the name of the file type.
+
+            * `guid` - Returns the item''''s globally unique identifier (GUID).
+
+            * `history` - Returns the item''''s history in ascending order by date.
+
+            * `id` - Returns the item''''s ID.
+
+            * `isAudited` - Tests whether the item is considered audited and returns true or false.
+
+            * `isBinaryAvailable` - Tests whether the item''''s binary is available before attempting to export it.  This returns
+
+            true if the item had binary data at processing time that was not stored. This
+
+            differs from isStored() as this method returns true if the item had binary
+
+            data at processing time that was not stored.
+
+            * `isBinaryStored` - Tests whether the item has binary stored against it in the database. True is returned
+
+            if stored binary exists. In this case, the source data isn''''t required for
+
+            binary export.
+
+            * `isChatMessage` - Tests whether the item is a chat message.
+
+            * `isChatConversation` - Tests whether the item is a chat conversation.
+
+            * `isDeleted` - Tests whether the item was marked as deleted and returns true or false.
+
+            * `isEmailThreadMember` - Tests whether the item is part of an email thread.
+
+            * `isEncrypted` - Tests whether the item was marked as encrypted and returns true or false.
+
+            * `isExcluded` - Tests whether the item was marked as excluded.
+
+            * `isFamilyMember` - Tests whether the item is a member of a family (i.e. it has a top-level item).
+
+            * `isIncuded` - Tests whether the item is included and returns true or false.
+
+            * `isLooseFile` - Tests whether the item is a loose file and returns true or false.
+
+            * `isPhysicalFile` - Tests whether the item is a physical file and returns true or false.
+
+            * `isPrintedImageStored` - Tests whether the printed image is stored and returns true or false. This field
+
+            is useful when you only need to know if a printed image exists for this item.
+
+            This is faster and uses fewer resources than requesting the printedImageInfo
+
+            field.
+
+            * `isTextAvailable` - Tests whether the item''''s text is available before attempting to read or export it.
+
+            * `isTextStored` - Tests hether the item has text stored against it in the database.  In the event
+
+            where you only want to know if the item had text but didn''''t need the text
+
+            this field is considerably faster and more conservative of resources than
+
+            isTextAvailable.
+
+            * `isThumbnailStored` - Tests whether a thumbnail is stored for this item in the database and returns true or false.
+
+            * `isTopLevel` - Tests whether this is a top-level item and returns true or false.
+
+            * `itemCategory` - Returns the item category.
+
+            * `kind` - Returns the item kind.
+
+            * `language` - Returns the language identified by the item.
+
+            * `localisedName` - Returns the item name or the localised placeholder (for example, [Unnamed Image])
+
+            if the name is blank.
+
+            * `localisedPathNames` - Returns a list of item names on the path from the root evidence container to the item.
+
+            * `name` - Returns the item name.
+
+            * `originalExtension` - Returns the original extension listed on the source file.
+
+            * `parent` - Returns the parent of this item.
+
+            * `path` - Returns an item list which represents the path from the root evidence container to the item.
+
+            * `pathIDs` - Returns a list of the IDs of items on the path from the root evidence container up to the item itself.
+
+            * `pathNames` - Returns a list of item names on the path from the root evidence container to the item.
+
+            * `position` - Returns the item position number which identifies where this item exists in the tree of all ingested items.
+
+            * `printedImageInfo` - Returns information about the printed image.
+
+            * `properties` - Returns item properties.
+
+            * `root` - Returns the root item. If this item is the root, the item itself is returned.
+
+            * `rootUri` - Returns the item''''s root URI as a string.
+
+            * `tags` - Returns the item tags.
+
+            * `text` - Returns the text of the item as a string.
+
+            * `textHtml` - Returns the text of the item escaped for HTML.
+
+            * `textSummary` - Returns the stored text summary of the item if one exists, otherwise null.
+
+            * `textSummaryHtml` - Returns the stored text summary of the item escaped for HTML if one exists, otherwise null.
+
+            * `threadItems` - Returns items that are in the same discussion thread as this item.
+
+            * `topLevelItem` - Returns the associated top-level item.
+
+            * `topLevelItemDate` - Returns the associated top-level item date.
+
+            * `type` - Returns the type name.
+
+            * `typeLocalisedName` - Returns the type name, localised appropriately for display to users.
+
+            * `uri` - Returns the item''''s uniform resource identifier (URI) as a string.
+
+            '
+          items:
+            type: string
+        customMetadataList:
+          description: List of custom metadata fields to be returned for each item in the results.
+          type: array
+          items:
+            type: string
+        propertyList:
+          type: array
+          description: List of properties to be returned for each item in the results.
+          items:
+            type: string
+        itemParameterizedFields:
+          type: array
+          items:
+            type: string
+          description: Specifies parameterized fields in a key/value pair separated by a colon. * `entities` - corresponds to item.getEntities.  (e.g., "entities:company") * `serializedItem` - returns a serialized copy of the item.  (e.g., "seralizedItem:topLevelItem") * `textTruncated` - returns the item text, truncated (if needed) to the specified maximum size in bytes (e.g., "textTruncated:10000") * `thumbnail` - corresponds to an item thumbnail. The parameter specifies the thumbnail dimensions (e.g., "thumbnail:200x200") * `nearDupeThreshold` - (e.g., "nearDupeThreshold:0.9") * `emailThreadCluster` - value corresponds to a Run - Cluster (e.g., "emailThreadCluster:cluster-1")
+        showAvailableThumbnails:
+          type: boolean
+          description: Show thumbnails that have been generated
+        useCache:
+          type: boolean
+          default: false
+          description: Specifies whether the results should be loaded from and stored in cache. Defaults to false.
+        forceCacheDelete:
+          type: boolean
+          default: false
+          description: Specifies whether the cached results should be deleted before performing the search. Defaults to false.
+        searchRetry:
+          type: integer
+          format: int32
+          description: Specifies the search retry count.
+        relationType:
+          type: string
+          description: The relation to apply to the found items. For performance reasons, the family option is run against the top-level items.
+          enum:
+          - family
+          - topTypes
+          - descendants
+        entities:
+          type: array
+          description: List of entity names to include in response (e.g. company,email).  Maintained for backward compatibility.
+          items:
+            type: string
+        property:
+          type: array
+          description: List of properties to be returned for each item in the results.  Deprecated use propertyList.
+          items:
+            type: string
+          deprecated: true
+        field:
+          type: array
+          description: List of fields to be returned for each item in the results.  Deprecated use fieldList.
+          items:
+            type: string
+          deprecated: true
+        s:
+          type: integer
+          format: int32
+          description: The index of the first record that should be returned.  Deprecated use startIndex.
+          deprecated: true
+        p:
+          type: integer
+          format: int32
+          description: The number of records that should be returned.  Deprecated use numberOfRecordsRequested.
+          deprecated: true
+        customMetadataField:
+          type: array
+          description: List of custom metadata to be returned for each item in the results.  Deprecated use customMetadataList.
+          items:
+            type: string
+          deprecated: true
+    SearchNativeResult:
+      type: object
+      properties:
+        request:
+          $ref: '#/components/schemas/SearchNativeRequest'
+        startedOn:
+          type: integer
+          description: Date the search started represented in milliseconds since the epoch.
+        completedOn:
+          type: integer
+          description: Date the search completed represented in milliseconds since the epoch.
+        elapsedTimeForSearch:
+          type: integer
+          description: Elapsed time to perform search.
+          format: int64
+        elapsedTimeForSort:
+          type: integer
+          format: int64
+          description: Elapsed time to perform the sort.
+        elapsedTimeForMarshal:
+          type: integer
+          format: int64
+          description: Elapsed time to perform the JSON marshalling.
+        elapsedTimeForDeduplicate:
+          type: integer
+          format: int64
+          description: Elapsed time to deduplicate items.
+        elapsedTotal:
+          type: integer
+          format: int64
+          description: Total elapsed time.
+        metadataItems:
+          type: array
+          description: The list of metadata item fields.
+          items:
+            type: string
+          deprecated: true
+        localizedMetadataItems:
+          description: The list of localized metadata item fields.
+          type: array
+          items:
+            type: string
+          deprecated: true
+        metadataItemDetails:
+          type: array
+          description: The list of metadata item details.
+          items:
+            $ref: '#/components/schemas/MetadataItemDetails'
+        resultList:
+          type: array
+          description: Results of the search
+          items:
+            type: object
+            additionalProperties:
+              type: object
+        count:
+          type: integer
+          description: Count of items in results
+          format: int32
+        deduplicatedCount:
+          type: integer
+          description: Count of deduplicated items
+          format: int32
+    QueryValidationResponse:
+      type: object
+      properties:
+        valid:
+          type: boolean
+          description: valid
+        query:
+          type: string
+          description: query
+        exception:
+          type: string
+          description: exception
+    ItemPropertiesRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Query items that should be included.  If a query is not supplied it defaults to an empty string, which returns all items.
+        distinct:
+          type: boolean
+          description: If true, excludes duplicate property values from the results. Default is true.
+    AsyncFunctionResponse:
+      type: object
+      properties:
+        functionKey:
+          type: string
+          description: The function key to use when querying status.
+        location:
+          type: string
+          description: The location URL for querying status.  (http://nuix-restful-service:8080/svc/v1/asyncFunctions/{functionKey})
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: nuix-auth-token
+      in: header
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

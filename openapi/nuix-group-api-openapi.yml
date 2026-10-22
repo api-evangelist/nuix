@@ -249,25 +249,6 @@ paths:
                     message: Group ID {} was not found.
 components:
   schemas:
-    listGroupsResponse:
-      type: object
-      properties:
-        cases:
-          type: array
-          items:
-            $ref: '#/components/schemas/Group'
-    standardResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: http response status code
-        id:
-          type: integer
-          description: id of the affected Object
-        message:
-          type: string
-          description: http status message
     Group:
       type: object
       properties:
@@ -283,6 +264,22 @@ components:
         deleted:
           type: boolean
           description: true if the group has been deleted
+    createGroupRequest:
+      type: object
+      properties:
+        groupName:
+          type: string
+          description: name of the group to be created
+        description:
+          type: string
+          description: description of the group to be created
+    listGroupsResponse:
+      type: object
+      properties:
+        cases:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
     modifyGroupRequest:
       type: object
       properties:
@@ -313,15 +310,18 @@ components:
               custodianId:
                 type: integer
                 description: id of the custodian to be removed
-    createGroupRequest:
+    standardResponse:
       type: object
       properties:
-        groupName:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
           type: string
-          description: name of the group to be created
-        description:
-          type: string
-          description: description of the group to be created
+          description: http status message
   securitySchemes:
     BasicAuth:
       type: http

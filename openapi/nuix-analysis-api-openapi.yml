@@ -1,0 +1,3613 @@
+openapi: 3.2.0
+info:
+  title: Nuix REST-API Reference Analysis API
+  description: 'Welcome to the Nuix REST API documentation. From here you can access all available REST APIs and execute queries against your running REST instance.
+
+
+    # Authentication Changes
+
+
+    The `nuix-auth-token` header is being deprecated in favor of standard JWT. The header will be removed in a
+
+    future release. Until the removal of the header, the Nuix REST API will accept the JWT in either the
+
+    `nuix-auth-token` header field or the `Authorization` header field prefixed by `Bearer`.'
+  contact:
+    name: Nuix
+    url: http://forums.nuix.com/
+  license:
+    name: Licence
+    url: https://www.nuix.com/sites/default/files/2023-03/End%20User%20License%20Agreement%20%28Effective%20December%2014%2C%202022%29_1.pdf
+  version: ${customer.version}
+servers:
+- url: /nuix-restful-service/svc
+- url: http://localhost:8080/svc
+security:
+- ApiKeyAuth: []
+- bearerAuth: []
+tags:
+- name: Analysis
+paths:
+  /cases/{caseId}/clusterRuns:
+    get:
+      tags:
+      - Analysis
+      summary: Returns the cluster runs for a case
+      description: Use this operation to view the cluster runs associated with a case. A cluster run is a group of documents that have been associated based on their near-duplicate similarity. Using cluster runs to group similar or related documents enables your team to perform a more efficient analysis on an item set. For example, you can have the same reviewer examine documents that are the most similar or related.
+      operationId: getClusterRuns
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClusterRunResponse'
+              example:
+              - clusterName: MyClusterRun
+                clusters:
+                - ignored
+                - unclustered
+                - 1
+                - 2
+                - 3
+                resemblanceThreshold: 0.85
+                useChainedNearDuplicatesEnabled: true
+                useEmailThreadsEnabled: false
+  /cases/{caseId}/domains:
+    get:
+      tags:
+      - Analysis
+      summary: Returns the set of communication domains in a case
+      description: Use this operation to view the communication domains associated with a case. Allowable values for addressType are internet_mail, phone, and instant_message. This is useful for analysis and analytics. The domains are returned as a set of strings.
+      operationId: getDomains
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: addressType
+        in: query
+        description: The type of contact address
+        required: true
+        schema:
+          type: string
+          enum:
+          - internet_mail
+          - phone
+          - instant_message
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  type: string
+              example:
+              - gmail.com
+  /cases/{caseId}/markupSets:
+    get:
+      tags:
+      - Analysis
+      summary: Gets all MarkupSets for the given case
+      description: Use this operation to get a list of all MarkupSets in the current case.
+      operationId: getMarkupSets
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MarkupSet'
+              example:
+              - redactionReason: The reason for the redaction.
+                name: MyMarkupSet
+                description: This is a markup set.
+    post:
+      tags:
+      - Analysis
+      summary: Create a markup set
+      description: Use this operation to create a new markup set.
+      operationId: createMarkupSet
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/MarkupSetRequest'
+            example:
+              description: This is a markup set.
+              redactionReason: The reason for the redaction.
+        required: true
+      responses:
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+        '502':
+          description: Bad Gateway
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+        '406':
+          description: Not Acceptable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+        '413':
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+        '201':
+          description: Created
+          content:
+            application/vnd.nuix.v2+json:
+              schema:
+                $ref: '#/components/schemas/MarkupSet'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarkupSet'
+  /cases/{caseId}/markupSet:
+    get:
+      tags:
+      - Analysis
+      summary: Gets all MarkupSets for the given case
+      description: Use this operation to get a list of all MarkupSets in the current case.
+      operationId: getMarkupSetDeprecated
+      deprecated: true
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MarkupSet'
+              example:
+              - redactionReason: The reason for the redaction.
+                name: MyMarkupSet
+                description: This is a markup set.
+  /cases/{caseId}/itemTypes:
+    get:
+      tags:
+      - Analysis
+      summary: Returns item kinds and types for a case
+      description: 'Use this operation to view the item kinds and types associated
+
+        with a case. You can also request counts along with a filtering query. Item
+
+        types are modeled on MIME types. For example, an item kind could be a document
+
+        and the item type could be a PDF.'
+      operationId: getItemTypes
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: includeCounts
+        in: query
+        description: Include count totals for the types
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: query
+        in: query
+        description: Query items that should be included. If a query is not supplied it defaults to an empty string, which returns all items.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/KindTypeResponse'
+              example:
+                itemKind: document
+                itemTypes:
+                - name: application/pdf
+                  localisedName: Portable Document Format
+                  kind: document
+                  preferredExtension: pdf
+                  count: 11
+  /cases/{caseId}/reviewJobs/{reviewJobNameOrGuid}:
+    get:
+      tags:
+      - Analysis
+      summary: Returns details for a review job
+      description: Use this operation to see the list of review jobs for a case. All jobs are returned including fast review jobs. In these jobs, reviewers are assigned directly to a job, enabling a systematic review.
+      operationId: getReviewJob
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: reviewJobNameOrGuid
+        in: path
+        description: Review job name or GUID.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ReviewJobResponse'
+              example:
+              - name: MyFastReviewJob
+                guid: 9a6ae288-aa23-44e5-ba6b-f88f588ebbc3
+        '404':
+          description: error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                Case Does Not Exist:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+                Invalid Job Review Name:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'REVIEW_JOB' and identifier 'unknownReviewJob' could not be found.
+                    userMessage: The resource of type 'REVIEW_JOB' and identifier 'unknownReviewJob' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+    delete:
+      tags:
+      - Analysis
+      summary: Deletes a review job
+      description: Use this operation to delete a review job for a case.
+      operationId: deleteReviewJob
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: reviewJobNameOrGuid
+        in: path
+        description: Review job name or guid.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: default response
+        '404':
+          description: error response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                Case Does Not Exist:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+                Invalid Job Review Name:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'REVIEW_JOB' and identifier 'unknownReviewJob' could not be found.
+                    userMessage: The resource of type 'REVIEW_JOB' and identifier 'unknownReviewJob' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+  /cases/{caseId}/reviewJobs:
+    get:
+      tags:
+      - Analysis
+      summary: Returns review jobs for a case
+      description: Use this operation to see the list of review jobs for a case. All review jobs are returned including fast review jobs. In fast review jobs, reviewers are assigned to a job, enabling a systematic review.
+      operationId: getFastReviewJobs
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReviewJobResponse'
+              example:
+              - name: MyFastReviewJob
+                guid: 9a6ae288-aa23-44e5-ba6b-f88f588ebbc3
+    post:
+      tags:
+      - Analysis
+      summary: Creates a review job for a case
+      description: Use this operation to create a review job for a case. Create a review job to enable a systematic review of a case.
+      operationId: createReviewJob
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/CreateReviewJobRequest'
+            example:
+              name: MyReviewJob
+              options:
+                tags:
+                - For Review
+                useNearDuplicates: false
+                useEmailThreads: false
+      responses:
+        '201':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ReviewJobResponse'
+              example:
+              - name: MyFastReviewJob
+                guid: 9a6ae288-aa23-44e5-ba6b-f88f588ebbc3
+        '404':
+          description: error response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                Case Does Not Exist:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+  /cases/{caseId}/reviewJobs/{reviewJobNameOrGuid}/items:
+    get:
+      tags:
+      - Analysis
+      summary: Returns the review job items
+      description: Use this operation to get the list of items for a review job. The items in a review job are grouped and must be reviewed as an entire family of documents. You can add different tags to each member of the family, but in order to advance to the next batch, the entire family must be tagged.
+      operationId: addItemsToReviewJob_1
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: reviewJobNameOrGuid
+        in: path
+        description: Review job name or guid.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NuixReviewJobItem'
+              example:
+              - completionDateTime: null
+                item:
+                  File Type: text/plain
+                  caseName: MyCase
+                  date: 1588880372000
+                  digests:
+                    md5: a9a55486967ac71c24b60fa5c922d716
+                  fileType: text/plain
+                  guid: 5ce80ae4-5b6f-484f-9563-1fa22c89ae05
+                  isBinaryAvailable: true
+                  isTopLevel: true
+                  text: some text
+                  fileSize: 13
+        '404':
+          description: error response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                Case Does Not Exist:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+                Invalid Job Review Name:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'REVIEW_JOB' and identifier 'unknownReviewJob' could not be found.
+                    userMessage: The resource of type 'REVIEW_JOB' and identifier 'unknownReviewJob' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+    post:
+      tags:
+      - Analysis
+      summary: Adds items to a review job
+      description: Use this operation to add items to an existing review job for a case. Items added to a review job are grouped and must be reviewed as an entire family of documents. You can add different tags to each member of the family, but to advance to the next batch, the entire family must be tagged.
+      operationId: addItemsToReviewJob
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: reviewJobNameOrGuid
+        in: path
+        description: Review job name or GUID.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/ReviewJobAddItemsRequest'
+            example:
+              query: guid:9dd7ebaa-0671-4f73-add7-d38d920105eb
+              options:
+                user: assignedUser1
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ReviewJobResponse'
+              example:
+                name: MyFastReviewJob
+                guid: 9a6ae288-aa23-44e5-ba6b-f88f588ebbc3
+        '404':
+          description: error response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                Case Does Not Exist:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+                Invalid Job Review Name:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'REVIEW_JOB' and identifier 'unknownReviewJob' could not be found.
+                    userMessage: The resource of type 'REVIEW_JOB' and identifier 'unknownReviewJob' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+  /cases/{caseId}/batches:
+    get:
+      tags:
+      - Analysis
+      summary: Returns batches associated with a case
+      description: Use this operation to view a list of batches associated with a case. Batches are created when an investigator ingests data using the Nuix Engine.
+      operationId: getCaseBatches
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identifier
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BatchLoadDetailsResponse'
+              examples:
+                BatchLoadResponseDetails:
+                  value:
+                  - batchId: aa6aec71-d867-4ed3-8aca-b304335b8d71
+                    dataProcessingSettings:
+                      Classify images with deep learning: 'false'
+                      Mime type settings.application#47vnd#46ms#45windows#45event#45log.Process embedded: 'false'
+                      Mime type settings.filesystem#47x#45ntfs#45logfile.Process images: 'true'
+                      Mime type settings.application#47x#45plist.Process images: 'true'
+                      Extract named entities from text: 'false'
+                      Mime type settings.application#47vnd#46ms#45windows#45event#45logx.Text processing mode: strip_text
+                      Mime type settings.application#47vnd#46tcpdump#46pcap.Store binary: 'true'
+                      Mime type settings.application#47vnd#46symantec#45vault#45stream#45data.Process named entities: 'true'
+                      Mime type settings.application#47vnd#46sqlite#45database.Process named entities: 'true'
+                      Store binary: 'false'
+                      Mime type settings.application#47vnd#46ms#45iis#45log.Process images: 'true'
+                      Mime type settings.application#47vnd#46symantec#45vault#45stream#45data.Process images: 'true'
+                      Calculate processing size: 'false'
+                      Mime type settings.application#47x#45pcapng.Text processing mode: strip_text
+                      Mime type settings.application#47x#45pcapng.Store binary: 'true'
+                      Mime type settings.application#47x#45plist.Process named entities: 'true'
+                      Mime type settings.filesystem#47x#45ntfs#45usnjrnl.Store binary: 'true'
+                      Mime type settings.application#47exe.Process images: 'true'
+                      Mime type settings.image#47vnd#46autocad#45dxf.Process embedded: 'true'
+                      Mime type settings.application#47vnd#46ms#45windows#45event#45logx.Store binary: 'true'
+                      Mime type settings.application#47vnd#46sqlite#45database.Process images: 'true'
+                      Mime type settings.application#47vnd#46ms#45registry.Process embedded: 'true'
+                      Mime type settings.image#47vnd#46autocad#45dxf.Process named entities: 'true'
+                      Mime type settings.image#47vnd#46autocad#45dwfx.Process images: 'true'
+                      Mime type settings.application#47vnd#46symantec#45vault#45stream#45data.Process embedded: 'true'
+                      Index chars fields: 'false'
+                      Mime type settings.filesystem#47x#45ntfs#45mft.Process named entities: 'true'
+                      Mime type settings.application#47x#45plist.Text processing mode: process_text
+                      Mime type settings.image#47vnd#46autocad#45dwf.Process images: 'true'
+                      Mime type settings.application#47vnd#46sqlite#45database.Store binary: 'true'
+                      Mime type settings.image#47vnd#46autocad#45dxf.Text processing mode: strip_text
+                      Mime type settings.text#47x#45common#45log.Store binary: 'true'
+                      Mime type settings.text#47tab#45separated#45values.Process images: 'true'
+                      Mime type settings.application#47exe.Text processing mode: skip_text
+                      Mime type settings.text#47x#45common#45log.Process images: 'true'
+                      Mime type settings.image#47vnd#46autocad#45dxf.Process images: 'true'
+                      Mime type settings.application#47vnd#46symantec#45vault#45stream#45data.Store binary: 'true'
+                      Mime type settings.application#47vnd#46ms#45cab#45compressed.Process images: 'true'
+                      Mime type settings.text#47x#45common#45log.Process named entities: 'true'
+                      Populate graph database: 'false'
+                      Mime type settings.filesystem#47x#45ntfs#45mft.Store binary: 'true'
+                      Mime type settings.text#47csv.Text processing mode: process_text
+                      Mime type settings.application#47vnd#46ms#45windows#45event#45logx.Process embedded: 'false'
+                      Mime type settings.application#47vnd#46symantec#45vault#45stream#45data.Text processing mode: process_text
+                      Perform ocr: 'false'
+                      Mime type settings.application#47vnd#46ms#45iis#45log.Text processing mode: strip_text
+                      Mime type settings.application#47exe.Process embedded: 'true'
+                      Mime type settings.filesystem#47unallocated#45space#45chunk.Process embedded: 'true'
+                      Calculate photo DNA robust hash: 'false'
+                      Mime type settings.application#47vnd#46ms#45windows#45event#45log.Text processing mode: strip_text
+                      Mime type settings.image#47vnd#46autocad#45dwg.Store binary: 'true'
+                      Mime type settings.image#47vnd#46autocad#45shp.Process images: 'true'
+                      Process forensic images: 'true'
+                      Mime type settings.filesystem#47x#45ntfs#45usnjrnl.Process named entities: 'true'
+                      Mime type settings.image#47vnd#46autocad#45dwg.Process named entities: 'true'
+                      Custom thumbnail selected: 'false'
+                      Face detection: 'false'
+                      Mime type settings.application#47vnd#46tcpdump#46pcap.Text processing mode: strip_text
+                      Mime type settings.image#47vnd#46autocad#45dwf.Text processing mode: strip_text
+                      Mime type settings.application#47vnd#46tcpdump#46pcap.Process named entities: 'true'
+                      Process loose file contents: 'true'
+                      Use named entity profile: 'false'
+                      Mime type settings.application#47vnd#46ms#45cab#45compressed.Store binary: 'true'
+                      Mime type settings.application#47vnd#46ms#45windows#45event#45log.Process named entities: 'true'
+                      Ocr profile name: Default
+                      Mime type settings.text#47x#45common#45log.Process embedded: 'false'
+                      Create thumbnails: 'false'
+                      Mime type settings.image#47vnd#46autocad#45dwf.Process named entities: 'true'
+                      Imaging profile name: Processing Default
+                      Mime type settings.image#47vnd#46autocad#45dwf.Store binary: 'true'
+                      Mime type settings.image#47vnd#46autocad#45dwfx.Process embedded: 'true'
+                      Mime type settings.application#47x#45plist.Store binary: 'true'
+                      Digests: MD5
+                      Mime type settings.application#47vnd#46ms#45windows#45event#45log.Store binary: 'true'
+                      Mime type settings.filesystem#47x#45ntfs#45usnjrnl.Process embedded: 'false'
+                      Mime type settings.text#47csv.Process embedded: 'false'
+                      Mime type settings.image#47vnd#46autocad#45dwfx.Text processing mode: strip_text
+                      Calculate SS deep fuzzy hash: 'false'
+                      Mime type settings.text#47x#45common#45log.Text processing mode: strip_text
+                      Extract named entities from properties: 'false'
+                      Mime type settings.filesystem#47x#45ntfs#45logfile.Process named entities: 'true'
+                      Mime type settings.image#47vnd#46autocad#45shp.Process embedded: 'true'
+                      Mime type settings.image#47vnd#46autocad#45dwg.Process embedded: 'true'
+                      Mime type settings.text#47tab#45separated#45values.Text processing mode: process_text
+                      Mime type settings.application#47vnd#46ms#45registry.Process images: 'true'
+                      Mime type settings.application#47vnd#46ms#45registry.Text processing mode: process_text
+                      Mime type settings.filesystem#47unallocated#45space#45chunk.Text processing mode: process_text
+                      Mime type settings.filesystem#47x#45ntfs#45logfile.Store binary: 'true'
+                      Mime type settings.application#47x#45pcapng.Process images: 'true'
+                      Calculate audited size: 'true'
+                      Mime type settings.application#47vnd#46ms#45cab#45compressed.Process named entities: 'true'
+                      Mime type settings.application#47x#45pcapng.Process embedded: 'false'
+                      Mime type settings.filesystem#47x#45ntfs#45logfile.Process embedded: 'false'
+                      Mime type settings.filesystem#47x#45ntfs#45mft.Text processing mode: strip_text
+                      Mime type settings.filesystem#47x#45ntfs#45usnjrnl.Process images: 'true'
+                      Workstation thumbnail selected: 'false'
+                      Mime type settings.image#47vnd#46autocad#45dwfx.Process named entities: 'true'
+                      Mime type settings.text#47csv.Process named entities: 'true'
+                      Mime type settings.application#47vnd#46ms#45windows#45event#45log.Process images: 'true'
+                      Mime type settings.image#47vnd#46autocad#45shp.Store binary: 'true'
+                      Process text: 'true'
+                      Mime type settings.filesystem#47x#45ntfs#45usnjrnl.Text processing mode: strip_text
+                      Mime type settings.filesystem#47unallocated#45space#45chunk.Process images: 'true'
+                      Processing settings software version: 8.2.0.123
+                      Hide embedded immaterial data: 'false'
+                      Mime type settings.text#47tab#45separated#45values.Store binary: 'true'
+                      Extract named entities from text stripped: 'false'
+                      Mime type settings.image#47vnd#46autocad#45shp.Process named entities: 'true'
+                      Mime type settings.application#47vnd#46ms#45cab#45compressed.Process embedded: 'false'
+                      Mime type settings.image#47vnd#46autocad#45dwg.Process images: 'true'
+                      Mime type settings.image#47vnd#46autocad#45dwfx.Store binary: 'true'
+                      Mime type settings.filesystem#47x#45ntfs#45mft.Process images: 'true'
+                      Mime type settings.application#47vnd#46sqlite#45database.Text processing mode: strip_text
+                      Mime type settings.application#47vnd#46ms#45registry.Process named entities: 'true'
+                      Mime type settings.application#47x#45plist.Process embedded: 'false'
+                      Web thumbnail selected: 'false'
+                      Mime type settings.filesystem#47x#45ntfs#45logfile.Text processing mode: strip_text
+                      Custom processing aspects: ''
+                      Mime type settings.application#47vnd#46sqlite#45database.Process embedded: 'false'
+                      Mime type settings.filesystem#47unallocated#45space#45chunk.Store binary: 'true'
+                      Mime type settings.text#47tab#45separated#45values.Process embedded: 'false'
+                      Mime type settings.image#47vnd#46autocad#45dxf.Store binary: 'true'
+                      Mime type settings.application#47exe.Store binary: 'true'
+                      Mime type settings.application#47vnd#46tcpdump#46pcap.Process embedded: 'false'
+                      Mime type settings.application#47vnd#46tcpdump#46pcap.Process images: 'true'
+                      Export metadata: 'false'
+                      Mime type settings.application#47vnd#46ms#45iis#45log.Process embedded: 'false'
+                      Mime type settings.application#47exe.Process named entities: 'true'
+                      Mime type settings.application#47vnd#46ms#45cab#45compressed.Text processing mode: process_text
+                      Skin tone analysis: 'false'
+                      Mime type settings.image#47vnd#46autocad#45dwg.Text processing mode: strip_text
+                      Mime type settings.text#47csv.Store binary: 'true'
+                      Mime type settings.application#47x#45pcapng.Process named entities: 'true'
+                      Process text summaries: 'true'
+                      Mime type settings.image#47vnd#46autocad#45shp.Text processing mode: strip_text
+                      Mime type settings.application#47vnd#46ms#45windows#45event#45logx.Process named entities: 'true'
+                      Max digest size: 250 MB
+                      Extract shingles: 'true'
+                      Mime type settings.application#47vnd#46ms#45registry.Store binary: 'true'
+                      Mime type settings.application#47vnd#46ms#45iis#45log.Store binary: 'true'
+                      Max binary size: 250 MB
+                      Mime type settings.text#47tab#45separated#45values.Process named entities: 'true'
+                      Mime type settings.text#47csv.Process images: 'true'
+                      Mime type settings.application#47vnd#46ms#45iis#45log.Process named entities: 'true'
+                      Mime type settings.image#47vnd#46autocad#45dwf.Process embedded: 'true'
+                      Mime type settings.filesystem#47unallocated#45space#45chunk.Process named entities: 'true'
+                      Mime type settings.filesystem#47x#45ntfs#45mft.Process embedded: 'false'
+                      Reuse evidence stores: 'false'
+                      Create printed image: 'false'
+                      Mime type settings.application#47vnd#46ms#45windows#45event#45logx.Process images: 'true'
+                      Process family fields: 'false'
+                    caseEvidenceSettings:
+                      Use stop words: false,
+                      Use stemming: false,
+                      Analysis language: ENGLISH
+                    additionalSettings:
+                      system.processorCount: '1'
+                      system.isLowSpec: 'true'
+                      system.swapSpace: 0 bytes
+                      system.memory: 8.19 GB
+                      master.memory: 1.86 GB
+                      system.jvmMaxMemory: 8.19 GB
+                    dataSettings:
+                      Use apsose for word text extraction: 'false'
+                      Recover deleted files: 'true'
+                      Add bcc to email digest: 'false'
+                      Identify physical files: 'true'
+                      Software version: 8.2.0.123
+                      Add communication date to email digest: 'false'
+                      Carve unidentified data: 'false'
+                      Extract end of file slack space: 'false'
+                      Expose binary data for directories: 'false'
+                      Direct access to mailboxes: 'false'
+                      Render dpi: '100'
+                      Disabled mime types: application/vnd.ms-registry,application/vnd.symantec-vault-stream-data
+                      Extract from slack space: 'false'
+                      Disabled carving mime types: ''
+                      Carve file system unallocated space: 'false'
+                      Smart process registry: 'false'
+                    loadedOn: 1576610430230,
+                    operatingSystem: linux
+                    operatingSystemArchitecture: amd64
+                    parallelProcessingSettings:
+                      Worker memory: 1431
+                      Broker memory: 4096
+                      User defined temp directory: true
+                      Embed broker: true
+                      Worker temp directory: /tmp
+                      Run local workers: true
+                      Batch size: null
+                      Worker count: 2
+                      Worker broker address: null
+                    processArchitecture: amd64
+  /cases/{caseId}/history:
+    get:
+      tags:
+      - Analysis
+      summary: Returns history events for a case
+      description: 'Use this operation to get a list of history events associated
+
+        with a case. The events are returned in ascending order by date. Each history
+
+        event represents an individual action performed by a user. This following
+
+        are the types of history events:
+
+
+        * **openSession:** This event occurs at the start of a session with a case (for example, when the
+
+        case is opened).
+
+        * **closeSession:** This event occurs at the end of a session with a case (for example, when the case is closed).
+
+        * **loadData:** This event occurs when data is loaded into the case.
+
+        * **search:** This event occurs when a search is performed.
+
+        * **annotation:** This event occurs when items are annotated or tagged.
+
+        * **export:** This event occurs when data or metadata is exported out of the case.
+
+        * **import**: This event occurs when data or metadata is imported into the case. With import,
+
+        the data is directly imported without processing.
+
+        * **delete:** This event occurs when data in the case is deleted.
+
+        * **script:** This event occurs when a script is executed.
+
+        * **printPreview:** This event occurs when a print preview action is executed.'
+      operationId: getCaseHistory
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: type
+        in: query
+        description: Filters the type of history event returned.  If not specified, all events are returned.
+        required: false
+        schema:
+          type: string
+          enum:
+          - openSession
+          - closeSession
+          - loadData
+          - search
+          - annotation
+          - export
+          - import
+          - delete
+          - script
+          - printPreview
+      - name: user
+        in: query
+        description: The user to return the events for. If the user does not exist, no records will be returned.
+        required: false
+        schema:
+          type: string
+      - name: startDateAfter
+        in: query
+        description: The start date to filter after (only more recent events will be returned.) Accepted date formats are RFC-3339 or a simple date format (yyyy-MM-dd) which will use the default timezone of the server.
+        required: false
+        schema:
+          type: string
+      - name: endDateBefore
+        in: query
+        description: The start date to filter before (only earlier events will be returned.) Accepted date formats are RFC-3339 or a simple date format (yyyy-MM-dd) which will use the default timezone of the server.
+        required: false
+        schema:
+          type: string
+      - name: order
+        in: query
+        description: The order to return the results in.
+        required: false
+        schema:
+          type: string
+          default: start_date_ascending
+          enum:
+          - start_date_ascending
+          - start_date_descending
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CaseHistoryEventResponse'
+              example:
+              - cancelled: false
+                details:
+                  searchString: '*'
+                startDate: 1588363137585
+                endDate: 1588363137591
+                failed: false
+                succeeded: true
+                unknown: false
+                type: search
+                username: youruser
+              - cancelled: false
+                details:
+                  version: 8.6.0.33
+                startDate: 1588363137585
+                endDate: 1588363137591
+                failed: false
+                succeeded: true
+                type: openSession
+                username: youruser
+  /cases/{caseId}/custodians:
+    get:
+      tags:
+      - Analysis
+      summary: Returns the set of custodians for a case
+      description: Use this operation to view the custodians associated with a case. This is useful to see who is responsible for files in specific cases. The custodian names are returned as a set of strings.
+      operationId: getCustodians
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  type: string
+              example:
+              - Homer Simpson
+              - Bart Simpson
+            application/vnd.nuix.v2+json:
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustodianResponse'
+              example:
+              - name: Homer Simpson
+                description: dad
+              - name: Bart Simpson
+                description: son
+    post:
+      tags:
+      - Analysis
+      summary: Creates a custodian without assigning any items to them
+      description: Use this endpoint to create a custodian without assigning any items to them.
+      operationId: newCustodian
+      parameters:
+      - name: caseId
+        in: path
+        required: true
+        description: Case identification token
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustodianRequest'
+            examples:
+              Create Custodian:
+                value:
+                  name: MyCustodian
+                  description: my custodian
+        required: true
+      responses:
+        '201':
+          description: Created
+  /cases/{caseId}/custodians/{custodian}:
+    get:
+      tags:
+      - Analysis
+      operationId: getCustodian_1
+      summary: Finds a custodian by name
+      description: Use this endpoint to find a custodian by name.
+      parameters:
+      - name: caseId
+        in: path
+        required: true
+        description: Case identification token
+        schema:
+          type: string
+      - name: custodian
+        in: path
+        required: true
+        description: The custodian name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/CustodianResponse'
+              example:
+              - name: Homer Simpson
+                description: dad
+    put:
+      tags:
+      - Analysis
+      summary: Update a custodian
+      description: Use this endpoint to update details about a custodian.
+      operationId: updateCustodian
+      parameters:
+      - name: caseId
+        in: path
+        required: true
+        description: Case identification token
+        schema:
+          type: string
+      - name: custodian
+        in: path
+        required: true
+        description: The custodian name
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustodianRequest'
+        required: true
+      responses:
+        '204':
+          description: No Content
+    delete:
+      tags:
+      - Analysis
+      summary: Deletes a custodian
+      description: Deletes a custodian if it was not currently in use.
+      operationId: deleteCustodian_1
+      parameters:
+      - name: caseId
+        in: path
+        required: true
+        description: Case identification token
+        schema:
+          type: string
+      - name: custodian
+        in: path
+        required: true
+        description: The name of the custodian
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+  /cases/{caseId}/custodians/{custodian}/items:
+    post:
+      tags:
+      - Analysis
+      summary: Assign custodian to items
+      description: Use this operation to assign custodian to items. Any custodians previously assigned to the items will automatically be unassigned.
+      operationId: assignCustodianToItems
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: custodian
+        in: path
+        description: Custodian for the item
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/ItemGuids'
+            example:
+              itemGuids:
+              - 2352389c-64f9-410b-aeee-93a279022d9e
+              - eee4163d-574c-403e-8e6c-0a6c865904fd
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/GenericItemGuidResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericItemGuidResponse'
+  /cases/{caseId}/items/{itemGuid}/custodian:
+    put:
+      tags:
+      - Analysis
+      summary: Assign custodian from the items
+      description: 'Use this operation to assign custodian from items.
+
+
+        This endpoint returns success response.'
+      operationId: assignCustodian
+      parameters:
+      - name: itemGuid
+        in: path
+        description: Item identification token
+        required: true
+        schema:
+          type: string
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/ItemCustodianRequest'
+            example:
+              itemCustodian: this is an item custodian
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ItemCustodianResponse'
+              example:
+                itemGuid: 9dd7ebaa-0671-4f73-add7-d38d920105eb
+                itemCustodian: this is an item custodian
+    delete:
+      tags:
+      - Analysis
+      summary: Remove Assigned custodian from the items
+      description: Use this operation to remove the assigned custodian from items.
+      operationId: unassignCustodian
+      parameters:
+      - name: itemGuid
+        in: path
+        description: Item identification token
+        required: true
+        schema:
+          type: string
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: default response
+    get:
+      tags:
+      - Analysis
+      summary: Get item custodian
+      description: 'Use this operation to get the assigned custodian from items.
+
+
+        This endpoint returns custodian and item guid response.'
+      operationId: getItemCustodian
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemGuid
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ItemCustodianResponse'
+              example:
+                itemGuid: 9dd7ebaa-0671-4f73-add7-d38d920105eb
+                itemCustodian: this is an item custodian
+  /cases/{caseId}/entityTypes:
+    get:
+      tags:
+      - Analysis
+      summary: Returns the set of entity types for a case
+      description: Use this operation to retrieve the types of named entities associated with a case. Named entities are classified during data ingestion and include email addresses, credit card numbers, URLs, and more. The entity types are returned as a set of strings.
+      operationId: getEntityTypes
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v2+json:
+              schema:
+                $ref: '#/components/schemas/EntityTypesResponse'
+              example:
+                entityTypes:
+                - name: company
+                  localisedName: Company
+                - name: country
+                  localisedName: United States
+                - name: credit-card-num
+                  localisedName: Credit Card
+                - name: email
+                  localisedName: Email
+                - name: ip-address
+                  localisedName: IP Address
+                - name: money
+                  localisedName: Money
+                - name: person
+                  localisedName: Person
+                - name: personal-id-num
+                  localisedName: Personal ID Number
+                - name: phone-number
+                  localisedName: Phone Number
+                - name: url
+                  localisedName: URL
+            application/vnd.nuix.v1+json:
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  type: string
+              example:
+              - company
+              - country
+              - credit-card-num
+              - email
+              - ip-address
+              - money
+              - person
+              - personal-id-num
+              - phone-number
+              - url
+  /cases/{caseId}/reviewJobs/{reviewJobNameOrGuid}/tags:
+    get:
+      tags:
+      - Analysis
+      summary: Returns the tags in this review job
+      description: Use this operation to view the list of tags associated with this review job. In order to advance to the next batch, all review job items must be tagged.
+      operationId: getTagsFromReviewJob
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: reviewJobNameOrGuid
+        in: path
+        description: Review job name or guid.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example:
+              - For Review
+        '404':
+          description: error response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                Case Does Not Exist:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+                Invalid Job Review Name:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'REVIEW_JOB' and identifier 'unknownReviewJob' could not be found.
+                    userMessage: The resource of type 'REVIEW_JOB' and identifier 'unknownReviewJob' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+  /cases/{caseId}/reviewJobs/{reviewJobNameOrGuid}/reviewers:
+    get:
+      tags:
+      - Analysis
+      summary: Returns the active reviewers in this review job
+      description: Use this operation to view the set of active users who have reviewed items under review job.
+      operationId: getReviewersFromReviewJob
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: reviewJobNameOrGuid
+        in: path
+        description: Review job name or guid.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NmsUser'
+              examples:
+                Assigned Users:
+                  value:
+                  - longName: assignedUser1
+                    shortName: assignedUser1
+                  - longName: assignedUser2
+                    shortName: assignedUser2
+                No Reviewers:
+                  value: []
+        '404':
+          description: error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                Case Does Not Exist:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+                Invalid Job Review Name:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'REVIEW_JOB' and identifier 'unknownReviewJob' could not be found.
+                    userMessage: The resource of type 'REVIEW_JOB' and identifier 'unknownReviewJob' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+  /cases/{caseId}/originalExtensions:
+    get:
+      tags:
+      - Analysis
+      summary: Returns the set of original file extensions for a case
+      description: Use this operation to view all original file extensions in a case. You can also view whether a file has been renamed. The extensions are returned as a set of strings. To view the current file types associated with a case, use the itemTypes endpoint.
+      operationId: getOriginalExtensions
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  type: string
+              example:
+              - txt
+              - dat
+              - docx
+              - gz
+              - html
+              - pdf
+              - png
+              - tiff
+              - xml
+              - yml
+              - zip
+              - tar
+              - log
+              - xlsx
+              - jpg
+  /cases/{caseId}/languages:
+    get:
+      tags:
+      - Analysis
+      summary: Returns all languages found in the case
+      description: Use this operation to see a list of all languages used in a case. This information is useful when analysing content and when working with analytics.
+      operationId: getLanguages
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: includeItemCounts
+        in: query
+        description: Include counts for the languages
+        required: false
+        schema:
+          type: boolean
+      - name: countScopingQuery
+        in: query
+        description: Scope the counts to a provided query when includeItemCounts=true
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LanguageResponse'
+              example:
+              - code: deu
+                languageName: German
+                itemCount: 3
+              - code: eng
+                languageName: English
+                itemCount: 162
+              - code: hrv
+                languageName: Croatian
+                itemCount: 12
+              - code: ron
+                languageName: Romanian
+                itemCount: 9
+  /cases/{caseId}/investigatorTimeZone:
+    get:
+      tags:
+      - Analysis
+      summary: Returns the investigation time zone for a case
+      description: 'Use this operation to find the time zone in which the case is being investigated. You can find a list of valid timezones at: http://www.joda.org/joda-time/timezones.html'
+      operationId: getInvestigatorTimeZone
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/InvestigatorTimeZoneResponse'
+              example:
+                timezone: America/New_York
+    put:
+      tags:
+      - Analysis
+      summary: Sets the investigation time zone for a case
+      description: 'Use this operation to set the investigation time zone for a case. You can find a list of valid timezones at: http://www.joda.org/joda-time/timezones.html'
+      operationId: setInvestigatorTimeZone
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/TimezoneRequest'
+            example:
+              timezone: Pacific/Honolulu
+      responses:
+        '200':
+          description: default response
+  /cases/{caseId}/markupSet/{markupSetNameOrGuid}:
+    put:
+      tags:
+      - Analysis
+      summary: Updates a markup set
+      description: Use this operation to update an existing markup set's description and redaction reason. Markup sets are applied to PDF's and used to revise sensitive content.
+      operationId: updateMarkupSet
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: markupSetNameOrGuid
+        in: path
+        description: The name of the markup set or guid.
+        required: true
+        example: MyMarkupSet
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/MarkupSetRequest'
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/MarkupSet'
+              example:
+                name: MyMarkupSet
+                description: This is an updated markup set.
+                redactionReason: The reason for this redaction has been updated.
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                Case Not Found:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+                Markup Set Not Found:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'MARKUP_SET' and identifier 'InvalidMarkupSet' could not be found.
+                    userMessage: The resource of type 'MARKUP_SET' and identifier 'InvalidMarkupSet' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+    post:
+      tags:
+      - Analysis
+      summary: Creates a markup set
+      description: Use this operation to create a redaction markup set. Markup sets are applied to PDF's and used to revise sensitive content.
+      operationId: createMarkupSetDeprecated
+      deprecated: true
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: markupSetNameOrGuid
+        in: path
+        description: The name or GUID of the markup set
+        required: true
+        example: MyMarkupSet
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/MarkupSetRequest'
+            example:
+              description: This is a markup set.
+              redactionReason: The reason for the redaction.
+      responses:
+        '201':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/MarkupSet'
+              example:
+                name: MyMarkupSet
+                description: This is a markup set.
+                redactionReason: The reason for the redaction.
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: RESOURCE_NOT_FOUND
+                developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                additionalInfo:
+                  rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                  rootExceptionMessage: null
+    delete:
+      tags:
+      - Analysis
+      summary: Deletes a markup set
+      description: Use this operation to delete a redaction markup set.
+      operationId: deleteMarkupSet
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: markupSetNameOrGuid
+        in: path
+        description: The name or GUID of the markup set
+        required: true
+        example: MyMarkupSet
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/MarkupSetDeleteResponse'
+              example:
+                success: true
+                name: MyMarkupSet
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                Case Not Found:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+                Markup Set Not Found:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'MARKUP_SET' and identifier 'InvalidMarkupSet' could not be found.
+                    userMessage: The resource of type 'MARKUP_SET' and identifier 'InvalidMarkupSet' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+  /cases/{caseId}/wordCounts:
+    post:
+      tags:
+      - Analysis
+      summary: Indicates word usage and frequency in a case
+      description: Use this operation to view a list of words and their frequency in the text. The word count is derived from the case text and properties.
+      operationId: wordCounts
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/WordCountsRequest'
+            example:
+              queryList:
+              - springfield
+              deduplication: md5
+              field: properties
+              sort: 'on'
+              maxResults: 100
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/WordCountsResponse'
+              examples:
+                Word Count Properties:
+                  value:
+                    springfield:
+                    - word: file
+                      count: 7
+                    - word: r
+                      count: 2
+                    - word: owner
+                      count: 1
+                    - word: set
+                      count: 1
+                    - word: rw
+                      count: 1
+                    - word: created
+                      count: 1
+                    - word: staff
+                      count: 1
+                    - word: accessed
+                      count: 1
+                    - word: txt
+                      count: 1
+                    - word: character
+                      count: 1
+                    - word: permissions
+                      count: 1
+                    - word: name
+                      count: 1
+                    - word: modified
+                      count: 1
+                    - word: springfield
+                      count: 1
+                    - word: ascii
+                      count: 1
+                    - word: posix
+                      count: 1
+                    - word: us
+                      count: 1
+                    - word: changed
+                      count: 1
+                    - word: group
+                      count: 1
+                Word Count Content:
+                  value:
+                    springfield:
+                    - word: simpson
+                      count: 1
+                    - word: doh
+                      count: 1
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: RESOURCE_NOT_FOUND
+                developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                additionalInfo:
+                  rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                  rootExceptionMessage: null
+  /cases/{caseId}/auditSizes:
+    post:
+      tags:
+      - Analysis
+      summary: Returns total audit sizes for items matching a query
+      description: 'Provides total audit size for items matching each query in a list of queries.
+
+        **NOTE:** This method will only work for cases loaded with "Calculate audited size" option set'
+      operationId: auditSizes
+      parameters:
+      - name: caseId
+        in: path
+        description: Case id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/DeduplicationQueryListRequest'
+            example:
+              queryList:
+              - '*'
+              deduplication: none
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ItemSizeResponse'
+              examples:
+                Calculate Audit Sizes Enabled:
+                  value:
+                  - query: '*'
+                    size: 1198749
+                Calculate Audit Sizes Not Enabled:
+                  value:
+                  - query: '*'
+                    size: 0
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: RESOURCE_NOT_FOUND
+                developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                additionalInfo:
+                  rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                  rootExceptionMessage: null
+  /cases/{caseId}/fileSizes:
+    post:
+      tags:
+      - Analysis
+      summary: Returns total file sizes for items matching a query
+      description: Provides total file size for items matching each query in a list of queries.
+      operationId: fileSizes
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/DeduplicationQueryListRequest'
+            example:
+              queryList:
+              - '*'
+              deduplication: none
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ItemSizeResponse'
+              example:
+              - query: '*'
+                size: 1233932
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: RESOURCE_NOT_FOUND
+                developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                additionalInfo:
+                  rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                  rootExceptionMessage: null
+  /cases/{caseId}/itemSizes:
+    post:
+      tags:
+      - Analysis
+      summary: Compute total sizes for items matching a query
+      description: Asynchronously provides total audit or file size for items matching each query in a list of queries.
+      operationId: itemSizes
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/ItemSizesRequest'
+            example:
+              queryList:
+              - '*'
+              deduplication: none
+              sizeType: FILE_SIZE
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+              example:
+                functionKey: c2b5a20b-3cd1-4eb3-b600-6fa909ba0949
+                location: http://localhost:8080/svc/v1/asyncFunctions/c2b5a20b-3cd1-4eb3-b600-6fa909ba0949
+        '400':
+          description: missing argument exception
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: REQUIRED_ARGUMENT_MISSING
+                developerMessage: The request is missing 1 or more required arguments. See  the 'missingArguments' field in 'additionalInfo' for the list of arguments that are missing.
+                userMessage: null
+                additionalinfo:
+                  missingArguments:
+                  - sizeType
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: RESOURCE_NOT_FOUND
+                developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                additionalInfo:
+                  rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                  rootExceptionMessage: null
+  /cases/{caseId}/asyncFunctions/wordCounts:
+    post:
+      tags:
+      - Analysis
+      summary: Asynchronously indicates word usage and frequency in a case
+      description: 'Use this operation to (asynchronously) view a list of words and
+
+        their frequency in the text. The word count is derived from the case text
+
+        and properties.'
+      operationId: wordCountsAsync
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/WordCountsRequest'
+            example:
+              queryList:
+              - springfield
+              deduplication: md5
+              field: properties
+              sort: 'on'
+              maxResults: 100
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+              example:
+                functionKey: 50960b90-1723-4af7-bed6-207fd37b7a5e
+                location: http://localhost:8080/svc/v1/asyncFunctions/50960b90-1723-4af7-bed6-207fd37b7a5e
+  /cases/{caseId}/familyStatistics:
+    post:
+      tags:
+      - Analysis
+      summary: Returns statistics for families of top-level items matching a query
+      description: 'Provides statistics for families of top-level items matching a query. The returned results from each query must be all top-level items
+
+        or an exception will be thrown.
+
+
+        This method will only work for cases loaded with both "Calculate audited size" and "Process family fields" options set'
+      operationId: familyStatistics
+      parameters:
+      - name: caseId
+        in: path
+        description: Case id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/DeduplicationQueryListRequest'
+            example:
+              queryList:
+              - kind:document
+              deduplication: none
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FamilyStatisticsResponse'
+              example:
+              - query: kind:document
+                auditSize: 822840
+                itemCount: 1
+                auditItemCount: 1
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: RESOURCE_NOT_FOUND
+                developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                additionalInfo:
+                  rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                  rootExceptionMessage: null
+  /cases/{caseId}/asyncFunctions/familyStatistics:
+    post:
+      tags:
+      - Analysis
+      summary: Asynchronously returns statistics for families of top-level items matching a…
+      description: 'Provides statistics (asynchronously) for families of top-level items matching a query. The returned results from each query must be all
+
+        top-level items or an exception will be thrown.
+
+
+        This method will only work for cases loaded with both "Calculate audited size" and "Process family fields" options set'
+      operationId: familyStatisticsAsync
+      parameters:
+      - name: caseId
+        in: path
+        description: Case id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/DeduplicationQueryListRequest'
+            example:
+              queryList:
+              - kind:document
+              deduplication: none
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+              example:
+                functionKey: 2e458caf-181b-4885-a6ac-c64f6fb24a1e
+                location: http://localhost:8080/svc/v1/asyncFunctions/2e458caf-181b-4885-a6ac-c64f6fb24a1e
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: RESOURCE_NOT_FOUND
+                developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                additionalInfo:
+                  rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                  rootExceptionMessage: null
+  /cases/{caseId}/count:
+    get:
+      tags:
+      - Analysis
+      summary: Returns the total number of items in a case
+      description: Use this operation to view the total number of items in a case. This is useful for informational purposes, such as seeing whether a case contains items. Using this endpoint you can also count the number of items in a query. For example, if the query is kind:document, this endpoint will return the number of documents in the case.
+      operationId: count
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: query
+        in: query
+        description: Query items that should be included. If a query is not supplied it defaults to an empty string, which returns everything.
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: deduplication
+        in: query
+        description: How the deduplication is applied. 'none' returns all items matching the query including duplicates. 'md5' and 'per custodian' returns deduplicated items based on the deduplication method used.
+        required: false
+        schema:
+          type: string
+          default: none
+          enum:
+          - none
+          - md5
+          - per custodian
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/CountResponse'
+              example:
+                count: 25106
+                query: ''
+                casePath: /cases/mycase
+                caseGuid: 219f69f5eee14cf6b8c8c15d7cc2dd1e
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: RESOURCE_NOT_FOUND
+                developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                additionalInfo:
+                  rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                  rootExceptionMessage: null
+    post:
+      tags:
+      - Analysis
+      summary: Returns the number of items associated with a case query
+      description: Use this operation to see the number of items that match a query in a case. For example, if you want to see the number of images in a case, you can perform a count query with a kind:image query.
+      operationId: countPost
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: deduplication
+        in: query
+        description: How the deduplication is applied. 'none' returns all items matching the query including duplicates. 'md5' and 'per custodian' returns deduplicated items based on the deduplication method used.
+        required: false
+        schema:
+          type: string
+          default: none
+          enum:
+          - none
+          - md5
+          - per custodian
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/CountRequest'
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/CountResponse'
+              example:
+                count: 25106
+                query: ''
+                casePath: /cases/mycase
+                caseGuid: 219f69f5eee14cf6b8c8c15d7cc2dd1e
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: RESOURCE_NOT_FOUND
+                developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                additionalInfo:
+                  rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                  rootExceptionMessage: null
+  /cases/{caseId}/items/{itemGuid}/itemText:
+    get:
+      tags:
+      - Analysis
+      summary: Returns item text
+      description: Use this operation to retrieve item text from an item in a case. A Boolean field **(htmlEscape)** is available to escape characters for HTML. By default, text is not escaped.
+      operationId: getItemText
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemGuid
+        in: path
+        description: Item GUID
+        required: true
+        schema:
+          type: string
+      - name: htmlEscape
+        in: query
+        description: Replaces newline and tab characters with their HTML variants
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: limitInMb
+        in: query
+        description: Overrides the default item text limit set by the system.  The value is in Megabytes.
+        required: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ItemTextResponse'
+              examples:
+                Item Text (No HTML Escape):
+                  value:
+                    text: '
+
+
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+                      '
+                    binaryAvailable: true
+                    htmlEscape: false
+                    totalTextLength: 62
+                    blank: false
+                Item Text (HTML Escape):
+                  value:
+                    text: <br/></br>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</br>
+                    binaryAvailable: true
+                    htmlEscape: true
+                    totalTextLength: 71
+                    blank: false
+                No Item Text:
+                  value:
+                    text: null
+                    binaryAvailable: true
+                    htmlEscape: false
+                    totalTextLength: -1
+                    blank: true
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                Case Not Found:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+                Item Not Found:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'ITEM' and identifier '96c3defc-ee21-4972-9561-d69622c25389' could not be found.
+                    userMessage: The resource of type 'ITEM' and identifier '96c3defc-ee21-4972-9561-d69622c25389' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+  /cases/{caseId}/items/{itemGuid}/searchHits:
+    post:
+      tags:
+      - Analysis
+      summary: Returns search hits for an item
+      description: Use this operation to retrieve the search hits for an item given a query. Search hits are returned for item properties and text content only.
+      operationId: getSearchHits
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemGuid
+        in: path
+        description: Item GUID
+        required: true
+        schema:
+          type: string
+      - name: property
+        in: query
+        description: List of properties associated with this item
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/SearchHitRequest'
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/SearchHitResponse'
+              example:
+                terms:
+                - searchTerm
+                text:
+                  term: searchTerm
+                  count: 2
+                properties:
+                  Name:
+                  - term: searchTerm
+                    count: 1
+        '404':
+          description: Case does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                Case Not Found:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+                Item Not Found:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'ITEM' and identifier '96c3defc-ee21-4972-9561-d69622c25389' could not be found.
+                    userMessage: The resource of type 'ITEM' and identifier '96c3defc-ee21-4972-9561-d69622c25389' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+  /cases/{caseId}/items/{itemGuid}:
+    get:
+      tags:
+      - Analysis
+      summary: Returns information for a specific item in a case
+      description: 'Use this operation to view fields, properties, and the metadata profile for a specific item in a case. You can retrieve fields or properties in addition to what is defined in the item''''s metadata profile.
+
+        For example, if you query an item by its globally unique identifier (GUID) and use the default metadata profile, you will see the following information:
+
+
+        * file type
+
+        * name
+
+        * path name
+
+        * GUID'
+      operationId: getItemByFields
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemGuid
+        in: path
+        description: Item GUID
+        required: true
+        schema:
+          type: string
+      - name: field
+        description: "Fields:\n  * `all` - Returns all fields for the item.\n  * `auditedSize` - Returns the item''s audited size.\n  * `children` - Returns a list of the item''s children.\n  * `clusterPivotResemblances` - Returns a map where the keys are cluster IDs and the values are resemblances.\n  * `clusterPivots` - Returns a map where the keys are cluster IDs and the values are boolean flags.\n  * `comment` - Returns item comments.\n  * `communication` - If the item is a communication, this returns item communication information.\n  * `correctedExtension` - Returns the extension based on Nuix''s identification of the item''s MIME type.\n  * `custodian` - Returns the custodian assigned to an item.\n  * `customMetadata` - Returns custom metadata for the item as a map. Must provide metadataProfile to get this.\n  * `date` - Returns the item date.\n  * `descendants` - Gets the list of items which are descendants of this item.\n  * `digests` - Returns a map of the computed digests for an item.\n  * `duplicateCustodianSet` - Returns the set of custodian names associated with this item and its duplicates.\n  * `duplicates` - Returns duplicates of this item.\n  * `evidenceMetadata` - Returns custom evidence metadata for the item.\n  * `exclusion` - Returns the reason for an item''s exclusion.\n  * `family` - Returns a list of items in the same family.\n  * `fileSize` - Returns the item''s file size if it is readable, or returns null if this is not file data.\n  * `fileType` - Returns the name of the file type.\n  * `guid` - Returns the item''s globally unique identifier (GUID).\n  * `history` - Returns the item''s history in ascending order by date.\n  * `id` - Returns the item''s ID.\n  * `isAudited` - Tests whether the item is considered audited and returns true or false.\n  * `isBinaryAvailable` - Tests whether the item''s binary is available before attempting to export it.  This returns\n            true if the item had binary data at processing time that was not stored. This\n            differs from isStored() as this method returns true if the item had binary\n            data at processing time that was not stored.\n  * `isBinaryStored` - Tests whether the item has binary stored against it in the database. True is returned\n            if stored binary exists. In this case, the source data isn''t required for\n            binary export.\n  * `isChatMessage` - Tests whether the item is a chat message.\n  * `isChatConversation` - Tests whether the item is a chat conversation.\n  * `isDeleted` - Tests whether the item was marked as deleted and returns true or false.\n  * `isEmailThreadMember` - Tests whether the item is part of an email thread.\n  * `isEncrypted` - Tests whether the item was marked as encrypted and returns true or false.\n  * `isExcluded` - Tests whether the item was marked as excluded.\n  * `isFamilyMember` - Tests whether the item is a member of a family (i.e. it has a top-level item).\n  * `isIncuded` - Tests whether the item is included and returns true or false.\n  * `isLooseFile` - Tests whether the item is a loose file and returns true or false.\n  * `isPhysicalFile` - Tests whether the item is a physical file and returns true or false.\n  * `isPrintedImageStored` - Tests whether the printed image is stored and returns true or false. This field\n            is useful when you only need to know if a printed image exists for this item.\n            This is faster and uses fewer resources than requesting the printedImageInfo\n            field.\n  * `isTextAvailable` - Tests whether the item''s text is available before attempting to read or export it.\n  * `isTextStored` - Tests hether the item has text stored against it in the database.  In the event\n            where you only want to know if the item had text but didn''t need the text\n            this field is considerably faster and more conservative of resources than\n            isTextAvailable.\n  * `isThumbnailStored` - Tests whether a thumbnail is stored for this item in the database and returns true or false.\n  * `isTopLevel` - Tests whether this is a top-level item and returns true or false.\n  * `itemCategory` - Returns the item category.\n  * `kind` - Returns the item kind.\n  * `language` - Returns the language identified by the item.\n  * `localisedName` - Returns the item name or the localised placeholder (for example, [Unnamed Image])\n            if the name is blank.\n  * `localisedPathNames` - Returns a list of item names on the path from the root evidence container to the item.\n  * `name` - Returns the item name.\n  * `originalExtension` - Returns the original extension listed on the source file.\n  * `parent` - Returns the parent of this item.\n  * `path` - Returns an item list which represents the path from the root evidence container to the item.\n  * `pathIDs` - Returns a list of the IDs of items on the path from the root evidence container up to the item itself.\n  * `pathNames` - Returns a list of item names on the path from the root evidence container to the item.\n  * `position` - Returns the item position number which identifies where this item exists in the tree of all ingested items.\n  * `printedImageInfo` - Returns information about the printed image.\n  * `properties` - Returns item properties.\n  * `root` - Returns the root item. If this item is the root, the item itself is returned.\n  * `rootUri` - Returns the item''s root URI as a string.\n  * `tags` - Returns the item tags.\n  * `text` - Returns the text of the item as a string.\n  * `textHtml` - Returns the text of the item escaped for HTML.\n  * `textSummary` - Returns the stored text summary of the item if one exists, otherwise null.\n  * `textSummaryHtml` - Returns the stored text summary of the item escaped for HTML if one exists, otherwise null.\n  * `threadItems` - Returns items that are in the same discussion thread as this item.\n  * `topLevelItem` - Returns the associated top-level item.\n  * `topLevelItemDate` - Returns the associated top-level item date.\n  * `type` - Returns the type name.\n  * `typeLocalisedName` - Returns the type name, localised appropriately for display to users.\n  * `uri` - Returns the item''s uniform resource identifier (URI) as a string.\n"
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - all
+            - auditedSize
+            - children
+            - clusterPivotResemblances
+            - clusterPivots
+            - comment
+            - communication
+            - correctedExtension
+            - custodian
+            - customMetadata
+            - date
+            - descendants
+            - digests
+            - duplicateCustodianSet
+            - duplicates
+            - evidenceMetadata
+            - exclusion
+            - family
+            - fileSize
+            - fileType
+            - guid
+            - history
+            - id
+            - isAudited
+            - isBinaryAvailable
+            - isBinaryStored
+            - isChatMessage
+            - isChatConversation
+            - isDeleted
+            - isEmailThreadMember
+            - isEncrypted
+            - isExcluded
+            - isFamilyMember
+            - isIncuded
+            - isLooseFile
+            - isPhysicalFile
+            - isPrintedImageStored
+            - isTextAvailable
+            - isTextStored
+            - isThumbnailStored
+            - isTopLevel
+            - itemCategory
+            - kind
+            - language
+            - localisedName
+            - localisedPathNames
+            - name
+            - originalExtension
+            - parent
+            - path
+            - pathIDs
+            - pathNames
+            - position
+            - printedImageInfo
+            - properties
+            - root
+            - rootUri
+            - tags
+            - text
+            - textHtml
+            - textSummary
+            - textSummaryHtml
+            - threadItems
+            - topLevelItem
+            - topLevelItemDate
+            - type
+            - typeLocalisedName
+            - uri
+      - name: property
+        in: query
+        description: List of properties associated with this item
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: metadataProfile
+        in: query
+        description: Metadata profile name. Needed to get custom metadata.
+        required: false
+        schema:
+          type: string
+        example: Default
+      - name: customMetadataField
+        in: query
+        description: Specifies the custom metadata fields to return.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: parameterizedField
+        in: query
+        description: "Specifies parameterized fields in a key/value pair separated by a colon.\n  * `entities` - corresponds to item.getEntities.  (e.g., \"entities:company\")\n  * `serializedItem` - returns a serialized copy of the item.  (e.g., \"seralizedItem:topLevelItem\")\n  * `textTruncated` - returns the item text, truncated (if needed) to the specified maximum size in bytes (e.g., \"textTruncated:10000\")\n  * `thumbnail` - corresponds to an item thumbnail. The parameter specifies the thumbnail dimensions (e.g., \"thumbnail:200x200\")\n  * `nearDupeThreshold` - (e.g., \"nearDupeThreshold:0.9\")\n  * `emailThreadCluster` - value corresponds to a Run - Cluster (e.g., \"emailThreadCluster:cluster-1\")\n"
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: entities
+        in: query
+        description: List of entity names to include in response (e.g. company, email)
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: 'The response is a map that represents a Nuix item that is described using the following schema: Map <String, Object>'
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+              examples:
+                Default Metadata Profile:
+                  value:
+                    File Type: Microsoft 2007 Word Document
+                    Name: MyWordDoc.docx
+                    Path Name: /Evidence 1/Documents
+                    guid: 5cc38060-640c-4fbb-91d0-b319812a5f0b
+                    localizedMetadataKeys:
+                    - Name
+                    - File Type
+                    - Path Name
+                    metadataItemDetails:
+                    - name: Name
+                      localisedName: Name
+                      type: String
+                    - name: File Type
+                      localisedName: File Type
+                      type: String
+                    - name: Path Name
+                      localisedName: Path Name
+                      type: String
+                    metadataKeys:
+                    - Name
+                    - File Type
+                    - Path Name
+        '404':
+          description: error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                Case Does Not Exist:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+                Invalid Item GUID:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'ITEM' and identifier '96c3defc-ee21-4972-9561-d69622c25389' could not be found.
+                    userMessage: The resource of type 'ITEM' and identifier '96c3defc-ee21-4972-9561-d69622c25389' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+  /cases/{caseId}/topLevelItems:
+    get:
+      tags:
+      - Analysis
+      summary: Returns the top-level items for a case
+      description: 'Use this operation to view all items specified as top-level in a case. The item fields to be returned are identified by the optional itemFields parameter. If no itemFields parameter is supplied, then all item fields are returned for this operation. Top-level items provide context for information. For example, for an email attachment, the top-level item is an email.
+
+        The response List[Map] returns the same map as the cases/{caseId}/items/{itemGuid} endpoint.'
+      operationId: getTopLevelItemsByCaseId
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: fields
+        description: "Fields:\n  * `all` - Returns all fields for the item.\n  * `auditedSize` - Returns the item''s audited size.\n  * `children` - Returns a list of the item''s children.\n  * `clusterPivotResemblances` - Returns a map where the keys are cluster IDs and the values are resemblances.\n  * `clusterPivots` - Returns a map where the keys are cluster IDs and the values are boolean flags.\n  * `comment` - Returns item comments.\n  * `communication` - If the item is a communication, this returns item communication information.\n  * `correctedExtension` - Returns the extension based on Nuix''s identification of the item''s MIME type.\n  * `custodian` - Returns the custodian assigned to an item.\n  * `customMetadata` - Returns custom metadata for the item as a map. Must provide metadataProfile to get this.\n  * `date` - Returns the item date.\n  * `descendants` - Gets the list of items which are descendants of this item.\n  * `digests` - Returns a map of the computed digests for an item.\n  * `duplicateCustodianSet` - Returns the set of custodian names associated with this item and its duplicates.\n  * `duplicates` - Returns duplicates of this item.\n  * `evidenceMetadata` - Returns custom evidence metadata for the item.\n  * `exclusion` - Returns the reason for an item''s exclusion.\n  * `family` - Returns a list of items in the same family.\n  * `fileSize` - Returns the item''s file size if it is readable, or returns null if this is not file data.\n  * `fileType` - Returns the name of the file type.\n  * `guid` - Returns the item''s globally unique identifier (GUID).\n  * `history` - Returns the item''s history in ascending order by date.\n  * `id` - Returns the item''s ID.\n  * `isAudited` - Tests whether the item is considered audited and returns true or false.\n  * `isBinaryAvailable` - Tests whether the item''s binary is available before attempting to export it.  This returns\n            true if the item had binary data at processing time that was not stored. This\n            differs from isStored() as this method returns true if the item had binary\n            data at processing time that was not stored.\n  * `isBinaryStored` - Tests whether the item has binary stored against it in the database. True is returned\n            if stored binary exists. In this case, the source data isn''t required for\n            binary export.\n  * `isChatMessage` - Tests whether the item is a chat message.\n  * `isChatConversation` - Tests whether the item is a chat conversation.\n  * `isDeleted` - Tests whether the item was marked as deleted and returns true or false.\n  * `isEmailThreadMember` - Tests whether the item is part of an email thread.\n  * `isEncrypted` - Tests whether the item was marked as encrypted and returns true or false.\n  * `isExcluded` - Tests whether the item was marked as excluded.\n  * `isFamilyMember` - Tests whether the item is a member of a family (i.e. it has a top-level item).\n  * `isIncuded` - Tests whether the item is included and returns true or false.\n  * `isLooseFile` - Tests whether the item is a loose file and returns true or false.\n  * `isPhysicalFile` - Tests whether the item is a physical file and returns true or false.\n  * `isPrintedImageStored` - Tests whether the printed image is stored and returns true or false. This field\n            is useful when you only need to know if a printed image exists for this item.\n            This is faster and uses fewer resources than requesting the printedImageInfo\n            field.\n  * `isTextAvailable` - Tests whether the item''s text is available before attempting to read or export it.\n  * `isTextStored` - Tests hether the item has text stored against it in the database.  In the event\n            where you only want to know if the item had text but didn''t need the text\n            this field is considerably faster and more conservative of resources than\n            isTextAvailable.\n  * `isThumbnailStored` - Tests whether a thumbnail is stored for this item in the database and returns true or false.\n  * `isTopLevel` - Tests whether this is a top-level item and returns true or false.\n  * `itemCategory` - Returns the item category.\n  * `kind` - Returns the item kind.\n  * `language` - Returns the language identified by the item.\n  * `localisedName` - Returns the item name or the localised placeholder (for example, [Unnamed Image])\n            if the name is blank.\n  * `localisedPathNames` - Returns a list of item names on the path from the root evidence container to the item.\n  * `name` - Returns the item name.\n  * `originalExtension` - Returns the original extension listed on the source file.\n  * `parent` - Returns the parent of this item.\n  * `path` - Returns an item list which represents the path from the root evidence container to the item.\n  * `pathIDs` - Returns a list of the IDs of items on the path from the root evidence container up to the item itself.\n  * `pathNames` - Returns a list of item names on the path from the root evidence container to the item.\n  * `position` - Returns the item position number which identifies where this item exists in the tree of all ingested items.\n  * `printedImageInfo` - Returns information about the printed image.\n  * `properties` - Returns item properties.\n  * `root` - Returns the root item. If this item is the root, the item itself is returned.\n  * `rootUri` - Returns the item''s root URI as a string.\n  * `tags` - Returns the item tags.\n  * `text` - Returns the text of the item as a string.\n  * `textHtml` - Returns the text of the item escaped for HTML.\n  * `textSummary` - Returns the stored text summary of the item if one exists, otherwise null.\n  * `textSummaryHtml` - Returns the stored text summary of the item escaped for HTML if one exists, otherwise null.\n  * `threadItems` - Returns items that are in the same discussion thread as this item.\n  * `topLevelItem` - Returns the associated top-level item.\n  * `topLevelItemDate` - Returns the associated top-level item date.\n  * `type` - Returns the type name.\n  * `typeLocalisedName` - Returns the type name, localised appropriately for display to users.\n  * `uri` - Returns the item''s uniform resource identifier (URI) as a string.\n"
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - all
+            - auditedSize
+            - children
+            - clusterPivotResemblances
+            - clusterPivots
+            - comment
+            - communication
+            - correctedExtension
+            - custodian
+            - customMetadata
+            - date
+            - descendants
+            - digests
+            - duplicateCustodianSet
+            - duplicates
+            - evidenceMetadata
+            - exclusion
+            - family
+            - fileSize
+            - fileType
+            - guid
+            - history
+            - id
+            - isAudited
+            - isBinaryAvailable
+            - isBinaryStored
+            - isChatMessage
+            - isChatConversation
+            - isDeleted
+            - isEmailThreadMember
+            - isEncrypted
+            - isExcluded
+            - isFamilyMember
+            - isIncuded
+            - isLooseFile
+            - isPhysicalFile
+            - isPrintedImageStored
+            - isTextAvailable
+            - isTextStored
+            - isThumbnailStored
+            - isTopLevel
+            - itemCategory
+            - kind
+            - language
+            - localisedName
+            - localisedPathNames
+            - name
+            - originalExtension
+            - parent
+            - path
+            - pathIDs
+            - pathNames
+            - position
+            - printedImageInfo
+            - properties
+            - root
+            - rootUri
+            - tags
+            - text
+            - textHtml
+            - textSummary
+            - textSummaryHtml
+            - threadItems
+            - topLevelItem
+            - topLevelItemDate
+            - type
+            - typeLocalisedName
+            - uri
+      responses:
+        '200':
+          description: 'The response is a map that represents a Nuix item that is described using the following schema: Map <String, Object>'
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties:
+                    type: object
+              example:
+              - Name: MyWordDoc.docx
+                File Type: Microsoft 2007 Word Document
+                Path Name: /Evidence 1/Documents
+                guid: 5cc38060-640c-4fbb-91d0-b319812a5f0b
+        '404':
+          description: error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                Case Does Not Exist:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+  /cases/{caseId}/items/{itemGuid}/comment:
+    get:
+      tags:
+      - Analysis
+      summary: Returns comments for an item
+      description: Use this operation to view comments associated with an item. Multiple comments are delimeted by the newline (\n) character.
+      operationId: getItemComment
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemGuid
+        in: path
+        description: Item GUID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ItemCommentResponse'
+              example:
+                itemGuid: 9dd7ebaa-0671-4f73-add7-d38d920105eb
+                itemComment: this is an item comment
+        '404':
+          description: error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                Case Does Not Exist:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+                Invalid Item GUID:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'ITEM' and identifier '96c3defc-ee21-4972-9561-d69622c25389' could not be found.
+                    userMessage: The resource of type 'ITEM' and identifier '96c3defc-ee21-4972-9561-d69622c25389' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+    put:
+      tags:
+      - Analysis
+      summary: Applies a comment to an item
+      description: Use this operation to apply a comment to an item. This will modify any existing comment. The boolean field **(append)** is available to let you replace or append the comment. By default, existing comments are replaced. Appended comments are done so with the newline (\n) character.
+      operationId: modifyItemComment
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: itemGuid
+        in: path
+        description: Item GUID
+        required: true
+        schema:
+          type: string
+      - name: append
+        in: query
+        description: Append to existing comment
+        required: false
+        schema:
+          type: boolean
+          default: false
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/ItemCommentRequest'
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ItemCommentResponse'
+              examples:
+                Simple Comment:
+                  value:
+                    itemGuid: 9dd7ebaa-0671-4f73-add7-d38d920105eb
+                    itemComment: this is an item comment
+                Appended Comment:
+                  value:
+                    itemGuid: 9dd7ebaa-0671-4f73-add7-d38d920105eb
+                    itemComment: 'This is an item comment.
+
+                      This comment is appended.'
+        '404':
+          description: error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              examples:
+                Case Does Not Exist:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    userMessage: The resource of type 'CASE' and identifier 'ef61c666296e4fc8a0a79288ab697348' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+                Invalid Item GUID:
+                  value:
+                    serverId: nuix-restful-server-1
+                    errorCode: RESOURCE_NOT_FOUND
+                    developerMessage: The resource of type 'ITEM' and identifier '96c3defc-ee21-4972-9561-d69622c25389' could not be found.
+                    userMessage: The resource of type 'ITEM' and identifier '96c3defc-ee21-4972-9561-d69622c25389' could not be found.
+                    additionalInfo:
+                      rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                      rootExceptionMessage: null
+  /cases/{caseId}/itemShingles:
+    put:
+      tags:
+      - Analysis
+      summary: Calculates the number of shingles associated with a case's items
+      description: 'Use this operation to see how many shingles are associated with
+
+        the items in a case. This operation starts an asynchronous task to count the
+
+        shingles.
+
+
+        Shingling enables you to find near-duplicate items by extracting the textual essence from each document and applying that pattern to a data set
+
+        to find similar documents. Each shingle, or pattern, generally consists of a phrase of 5 or 6 words. For example, you could use shingling
+
+        to find the Word document that a PDF was created from. The binary makeup of the documents is different, but the content is the same.'
+      operationId: getItemsShingles
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/ItemsShinglesRequest'
+            example:
+              query: kind:document
+              deduplication: md5
+              maxItems: 5
+              maxShingleResponse: 5
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+              example:
+                functionKey: 1277e4ce-a1dd-421a-b4e0-41c40404908a
+                location: http://localhost:8080/svc/v1/asyncFunctions/1277e4ce-a1dd-421a-b4e0-41c40404908a
+components:
+  schemas:
+    ItemCustodianRequest:
+      type: object
+      properties:
+        itemCustodian:
+          type: string
+          description: Custodian for the item.
+      required:
+      - itemCustodian
+    DeduplicationQueryListRequest:
+      type: object
+      properties:
+        queryList:
+          type: array
+          description: The set of queries which will be executed.
+          items:
+            type: string
+        deduplication:
+          type: string
+          description: The deduplication to apply over each query. Defaults to 'none'
+          default: none
+          enum:
+          - none
+          - md5
+    ItemSizeResponse:
+      type: object
+      properties:
+        query:
+          type: string
+          description: The specified query.
+        size:
+          type: integer
+          description: The relevant size.
+          format: int64
+    CountRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Identifies what items should be returned. If a query is not supplied it defaults to an empty string, which returns all items.
+    GenericResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Returns true or false.
+    CaseHistoryEventResponse:
+      type: object
+      properties:
+        cancelled:
+          type: boolean
+          description: Tests if the action was cancelled.
+        details:
+          type: object
+          description: Gets the details of the event.
+          additionalProperties:
+            type: object
+        startDate:
+          type: integer
+          description: Gets the start date (and time.) represented in milliseconds since the epoch.
+        endDate:
+          type: integer
+          description: Gets the end date (and time.) represented in milliseconds since the epoch.
+        failed:
+          type: boolean
+          description: Tests if the action failed.
+        succeeded:
+          type: boolean
+          description: Tests if the action succeeded.
+        unknown:
+          type: boolean
+          description: Tests if the action was unknown.
+        type:
+          type: string
+          description: Gets the type string for this event.
+        username:
+          type: string
+          description: Gets the user who performed the action.
+    NuixReviewJobItem:
+      type: object
+      properties:
+        completionDateTime:
+          type: integer
+          description: Returns the date the review item was completed.
+          format: int64
+        item:
+          type: object
+          additionalProperties:
+            type: object
+          description: Returns the item
+    ClusteredRestErrorResponse:
+      type: object
+      properties:
+        serverId:
+          type: string
+          description: The server ID of the server reporting the error.
+        developerMessage:
+          type: string
+          description: The technical description of the error.
+        userMessage:
+          type: string
+          description: The friendly error message.
+        additionalInfo:
+          type: object
+          description: Additional information about the error.
+          additionalProperties:
+            type: object
+            description: This is a map of additional properties.
+        errorCode:
+          type: string
+          description: The specific error code for the error from the list of available error codes.
+          enum:
+          - AUTHENTICATION_FAILED
+          - CASE_ACCESS_RESTRICTED
+          - CASE_LOCKED
+          - DELETE_DENIED
+          - DUPLICATE_CASES_DETECTED
+          - ENGINE_EXCEPTION
+          - FILE_TOO_LARGE
+          - INVALID_REQUEST_FORMAT
+          - INVALID_APPLICATION_RESPONSE
+          - INVALID_ARGUMENT
+          - ITEM_ACCESS_RESTRICTED
+          - LICENSE_EXCEPTION
+          - MEDIA_TYPE_NOT_SUPPORTED
+          - MEDIA_TYPE_NOT_ACCEPTABLE
+          - METHOD_NOT_ALLOWED
+          - NOT_IMPLEMENTED
+          - PRODUCTION_SET_FROZEN
+          - REQUIRED_ARGUMENT_MISSING
+          - RESOURCE_NOT_FOUND
+          - UNAUTHORISED
+          - UNKNOWN
+          - USER_SCRIPT_NOT_PROVIDED
+          - FOLDER_ALREADY_EXISTS
+          - CASE_LOCKED_BY_FUNCTION
+          - MISSING_THUMBNAIL
+          - ITEM_SET_ALREADY_EXISTS
+          - INVALID_LICENSE_TYPE_FOR_CASE
+          - SIMPLE_CASE_REQUIRED
+          - USER_ACCOUNT_LOCKED
+          - APPLICATION_NOT_REGISTERED
+          - INVALID_TEMPLATE
+          - DUPLICATE_RECORD
+          - CASE_MIGRATION_REQUIRED
+          - SERVICE_UNAVAILABLE
+          - RESPONSE_TOO_LARGE
+          - QUERY_PARSE_ERROR
+          - REMOTE_SYSTEM_ERROR
+          - FILE_SYSTEM_ERROR
+    TimezoneRequest:
+      type: object
+      properties:
+        timezone:
+          type: string
+          description: A valid Joda timezone ID.
+      required:
+      - timezone
+    ItemCustodianResponse:
+      type: object
+      properties:
+        itemGuid:
+          type: string
+          description: The guid of the item.
+        itemCustodian:
+          type: string
+          description: Custodian for this item
+    InvestigatorTimeZoneResponse:
+      type: object
+      properties:
+        timeZone:
+          type: string
+          description: 'Gets the time zone ID for the case''s investigation time zone. You can find a list of valid timezones at: http://www.joda.org/joda-time/timezones.html'
+    ReviewJobAddItemsRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Query items that should be added to the review job.
+        options:
+          $ref: '#/components/schemas/ReviewJobAddItemsOptions'
+      required:
+      - query
+    EntityTypesResponse:
+      type: object
+      description: The types of named entities associated with a case.
+      properties:
+        entityTypes:
+          description: A list of entity types
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityType'
+    CustodianResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the custodian.
+        description:
+          type: string
+          description: The description of the custodian.
+    MarkupSet:
+      type: object
+      properties:
+        guid:
+          type: string
+          description: Gets the GUID of the markup set.
+        name:
+          type: string
+          description: Gets the name of the markup set.
+        description:
+          type: string
+          description: Gets the description of the markup set.
+        redactionReason:
+          type: string
+          description: Gets the redaction reason for this markup set.
+    CreateReviewJobOptions:
+      type: object
+      description: The review job options.
+      properties:
+        tags:
+          type: array
+          description: Tags to be used for the review job.
+          items:
+            type: string
+        highlights:
+          type: array
+          description: Any words to highlight.
+          items:
+            type: string
+        order:
+          type: string
+          description: Default sort order for items in a review job.  Default is orderAdded.
+          enum:
+          - orderAdded
+          - ascendingItemDate
+          - descendingItemDate
+          - ascendingTopLevelItemDate
+          - descendingTopLevelItemDate
+          default: orderAdded
+        useNearDuplicates:
+          type: boolean
+          description: Use chained near-duplicates when batching out items to a reviewer.  Default is true.
+          default: true
+        useEmailThreads:
+          type: boolean
+          description: Use email threads when batching out items to a reviewer.  Default is false.
+          default: false
+    GenericItemGuidResponse:
+      type: object
+      properties:
+        itemGuids:
+          type: array
+          description: complete list of item GUIDs
+          items:
+            type: string
+        successfulItemGuids:
+          type: array
+          description: list of item GUIDs successfuly completed the operation
+          items:
+            type: string
+        failedItemGuids:
+          type: array
+          description: list of item GUIDs failed the to complete the operation
+          items:
+            type: string
+    ClusterRunResponse:
+      type: object
+      properties:
+        guid:
+          type: string
+          description: The GUID of the cluster run.
+        clusterName:
+          type: string
+          description: The name of the cluster run.
+        clusters:
+          type: array
+          description: A list of all clusters associated with this cluster run.
+          items:
+            type: string
+        resemblanceThreshold:
+          type: number
+          description: Gets the resemblance threshold associated with the cluster run, irrespective of what clustering options are set.
+          format: float
+        useChainedNearDuplicatesEnabled:
+          type: boolean
+          description: Gets whether or not chained near-duplicates were used during clustering.
+        useEmailThreadsEnabled:
+          type: boolean
+          description: Gets whether or not email threads were used during clustering.
+    EntityType:
+      type: object
+      description: A named entity.
+      properties:
+        name:
+          type: string
+          description: Gets the name of the entity type.
+        localisedName:
+          type: string
+          description: Gets the name of the entity type, localised appropriately for display to users.
+    NmsUser:
+      type: object
+      properties:
+        longName:
+          type: string
+          description: The long name of the user.
+        shortName:
+          type: string
+          description: The short name of the user.
+    SearchHitRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Search hits query. If a query is not supplied, it defaults to an empty string which will not return search hits.
+    AsyncFunctionResponse:
+      type: object
+      properties:
+        functionKey:
+          type: string
+          description: The function key to use when querying status.
+        location:
+          type: string
+          description: The location URL for querying status.  (http://nuix-restful-service:8080/svc/v1/asyncFunctions/{functionKey})
+    LanguageResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: The language code.
+        languageName:
+          type: string
+          description: The display name for the language.
+        itemCount:
+          type: integer
+          format: int64
+          description: The number of items in that language.
+    WordCountsResponse:
+      type: object
+      properties:
+        word:
+          type: string
+          description: The word / term
+        count:
+          type: integer
+          description: The frequency of the word / term
+          format: int64
+    WordCountsRequest:
+      type: object
+      properties:
+        queryList:
+          type: array
+          description: The set of queries which will be executed.
+          items:
+            type: string
+        deduplication:
+          type: string
+          description: The deduplication to apply over each query. Defaults to 'none'
+          default: none
+          enum:
+          - none
+          - md5
+        field:
+          type: string
+          description: Specifies the field to search over each query. Defaults to all.
+          default: all
+          enum:
+          - content
+          - properties
+          - all
+        sort:
+          type: string
+          description: Sorts the results from most frequent to least frequent. Defaults to off.
+          default: 'off'
+          enum:
+          - 'on'
+          - 'off'
+        minOccurs:
+          type: integer
+          description: Returns only results occurring at least this number of times.
+          format: int32
+        maxOccurs:
+          type: integer
+          description: Returns only results occurring at most this number of times.
+          format: int32
+        minWordLength:
+          type: integer
+          description: Limits results to words whose length is greater than or equal to this value.
+          format: int32
+        maxWordLength:
+          type: integer
+          description: Limits results to words whose length is less than or equal to this value.
+          format: int32
+        filter:
+          type: string
+          description: Limits results to words that match the filter.  Default is 'all'
+          enum:
+          - all
+          - numeric
+          - aToZ
+          - foreign
+          - atypicalLength
+          default: all
+        maxResults:
+          type: integer
+          description: Limits the size of the returned list of word counts.  Defaults to 200; use -1 for no limit.
+          format: int32
+          default: 200
+    ItemCommentResponse:
+      type: object
+      properties:
+        itemGuid:
+          type: string
+          description: The guid of the item.
+        itemComment:
+          type: string
+          description: Comments for this item
+    NuixItemType:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Gets the name of this type.
+        localisedName:
+          type: string
+          description: Gets the name of this type, localised appropriately for display to users.
+        preferredExtension:
+          type: string
+          description: Gets the preferred file extension.
+        kind:
+          type: string
+          description: Gets the kind.
+        count:
+          type: integer
+          description: Gets the count of items of this kind.
+          format: int64
+    CustodianRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the custodian.
+        description:
+          type: string
+          description: The description of the custodian.
+    ReviewJobAddItemsOptions:
+      type: object
+      properties:
+        user:
+          type: string
+          description: The user to assign the items to.
+    SearchHitResponse:
+      type: object
+      properties:
+        terms:
+          uniqueItems: true
+          type: array
+          description: Set of matching terms
+          items:
+            type: string
+        text:
+          uniqueItems: true
+          type: array
+          description: Set of search hits matching the text content
+          items:
+            $ref: '#/components/schemas/SearchHit'
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+          description: Map containing the set of search hits by property name.  Objects are map[string, array[SearchHit]
+    ItemsShinglesRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Query items that should be included.  If a query is not supplied it defaults to an empty string, which returns all items.
+        deduplication:
+          type: string
+          description: deduplication.  Default is 'none'.
+          default: none
+          enum:
+          - md5
+          - per custodian
+          - none
+        maxItems:
+          type: integer
+          description: maxItems.  Default is 1000 items.
+          default: 1000
+          format: int32
+        maxShingleResponse:
+          type: integer
+          description: The maximum number of shingles to return.  Default is 100 shingles.
+          default: 100
+          format: int32
+    KindTypeResponse:
+      type: object
+      properties:
+        itemKind:
+          type: string
+          description: Gets the kind.
+        localisedItemKind:
+          type: string
+          description: Gets the name of this type, localised appropriately for display to users.
+        itemTypes:
+          type: array
+          description: Gets the collection of all types which are of this kind.
+          items:
+            $ref: '#/components/schemas/NuixItemType'
+    SearchHit:
+      type: object
+      properties:
+        term:
+          type: string
+          description: Search hit term.
+        count:
+          type: integer
+          description: The number of occurrances for this term
+          format: int32
+    BatchLoadDetailsResponse:
+      type: object
+      properties:
+        batchId:
+          type: string
+          description: The batch identifier.
+        loadedOn:
+          type: integer
+          description: The date and time the batch was loaded represented in milliseconds since the epoch.
+        operatingSystem:
+          type: string
+          description: The name of the operating system the batch was loaded under.
+        operatingSystemArchitecture:
+          type: string
+          description: The operating system architecture the batch was loaded under
+        processArchitecture:
+          type: string
+          description: process architecture the batch was loaded under
+        dataSettings:
+          type: object
+          additionalProperties:
+            type: object
+          description: The data settings for the batch load as a map.
+        dataProcessingSettings:
+          type: object
+          additionalProperties:
+            type: object
+          description: The data processing settings for the batch load as a map.
+        parallelProcessingSettings:
+          type: object
+          additionalProperties:
+            type: object
+          description: The parallel processing settings for the batch load as a map
+        caseEvidenceSettings:
+          type: object
+          additionalProperties:
+            type: object
+          description: The case evidence settings for the batch load as a map.
+        additionalSettings:
+          type: object
+          additionalProperties:
+            type: object
+          description: The additional settings for the batch load as a map.
+    MarkupSetDeleteResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Gets whether the markup set was successfully deleted.
+        name:
+          type: string
+          description: The name of the deleted markup set.
+    MarkupSetRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the markup set.
+        description:
+          type: string
+          description: A description of the markup set.
+        redactionReason:
+          type: string
+          description: An explaination of why the redaction was added.
+    ItemTextResponse:
+      type: object
+      properties:
+        text:
+          type: string
+          description: text
+        binaryAvailable:
+          type: boolean
+          description: binaryAvailable
+        htmlEscape:
+          type: boolean
+          description: htlmEscape
+        totalTextLength:
+          type: integer
+          description: The total length of the text.
+          format: int64
+        blank:
+          type: boolean
+          description: blank
+    ItemGuids:
+      type: object
+      properties:
+        itemGuids:
+          type: array
+          description: list of item GUIDs
+          items:
+            type: string
+      required:
+      - itemGuids
+    ItemSizesRequest:
+      type: object
+      properties:
+        queryList:
+          type: array
+          description: The set of queries which will be executed.
+          items:
+            type: string
+        deduplication:
+          type: string
+          description: The deduplication to apply over each query. Defaults to 'none'
+          default: none
+          enum:
+          - none
+          - md5
+        sizeType:
+          type: string
+          description: The size type to calculate.
+          enum:
+          - FILE_SIZE
+          - AUDIT_SIZE
+    ItemCommentRequest:
+      type: object
+      properties:
+        itemComment:
+          type: string
+          description: Comments about the item.
+      required:
+      - itemComment
+    ReviewJobResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the review job.
+        guid:
+          type: string
+          description: The GUID for this review job.
+      required:
+      - name
+      - guid
+    CreateReviewJobRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the review job.
+        options:
+          $ref: '#/components/schemas/CreateReviewJobOptions'
+      required:
+      - name
+    FamilyStatisticsResponse:
+      type: object
+      properties:
+        query:
+          type: string
+          description: The specified query
+        auditSize:
+          type: integer
+          description: The total audit size of all family items
+          format: int64
+        itemCount:
+          type: integer
+          description: The total number of family items
+          format: int64
+        auditItemCount:
+          type: integer
+          description: The total number of family items which are audited (excludes immaterial items)
+          format: int64
+    CountResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: The count of the items in the query.
+          format: int64
+        query:
+          type: string
+          description: The query submitted.
+        casePath:
+          type: string
+          description: The absolute path of the case.
+        caseGuid:
+          type: string
+          description: The case identifier.
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: nuix-auth-token
+      in: header
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

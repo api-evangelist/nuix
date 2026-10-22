@@ -1,0 +1,202 @@
+generated: '2026-10-21'
+method: searched
+probe: true
+source: https://www.nuix.com/privacy-policy
+sources_read:
+- {url: https://www.nuix.com/privacy-policy, http_status: 200, note: 'Privacy notice, "Last Modified: April 15, 2026"'}
+- {url: https://www.nuix.com/legal, http_status: 200, note: 'Legal hub (the /legal/eula pointer redirects here); links the contract PDFs below'}
+- {url: 'https://www.nuix.com/sites/default/files/2026-06/Nuix%20Data%20Processing%20Addendum%20%28Nuix%20as%20Processor%20for%20Customers%29%20v%204%20June%202026.pdf', http_status: 200}
+- {url: 'https://www.nuix.com/sites/default/files/2026-06/Nuix%20Solutions%20Terms%20v%201%20July%202026.pdf', http_status: 200}
+- {url: 'https://www.nuix.com/sites/default/files/2026-06/Nuix%20Software%20Support%20Terms%20v%204%20June%202026.pdf', http_status: 200}
+- {url: https://trustcenter.nuix.com/, http_status: null, note: 'Security Trust Center linked from the site footer; a headless render returned only a Cloudflare "Performing security verification" page, so its contents were not read'}
+quote_note: >-
+  Quotes from the PDF contracts were extracted with pdftotext; the only change is that hard line
+  wraps from the PDF layout are joined with single spaces.
+signals:
+  data_subject_request:
+    url: https://www.nuix.com/privacy-policy
+    section: '10. ACCESS TO AND CORRECTION OF MY PERSONAL INFORMATION; 20. How to Submit a Request'
+    channel: privacy@nuix.com
+    stated_sla: 'We will respond to verifiable consumer requests within 45 days of receipt.'
+    rights_named: [access, correction, restriction of processing, erasure, data portability, right to know (CA), right to delete (CA), right to correct (CA), opt out of sale/sharing (CA), limit use of sensitive PI (CA), non-discrimination (CA)]
+    evidence:
+    - source: https://www.nuix.com/privacy-policy
+      http_status: 200
+      fetched: '2026-10-21'
+      quote: >-
+        You may request access to and correction of your personal data, limitations on processing or
+        disclosures or your personal data, and erasure of your personal information that we hold about you
+        by contacting us using the contact details set out in Section 1 of this notice.
+    - source: https://www.nuix.com/privacy-policy
+      http_status: 200
+      fetched: '2026-10-21'
+      quote: >-
+        To exercise your rights, please contact us at privacy@nuix.com or write to us at Nuix North America
+        Inc., Suite 320, 12100 Sunset Hills Rd., Reston, VA 20171. We will verify your identity before
+        fulfilling your request. You may designate an authorized agent to make a request on your behalf. We
+        will respond to verifiable consumer requests within 45 days of receipt.
+    note: >-
+      Requests go by email or post (no self-service form or API is documented). The 45-day response
+      commitment is stated in the California section (20); the general section 10 gives no timeframe.
+  global_privacy_control:
+    honored: true
+    scope: California residents
+    url: https://www.nuix.com/privacy-policy
+    section: '5. COOKIES AND OTHER TRACKING MECHANISMS'
+    evidence:
+    - source: https://www.nuix.com/privacy-policy
+      http_status: 200
+      fetched: '2026-10-21'
+      quote: >-
+        For California residents: we do recognize and honor Global Privacy Control (GPC) opt-out preference
+        signals as a valid request to opt out of the sale or sharing of your personal information, as
+        required by the California Privacy Rights Act (CPRA).
+    note: >-
+      A published statement that GPC is honoured, limited by its own words to California residents. The
+      same section says "our systems do not recognize browser “do-not-track” requests".
+  ai_transparency:
+    url: https://www.nuix.com/privacy-policy
+    section: '3. USE OF PERSONAL DATA'
+    evidence:
+    - source: https://www.nuix.com/privacy-policy
+      http_status: 200
+      fetched: '2026-10-21'
+      quote: >-
+        Nuix may use artificial intelligence, machine learning, or other automated processing technologies
+        in the course of its business operations, including to improve our products and services, support
+        internal decision-making, or enhance security. Where AI or automated technologies are used to process
+        your personal data, we will ensure that appropriate safeguards are in place, including human
+        oversight where decisions have a significant affect on you. We do not use AI to make solely automated
+        decisions that produce legal or similarly significant affects on individuals without appropriate
+        safeguards and, where required, your consent.
+    note: >-
+      A privacy-notice disclosure about AI use on personal data and automated decision-making. It is not a
+      product-level AI disclosure page and says nothing about model provenance or training data.
+  subprocessors:
+    url: 'https://www.nuix.com/sites/default/files/2026-06/Nuix%20Data%20Processing%20Addendum%20%28Nuix%20as%20Processor%20for%20Customers%29%20v%204%20June%202026.pdf'
+    section: '3. Sub-processing; Annex III – List of Sub-Processors'
+    change_notice: 'written notice of new Sub-processors; 15-day objection window'
+    listed: [Nuix Limited (Australia), Nuix North America, Inc. (United States), Nuix Technology UK Limited (United Kingdom), Nuix Ireland Limited (Ireland, Germany, Poland), Amazon Web Services, ServiceNow UK Ltd. (Netherlands), Zadara Storage Inc. (Discover SaaS)]
+    evidence:
+    - source: 'https://www.nuix.com/sites/default/files/2026-06/Nuix%20Data%20Processing%20Addendum%20%28Nuix%20as%20Processor%20for%20Customers%29%20v%204%20June%202026.pdf'
+      http_status: 200
+      fetched: '2026-10-21'
+      quote: >-
+        3.3 Current Sub-processors. Current Sub-processors. The current Nuix Sub-processors, along with
+        details of the infrastructure supporting the Nuix SaaS business, are specified in Annex III of this
+        DPA. By executing this DPA, Customer confirms its acceptance of such Sub-processors.
+    - source: 'https://www.nuix.com/sites/default/files/2026-06/Nuix%20Data%20Processing%20Addendum%20%28Nuix%20as%20Processor%20for%20Customers%29%20v%204%20June%202026.pdf'
+      http_status: 200
+      fetched: '2026-10-21'
+      quote: >-
+        Nuix shall provide Customer with written notice of the appointment of any new Sub-processor, which
+        notice may be given by a message or alert notified to Customer.
+    note: >-
+      A published, named sub-processor list (Annex III of the public DPA v 4 June 2026) with country of
+      processing and transfer mechanism, plus a notice-and-objection procedure for changes.
+  data_residency:
+    url: 'https://www.nuix.com/sites/default/files/2026-06/Nuix%20Data%20Processing%20Addendum%20%28Nuix%20as%20Processor%20for%20Customers%29%20v%204%20June%202026.pdf'
+    section: 'Annex III – List of Sub-Processors (Amazon Web Services row)'
+    regions: [Germany, UK, Canada, Australia, US]
+    evidence:
+    - source: 'https://www.nuix.com/sites/default/files/2026-06/Nuix%20Data%20Processing%20Addendum%20%28Nuix%20as%20Processor%20for%20Customers%29%20v%204%20June%202026.pdf'
+      http_status: 200
+      fetched: '2026-10-21'
+      quote: 'Served out of multiple locations. Customer determines the region where the data is processed: Germany UK Canada Australia US'
+    note: >-
+      Customer-selected SaaS hosting region on AWS, as stated in the sub-processor table (the quote is the
+      cell text of that table read top to bottom). The Zadara row for Discover SaaS carries the same
+      "Customer determines the region" wording.
+  incident_notification:
+    url: https://www.nuix.com/privacy-policy
+    section: '18. DATA BREACH NOTIFICATION; DPA 5. Personal Data Breach Response'
+    stated_sla: 'without undue delay (DPA 5.1); "within the timeframes required by applicable law" (privacy notice)'
+    evidence:
+    - source: https://www.nuix.com/privacy-policy
+      http_status: 200
+      fetched: '2026-10-21'
+      quote: >-
+        Should a breach occur that poses a risk to your rights and freedoms, we will notify affected
+        individuals and relevant supervisory authorities within the timeframes required by applicable law,
+        including GDPR requirements where applicable.
+    - source: 'https://www.nuix.com/sites/default/files/2026-06/Nuix%20Data%20Processing%20Addendum%20%28Nuix%20as%20Processor%20for%20Customers%29%20v%204%20June%202026.pdf'
+      http_status: 200
+      fetched: '2026-10-21'
+      quote: >-
+        5.1 Notification. Upon becoming aware of a Personal Data Breach that affects Personal Data, Nuix will
+        notify Customer without undue delay and will provide information relating to such Breach as
+        reasonably requested by Customer.
+    note: >-
+      No fixed hour count is stated anywhere read. The privacy notice also commits to the Australian
+      Notifiable Data Breaches scheme ("We will notify affected individuals and the Office of the Australian
+      Information Commissioner (OAIC) as required by law.").
+  exit_assistance:
+    url: 'https://www.nuix.com/sites/default/files/2026-06/Nuix%20Solutions%20Terms%20v%201%20July%202026.pdf'
+    section: '7. Duration and Termination, (b) End of Subscription Period; DPA 8. Deletion of Personal Data'
+    stated_period: '10 days from the end of the Subscription Period'
+    evidence:
+    - source: 'https://www.nuix.com/sites/default/files/2026-06/Nuix%20Solutions%20Terms%20v%201%20July%202026.pdf'
+      http_status: 200
+      fetched: '2026-10-21'
+      quote: >-
+        Customer will have 10 days from the end of the Subscription Period in which to download the Customer
+        Data from the relevant Solution (“Data Download Period”), after which time (subject to the parties
+        reaching an alternative arrangement, for which additional costs will apply): (1) Customer will no
+        longer be able to access the Customer Data in that Solution; and (2) if the Solution is a SaaS
+        Offering, Nuix will delete the Customer Data in that Solution (other than residual copies of data
+        from backup or disaster recovery systems).
+    - source: 'https://www.nuix.com/sites/default/files/2026-06/Nuix%20Data%20Processing%20Addendum%20%28Nuix%20as%20Processor%20for%20Customers%29%20v%204%20June%202026.pdf'
+      http_status: 200
+      fetched: '2026-10-21'
+      quote: >-
+        Following expiration or termination of the Agreement, and at any time during the term of the
+        Agreement upon written request, Nuix will delete or return to Customer any Personal Data in Nuix’s
+        possession, except to the extent Nuix is required by applicable law to retain some or all of the
+        Personal Data
+    note: >-
+      A contractual post-termination data download window (10 days, longer only by paid arrangement) and a
+      delete-or-return commitment. The privacy notice separately grants a GDPR-style data portability right
+      ("in a structured, commonly used, machine-readable format").
+  data_retention:
+    url: https://www.nuix.com/privacy-policy
+    section: '12. RETENTION OF YOUR PERSONAL DATA'
+    evidence:
+    - source: https://www.nuix.com/privacy-policy
+      http_status: 200
+      fetched: '2026-10-21'
+      quote: >-
+        We apply a general rule of keeping personal data only for as long as required to fulfill the purposes
+        for which it was collected. In general, we retain your personal data for a period of time
+        corresponding to a statute of limitation, for example, to maintain an accurate record of your
+        dealings with us.
+    - source: 'https://www.nuix.com/sites/default/files/2026-06/Nuix%20Solutions%20Terms%20v%201%20July%202026.pdf'
+      http_status: 200
+      fetched: '2026-10-21'
+      quote: 'Customer Data in a SaaS Offering will be unrecoverable, including from any back-ups, 90 days after the end of the Solution Subscription Period.'
+    note: >-
+      The privacy notice gives a purpose-bound rule with no fixed period. The Solutions Terms give a hard
+      90-day outer limit for SaaS customer data, backups included, after the subscription ends.
+  support_lifetime:
+    url: 'https://www.nuix.com/sites/default/files/2026-06/Nuix%20Software%20Support%20Terms%20v%204%20June%202026.pdf'
+    section: '7. Supported Versions'
+    stated_period: 'not less than 12 months from the date on which the major update is first made generally available to customers'
+    evidence:
+    - source: 'https://www.nuix.com/sites/default/files/2026-06/Nuix%20Software%20Support%20Terms%20v%204%20June%202026.pdf'
+      http_status: 200
+      fetched: '2026-10-21'
+      quote: >-
+        Following the release of a major update, the Supplier will continue to support the immediately
+        preceding major update version (“Supported Prior Version”) for a period of not less than 12 months
+        from the date on which the major update is first made generally available to customers (“Supported
+        Period”).
+    note: >-
+      Applies to on-premises Software. The SaaS Support Terms say instead that customers are kept on one
+      current Supported Version, and the Solutions Terms (15.10) allow a Solution to be discontinued at the
+      end of a Subscription Period with at least 60 days' written notice.
+not_recorded:
+- signal: age_assurance
+  reason: >-
+    The privacy notice (8. CHILDREN) says "Our websites are not for use by children under the age of 18
+    years", but describes no age-assurance mechanism, so no signal is recorded.
+- signal: accessibility_conformance, sbom, training_data_summary, transparency_report, notice_and_action
+  reason: None of the pages read speak to these. The Security Trust Center could not be read (Cloudflare challenge).

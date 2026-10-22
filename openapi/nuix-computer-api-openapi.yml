@@ -204,6 +204,18 @@ paths:
                 message: Invalid Computer ID supplied
 components:
   schemas:
+    standardResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: http response status code
+        id:
+          type: integer
+          description: id of the affected Object
+        message:
+          type: string
+          description: http status message
     listComputerRequest:
       type: object
       properties:
@@ -298,18 +310,6 @@ components:
                 - ServerPublicKey
               value:
                 description: Comparison is case-sensitive.  See the list of filtering and sorting fields, above, for field types and descriptions.
-    standardResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: http response status code
-        id:
-          type: integer
-          description: id of the affected Object
-        message:
-          type: string
-          description: http status message
     Computer:
       type: object
       properties:

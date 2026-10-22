@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nuix/main/json-schema/nuix-list-cases-response-schema.json",
+  "title": "listCasesResponse",
+  "x-generated": "2026-10-21",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/nuix-case-api-openapi.yml#/components/schemas/listCasesResponse",
+  "type": "object",
+  "properties": {
+    "cases": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Case"
+      }
+    }
+  },
+  "$defs": {
+    "Case": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "id of the case"
+        },
+        "name": {
+          "type": "string",
+          "description": "name of the case"
+        },
+        "status": {
+          "type": "string",
+          "description": "case status, Open or Closed"
+        }
+      }
+    }
+  }
+}

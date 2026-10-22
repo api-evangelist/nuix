@@ -1,0 +1,43 @@
+generated: '2026-10-21'
+method: searched
+source:
+- https://developer.nuix.com/latest/engine/rest/examples/authentication.html
+- https://developer.nuix.com/latest/ecc/auth/home.html
+- openapi/nuix-core-engine-rest-api-openapi.yml
+- openapi/nuix-job-api-openapi.yml
+description: Two self-hosted REST surfaces - the Nuix Core Engine REST API (Nuix RESTful Service, 204 operations, base
+  /nuix-restful-service/svc) and the ECC REST API (11 specs, base {protocol}://{address}:{port}/api/ecc).
+api_style: REST/JSON, self-hosted
+authentication:
+  core_engine: session token from PUT /v1/authenticatedUsers/login sent in the nuix-auth-token header
+  ecc: Authentication header with Basic (RFC 7617) or Bearer (RFC 6750, Keycloak / Azure AD)
+  see: authentication/nuix-authentication.yml
+idempotency:
+  coverage: none
+  note: No Idempotency-Key header or replay protection is declared in any spec or documented.
+pagination:
+  style: offset
+  params: [startIndex, limit (Core Engine item searches), offset, countOnly (ECC computer/job lists)]
+  note: Derived from parameter names in the specs; no pagination guide found in the docs.
+async_operations: Core Engine long-running work runs as asynchronous functions (docs "Part 6 Asynchronous Functions")
+  that can be cancelled via cancelAsyncFunction.
+request_tracing: null
+versioning: see lifecycle/nuix-lifecycle.yml
+error_envelope: No published error envelope; see errors/nuix-problem-types.yml when derived.
+rate_limits: see rate-limits/nuix-rate-limits.yml (no API rate limits published; capacity is bounded by licensed workers)
+reversibility:
+  coverage: partial
+  operations:
+  - write: asynchronous functions (Core Engine)
+    reversal: cancelAsyncFunction
+    method: DELETE
+    window: null
+    grade: documented
+  - write: processing jobs (Core Engine)
+    reversal: cancelProcessingJob
+    method: DELETE
+    window: null
+    grade: documented
+  note: Cancellation exists for running async functions and processing jobs; no window is stated in the docs. Deletes
+    (deleteCase, deleteTarget, deleteCustodian, deleteGroup ...) have no documented restore. ECC jobAction changes job
+    status but the spec does not enumerate the actions.

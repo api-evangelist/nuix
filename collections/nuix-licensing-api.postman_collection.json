@@ -1,0 +1,657 @@
+{
+  "info": {
+    "_postman_id": "d602cf07-f59d-4498-81fe-7e3b8c08ea72",
+    "name": "Nuix REST-API Reference Licensing API",
+    "description": "Welcome to the Nuix REST API documentation. From here you can access all available REST APIs and execute queries against your running REST instance.\n\n# Authentication Changes\n\nThe `nuix-auth-token` header is being deprecated in favor of standard JWT. The header will be removed in a\nfuture release. Until the removal of the header, the Nuix REST API will accept the JWT in either the\n`nuix-auth-token` header field or the `Authorization` header field prefixed by `Bearer`.\n\nContact Support:\n Name: Nuix",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:21:21.000Z",
+    "updatedAt": "2026-10-21T21:21:21.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-d602cf07-f59d-4498-81fe-7e3b8c08ea72"
+  },
+  "item": [
+    {
+      "name": "cases",
+      "item": [
+        {
+          "name": "{caseId}",
+          "item": [
+            {
+              "name": "auditReportFile",
+              "item": [
+                {
+                  "name": "Returns an audit report file",
+                  "id": "8a14f4e3-cd3a-44fc-8ce7-f2feb3ac6cfb",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "text/plain"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cases/:caseId/auditReportFile",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cases",
+                        ":caseId",
+                        "auditReportFile"
+                      ],
+                      "variable": [
+                        {
+                          "id": "85ad541b-5c2d-4e78-b9ce-6494d1df861f",
+                          "key": "caseId",
+                          "value": "<string>",
+                          "description": "(Required) Case identification token"
+                        }
+                      ]
+                    },
+                    "description": "Returns an audit report file as an attachment for an audited case. The audit report file is the file that is uploaded to the Nuix portal for audited cases."
+                  },
+                  "response": [
+                    {
+                      "id": "c2657e07-358c-46f1-9ed7-7cdb6c7572ca",
+                      "name": "default response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "text/plain"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/cases/:caseId/auditReportFile",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cases",
+                            ":caseId",
+                            "auditReportFile"
+                          ],
+                          "variable": [
+                            {
+                              "key": "caseId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "text/plain"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "<string>",
+                      "createdAt": "2026-10-21T21:21:22.000Z",
+                      "updatedAt": "2026-10-21T21:21:22.000Z",
+                      "uid": "35240-c2657e07-358c-46f1-9ed7-7cdb6c7572ca"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:21:22.000Z",
+                  "updatedAt": "2026-10-21T21:21:22.000Z",
+                  "uid": "35240-8a14f4e3-cd3a-44fc-8ce7-f2feb3ac6cfb"
+                }
+              ],
+              "id": "00072714-6ae2-48da-a6c3-2edfee0d4e81",
+              "createdAt": "2026-10-21T21:21:22.000Z",
+              "updatedAt": "2026-10-21T21:21:22.000Z",
+              "uid": "35240-00072714-6ae2-48da-a6c3-2edfee0d4e81"
+            },
+            {
+              "name": "auditVerificationFile",
+              "item": [
+                {
+                  "name": "Uploads an audit verification file",
+                  "id": "55085d67-d7b3-4420-b58a-6ad16c78e282",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "key": "uploadFile",
+                          "type": "file",
+                          "value": null
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/cases/:caseId/auditVerificationFile",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cases",
+                        ":caseId",
+                        "auditVerificationFile"
+                      ],
+                      "variable": [
+                        {
+                          "id": "2b5e1514-f8b7-4db9-893f-f52a50179ced",
+                          "key": "caseId",
+                          "value": "<string>",
+                          "description": "(Required) Case identification token"
+                        }
+                      ]
+                    },
+                    "description": "Use this operation to upload an audit verification file to a case. The audit verification file is the file that is downloaded from the Nuix portal after uploading an audit report."
+                  },
+                  "response": [
+                    {
+                      "id": "767ef096-be0e-4d67-a5f3-318bf18ce93d",
+                      "name": "default response",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "key": "uploadFile",
+                              "type": "file"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/cases/:caseId/auditVerificationFile",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cases",
+                            ":caseId",
+                            "auditVerificationFile"
+                          ],
+                          "variable": [
+                            {
+                              "key": "caseId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T21:21:22.000Z",
+                      "updatedAt": "2026-10-21T21:21:22.000Z",
+                      "uid": "35240-767ef096-be0e-4d67-a5f3-318bf18ce93d"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:21:22.000Z",
+                  "updatedAt": "2026-10-21T21:21:22.000Z",
+                  "uid": "35240-55085d67-d7b3-4420-b58a-6ad16c78e282"
+                }
+              ],
+              "id": "8e7e7e66-d6b8-4b38-a986-64586faeafc0",
+              "createdAt": "2026-10-21T21:21:22.000Z",
+              "updatedAt": "2026-10-21T21:21:22.000Z",
+              "uid": "35240-8e7e7e66-d6b8-4b38-a986-64586faeafc0"
+            },
+            {
+              "name": "auditFiles",
+              "item": [
+                {
+                  "name": "Deletes all audit reports and audit verification files for a specified case",
+                  "id": "05cd4e55-ac10-4018-a1ce-b3904fb2aa2a",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/cases/:caseId/auditFiles",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cases",
+                        ":caseId",
+                        "auditFiles"
+                      ],
+                      "variable": [
+                        {
+                          "id": "8f050e33-c6e3-4b50-8e02-7a0cf6af713e",
+                          "key": "caseId",
+                          "value": "<string>",
+                          "description": "(Required) Case identification token"
+                        }
+                      ]
+                    },
+                    "description": "Use this operation to delete all audit reports and audit verification files for the specified case. You may want to do this if an incorrect audit verification file has been uploaded for a case. This will allow the Nuix Engine to generate a new audit file."
+                  },
+                  "response": [
+                    {
+                      "id": "6669d96b-1170-42e2-b2e9-f8c92682b260",
+                      "name": "default response",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/cases/:caseId/auditFiles",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cases",
+                            ":caseId",
+                            "auditFiles"
+                          ],
+                          "variable": [
+                            {
+                              "key": "caseId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T21:21:22.000Z",
+                      "updatedAt": "2026-10-21T21:21:22.000Z",
+                      "uid": "35240-6669d96b-1170-42e2-b2e9-f8c92682b260"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:21:22.000Z",
+                  "updatedAt": "2026-10-21T21:21:22.000Z",
+                  "uid": "35240-05cd4e55-ac10-4018-a1ce-b3904fb2aa2a"
+                }
+              ],
+              "id": "9c08c8e1-ae5c-43cd-9880-f0e4e00f5481",
+              "createdAt": "2026-10-21T21:21:22.000Z",
+              "updatedAt": "2026-10-21T21:21:22.000Z",
+              "uid": "35240-9c08c8e1-ae5c-43cd-9880-f0e4e00f5481"
+            },
+            {
+              "name": "auditStatus",
+              "item": [
+                {
+                  "name": "Returns the audit status for a case",
+                  "id": "abe6d957-910a-49aa-a4c0-120537fef999",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cases/:caseId/auditStatus",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cases",
+                        ":caseId",
+                        "auditStatus"
+                      ],
+                      "variable": [
+                        {
+                          "id": "2dc2831b-1a40-4772-b67e-ef034f0db1d7",
+                          "key": "caseId",
+                          "value": "<string>",
+                          "description": "(Required) Case identification token"
+                        }
+                      ]
+                    },
+                    "description": "Use this operation to check the audit status for a case."
+                  },
+                  "response": [
+                    {
+                      "id": "da75d074-ce41-45ea-9253-ced51ed896f5",
+                      "name": "default response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/cases/:caseId/auditStatus",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cases",
+                            ":caseId",
+                            "auditStatus"
+                          ],
+                          "variable": [
+                            {
+                              "key": "caseId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/vnd.nuix.v1+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"unverifiedAuditReport\": \"<boolean>\",\n  \"verifiedAuditReports\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"auditReportFilename\": \"<string>\",\n  \"creationDate\": \"<long>\"\n}",
+                      "createdAt": "2026-10-21T21:21:22.000Z",
+                      "updatedAt": "2026-10-21T21:21:22.000Z",
+                      "uid": "35240-da75d074-ce41-45ea-9253-ced51ed896f5"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:21:22.000Z",
+                  "updatedAt": "2026-10-21T21:21:22.000Z",
+                  "uid": "35240-abe6d957-910a-49aa-a4c0-120537fef999"
+                }
+              ],
+              "id": "f62f1467-39f7-43b7-a69e-7b07135356e6",
+              "createdAt": "2026-10-21T21:21:22.000Z",
+              "updatedAt": "2026-10-21T21:21:22.000Z",
+              "uid": "35240-f62f1467-39f7-43b7-a69e-7b07135356e6"
+            }
+          ],
+          "id": "487f6f0f-c5cc-482e-8424-cb40fcf8fd20",
+          "createdAt": "2026-10-21T21:21:22.000Z",
+          "updatedAt": "2026-10-21T21:21:22.000Z",
+          "uid": "35240-487f6f0f-c5cc-482e-8424-cb40fcf8fd20"
+        }
+      ],
+      "id": "f214b5a6-2217-4d80-8a6f-b58377800eca",
+      "createdAt": "2026-10-21T21:21:22.000Z",
+      "updatedAt": "2026-10-21T21:21:22.000Z",
+      "uid": "35240-f214b5a6-2217-4d80-8a6f-b58377800eca"
+    },
+    {
+      "name": "licenseServer",
+      "item": [
+        {
+          "name": "credentials",
+          "item": [
+            {
+              "name": "Update and persist license server credentials",
+              "id": "2d8c248b-6761-4d3b-9d95-5c9094d109d3",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json;charset=UTF-8"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<string>\",\n  \"workers\": \"<integer>\",\n  \"licenceShortName\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/licenseServer/credentials",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "licenseServer",
+                    "credentials"
+                  ]
+                },
+                "description": "Updates and attempts to persist the license server credentials. This endpoint will validate the credentials provided, persist, and encrypt the user credentials."
+              },
+              "response": [
+                {
+                  "id": "a8bb7a0a-1ce3-4d2e-a2ae-425a62dce0a1",
+                  "name": "The REST configuration change response object.",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json;charset=UTF-8"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<string>\",\n  \"workers\": \"<integer>\",\n  \"licenceShortName\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/licenseServer/credentials",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "licenseServer",
+                        "credentials"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json;charset=UTF-8"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"status\": \"PERSISTENT\"\n}",
+                  "createdAt": "2026-10-21T21:21:22.000Z",
+                  "updatedAt": "2026-10-21T21:21:22.000Z",
+                  "uid": "35240-a8bb7a0a-1ce3-4d2e-a2ae-425a62dce0a1"
+                }
+              ],
+              "createdAt": "2026-10-21T21:21:22.000Z",
+              "updatedAt": "2026-10-21T21:21:22.000Z",
+              "uid": "35240-2d8c248b-6761-4d3b-9d95-5c9094d109d3"
+            }
+          ],
+          "id": "557a786b-ab5a-4227-b2eb-4928fb785ca7",
+          "createdAt": "2026-10-21T21:21:22.000Z",
+          "updatedAt": "2026-10-21T21:21:22.000Z",
+          "uid": "35240-557a786b-ab5a-4227-b2eb-4928fb785ca7"
+        }
+      ],
+      "id": "0eb755e9-37b3-4e97-ad78-e3f797a87963",
+      "createdAt": "2026-10-21T21:21:22.000Z",
+      "updatedAt": "2026-10-21T21:21:22.000Z",
+      "uid": "35240-0eb755e9-37b3-4e97-ad78-e3f797a87963"
+    },
+    {
+      "name": "licenses",
+      "item": [
+        {
+          "name": "Returns a list of available licences",
+          "id": "e2034b6d-661d-41e3-8ce1-98ff21d3066d",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v1+json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/licenses",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "licenses"
+              ]
+            },
+            "description": "Use this operation to view a list of your available licences. This information comes from the Nuix Management Server (NMS) or Cloud License Server (CLS)."
+          },
+          "response": [
+            {
+              "id": "fc6734df-2cfc-4da4-963a-413ce7c1910f",
+              "name": "default response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/licenses",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "licenses"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"source\": \"<string>\",\n    \"type\": \"<string>\",\n    \"location\": \"<string>\",\n    \"shortname\": \"<string>\",\n    \"count\": \"<integer>\",\n    \"configuredCount\": \"<integer>\",\n    \"description\": \"<string>\",\n    \"workers\": \"<integer>\",\n    \"configuredWorkers\": \"<integer>\",\n    \"canChooseWorkers\": \"<boolean>\",\n    \"audited\": \"<boolean>\",\n    \"auditThreshold\": \"<long>\",\n    \"expiry\": \"<string>\",\n    \"features\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"legalHoldHoldCountLimit\": \"<long>\",\n    \"concurrentUserLimit\": \"<long>\"\n  },\n  {\n    \"source\": \"<string>\",\n    \"type\": \"<string>\",\n    \"location\": \"<string>\",\n    \"shortname\": \"<string>\",\n    \"count\": \"<integer>\",\n    \"configuredCount\": \"<integer>\",\n    \"description\": \"<string>\",\n    \"workers\": \"<integer>\",\n    \"configuredWorkers\": \"<integer>\",\n    \"canChooseWorkers\": \"<boolean>\",\n    \"audited\": \"<boolean>\",\n    \"auditThreshold\": \"<long>\",\n    \"expiry\": \"<string>\",\n    \"features\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"legalHoldHoldCountLimit\": \"<long>\",\n    \"concurrentUserLimit\": \"<long>\"\n  }\n]",
+              "createdAt": "2026-10-21T21:21:22.000Z",
+              "updatedAt": "2026-10-21T21:21:22.000Z",
+              "uid": "35240-fc6734df-2cfc-4da4-963a-413ce7c1910f"
+            }
+          ],
+          "createdAt": "2026-10-21T21:21:22.000Z",
+          "updatedAt": "2026-10-21T21:21:22.000Z",
+          "uid": "35240-e2034b6d-661d-41e3-8ce1-98ff21d3066d"
+        }
+      ],
+      "id": "1499b32a-3ba9-4399-8ddc-fa5a20a0d286",
+      "createdAt": "2026-10-21T21:21:22.000Z",
+      "updatedAt": "2026-10-21T21:21:22.000Z",
+      "uid": "35240-1499b32a-3ba9-4399-8ddc-fa5a20a0d286"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "nuix-auth-token",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "/nuix-restful-service/svc"
+    }
+  ]
+}

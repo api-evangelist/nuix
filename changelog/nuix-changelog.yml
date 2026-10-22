@@ -1,0 +1,44 @@
+generated: '2026-10-21'
+method: searched
+source: https://developer.nuix.com/latest/engine/rest/release-notes/9.10.x/home.html
+docs: https://developer.nuix.com/latest/engine/rest/release-notes/home.html
+product: Nuix RESTful Service (Nuix Core Engine REST SDK)
+scheme: semver-like engine versions (major.minor.patch); dates published to month precision only
+current_version: 9.10.59
+description: Each RESTful Service release tracks the Nuix Engine version of the same number; patch notes point to the
+  9.10.0 release notes and the v9.10 engine changelog. Dates below are the month stated on the release-notes index.
+entries:
+- version: 9.10.59
+  date: 2026-09
+  breaking: false
+  highlights: ['Listed on the 9.10.x index as released in September 2026 (the patch page path 9.10.59.html returned 404 on 2026-10-21).']
+- version: 9.10.51
+  date: 2026-06
+  breaking: false
+  highlights: ['Fixed password word list / processing-profile passwords not loading during ingestion.', 'TRIAGE-5672: bulk exclude now runs in configurable batches with a hard limit (default 10 million items).']
+  url: https://developer.nuix.com/latest/engine/rest/release-notes/9.10.51.html
+- version: 9.10.49
+  date: 2026-04
+  breaking: false
+  highlights: ['Delete Case (V2) can delete elasticsearch indices for elasticsearch cases.', 'TRIAGE-5434: fix for slowness opening elasticsearch compound cases.']
+  url: https://developer.nuix.com/latest/engine/rest/release-notes/9.10.49.html
+- version: 9.10.44
+  date: 2026-01
+  breaking: false
+  highlights: ['Added form-encoded login endpoint accepting application/x-www-form-urlencoded for passwords with special characters.']
+  url: https://developer.nuix.com/latest/engine/rest/release-notes/9.10.44.html
+- version: 9.10.43
+  date: 2025-09
+  breaking: false
+  highlights: ['Fixed ScriptException causing "I/O reactor status: STOPPED" in elastic compound cases.', 'Added Async V2 DELETE /cases/ endpoint.']
+  url: https://developer.nuix.com/latest/engine/rest/release-notes/9.10.43.html
+- version: 9.10.39
+  date: 2025-05
+  breaking: false
+  highlights: ['Server can now run multiple jobs/functions concurrently (previously a single job/function at a time), with conditions.']
+  url: https://developer.nuix.com/latest/engine/rest/release-notes/9.10.39.html
+- version: 9.10.35
+  date: 2025-01
+  breaking: false
+  highlights: ['Fixed server becoming unresponsive during bulk OCR operations.']
+  url: https://developer.nuix.com/latest/engine/rest/release-notes/9.10.35.html

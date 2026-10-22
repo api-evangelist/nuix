@@ -1,0 +1,1773 @@
+{
+  "info": {
+    "_postman_id": "8a517150-0503-4192-896e-43bf01ab1553",
+    "name": "Nuix REST-API Reference Inventory API",
+    "description": "Welcome to the Nuix REST API documentation. From here you can access all available REST APIs and execute queries against your running REST instance.\n\n# Authentication Changes\n\nThe `nuix-auth-token` header is being deprecated in favor of standard JWT. The header will be removed in a\nfuture release. Until the removal of the header, the Nuix REST API will accept the JWT in either the\n`nuix-auth-token` header field or the `Authorization` header field prefixed by `Bearer`.\n\nContact Support:\n Name: Nuix",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:21:15.000Z",
+    "updatedAt": "2026-10-21T21:21:15.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-8a517150-0503-4192-896e-43bf01ab1553"
+  },
+  "item": [
+    {
+      "name": "cases",
+      "item": [
+        {
+          "name": "{caseId}",
+          "item": [
+            {
+              "name": "childCases",
+              "item": [
+                {
+                  "name": "{childCaseId}",
+                  "item": [
+                    {
+                      "name": "Adds a child case to a compound case",
+                      "id": "a978cd10-8ba2-45cf-8ee6-6f4ec867bff3",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "PUT",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/cases/:caseId/childCases/:childCaseId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cases",
+                            ":caseId",
+                            "childCases",
+                            ":childCaseId"
+                          ],
+                          "variable": [
+                            {
+                              "id": "3da746a8-ba34-4166-85c8-b5286edc1f0a",
+                              "key": "caseId",
+                              "value": "<string>",
+                              "description": "(Required) Case identification token"
+                            },
+                            {
+                              "id": "b8d746e0-2972-4ff9-901d-a1d2180ffad5",
+                              "key": "childCaseId",
+                              "value": "<string>",
+                              "description": "(Required) Case ID for the child case"
+                            }
+                          ]
+                        },
+                        "description": "Use this operation to add a single child case to a compound case."
+                      },
+                      "response": [
+                        {
+                          "id": "278d1cfc-0359-4f3e-a8b6-087d6c4e4689",
+                          "name": "default response",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "nuix-auth-token",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/cases/:caseId/childCases/:childCaseId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "cases",
+                                ":caseId",
+                                "childCases",
+                                ":childCaseId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "caseId"
+                                },
+                                {
+                                  "key": "childCaseId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-10-21T21:21:15.000Z",
+                          "updatedAt": "2026-10-21T21:21:15.000Z",
+                          "uid": "35240-278d1cfc-0359-4f3e-a8b6-087d6c4e4689"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T21:21:15.000Z",
+                      "updatedAt": "2026-10-21T21:21:15.000Z",
+                      "uid": "35240-a978cd10-8ba2-45cf-8ee6-6f4ec867bff3"
+                    }
+                  ],
+                  "id": "bd5c7b71-0e37-46b1-98f3-d5c86107f547",
+                  "createdAt": "2026-10-21T21:21:15.000Z",
+                  "updatedAt": "2026-10-21T21:21:15.000Z",
+                  "uid": "35240-bd5c7b71-0e37-46b1-98f3-d5c86107f547"
+                },
+                {
+                  "name": "Returns a list of child cases for a compound case",
+                  "id": "a151c0fb-f1dd-4c2d-9c1c-0d0520d7e818",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cases/:caseId/childCases?determineAdditionalAttributes=false&calculateCaseSize=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cases",
+                        ":caseId",
+                        "childCases"
+                      ],
+                      "query": [
+                        {
+                          "description": "Returns extended case attributes.  These attributes are hasExclusions, hasProductionSets, hasCalculatedAuditSize, and hasNuixSystemTags.",
+                          "key": "determineAdditionalAttributes",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Should size of each child case on disk be calculated? Defaults to false",
+                          "key": "calculateCaseSize",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "d6542455-bf31-4066-9ef7-ebc24076ee4a",
+                          "key": "caseId",
+                          "value": "<string>",
+                          "description": "(Required) Case identification token"
+                        }
+                      ]
+                    },
+                    "description": "Use this operation to view the child cases, or simple cases, associated with a compound case."
+                  },
+                  "response": [
+                    {
+                      "id": "e6200410-02ef-47ba-8ce4-f4616d481967",
+                      "name": "default response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/cases/:caseId/childCases?determineAdditionalAttributes=false&calculateCaseSize=false",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cases",
+                            ":caseId",
+                            "childCases"
+                          ],
+                          "query": [
+                            {
+                              "description": "Returns extended case attributes.  These attributes are hasExclusions, hasProductionSets, hasCalculatedAuditSize, and hasNuixSystemTags.",
+                              "key": "determineAdditionalAttributes",
+                              "value": "false"
+                            },
+                            {
+                              "description": "Should size of each child case on disk be calculated? Defaults to false",
+                              "key": "calculateCaseSize",
+                              "value": "false"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "caseId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/vnd.nuix.v1+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"caseId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"path\": \"<string>\",\n    \"description\": \"<string>\",\n    \"investigator\": \"<string>\",\n    \"creationDate\": \"<long>\",\n    \"compound\": \"<boolean>\",\n    \"elastic\": \"<boolean>\",\n    \"binaryStoreLocation\": \"<string>\",\n    \"indexId\": \"<string>\",\n    \"caseSize\": \"<long>\",\n    \"casePathParent\": \"<string>\",\n    \"caseInvestigationTimeZone\": \"<string>\",\n    \"hasExclusions\": \"<boolean>\",\n    \"hasNuixSystemTags\": \"<boolean>\",\n    \"hasProductionSets\": \"<boolean>\",\n    \"hasCalculatedAuditSize\": \"<boolean>\",\n    \"caseName\": \"<string>\",\n    \"casePath\": \"<string>\",\n    \"caseDescription\": \"<string>\",\n    \"caseCreationDate\": \"<integer>\",\n    \"caseInvestigator\": \"<string>\"\n  },\n  {\n    \"caseId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"path\": \"<string>\",\n    \"description\": \"<string>\",\n    \"investigator\": \"<string>\",\n    \"creationDate\": \"<long>\",\n    \"compound\": \"<boolean>\",\n    \"elastic\": \"<boolean>\",\n    \"binaryStoreLocation\": \"<string>\",\n    \"indexId\": \"<string>\",\n    \"caseSize\": \"<long>\",\n    \"casePathParent\": \"<string>\",\n    \"caseInvestigationTimeZone\": \"<string>\",\n    \"hasExclusions\": \"<boolean>\",\n    \"hasNuixSystemTags\": \"<boolean>\",\n    \"hasProductionSets\": \"<boolean>\",\n    \"hasCalculatedAuditSize\": \"<boolean>\",\n    \"caseName\": \"<string>\",\n    \"casePath\": \"<string>\",\n    \"caseDescription\": \"<string>\",\n    \"caseCreationDate\": \"<integer>\",\n    \"caseInvestigator\": \"<string>\"\n  }\n]",
+                      "createdAt": "2026-10-21T21:21:15.000Z",
+                      "updatedAt": "2026-10-21T21:21:15.000Z",
+                      "uid": "35240-e6200410-02ef-47ba-8ce4-f4616d481967"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:21:15.000Z",
+                  "updatedAt": "2026-10-21T21:21:15.000Z",
+                  "uid": "35240-a151c0fb-f1dd-4c2d-9c1c-0d0520d7e818"
+                },
+                {
+                  "name": "Adds child cases to a compound case",
+                  "id": "073de1cd-3d94-4c91-907f-dbb283d13451",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/vnd.nuix.v1+json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n  \"<string>\",\n  \"<string>\"\n]",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/cases/:caseId/childCases",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cases",
+                        ":caseId",
+                        "childCases"
+                      ],
+                      "variable": [
+                        {
+                          "id": "65378d67-51e0-42fa-bd42-c6074309decf",
+                          "key": "caseId",
+                          "value": "<string>",
+                          "description": "(Required) Case identification token"
+                        }
+                      ]
+                    },
+                    "description": "Use this operation to add multiple child cases to a compound case at once."
+                  },
+                  "response": [
+                    {
+                      "id": "f16cff5f-d8e6-4fd7-bcc7-6e2d634e681a",
+                      "name": "default response",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "[\n  \"<string>\",\n  \"<string>\"\n]",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/cases/:caseId/childCases",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cases",
+                            ":caseId",
+                            "childCases"
+                          ],
+                          "variable": [
+                            {
+                              "key": "caseId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T21:21:15.000Z",
+                      "updatedAt": "2026-10-21T21:21:15.000Z",
+                      "uid": "35240-f16cff5f-d8e6-4fd7-bcc7-6e2d634e681a"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:21:15.000Z",
+                  "updatedAt": "2026-10-21T21:21:15.000Z",
+                  "uid": "35240-073de1cd-3d94-4c91-907f-dbb283d13451"
+                }
+              ],
+              "id": "6fb11d0d-a3bd-44b4-b79a-62540dec528c",
+              "createdAt": "2026-10-21T21:21:15.000Z",
+              "updatedAt": "2026-10-21T21:21:15.000Z",
+              "uid": "35240-6fb11d0d-a3bd-44b4-b79a-62540dec528c"
+            },
+            {
+              "name": "close",
+              "item": [
+                {
+                  "name": "Closes a case",
+                  "id": "316d3970-2ca9-4e4c-a4d6-86870643e159",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cases/:caseId/close",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cases",
+                        ":caseId",
+                        "close"
+                      ],
+                      "variable": [
+                        {
+                          "id": "bd13153b-5c0c-4de5-b3d6-0be317da9cef",
+                          "key": "caseId",
+                          "value": "<string>",
+                          "description": "(Required) Case identification token"
+                        }
+                      ]
+                    },
+                    "description": "Use this operation to close a case in a user session. Cases should be closed when not in use or they will remain locked."
+                  },
+                  "response": [
+                    {
+                      "id": "672017b0-30fd-48f1-b368-405026182271",
+                      "name": "default response",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/cases/:caseId/close",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cases",
+                            ":caseId",
+                            "close"
+                          ],
+                          "variable": [
+                            {
+                              "key": "caseId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/vnd.nuix.v1+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"success\": \"<boolean>\"\n}",
+                      "createdAt": "2026-10-21T21:21:15.000Z",
+                      "updatedAt": "2026-10-21T21:21:15.000Z",
+                      "uid": "35240-672017b0-30fd-48f1-b368-405026182271"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:21:15.000Z",
+                  "updatedAt": "2026-10-21T21:21:15.000Z",
+                  "uid": "35240-316d3970-2ca9-4e4c-a4d6-86870643e159"
+                }
+              ],
+              "id": "863df2a1-0f26-4921-9c0c-d417aeafd1d1",
+              "createdAt": "2026-10-21T21:21:15.000Z",
+              "updatedAt": "2026-10-21T21:21:15.000Z",
+              "uid": "35240-863df2a1-0f26-4921-9c0c-d417aeafd1d1"
+            },
+            {
+              "name": "subset",
+              "item": [
+                {
+                  "name": "Creates a case subset",
+                  "id": "1b82775e-6d9e-4e1e-a81f-337044e9726b",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"query\": \"<string>\",\n  \"location\": \"inventory0\",\n  \"evidenceStoreCount\": 1,\n  \"includeFamilies\": false,\n  \"copyTags\": false,\n  \"copyComments\": false,\n  \"copyCustodians\": false,\n  \"copyItemSets\": false,\n  \"copyClassifiers\": false,\n  \"copyMarkupSets\": false,\n  \"copyProductionSets\": false,\n  \"copyClusters\": false,\n  \"copyCustomMetadata\": false,\n  \"caseMetadata\": {\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"investigator\": \"<string>\",\n    \"elasticSearchSettings\": {\n      \"cluster.name\": \"<string>\",\n      \"nuix.transport.hosts\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"additionalSettings\": {\n        \"adipisicing02\": \"<string>\",\n        \"est_077\": \"<string>\",\n        \"in_0fd\": \"<string>\"\n      },\n      \"index.number_of_shards\": \"<integer>\",\n      \"index.number_of_replicas\": \"<integer>\",\n      \"index.refresh_interval\": \"<string>\",\n      \"nuix.index.auto_close\": \"<boolean>\",\n      \"nuix.http.hosts\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"xpack.security.user\": \"<string>\",\n      \"xpack.security.password\": \"<string>\",\n      \"xpack.security.transport.ssl.enabled\": \"<boolean>\",\n      \"xpack.security.transport.ssl.truststore.path\": \"<string>\",\n      \"xpack.security.transport.ssl.truststore.type\": \"<string>\",\n      \"xpack.security.transport.ssl.keystore.path\": \"<string>\",\n      \"xpack.security.transport.ssl.keystore.type\": \"<string>\",\n      \"xpack.security.transport.ssl.verification_mode\": \"<string>\",\n      \"xpack.security.http.ssl.enabled\": \"<boolean>\",\n      \"xpack.security.http.ssl.key\": \"<string>\",\n      \"xpack.security.http.ssl.key_passphrase\": \"<string>\",\n      \"xpack.security.http.ssl.keystore.key_password\": \"<string>\",\n      \"xpack.security.http.ssl.keystore.path\": \"<string>\",\n      \"xpack.security.http.ssl.keystore.type\": \"<string>\",\n      \"xpack.security.http.ssl.keystore.password\": \"<string>\",\n      \"xpack.security.http.ssl.truststore.path\": \"<string>\",\n      \"xpack.security.http.ssl.truststore.type\": \"<string>\",\n      \"xpack.security.http.ssl.certificate\": \"<string>\",\n      \"xpack.security.http.ssl.certificate_authorities\": \"<string>\",\n      \"nuix.auth.username\": \"<string>\",\n      \"nuix.auth.password\": \"<string>\",\n      \"searchguard.ssl.transport.keystore_filepath\": \"<string>\",\n      \"searchguard.ssl.transport.keystore_password\": \"<string>\",\n      \"searchguard.ssl.transport.truststore_filepath\": \"<string>\",\n      \"searchguard.ssl.transport.truststore_password\": \"<string>\"\n    },\n    \"binaryStoreLocation\": \"<string>\"\n  },\n  \"processingSettings\": {\n    \"analysisLanguage\": \"en\",\n    \"stopWords\": false,\n    \"stemming\": false,\n    \"enableExactQueries\": false\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/cases/:caseId/subset",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cases",
+                        ":caseId",
+                        "subset"
+                      ],
+                      "variable": [
+                        {
+                          "id": "6b2ed45f-2239-41fd-a966-a5b2f5be83fe",
+                          "key": "caseId",
+                          "value": "<string>",
+                          "description": "(Required) Case identification token"
+                        }
+                      ]
+                    },
+                    "description": "Use this operation to create a case subset. When you create a case, the location must be a relative path, or an absolute path that is within\na configured inventory location. You must include the `elasticSearchSettings` field in the `caseMetadata` in order to case subset to Elasticsearch.\nOtherwise, the default case subset will be a standard Lucene/Derby case."
+                  },
+                  "response": [
+                    {
+                      "id": "10e69e40-faa1-43ba-a8a9-31278cb4295a",
+                      "name": "default response",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"query\": \"<string>\",\n  \"location\": \"inventory0\",\n  \"evidenceStoreCount\": 1,\n  \"includeFamilies\": false,\n  \"copyTags\": false,\n  \"copyComments\": false,\n  \"copyCustodians\": false,\n  \"copyItemSets\": false,\n  \"copyClassifiers\": false,\n  \"copyMarkupSets\": false,\n  \"copyProductionSets\": false,\n  \"copyClusters\": false,\n  \"copyCustomMetadata\": false,\n  \"caseMetadata\": {\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"investigator\": \"<string>\",\n    \"elasticSearchSettings\": {\n      \"cluster.name\": \"<string>\",\n      \"nuix.transport.hosts\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"additionalSettings\": {\n        \"adipisicing02\": \"<string>\",\n        \"est_077\": \"<string>\",\n        \"in_0fd\": \"<string>\"\n      },\n      \"index.number_of_shards\": \"<integer>\",\n      \"index.number_of_replicas\": \"<integer>\",\n      \"index.refresh_interval\": \"<string>\",\n      \"nuix.index.auto_close\": \"<boolean>\",\n      \"nuix.http.hosts\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"xpack.security.user\": \"<string>\",\n      \"xpack.security.password\": \"<string>\",\n      \"xpack.security.transport.ssl.enabled\": \"<boolean>\",\n      \"xpack.security.transport.ssl.truststore.path\": \"<string>\",\n      \"xpack.security.transport.ssl.truststore.type\": \"<string>\",\n      \"xpack.security.transport.ssl.keystore.path\": \"<string>\",\n      \"xpack.security.transport.ssl.keystore.type\": \"<string>\",\n      \"xpack.security.transport.ssl.verification_mode\": \"<string>\",\n      \"xpack.security.http.ssl.enabled\": \"<boolean>\",\n      \"xpack.security.http.ssl.key\": \"<string>\",\n      \"xpack.security.http.ssl.key_passphrase\": \"<string>\",\n      \"xpack.security.http.ssl.keystore.key_password\": \"<string>\",\n      \"xpack.security.http.ssl.keystore.path\": \"<string>\",\n      \"xpack.security.http.ssl.keystore.type\": \"<string>\",\n      \"xpack.security.http.ssl.keystore.password\": \"<string>\",\n      \"xpack.security.http.ssl.truststore.path\": \"<string>\",\n      \"xpack.security.http.ssl.truststore.type\": \"<string>\",\n      \"xpack.security.http.ssl.certificate\": \"<string>\",\n      \"xpack.security.http.ssl.certificate_authorities\": \"<string>\",\n      \"nuix.auth.username\": \"<string>\",\n      \"nuix.auth.password\": \"<string>\",\n      \"searchguard.ssl.transport.keystore_filepath\": \"<string>\",\n      \"searchguard.ssl.transport.keystore_password\": \"<string>\",\n      \"searchguard.ssl.transport.truststore_filepath\": \"<string>\",\n      \"searchguard.ssl.transport.truststore_password\": \"<string>\"\n    },\n    \"binaryStoreLocation\": \"<string>\"\n  },\n  \"processingSettings\": {\n    \"analysisLanguage\": \"en\",\n    \"stopWords\": false,\n    \"stemming\": false,\n    \"enableExactQueries\": false\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/cases/:caseId/subset",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cases",
+                            ":caseId",
+                            "subset"
+                          ],
+                          "variable": [
+                            {
+                              "key": "caseId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/vnd.nuix.v1+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"functionKey\": \"<string>\",\n  \"location\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:21:15.000Z",
+                      "updatedAt": "2026-10-21T21:21:15.000Z",
+                      "uid": "35240-10e69e40-faa1-43ba-a8a9-31278cb4295a"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:21:15.000Z",
+                  "updatedAt": "2026-10-21T21:21:15.000Z",
+                  "uid": "35240-1b82775e-6d9e-4e1e-a81f-337044e9726b"
+                }
+              ],
+              "id": "18108642-1248-4868-b13f-696ffece843a",
+              "createdAt": "2026-10-21T21:21:15.000Z",
+              "updatedAt": "2026-10-21T21:21:15.000Z",
+              "uid": "35240-18108642-1248-4868-b13f-696ffece843a"
+            },
+            {
+              "name": "metadataFields",
+              "item": [
+                {
+                  "name": "Returns metadata fields available for a case",
+                  "id": "c9b10b39-86b4-43be-bc35-0a57d1039834",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cases/:caseId/metadataFields",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cases",
+                        ":caseId",
+                        "metadataFields"
+                      ],
+                      "variable": [
+                        {
+                          "id": "075981f1-a037-4c77-9872-be855d0a19ef",
+                          "key": "caseId",
+                          "value": "<string>",
+                          "description": "(Required) Case identification token"
+                        }
+                      ]
+                    },
+                    "description": "Use this operation to view the metadata fields associated with a case."
+                  },
+                  "response": [
+                    {
+                      "id": "2b087c98-2c9a-4075-b25d-7b4a8d94c9d9",
+                      "name": "default response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/cases/:caseId/metadataFields",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cases",
+                            ":caseId",
+                            "metadataFields"
+                          ],
+                          "variable": [
+                            {
+                              "key": "caseId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/vnd.nuix.v1+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\"\n  },\n  {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\"\n  }\n]",
+                      "createdAt": "2026-10-21T21:21:15.000Z",
+                      "updatedAt": "2026-10-21T21:21:15.000Z",
+                      "uid": "35240-2b087c98-2c9a-4075-b25d-7b4a8d94c9d9"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:21:15.000Z",
+                  "updatedAt": "2026-10-21T21:21:15.000Z",
+                  "uid": "35240-c9b10b39-86b4-43be-bc35-0a57d1039834"
+                }
+              ],
+              "id": "b45bf67a-3b42-4fe5-96be-d82f16eef7a8",
+              "createdAt": "2026-10-21T21:21:15.000Z",
+              "updatedAt": "2026-10-21T21:21:15.000Z",
+              "uid": "35240-b45bf67a-3b42-4fe5-96be-d82f16eef7a8"
+            },
+            {
+              "name": "caseFunctions",
+              "item": [
+                {
+                  "name": "Case functions",
+                  "id": "d0f1b322-1300-4404-8b57-23c558c44d0f",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cases/:caseId/caseFunctions",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cases",
+                        ":caseId",
+                        "caseFunctions"
+                      ],
+                      "variable": [
+                        {
+                          "id": "9e8294a8-bac4-47d1-8473-d457c5385eb6",
+                          "key": "caseId",
+                          "value": "<string>",
+                          "description": "(Required) Case identification token"
+                        }
+                      ]
+                    },
+                    "description": "Use this operation to list functions that are available to be run against this case."
+                  },
+                  "response": [
+                    {
+                      "id": "e90b1b61-adba-485a-bc15-e72b2915d6f1",
+                      "name": "default response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/cases/:caseId/caseFunctions",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cases",
+                            ":caseId",
+                            "caseFunctions"
+                          ],
+                          "variable": [
+                            {
+                              "key": "caseId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/vnd.nuix.v1+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  \"MIGRATE\",\n  \"MIGRATE\"\n]",
+                      "createdAt": "2026-10-21T21:21:15.000Z",
+                      "updatedAt": "2026-10-21T21:21:15.000Z",
+                      "uid": "35240-e90b1b61-adba-485a-bc15-e72b2915d6f1"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:21:15.000Z",
+                  "updatedAt": "2026-10-21T21:21:15.000Z",
+                  "uid": "35240-d0f1b322-1300-4404-8b57-23c558c44d0f"
+                },
+                {
+                  "name": "Perform a function against a case",
+                  "id": "bdf4fe76-9df2-4ff5-b7f8-43eee241b916",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"method\": \"MIGRATE\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/cases/:caseId/caseFunctions",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cases",
+                        ":caseId",
+                        "caseFunctions"
+                      ],
+                      "variable": [
+                        {
+                          "id": "e4c1ca98-8089-4403-8825-e7c8b65f4e26",
+                          "key": "caseId",
+                          "value": "<string>",
+                          "description": "(Required) Case identification token"
+                        }
+                      ]
+                    },
+                    "description": "Use this operation to perform some function against a case."
+                  },
+                  "response": [
+                    {
+                      "id": "7058d1bd-a546-40b7-85e6-cd9c10ef609c",
+                      "name": "default response",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"method\": \"MIGRATE\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/cases/:caseId/caseFunctions",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cases",
+                            ":caseId",
+                            "caseFunctions"
+                          ],
+                          "variable": [
+                            {
+                              "key": "caseId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/vnd.nuix.v1+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"functionKey\": \"<string>\",\n  \"location\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:21:15.000Z",
+                      "updatedAt": "2026-10-21T21:21:15.000Z",
+                      "uid": "35240-7058d1bd-a546-40b7-85e6-cd9c10ef609c"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:21:15.000Z",
+                  "updatedAt": "2026-10-21T21:21:15.000Z",
+                  "uid": "35240-bdf4fe76-9df2-4ff5-b7f8-43eee241b916"
+                }
+              ],
+              "id": "b9105a86-4929-40b7-8651-bbea65fdebc4",
+              "createdAt": "2026-10-21T21:21:15.000Z",
+              "updatedAt": "2026-10-21T21:21:15.000Z",
+              "uid": "35240-b9105a86-4929-40b7-8651-bbea65fdebc4"
+            },
+            {
+              "name": "Returns the top-level information for a case",
+              "id": "75393e14-acbc-43aa-8c76-4ded315deaf9",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/cases/:caseId?determineAdditionalAttributes=false&calculateCaseSize=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "cases",
+                    ":caseId"
+                  ],
+                  "query": [
+                    {
+                      "description": "Returns extended case attributes.  These attributes are hasExclusions, hasProductionSets, hasCalculatedAuditSize, and hasNuixSystemTags.",
+                      "key": "determineAdditionalAttributes",
+                      "value": "false"
+                    },
+                    {
+                      "description": "Should size of case on disk be calculated? Defaults to false",
+                      "key": "calculateCaseSize",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "b51be9dc-a3b7-44c6-b73c-404644d298a4",
+                      "key": "caseId",
+                      "value": "<string>",
+                      "description": "(Required) Case identification token"
+                    }
+                  ]
+                },
+                "description": "Use this operation to view the top-level information associated with a case. Top-level case information returns case property content like the following: case ID, name, path, description, investigator time zone, investigator, and whether the case is simple or compound."
+              },
+              "response": [
+                {
+                  "id": "58da9003-65fb-4908-8a46-18bc55125361",
+                  "name": "default response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cases/:caseId?determineAdditionalAttributes=false&calculateCaseSize=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cases",
+                        ":caseId"
+                      ],
+                      "query": [
+                        {
+                          "description": "Returns extended case attributes.  These attributes are hasExclusions, hasProductionSets, hasCalculatedAuditSize, and hasNuixSystemTags.",
+                          "key": "determineAdditionalAttributes",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Should size of case on disk be calculated? Defaults to false",
+                          "key": "calculateCaseSize",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "caseId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/vnd.nuix.v1+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"caseId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"path\": \"<string>\",\n  \"description\": \"<string>\",\n  \"investigator\": \"<string>\",\n  \"creationDate\": \"<long>\",\n  \"compound\": \"<boolean>\",\n  \"elastic\": \"<boolean>\",\n  \"binaryStoreLocation\": \"<string>\",\n  \"indexId\": \"<string>\",\n  \"caseSize\": \"<long>\",\n  \"casePathParent\": \"<string>\",\n  \"caseInvestigationTimeZone\": \"<string>\",\n  \"hasExclusions\": \"<boolean>\",\n  \"hasNuixSystemTags\": \"<boolean>\",\n  \"hasProductionSets\": \"<boolean>\",\n  \"hasCalculatedAuditSize\": \"<boolean>\",\n  \"caseName\": \"<string>\",\n  \"casePath\": \"<string>\",\n  \"caseDescription\": \"<string>\",\n  \"caseCreationDate\": \"<integer>\",\n  \"caseInvestigator\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:21:15.000Z",
+                  "updatedAt": "2026-10-21T21:21:15.000Z",
+                  "uid": "35240-58da9003-65fb-4908-8a46-18bc55125361"
+                }
+              ],
+              "createdAt": "2026-10-21T21:21:15.000Z",
+              "updatedAt": "2026-10-21T21:21:15.000Z",
+              "uid": "35240-75393e14-acbc-43aa-8c76-4ded315deaf9"
+            },
+            {
+              "name": "Deletes a case",
+              "id": "84fdecf6-4c05-4c3b-bc93-ab55a5ec4636",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/cases/:caseId?deleteAllDescendants=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "cases",
+                    ":caseId"
+                  ],
+                  "query": [
+                    {
+                      "description": "Delete child cases of a compound case",
+                      "key": "deleteAllDescendants",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "536dd692-7987-462e-9026-eb87ab6ba6d4",
+                      "key": "caseId",
+                      "value": "<string>",
+                      "description": "(Required) Case identification token"
+                    }
+                  ]
+                },
+                "description": "Use this operation to delete a case."
+              },
+              "response": [
+                {
+                  "id": "8bdf326f-0213-4985-bc8e-18a91d4b3acb",
+                  "name": "default response",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cases/:caseId?deleteAllDescendants=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cases",
+                        ":caseId"
+                      ],
+                      "query": [
+                        {
+                          "description": "Delete child cases of a compound case",
+                          "key": "deleteAllDescendants",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "caseId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/vnd.nuix.v1+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"caseId\": \"<string>\",\n  \"success\": \"<boolean>\",\n  \"errorMessage\": \"<string>\",\n  \"childCases\": [\n    {\n      \"value\": \"<Circular reference to #/components/schemas/CaseDeleteResponse detected>\"\n    },\n    {\n      \"value\": \"<Circular reference to #/components/schemas/CaseDeleteResponse detected>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-21T21:21:15.000Z",
+                  "updatedAt": "2026-10-21T21:21:15.000Z",
+                  "uid": "35240-8bdf326f-0213-4985-bc8e-18a91d4b3acb"
+                }
+              ],
+              "createdAt": "2026-10-21T21:21:15.000Z",
+              "updatedAt": "2026-10-21T21:21:15.000Z",
+              "uid": "35240-84fdecf6-4c05-4c3b-bc93-ab55a5ec4636"
+            }
+          ],
+          "id": "771b1a45-2866-4d52-8ab3-a1e737730fc5",
+          "createdAt": "2026-10-21T21:21:15.000Z",
+          "updatedAt": "2026-10-21T21:21:15.000Z",
+          "uid": "35240-771b1a45-2866-4d52-8ab3-a1e737730fc5"
+        },
+        {
+          "name": "Creates a case",
+          "id": "785e6c51-66ca-4aea-812c-4dce6fbf58a7",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.nuix.v2+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v2+json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"compound\": false,\n  \"location\": \"inventory0\",\n  \"description\": \"<string>\",\n  \"investigator\": \"<string>\",\n  \"elasticSearchSettings\": {\n    \"cluster.name\": \"<string>\",\n    \"nuix.transport.hosts\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"additionalSettings\": {\n      \"fugiat_83\": \"<string>\",\n      \"est_40\": \"<string>\"\n    },\n    \"index.number_of_shards\": \"<integer>\",\n    \"index.number_of_replicas\": \"<integer>\",\n    \"index.refresh_interval\": \"<string>\",\n    \"nuix.index.auto_close\": \"<boolean>\",\n    \"nuix.http.hosts\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"xpack.security.user\": \"<string>\",\n    \"xpack.security.password\": \"<string>\",\n    \"xpack.security.transport.ssl.enabled\": \"<boolean>\",\n    \"xpack.security.transport.ssl.truststore.path\": \"<string>\",\n    \"xpack.security.transport.ssl.truststore.type\": \"<string>\",\n    \"xpack.security.transport.ssl.keystore.path\": \"<string>\",\n    \"xpack.security.transport.ssl.keystore.type\": \"<string>\",\n    \"xpack.security.transport.ssl.verification_mode\": \"<string>\",\n    \"xpack.security.http.ssl.enabled\": \"<boolean>\",\n    \"xpack.security.http.ssl.key\": \"<string>\",\n    \"xpack.security.http.ssl.key_passphrase\": \"<string>\",\n    \"xpack.security.http.ssl.keystore.key_password\": \"<string>\",\n    \"xpack.security.http.ssl.keystore.path\": \"<string>\",\n    \"xpack.security.http.ssl.keystore.type\": \"<string>\",\n    \"xpack.security.http.ssl.keystore.password\": \"<string>\",\n    \"xpack.security.http.ssl.truststore.path\": \"<string>\",\n    \"xpack.security.http.ssl.truststore.type\": \"<string>\",\n    \"xpack.security.http.ssl.certificate\": \"<string>\",\n    \"xpack.security.http.ssl.certificate_authorities\": \"<string>\",\n    \"nuix.auth.username\": \"<string>\",\n    \"nuix.auth.password\": \"<string>\",\n    \"searchguard.ssl.transport.keystore_filepath\": \"<string>\",\n    \"searchguard.ssl.transport.keystore_password\": \"<string>\",\n    \"searchguard.ssl.transport.truststore_filepath\": \"<string>\",\n    \"searchguard.ssl.transport.truststore_password\": \"<string>\"\n  },\n  \"binaryStoreLocation\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/cases",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cases"
+              ]
+            },
+            "description": "Use this operation to create a case. You can create a simple or\ncompound case, which is a collection of simple cases. You can declare that\na simple case be processed via ElasticSearch by defining the elasticSearchSettings\nattribute. Compound cases cannot be processed via ElasticSearch.\n\nWhen you create a case, the location of the CaseCreateRequest should be an inventory location (inventory0,\ninventory1, inventoryx) or a path relative to an inventory location. Absolute paths within an inventory location\nwill be created at the desired location but absolute paths outside an inventory location will be appended\nto the first inventory location.\n\nThe following are examples of locations and the absolute paths where those cases will be created given\ntwo inventory locations that have been configured at /cases and /elasticsearchCases.\n\n| Location | Case Name | Absolute Path |\n| ----------- | --------- | ------------------- |\n| inventory0 | MyCase | /cases/MyCase |\n| inventory1 | MyElasticCase | /elasticsearchCases/MyElasticCase |\n| /my/path | Case1 | /cases/my/path/Case1 |\n| my/path | Case2 | /cases/my/path/Case2 |\n| inventory0/my/path | Case3 | /cases/my/path/Case3 |\n| inventory1/my/path | Case4 | /elasticsearchCases/my/path/Case4 |\n| /cases | Case5 | /cases/Case5 |\n| /cases/another/path | Case6 | /cases/another/path/Case6 |\n\nInventory locations let the REST server administrator control where cases are created and provide a layer\nof security between the server and the user."
+          },
+          "response": [
+            {
+              "id": "eee656dc-7e85-4760-88f5-0289fcbbc520",
+              "name": "default response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/vnd.nuix.v2+json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v2+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"compound\": false,\n  \"location\": \"inventory0\",\n  \"description\": \"<string>\",\n  \"investigator\": \"<string>\",\n  \"elasticSearchSettings\": {\n    \"cluster.name\": \"<string>\",\n    \"nuix.transport.hosts\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"additionalSettings\": {\n      \"fugiat_83\": \"<string>\",\n      \"est_40\": \"<string>\"\n    },\n    \"index.number_of_shards\": \"<integer>\",\n    \"index.number_of_replicas\": \"<integer>\",\n    \"index.refresh_interval\": \"<string>\",\n    \"nuix.index.auto_close\": \"<boolean>\",\n    \"nuix.http.hosts\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"xpack.security.user\": \"<string>\",\n    \"xpack.security.password\": \"<string>\",\n    \"xpack.security.transport.ssl.enabled\": \"<boolean>\",\n    \"xpack.security.transport.ssl.truststore.path\": \"<string>\",\n    \"xpack.security.transport.ssl.truststore.type\": \"<string>\",\n    \"xpack.security.transport.ssl.keystore.path\": \"<string>\",\n    \"xpack.security.transport.ssl.keystore.type\": \"<string>\",\n    \"xpack.security.transport.ssl.verification_mode\": \"<string>\",\n    \"xpack.security.http.ssl.enabled\": \"<boolean>\",\n    \"xpack.security.http.ssl.key\": \"<string>\",\n    \"xpack.security.http.ssl.key_passphrase\": \"<string>\",\n    \"xpack.security.http.ssl.keystore.key_password\": \"<string>\",\n    \"xpack.security.http.ssl.keystore.path\": \"<string>\",\n    \"xpack.security.http.ssl.keystore.type\": \"<string>\",\n    \"xpack.security.http.ssl.keystore.password\": \"<string>\",\n    \"xpack.security.http.ssl.truststore.path\": \"<string>\",\n    \"xpack.security.http.ssl.truststore.type\": \"<string>\",\n    \"xpack.security.http.ssl.certificate\": \"<string>\",\n    \"xpack.security.http.ssl.certificate_authorities\": \"<string>\",\n    \"nuix.auth.username\": \"<string>\",\n    \"nuix.auth.password\": \"<string>\",\n    \"searchguard.ssl.transport.keystore_filepath\": \"<string>\",\n    \"searchguard.ssl.transport.keystore_password\": \"<string>\",\n    \"searchguard.ssl.transport.truststore_filepath\": \"<string>\",\n    \"searchguard.ssl.transport.truststore_password\": \"<string>\"\n  },\n  \"binaryStoreLocation\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/cases",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "cases"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v2+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"functionKey\": \"<string>\",\n  \"location\": \"<string>\"\n}",
+              "createdAt": "2026-10-21T21:21:15.000Z",
+              "updatedAt": "2026-10-21T21:21:15.000Z",
+              "uid": "35240-eee656dc-7e85-4760-88f5-0289fcbbc520"
+            }
+          ],
+          "createdAt": "2026-10-21T21:21:15.000Z",
+          "updatedAt": "2026-10-21T21:21:15.000Z",
+          "uid": "35240-785e6c51-66ca-4aea-812c-4dce6fbf58a7"
+        }
+      ],
+      "id": "f1d8c477-0846-4b66-8fd8-ab4cf8f42ae3",
+      "createdAt": "2026-10-21T21:21:15.000Z",
+      "updatedAt": "2026-10-21T21:21:15.000Z",
+      "uid": "35240-f1d8c477-0846-4b66-8fd8-ab4cf8f42ae3"
+    },
+    {
+      "name": "inventory",
+      "item": [
+        {
+          "name": "locations",
+          "item": [
+            {
+              "name": "Returns the set of inventory locations",
+              "id": "fe559d82-9f7e-4fc6-bb56-b957d1fa0b40",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/inventory/locations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "inventory",
+                    "locations"
+                  ]
+                },
+                "description": "Use this operation to view the list of normalized inventory locations. Any case placed in any location in this list will be added to the case inventory during the next scheduled inventory scan."
+              },
+              "response": [
+                {
+                  "id": "3ac6e071-fd0c-4a0b-b687-1c58eae44f7b",
+                  "name": "default response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/inventory/locations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "inventory",
+                        "locations"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/vnd.nuix.v1+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "[\n  \"<string>\",\n  \"<string>\"\n]",
+                  "createdAt": "2026-10-21T21:21:15.000Z",
+                  "updatedAt": "2026-10-21T21:21:15.000Z",
+                  "uid": "35240-3ac6e071-fd0c-4a0b-b687-1c58eae44f7b"
+                }
+              ],
+              "createdAt": "2026-10-21T21:21:15.000Z",
+              "updatedAt": "2026-10-21T21:21:15.000Z",
+              "uid": "35240-fe559d82-9f7e-4fc6-bb56-b957d1fa0b40"
+            }
+          ],
+          "id": "8b33d45d-061c-4006-be07-35c66565ffc2",
+          "createdAt": "2026-10-21T21:21:15.000Z",
+          "updatedAt": "2026-10-21T21:21:15.000Z",
+          "uid": "35240-8b33d45d-061c-4006-be07-35c66565ffc2"
+        },
+        {
+          "name": "{caseId}",
+          "item": [
+            {
+              "name": "Returns the digest information for a case",
+              "id": "8366ca30-e526-4b49-b530-994624446c36",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/inventory/:caseId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "inventory",
+                    ":caseId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "911212fc-97c3-410a-be93-18121d3b3dca",
+                      "key": "caseId",
+                      "value": "<string>",
+                      "description": "(Required) Case identification token"
+                    }
+                  ]
+                },
+                "description": "Use this operation to view the case digest for a given case, which is obtained without opening the case."
+              },
+              "response": [
+                {
+                  "id": "ff61138e-01c3-4708-aa50-889c37e52a6e",
+                  "name": "default response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/inventory/:caseId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "inventory",
+                        ":caseId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "caseId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/vnd.nuix.v1+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"caseId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"path\": \"<string>\",\n  \"description\": \"<string>\",\n  \"investigator\": \"<string>\",\n  \"creationDate\": \"<long>\",\n  \"compound\": \"<boolean>\",\n  \"elastic\": \"<boolean>\",\n  \"binaryStoreLocation\": \"<string>\",\n  \"indexId\": \"<string>\",\n  \"productName\": \"<string>\",\n  \"version\": \"<string>\",\n  \"isOpen\": \"<boolean>\",\n  \"childCases\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"url\": \"<string>\",\n  \"serverId\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:21:15.000Z",
+                  "updatedAt": "2026-10-21T21:21:15.000Z",
+                  "uid": "35240-ff61138e-01c3-4708-aa50-889c37e52a6e"
+                }
+              ],
+              "createdAt": "2026-10-21T21:21:15.000Z",
+              "updatedAt": "2026-10-21T21:21:15.000Z",
+              "uid": "35240-8366ca30-e526-4b49-b530-994624446c36"
+            }
+          ],
+          "id": "02b87fe0-db37-4e4c-887c-b3c5a8b1f517",
+          "createdAt": "2026-10-21T21:21:15.000Z",
+          "updatedAt": "2026-10-21T21:21:15.000Z",
+          "uid": "35240-02b87fe0-db37-4e4c-887c-b3c5a8b1f517"
+        },
+        {
+          "name": "digest",
+          "item": [
+            {
+              "name": "Returns the set of case digests for all inventory locations",
+              "id": "5f46c642-d049-4b26-acc0-7ceb381bb5ef",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/inventory/digest",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "inventory",
+                    "digest"
+                  ]
+                },
+                "description": "Use this operation to view the set of case digests for all inventory locations."
+              },
+              "response": [
+                {
+                  "id": "ee0fcdda-483d-4722-81be-c1960bf5fa52",
+                  "name": "default response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "nuix-auth-token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/inventory/digest",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "inventory",
+                        "digest"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/vnd.nuix.v1+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "[\n  {\n    \"caseId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"path\": \"<string>\",\n    \"description\": \"<string>\",\n    \"investigator\": \"<string>\",\n    \"creationDate\": \"<long>\",\n    \"compound\": \"<boolean>\",\n    \"elastic\": \"<boolean>\",\n    \"binaryStoreLocation\": \"<string>\",\n    \"indexId\": \"<string>\",\n    \"productName\": \"<string>\",\n    \"version\": \"<string>\",\n    \"isOpen\": \"<boolean>\",\n    \"childCases\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"url\": \"<string>\",\n    \"serverId\": \"<string>\"\n  },\n  {\n    \"caseId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"path\": \"<string>\",\n    \"description\": \"<string>\",\n    \"investigator\": \"<string>\",\n    \"creationDate\": \"<long>\",\n    \"compound\": \"<boolean>\",\n    \"elastic\": \"<boolean>\",\n    \"binaryStoreLocation\": \"<string>\",\n    \"indexId\": \"<string>\",\n    \"productName\": \"<string>\",\n    \"version\": \"<string>\",\n    \"isOpen\": \"<boolean>\",\n    \"childCases\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"url\": \"<string>\",\n    \"serverId\": \"<string>\"\n  }\n]",
+                  "createdAt": "2026-10-21T21:21:15.000Z",
+                  "updatedAt": "2026-10-21T21:21:15.000Z",
+                  "uid": "35240-ee0fcdda-483d-4722-81be-c1960bf5fa52"
+                }
+              ],
+              "createdAt": "2026-10-21T21:21:15.000Z",
+              "updatedAt": "2026-10-21T21:21:15.000Z",
+              "uid": "35240-5f46c642-d049-4b26-acc0-7ceb381bb5ef"
+            }
+          ],
+          "id": "cb5fbe5a-02f7-4bbd-a0bb-4a75259ff8c2",
+          "createdAt": "2026-10-21T21:21:15.000Z",
+          "updatedAt": "2026-10-21T21:21:15.000Z",
+          "uid": "35240-cb5fbe5a-02f7-4bbd-a0bb-4a75259ff8c2"
+        },
+        {
+          "name": "Rescans your inventory",
+          "id": "e78c78ef-eb9f-4712-ac2a-8cabec739dc9",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.nuix.v1+json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/inventory",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "inventory"
+              ]
+            },
+            "description": "Use this operation to rescan your inventory. The inventory is scanned on startup by default and at a predefined regular interval."
+          },
+          "response": [
+            {
+              "id": "2da1f6df-9832-4e11-8cc0-6a5e8dd81b8b",
+              "name": "default response",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.nuix.v1+json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "nuix-auth-token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/inventory",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "inventory"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.nuix.v1+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  \"<string>\",\n  \"<string>\"\n]",
+              "createdAt": "2026-10-21T21:21:15.000Z",
+              "updatedAt": "2026-10-21T21:21:15.000Z",
+              "uid": "35240-2da1f6df-9832-4e11-8cc0-6a5e8dd81b8b"
+            }
+          ],
+          "createdAt": "2026-10-21T21:21:15.000Z",
+          "updatedAt": "2026-10-21T21:21:15.000Z",
+          "uid": "35240-e78c78ef-eb9f-4712-ac2a-8cabec739dc9"
+        }
+      ],
+      "id": "99feb174-8297-4ed4-8c89-d928e6c40411",
+      "createdAt": "2026-10-21T21:21:15.000Z",
+      "updatedAt": "2026-10-21T21:21:15.000Z",
+      "uid": "35240-99feb174-8297-4ed4-8c89-d928e6c40411"
+    },
+    {
+      "name": "v2",
+      "item": [
+        {
+          "name": "cases",
+          "item": [
+            {
+              "name": "{caseId}",
+              "item": [
+                {
+                  "name": "Deletes a case asynchronously",
+                  "id": "df249f4e-4f9e-4ddb-b9c2-34b819ce6ea7",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/vnd.nuix.v1+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/cases/:caseId?deleteAllDescendants=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "cases",
+                        ":caseId"
+                      ],
+                      "query": [
+                        {
+                          "description": "Delete child cases of a compound case",
+                          "key": "deleteAllDescendants",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "2b64bef2-c969-449e-b228-deb2fd5edad8",
+                          "key": "caseId",
+                          "value": "<string>",
+                          "description": "(Required) Case identification token"
+                        }
+                      ]
+                    },
+                    "description": "Use this operation to delete a case asynchronously. This operation returns immediately with an async function key that can be used to monitor the deletion progress."
+                  },
+                  "response": [
+                    {
+                      "id": "f51276b0-c06e-472a-bdfe-3c1a37f2273f",
+                      "name": "Async function response with key and location for monitoring progress",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/cases/:caseId?deleteAllDescendants=false",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "cases",
+                            ":caseId"
+                          ],
+                          "query": [
+                            {
+                              "description": "Delete child cases of a compound case",
+                              "key": "deleteAllDescendants",
+                              "value": "false"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "caseId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/vnd.nuix.v1+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"functionKey\": \"<string>\",\n  \"location\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:21:15.000Z",
+                      "updatedAt": "2026-10-21T21:21:15.000Z",
+                      "uid": "35240-f51276b0-c06e-472a-bdfe-3c1a37f2273f"
+                    },
+                    {
+                      "id": "b01582e3-1105-467d-a1fb-0010e2962854",
+                      "name": "Case does not exist",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/vnd.nuix.v1+json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "nuix-auth-token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/cases/:caseId?deleteAllDescendants=false",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "cases",
+                            ":caseId"
+                          ],
+                          "query": [
+                            {
+                              "description": "Delete child cases of a compound case",
+                              "key": "deleteAllDescendants",
+                              "value": "false"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "caseId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/vnd.nuix.v1+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"serverId\": \"<string>\",\n  \"developerMessage\": \"<string>\",\n  \"userMessage\": \"<string>\",\n  \"additionalInfo\": {\n    \"fugiat_2e6\": {},\n    \"laborum_6\": {},\n    \"ullamco_8ba\": {}\n  },\n  \"errorCode\": \"LICENSE_EXCEPTION\"\n}",
+                      "createdAt": "2026-10-21T21:21:15.000Z",
+                      "updatedAt": "2026-10-21T21:21:15.000Z",
+                      "uid": "35240-b01582e3-1105-467d-a1fb-0010e2962854"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:21:15.000Z",
+                  "updatedAt": "2026-10-21T21:21:15.000Z",
+                  "uid": "35240-df249f4e-4f9e-4ddb-b9c2-34b819ce6ea7"
+                }
+              ],
+              "id": "b0f6b5de-a407-4cf1-b669-25106bc1526e",
+              "createdAt": "2026-10-21T21:21:15.000Z",
+              "updatedAt": "2026-10-21T21:21:15.000Z",
+              "uid": "35240-b0f6b5de-a407-4cf1-b669-25106bc1526e"
+            }
+          ],
+          "id": "7a968026-6974-48e1-9a7e-d9f9a608d7ed",
+          "createdAt": "2026-10-21T21:21:15.000Z",
+          "updatedAt": "2026-10-21T21:21:15.000Z",
+          "uid": "35240-7a968026-6974-48e1-9a7e-d9f9a608d7ed"
+        }
+      ],
+      "id": "1354d6ee-f83c-4a27-b5db-0ef0a2e57f29",
+      "createdAt": "2026-10-21T21:21:15.000Z",
+      "updatedAt": "2026-10-21T21:21:15.000Z",
+      "uid": "35240-1354d6ee-f83c-4a27-b5db-0ef0a2e57f29"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "nuix-auth-token",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "/nuix-restful-service/svc"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist overlay for NUIX ECC REST API Command Reference Group API
+  version: 1.0.0
+extends: openapi/nuix-group-api-openapi.yml
+x-generated: '2026-10-21'
+x-method: generated
+x-source: openapi/nuix-group-api-openapi.yml
+x-rationale: Adds provenance, a link to the provider reference docs, and per-operation agent hints (read_only
+  from GET, confirmation for DELETE/cancel/job actions) without editing the captured spec.
+actions:
+- target: $.info
+  description: Record API Evangelist provenance without mutating the original.
+  update:
+    x-api-evangelist:
+      provider: nuix
+      generated: '2026-10-21'
+      source: openapi/nuix-group-api-openapi.yml
+      deployment: Self-hosted. Nuix ships this API inside customer-installed software (Enterprise Collection
+        Center server); there is no public multi-tenant host, so servers[] stays templated/local.
+- target: $
+  description: Link the provider-published reference documentation.
+  update:
+    externalDocs:
+      description: Nuix developer documentation
+      url: https://developer.nuix.com/latest/reference/eccapireference.html
+- target: $.paths['/v2/groups'].get
+  description: 'Agent hint for listGroupsAll: derived from the HTTP method.'
+  update:
+    x-agent-hints:
+      read_only: true
+      requires_confirmation: false
+- target: $.paths['/v2/group'].post
+  description: 'Agent hint for createGroup: derived from the HTTP method.'
+  update:
+    x-agent-hints:
+      read_only: false
+      requires_confirmation: false
+- target: $.paths['/v2/group'].put
+  description: 'Agent hint for modifyGroup: derived from the HTTP method.'
+  update:
+    x-agent-hints:
+      read_only: false
+      requires_confirmation: false
+- target: $.paths['/v2/group'].delete
+  description: 'Agent hint for deleteGroup: derived from the HTTP method.'
+  update:
+    x-agent-hints:
+      read_only: false
+      requires_confirmation: true

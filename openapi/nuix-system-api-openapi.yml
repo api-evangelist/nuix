@@ -1,0 +1,668 @@
+openapi: 3.2.0
+info:
+  title: Nuix REST-API Reference System API
+  description: 'Welcome to the Nuix REST API documentation. From here you can access all available REST APIs and execute queries against your running REST instance.
+
+
+    # Authentication Changes
+
+
+    The `nuix-auth-token` header is being deprecated in favor of standard JWT. The header will be removed in a
+
+    future release. Until the removal of the header, the Nuix REST API will accept the JWT in either the
+
+    `nuix-auth-token` header field or the `Authorization` header field prefixed by `Bearer`.'
+  contact:
+    name: Nuix
+    url: http://forums.nuix.com/
+  license:
+    name: Licence
+    url: https://www.nuix.com/sites/default/files/2023-03/End%20User%20License%20Agreement%20%28Effective%20December%2014%2C%202022%29_1.pdf
+  version: ${customer.version}
+servers:
+- url: /nuix-restful-service/svc
+- url: http://localhost:8080/svc
+security:
+- ApiKeyAuth: []
+- bearerAuth: []
+tags:
+- name: System
+paths:
+  /resources/ocr:
+    get:
+      tags:
+      - System
+      summary: Detects whether OCR functionality is available
+      description: Use this operation to determine whether optical character recognition (OCR) functionality is available.
+      operationId: checkOcrCapability
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              examples:
+                OCR Enabled:
+                  value:
+                    success: true
+                OCR Disabled:
+                  value:
+                    success: false
+  /resources/ffmpeg:
+    get:
+      tags:
+      - System
+      summary: Detects whether FFmpeg/FFprobe functionality is available
+      description: Use this operation to determine whether FFmpeg and FFprobe functionality is available.
+      operationId: checkFfmpegCapability
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              examples:
+                FFmpeg Enabled:
+                  value:
+                    success: true
+                FFmpeg Disabled:
+                  value:
+                    success: false
+  /resources/lotusnotes:
+    get:
+      tags:
+      - System
+      summary: Detects whether Lotus Notes functionality is available
+      description: Use this operation to determine whether Lotus Notes functionality is available.
+      operationId: checkLotusNotesCapability
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              examples:
+                Lotus Notes Enabled:
+                  value:
+                    success: true
+                Lotus Notes Disabled:
+                  value:
+                    success: false
+  /resources/thirdparty:
+    get:
+      tags:
+      - System
+      summary: Provides a summary of third party dependencies and their availability
+      description: Use this operation to determine whether third party dependencies have been installed and what functionality is available.
+      operationId: getThirdPartyDepedencies
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ThirdPartyDependencyResponse'
+              examples:
+                Third Party Dependencies:
+                  value:
+                  - description: Lotus Notes
+                    version: null
+                    message: Not found
+                    comment: <html> <p>Lotus notes was not found. Lotus Notes files will not be able to be processed.</p> <p>Version 9.0 is required.</p> <p>Due to licensing restrictions, this software cannot be redistributed; you will need to install it separately.</p> </html>
+                    attentionRequired: true
+                  - description: FFmpeg / FFprobe
+                    version: '0.1'
+                    message: Found
+                    comment: <html> <p>FFmpeg and FFprobe were found. Multimedia metadata will be extracted and video image data will be processed.</p> </html>
+                    attentionRequired: false
+                  - description: Nuix OCR
+                    version: 12.4.7
+                    message: Found Version 12.4.7
+                    comment: <html> <p>The Nuix OCR add-on 12.4.7 was found on your system.</p> <p>It will be possible to perform OCR.</p> </html>
+                    attentionRequired: false
+            application/vnd.nuix.v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClusterThirdPartyDependency'
+              examples:
+                Third Party Dependencies Across Cluster:
+                  value:
+                  - hostAddress: http://consumer1:8080
+                    thirdPartyDependency:
+                    - description: Lotus Notes
+                      version: null
+                      message: Not found
+                      comment: <html> <p>Lotus notes was not found. Lotus Notes files will not be able to be processed.</p> <p>Version 9.0 is required.</p> <p>Due to licensing restrictions, this software cannot be redistributed; you will need to install it separately.</p> </html>
+                      attentionRequired: true
+                    - description: FFmpeg / FFprobe
+                      version: '0.1'
+                      message: Found
+                      comment: <html> <p>FFmpeg and FFprobe were found. Multimedia metadata will be extracted and video image data will be processed.</p> </html>
+                      attentionRequired: false
+                    - description: Nuix OCR
+                      version: 12.4.7
+                      message: Found Version 12.4.7
+                      comment: <html> <p>The Nuix OCR add-on 12.4.7 was found on your system.</p> <p>It will be possible to perform OCR.</p> </html>
+                      attentionRequired: false
+  /system/properties/{propertyName}:
+    get:
+      tags:
+      - System
+      summary: Gets a Nuix system property
+      description: Use this operation to get the value of a Nuix system property. This operation is limited to Nuix system properties only and the property must start with the string "nuix."
+      operationId: getSystemProperty
+      parameters:
+      - name: propertyName
+        in: path
+        description: The name of the system property.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/SystemPropertyResponse'
+              example:
+                name: nuix.registry.servers
+                value: server.domain.com
+                previousValue: null
+        '400':
+          description: Invalid Property
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: INVALID_REQUEST_FORMAT
+                developerMessage: badproperty is an unrecognized Nuix system property.
+                userMessage: null
+                additionalInfo: null
+    put:
+      tags:
+      - System
+      summary: Sets a Nuix system property
+      description: Use this operation to set a Nuix system property. This operation is limited to Nuix system properties only and the value is not persisted between application restarts. You may want to do this if there is a specific Nuix system property required for an ingestion, export, or OCR operation. This is NOT threadsafe and could affect other users.
+      operationId: setSystemProperty
+      parameters:
+      - name: propertyName
+        in: path
+        description: The name of the system property.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/SystemPropertyRequest'
+            examples:
+              Update Property Example:
+                value:
+                  value: new_value
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/SystemPropertyResponse'
+              example:
+                name: nuix.registry.servers
+                value: server.domain.com
+                previousValue: oldserver.domain.com
+        '400':
+          description: Invalid Property
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: INVALID_REQUEST_FORMAT
+                developerMessage: badproperty is an unrecognized Nuix system property.
+                userMessage: null
+                additionalInfo: null
+    delete:
+      tags:
+      - System
+      summary: Clears a Nuix system property
+      description: Use this operation to clear a Nuix system property. This operation is limited to Nuix system properties only and the value is not persisted between application restarts. You may want to do this if you previously set a specific Nuix system property required for an ingestion, export, or OCR operation. This is NOT threadsafe and could affect other users.
+      operationId: clearSystemProperty
+      parameters:
+      - name: propertyName
+        in: path
+        description: The name of the system property.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/SystemPropertyResponse'
+              example:
+                name: nuix.registry.servers
+                value: null
+                previousValue: oldserver.domain.com
+        '400':
+          description: Invalid Property
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: INVALID_REQUEST_FORMAT
+                developerMessage: badproperty is an unrecognized Nuix system property.
+                userMessage: null
+                additionalInfo: null
+  /system/diagnostics:
+    get:
+      tags:
+      - System
+      summary: Generates a system diagnostics ZIP file
+      description: Use this operation to create a ZIP file with system diagnostics information. The diagnostics include log files, product versions, environment variables, system properties, licence properties, drive information, process information, JVM arguments and settings, and installed and not installed dependencies. Please note that when operating in a cluster this endpoint will return system diagnostics from ALL nodes in the cluster.
+      operationId: generateSystemsDiagnostics
+      parameters:
+      - name: includeResourceDetails
+        in: query
+        description: Creates an additional diagnostics file that includes the engine version, search cache, system resources, function queue, and active user count.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: default response
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+    post:
+      tags:
+      - System
+      summary: Generates a system diagnostics ZIP file asyncronously
+      description: Use this operation to create a ZIP file with system diagnostics information asyncronously. The diagnostics include log files, product versions, environment variables, system properties, licence properties, drive information, process information, JVM arguments and settings, and installed and not installed dependencies. The endpoint return an async function id which should be polled until complete. The result can be used to retrieve the download from the /downloads/{downloadId} endpoint. Please note that when operating in a cluster this endpoint will return diagnostics from ALL nodes in the cluster.
+      operationId: generateSystemDiagnosticsDistributed_1
+      parameters:
+      - name: includeResourceDetails
+        in: query
+        description: Creates an additional diagnostics file that includes the engine version, search cache, system resources, function queue, and active user count.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /downloads/{id}:
+    get:
+      tags:
+      - System
+      summary: Downloads a file given an id
+      description: Use this endpoint to download a file from the server given a download id.
+      operationId: downloadFile_1
+      parameters:
+      - name: id
+        in: path
+        description: The id of the download.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json,application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Download does not exist
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: RESOURCE_NOT_FOUND
+                developerMessage: The resource of type 'DOWNLOAD' and identifier 'c2284dc7-1ec4-47bf-b5c0-af91ae2e8087' could not be found.
+                userMessage: The resource of type 'DOWNLOAD' and identifier 'c2284dc7-1ec4-47bf-b5c0-af91ae2e8087' could not be found.
+                additionalInfo:
+                  rootExceptionClass: com.nuix.us.exception.i18n.I18nNotFoundException
+                  rootExceptionMessage: null
+  /system/health:
+    get:
+      tags:
+      - System
+      summary: Checks whether the REST server is running
+      description: Use this operation to ensure the RESTful services are working. This is a heartbeat test that checks whether the REST server is up and running.
+      operationId: heartbeat
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              examples:
+                Service Running:
+                  value:
+                    success: true
+  /about:
+    get:
+      tags:
+      - System
+      summary: Retrieves information about Nuix RESTful services
+      description: Use this operation to view version information about your Nuix RESTful services configuration. Authentication is optional for this endpoint. If the user is not authenticated then sensitive information about the service is not returned.
+      operationId: aboutV1
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v2+json:
+              schema:
+                $ref: '#/components/schemas/AboutResponse'
+              examples:
+                Unauthenticated Response:
+                  value:
+                    server: http://localhost:8080
+                    serverId: my-rest-server
+                    startupTime: null
+                    nuixRestfulVersion: null
+                    engineVersion: null
+                Authenticated Response:
+                  value:
+                    server: http://localhost:8080
+                    serverId: my-rest-server
+                    startupTime: 1582916595048
+                    nuixRestfulVersion: 15.0.0
+                    engineVersion: 8.4.0.251
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AboutResponseV1'
+              examples:
+                Unathenticated Response:
+                  value:
+                    server: http://localhost:8080
+                    serverId: my-rest-server
+                    startupTime: null
+                    nuixRestfulVersion: 15.0.0
+                    engineVersion: null
+                    licenceSource: server
+                    casePrivilegeSecurityEnabled: false
+                    itemSecurityEnabled: false
+                    specificLicenseRequiredAtLogin: false
+                    userManagementUrl: ''
+                    textHighlightingEnabled: true
+                    phraseHighlightingEnabled: false
+                Authenticated Response:
+                  value:
+                    server: http://localhost:8080
+                    serverId: my-rest-server
+                    startupTime: 1582916595048
+                    nuixRestfulVersion: 15.0.0
+                    engineVersion: 8.4.0.251
+                    licenceSource: server
+                    casePrivilegeSecurityEnabled: false
+                    itemSecurityEnabled: false
+                    specificLicenseRequiredAtLogin: false
+                    userManagementUrl: ''
+                    textHighlightingEnabled: true
+                    phraseHighlightingEnabled: false
+  /charsets:
+    get:
+      summary: Returns the list of charsets on the system
+      description: Use this operation to view the list of system charsets.
+      tags:
+      - System
+      operationId: getCharSets
+      responses:
+        '200':
+          description: A list of system charsets.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CharsetResponse'
+              example:
+              - name: UTF-8
+                displayName: UTF-8
+components:
+  schemas:
+    ClusterThirdPartyDependency:
+      type: object
+      properties:
+        hostAddress:
+          type: string
+          description: node host URL
+        thirdPartyDependency:
+          description: a summary of third party dependencies and their availability
+          type: object
+          items:
+            $ref: '#/components/schemas/ThirdPartyDependencyResponse'
+    SystemPropertyResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the system property.
+        value:
+          type: string
+          description: The current value of the system property, or null if there was no property with that key.
+        previousValue:
+          type: string
+          description: The previous value of the system property, or null if there was no property with that key.
+    GenericResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Returns true or false.
+    AboutResponse:
+      type: object
+      properties:
+        server:
+          type: string
+          description: The URL of the server as configured by the publicURL property.
+        nuixRestfulVersion:
+          type: string
+          description: The version of the service.
+        engineVersion:
+          type: string
+          description: The version of the Nuix engine the service is running.
+        startupTime:
+          type: string
+          description: The startup time of the server in milliseconds.
+        serverId:
+          type: string
+          description: The server ID as configured by the serverId property.
+    ClusteredRestErrorResponse:
+      type: object
+      properties:
+        serverId:
+          type: string
+          description: The server ID of the server reporting the error.
+        developerMessage:
+          type: string
+          description: The technical description of the error.
+        userMessage:
+          type: string
+          description: The friendly error message.
+        additionalInfo:
+          type: object
+          description: Additional information about the error.
+          additionalProperties:
+            type: object
+            description: This is a map of additional properties.
+        errorCode:
+          type: string
+          description: The specific error code for the error from the list of available error codes.
+          enum:
+          - AUTHENTICATION_FAILED
+          - CASE_ACCESS_RESTRICTED
+          - CASE_LOCKED
+          - DELETE_DENIED
+          - DUPLICATE_CASES_DETECTED
+          - ENGINE_EXCEPTION
+          - FILE_TOO_LARGE
+          - INVALID_REQUEST_FORMAT
+          - INVALID_APPLICATION_RESPONSE
+          - INVALID_ARGUMENT
+          - ITEM_ACCESS_RESTRICTED
+          - LICENSE_EXCEPTION
+          - MEDIA_TYPE_NOT_SUPPORTED
+          - MEDIA_TYPE_NOT_ACCEPTABLE
+          - METHOD_NOT_ALLOWED
+          - NOT_IMPLEMENTED
+          - PRODUCTION_SET_FROZEN
+          - REQUIRED_ARGUMENT_MISSING
+          - RESOURCE_NOT_FOUND
+          - UNAUTHORISED
+          - UNKNOWN
+          - USER_SCRIPT_NOT_PROVIDED
+          - FOLDER_ALREADY_EXISTS
+          - CASE_LOCKED_BY_FUNCTION
+          - MISSING_THUMBNAIL
+          - ITEM_SET_ALREADY_EXISTS
+          - INVALID_LICENSE_TYPE_FOR_CASE
+          - SIMPLE_CASE_REQUIRED
+          - USER_ACCOUNT_LOCKED
+          - APPLICATION_NOT_REGISTERED
+          - INVALID_TEMPLATE
+          - DUPLICATE_RECORD
+          - CASE_MIGRATION_REQUIRED
+          - SERVICE_UNAVAILABLE
+          - RESPONSE_TOO_LARGE
+          - QUERY_PARSE_ERROR
+          - REMOTE_SYSTEM_ERROR
+          - FILE_SYSTEM_ERROR
+    SystemPropertyRequest:
+      type: object
+      properties:
+        value:
+          type: string
+          description: The value of the system property.
+      required:
+      - value
+    ThirdPartyDependencyResponse:
+      type: object
+      properties:
+        description:
+          description: Gets the localised description of this prerequisite in the system's current locale.
+          type: string
+        version:
+          description: The version of the application.
+          type: string
+        message:
+          description: Gets the status of this prerequisite.
+          type: string
+        comment:
+          description: Gets the comment.
+          type: string
+        attentionRequired:
+          description: Tests whether the user's attention is required.
+          type: boolean
+    CharsetResponse:
+      type: object
+      description: An object describing a system charset.
+      properties:
+        name:
+          type: string
+          description: The name of the charset.
+        displayName:
+          type: string
+          description: A description of the charset.
+    AsyncFunctionResponse:
+      type: object
+      properties:
+        functionKey:
+          type: string
+          description: The function key to use when querying status.
+        location:
+          type: string
+          description: The location URL for querying status.  (http://nuix-restful-service:8080/svc/v1/asyncFunctions/{functionKey})
+    AboutResponseV1:
+      type: object
+      properties:
+        server:
+          type: string
+          description: The URL of the server as configured by the publicURL property.
+          deprecated: true
+        nuixRestfulVersion:
+          type: string
+          description: The version of the service.
+          deprecated: true
+        engineVersion:
+          type: string
+          description: The version of the Nuix engine the service is running.
+          deprecated: true
+        startupTime:
+          type: string
+          description: The startup time of the server in milliseconds.
+          deprecated: true
+        serverId:
+          type: string
+          description: The server ID as configured by the serverId property.
+          deprecated: true
+        licenceSource:
+          description: The license source.  Note this is always server.
+          deprecated: true
+        casePrivilegeSecurityEnabled:
+          type: boolean
+          description: Unused and deprecated.  Always false.
+          deprecated: true
+        itemSecurityEnabled:
+          type: boolean
+          description: Unused and deprecated. Always false.
+          deprecated: true
+        specificLicenseRequiredAtLogin:
+          type: boolean
+          description: Unused and deprecated. Always false.
+          deprecated: true
+        userManagementUrl:
+          type: string
+          description: Unused and deprecated.  Always empty string.
+          deprecated: true
+        textHighlightingEnabled:
+          type: boolean
+          description: Unused and deprecated.  Return value as configured based on the textHighlightingEnabled property.
+          deprecated: true
+        phraseHighlightingEnabled:
+          type: boolean
+          description: Unused and deprecated.  Return value as configured based on the phraseHighlightingEnabled property.
+          deprecated: true
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: nuix-auth-token
+      in: header
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

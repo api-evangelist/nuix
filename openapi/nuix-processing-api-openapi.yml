@@ -1,0 +1,3208 @@
+openapi: 3.2.0
+info:
+  title: Nuix REST-API Reference Processing API
+  description: 'Welcome to the Nuix REST API documentation. From here you can access all available REST APIs and execute queries against your running REST instance.
+
+
+    # Authentication Changes
+
+
+    The `nuix-auth-token` header is being deprecated in favor of standard JWT. The header will be removed in a
+
+    future release. Until the removal of the header, the Nuix REST API will accept the JWT in either the
+
+    `nuix-auth-token` header field or the `Authorization` header field prefixed by `Bearer`.'
+  contact:
+    name: Nuix
+    url: http://forums.nuix.com/
+  license:
+    name: Licence
+    url: https://www.nuix.com/sites/default/files/2023-03/End%20User%20License%20Agreement%20%28Effective%20December%2014%2C%202022%29_1.pdf
+  version: ${customer.version}
+servers:
+- url: /nuix-restful-service/svc
+- url: http://localhost:8080/svc
+security:
+- ApiKeyAuth: []
+- bearerAuth: []
+tags:
+- name: Processing
+paths:
+  /cases/{caseId}/keyStores:
+    get:
+      tags:
+      - Processing
+      summary: Returns a list of keystore files available for a case
+      description: Returns a list of keystore files available for a case.
+      operationId: getCaseKeystores
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+        example:
+        - /opt/nuix/nuix-restful-service/cases/MyCase/keystores
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example:
+              - mykeystore
+    post:
+      tags:
+      - Processing
+      summary: Adds a keystore to a case
+      description: 'Uploads a keystore file to the cases directory.Currently supported key files are: PGP keyrings and collections - ACSII-armoured and binary (used for PGP decryption), PKCS#12 (used for S/MIME decryption), and Lotus Notes ID files which are associated with NSF files found in evidence'
+      operationId: addKeyStoreToCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                keystoreFile:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/Success'
+              example:
+                success: true
+        '409':
+          description: A keystore file with the same filename already exists.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                userMessage: A keystore file with that name was already uploaded to this case.
+                additionalInfo: null
+                errorCode: FOLDER_ALREADY_EXISTS
+                developerMessage: A user attempted to upload a file, while another file with this name already existed.
+        '413':
+          description: The size of the request exceeds the maximum size.
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/ClusteredRestErrorResponse'
+              example:
+                serverId: nuix-restful-server-1
+                errorCode: FILE_TOO_LARGE
+                developerMessage: 'Could not parse multipart servlet request; nested exception is java.lang.IllegalStateException: org.apache.tomcat.util.http.fileupload.FileUploadBase$SizeLimitExceededException: the request was rejected because its size (3260299650) exceeds the configured maximum (10485760)"
+
+                  '
+                userMessage: null
+                additionalInfo:
+                  rootExceptionClass: org.springframework.web.multipart.MultipartException
+                  rootExceptionMessage: 'Could not parse multipart servlet request; nested exception is java.lang.IllegalStateException: org.apache.tomcat.util.http.fileupload.FileUploadBase$SizeLimitExceededException: the request was rejected because its size (3260299650) exceeds the configured maximum (10485760)"
+
+                    '
+    delete:
+      tags:
+      - Processing
+      summary: Deletes the requested keystore from the case's keystore directory
+      description: Deletes the requested keystore from the case's keystore directory. All keystores are deleted if the fileToDeleteRegex query parameter is not included.
+      operationId: deleteKeystoreFromCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      - name: fileToDeleteRegex
+        in: query
+        description: fileToDeleteRegex
+        required: false
+        schema:
+          type: string
+          default: .*
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/Success'
+              example:
+                success: true
+  /cases/{caseId}/evidence:
+    post:
+      tags:
+      - Processing
+      summary: Ingests a new repository and/or supported containers into a simple case
+      description: 'Use this operation to ingest different types of data during a single
+
+        processing session. This operation is useful to ingest multiple containers
+
+        using one call rather than having to call multiple operations for each individual
+
+        container.'
+      operationId: bulkIngestionIntoSimpleCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/BulkIngestionRequest'
+            examples:
+              File and S3 Bucket Ingestion:
+                value:
+                  processingProfile: Default
+                  containers:
+                  - files:
+                    - path: /mnt/raw-data/singleFile.txt
+                    - path: /mnt/raw-data/directory
+                    s3Buckets:
+                    - access: AWSACCESSKEY
+                      bucket: my.aws.bucket/bucketFolder
+                      endpoint: ''
+                      secret: AWSSECRETACCESSKEY
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/evidence/repository:
+    post:
+      tags:
+      - Processing
+      summary: Ingests a directory and creates a repository in a simple case
+      description: 'Use this operation to ingest a single directory into a simple case
+
+        as an evidence repository. Adding evidence as a repository allows the evidence
+
+        to be re-scanned at a future point and any new files added to the repository
+
+        to be indexed in addition to the originally indexed evidence.'
+      operationId: ingestRepoIntoSimpleCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/SingleRepositoryIngestionRequest'
+            examples:
+              Simple Evidence Repository Ingestion:
+                value:
+                  repository:
+                    path: /mnt/repositories
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/evidence/file:
+    post:
+      tags:
+      - Processing
+      summary: Ingests a new file/directory target into a container in a simple case
+      description: Use this operation to ingest a single file or directory during a processing session.
+      operationId: ingestFileIntoSimpleCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/SingleContainerIngestionRequestIngestibleFile'
+            examples:
+              Simple File Ingestion:
+                value:
+                  target:
+                    path: /mnt/raw-data/singleFile.txt
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/evidence/loadFile:
+    post:
+      tags:
+      - Processing
+      summary: Ingests a new load file target into a container within a simple case
+      description: 'Use this operation to ingest a single type of data from a single
+
+        source during a processing session. This endpoint currently supports loadfiles
+
+        in CSV format.'
+      operationId: ingestLoadFileIntoSimpleCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/SingleContainerIngestionRequestIngestibleLoadFile'
+            examples:
+              Simple Loadfile Ingestion:
+                value:
+                  target:
+                    path: /mnt/loadfile.csv
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/evidence/mail:
+    post:
+      tags:
+      - Processing
+      summary: Ingests a new mail target into a container in a simple case
+      description: Use this operation to ingest an individual mail store into a simple case. This is useful when you want to ingest non-Microsoft Exchange targets.
+      operationId: ingestMailstoreIntoSimpleCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/SingleContainerIngestionRequestIngestibleMailStore'
+            examples:
+              GMail IMAP Ingestion:
+                value:
+                  target:
+                    protocol: imap
+                    host: imap.gmail.com
+                    port: 993
+                    username: myuser
+                    password: mypassword
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/evidence/exchange:
+    post:
+      tags:
+      - Processing
+      summary: Ingests a new Exchange target into a container in a simple case
+      description: Use this operation to ingest an Exchange account or a Microsoft Exchange email mailbox into a simple case.
+      operationId: ingestExchangeIntoSimpleCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/SingleContainerIngestionRequestIngestibleExchangeMailbox'
+            examples:
+              Simple Exchange Ingestion:
+                value:
+                  target:
+                    mailboxRetrieval:
+                    - mailbox
+                    uri: https://outlook.office365.com/ews/exchange.asmx
+                    username: yourusername
+                    password: yourpassword
+                    impersonating: false
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/evidence/sharepoint:
+    post:
+      tags:
+      - Processing
+      summary: Ingests a new SharePoint target into a container within a simple case
+      description: Use this operation to ingest a single type of data from one source during a processing session.
+      operationId: ingestSharepointIntoSimpleCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/SingleContainerIngestionRequestIngestibleSharepoint'
+            examples:
+              Simple Sharepoint Ingestion:
+                value:
+                  target:
+                    domain: mydomain.sharepoint.com
+                    username: myuser
+                    password: mypassword
+                    uri: domain.sharepoint.com/sites/mypage
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/evidence/sql:
+    post:
+      tags:
+      - Processing
+      summary: Ingests a new SQL target into a container in a simple case
+      description: Use this operation to ingest a single type of data from one source during a processing session.
+      operationId: ingestSqlIntoSimpleCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/SingleContainerIngestionRequestIngestibleSQLServer'
+            examples:
+              Simple SQL Server Ingestion:
+                value:
+                  target:
+                    username: myuser
+                    password: mypassword
+                    computer: myServerAddress
+                    instance: myDatabase
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/evidence/oracle:
+    post:
+      tags:
+      - Processing
+      summary: Ingests a new Oracle target into a container in a simple case
+      description: Use this operation to ingest a single type of data from one source during a processing session.
+      operationId: ingestOracleIntoSimpleCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/SingleContainerIngestionRequestIngestibleOracleServer'
+            examples:
+              Simple Oracle Server Ingestion:
+                value:
+                  target:
+                    driverType: thin
+                    password: mypassword
+                    username: myusername
+                    database: host:port
+                    role: SYSDBA
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/evidence/ev:
+    post:
+      tags:
+      - Processing
+      summary: Ingests a new enterprise vault target into a container in a simple case
+      description: 'Use this operation to ingest a single type of data from a Enterprise
+
+        Vault archiving system. Enterprise Vault is an on-premise data archiving platform
+
+        produced by Symantec Corporation.'
+      operationId: ingestEnterpriseVaultIntoSimpleCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/SingleContainerIngestionRequestIngestibleEnterpriseVault'
+            examples:
+              Simple Enterprise Vault Ingestion:
+                value:
+                  target:
+                    computer: MyEnterpriseVaultServer
+                    vault: MyVaultId
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/evidence/s3:
+    post:
+      tags:
+      - Processing
+      summary: Ingests a new S3 target into a container in a simple case
+      description: Use this operation to ingest a single type of data from one source during a processing session.
+      operationId: ingestS3IntoSimpleCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/SingleContainerIngestionRequestIngestibleS3Bucket'
+            examples:
+              Sample S3 Bucket Ingestion:
+                value:
+                  target:
+                    access: AWSACCESSKEY
+                    bucket: my.aws.bucket/bucketFolder
+                    endpoint: ''
+                    secret: AWSSECRETACCESSKEY
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/evidence/centera:
+    post:
+      tags:
+      - Processing
+      summary: Ingests a new Centera target into a container in a simple case
+      description: Use this operation to ingest a single type of data from a Centera archiving system. Centera is a content-addressable storage platform for data archiving produced by EMC Corporation.
+      operationId: ingestCenteraIntoSimpleCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/SingleContainerIngestionRequestIngestibleCenteraCluster'
+            examples:
+              Simple Centera Cluster Ingestion:
+                value:
+                  target:
+                    ipsFile: /mnt/centera/ipsFile
+                    clipsFile: /mnt/centera/clipsFile
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/evidence/splitFiles:
+    post:
+      tags:
+      - Processing
+      summary: Ingests a new split file list target into a container in a simple case
+      description: Use this operation to ingest a single type of data from one source during a processing session. This can be used to load files which have been split using ordinary splitting tools, which is common for raw ("dd") disk images.
+      operationId: ingestSplitFilesIntoSimpleCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/SingleContainerIngestionRequestIngestibleSplitFileList'
+            examples:
+              Simple Split Files Ingestion:
+                value:
+                  target:
+                    files:
+                    - /mnt/splitFile1
+                    - /mnt/splitFile2
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/evidence/dropbox:
+    post:
+      tags:
+      - Processing
+      summary: Ingests a new Dropbox target into a container in a simple case
+      description: Use this operation to ingest a single type of data from one source during a processing session.
+      operationId: ingestDropboxIntoSimpleCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/SingleContainerIngestionRequestIngestibleDropbox'
+            examples:
+              Simple Dropbox Ingestion:
+                value:
+                  target:
+                    authCode: DROPBOXAUTHCODE
+                    team: true
+                    accessToken: DROPBOXACCESSTOKEN
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/evidence/ssh:
+    post:
+      tags:
+      - Processing
+      summary: Ingests a new SSH-based target into a container in a simple case
+      description: Use this operation to ingest a single type of data from one source during a processing session.
+      operationId: ingestSSHIntoSimpleCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/SingleContainerIngestionRequestIngestibleSSH'
+            examples:
+              SSH Ingestion Username/Password:
+                value:
+                  target:
+                    computer: MyServerName
+                    username: myUserName
+                    password: myPassword
+                    port: 22
+                    remoteFolder: /mnt/data
+              SSH Ingestion Authentication Key:
+                value:
+                  target:
+                    computer: MyServerName
+                    username: myUserName
+                    keyFolder: /home/user/.ssh/id_rsa
+                    port: 22
+                    remoteFolder: /mnt/data
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/evidence/twitter:
+    post:
+      tags:
+      - Processing
+      summary: Ingests a new historical twitter target into a container in a simple case
+      description: Use this operation to ingest a single type of data from one source during a processing session.
+      operationId: ingestTwitterIntoSimpleCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/SingleContainerIngestionRequestIngestibleTwitter'
+            examples:
+              Simple Historical Twitter Ingestion:
+                value:
+                  target:
+                    consumerKey: consumerKey
+                    consumerSecret: consumerSecret
+                    accessToken: accessToken
+                    accessTokenSecret: accessTokenSecret
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/evidence/ms365:
+    post:
+      tags:
+      - Processing
+      summary: Ingests a new Microsoft 365 target into a container in a simple case
+      description: Use this operation to ingest a single type of data from one source during a processing session.
+      operationId: ingestMs365IntoSimpleCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/SingleContainerIngestionRequestIngestibleMicrosoft365'
+            examples:
+              Simple Microsoft 365 Ingestion:
+                value:
+                  target:
+                    tenantId: tenantId
+                    clientId: clientId
+                    clientSecret: clientSecret
+                    from: '2021-01-01'
+                    to: '2021-04-30'
+                    username: username
+                    password: password
+                    userPrincipalNames:
+                    - userprincipal@domain.com
+                    retrievals:
+                    - USERS_CONTACTS
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/evidence/slack:
+    post:
+      tags:
+      - Processing
+      summary: Ingests a new Slack target into a container in a simple case
+      description: Use this operation to ingest a single type of data from one source during a processing session.
+      operationId: ingestSlackIntoSimpleCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/SingleContainerIngestionRequestIngestibleSlack'
+            examples:
+              Simple Slack Ingestion:
+                value:
+                  target:
+                    tempAuthCode: '23432421'
+                    storedCredentialName: null
+                    from: '2021-01-01'
+                    to: '2021-04-30'
+                    userIds:
+                    - '1244'
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/evidence/documentum:
+    post:
+      tags:
+      - Processing
+      summary: Ingests a new Documentum target into a container in a simple case
+      description: Use this operation to ingest a single type of data from one source during a processing session.
+      operationId: ingestDocumentumIntoSimpleCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/SingleContainerIngestionRequestIngestibleDocumentum'
+            examples:
+              Simple Documentum Ingestion:
+                value:
+                  target:
+                    username: myuser
+                    password: mypassword
+                    domain: domain
+                    port: 1489
+                    query: query
+                    server: server
+                    docBase: docBaseRepository
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/items:
+    put:
+      tags:
+      - Processing
+      summary: Reloads items from source based on a query in a simple case
+      description: Use this operation to reload items from source.
+      operationId: reloadItemsFromSourceIntoSimpleCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/ReloadItemsIngestionRequest'
+            examples:
+              Reload All Items:
+                value:
+                  query: '*'
+      responses:
+        '200':
+          description: default response
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+  /cases/{caseId}/items/ocr:
+    put:
+      tags:
+      - Processing
+      summary: Performs OCR on query items
+      description: 'Use this operation to perform bulk optical character recognition
+
+        (OCR) on items returned from a query. This is done using OCR and imaging options.
+
+        The Nuix OCR add-on must be installed. For example, you can OCR an image with
+
+        a query to extract item text.'
+      operationId: bulkOcrItemsAsFunctionV2
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v2+json:
+            schema:
+              $ref: '#/components/schemas/OcrRequestV2'
+            examples:
+              Simple OCR Request:
+                value:
+                  query: 'kind: spreadsheet'
+                  ocrOptions:
+                    quality: document_archiving_speed
+                    ocrImagingOptions:
+                      excelExportingEngine: MS_OFFICE
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/OcrRequest'
+            examples:
+              Simple OCR Request:
+                value:
+                  query: 'kind: document'
+                  ocrOptions:
+                    quality: document_archiving_speed
+                    ocrImagingOptions:
+                      wordExportingEngine: MS_OFFICE
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v2+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+            application/vnd.nuix.v1+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+components:
+  schemas:
+    SingleContainerIngestionRequestIngestibleS3Bucket:
+      type: object
+      properties:
+        processorSettings:
+          $ref: '#/components/schemas/ProcessorSettings'
+        mimeTypeProcessorSettings:
+          type: array
+          description: Sets the processing settings for individual mime types.
+          items:
+            $ref: '#/components/schemas/MimeTypeProcessingSetting'
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+        keystoreKeyParameters:
+          type: array
+          description: Sets the settings used to apply a keystore file to the ingestion.
+          items:
+            $ref: '#/components/schemas/KeyStoreKeyParameters'
+        rescanEvidenceRepositories:
+          type: boolean
+          description: If true, the case's Evidence Repositories will be rescanned to discover new Evidence Containers within them and new files within existing Evidence Containers which are themselves within the cases's Evidence Repositories. Default is false.
+        rescanEvidenceRepositoriesSettings:
+          $ref: '#/components/schemas/RescanEvidenceRepositoriesSettings'
+        passwordDiscoverySettings:
+          $ref: '#/components/schemas/PasswordDiscoverySettings'
+        configurationProfile:
+          type: string
+          deprecated: true
+          description: Deprecated in favor of processingProfile. Configuration profile to use as base set of processor, parallel processing, and mime type settings.  Values present in processorSettings, parallelProcessingSettings, and mimeTypeProcessorSettings will override anything defined by this profile.
+        processingProfile:
+          type: string
+          description: The name of the Processing Profile to use. If you use this setting then do not use any other settings from processorSettings as everything will be overridden by the loaded Processing profile.
+        target:
+          $ref: '#/components/schemas/IngestibleS3Bucket'
+        container:
+          $ref: '#/components/schemas/EvidenceContainer'
+    SingleRepositoryIngestionRequest:
+      type: object
+      properties:
+        processorSettings:
+          $ref: '#/components/schemas/ProcessorSettings'
+        mimeTypeProcessorSettings:
+          type: array
+          description: Sets the processing settings for individual mime types.
+          items:
+            $ref: '#/components/schemas/MimeTypeProcessingSetting'
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+        keystoreKeyParameters:
+          type: array
+          description: Sets the settings used to apply a keystore file to the ingestion.
+          items:
+            $ref: '#/components/schemas/KeyStoreKeyParameters'
+        rescanEvidenceRepositories:
+          type: boolean
+          description: If true, the case's Evidence Repositories will be rescanned to discover new Evidence Containers within them and new files within existing Evidence Containers which are themselves within the cases's Evidence Repositories. Default is false.
+        rescanEvidenceRepositoriesSettings:
+          $ref: '#/components/schemas/RescanEvidenceRepositoriesSettings'
+        passwordDiscoverySettings:
+          $ref: '#/components/schemas/PasswordDiscoverySettings'
+        configurationProfile:
+          type: string
+          deprecated: true
+          description: Deprecated in favor of processingProfile. Configuration profile to use as base set of processor, parallel processing, and mime type settings.  Values present in processorSettings, parallelProcessingSettings, and mimeTypeProcessorSettings will override anything defined by this profile.
+        processingProfile:
+          type: string
+          description: The name of the Processing Profile to use. If you use this setting then do not use any other settings from processorSettings as everything will be overridden by the loaded Processing profile.
+        repository:
+          $ref: '#/components/schemas/EvidenceRepository'
+    Languages:
+      type: string
+      enum:
+      - Abkhaz
+      - Adyghe
+      - Afrikaans
+      - Agul
+      - Albanian
+      - Altaic
+      - Arabic
+      - ArmenianEastern
+      - ArmenianGrabar
+      - ArmenianWestern
+      - Awar
+      - Aymara
+      - AzeriCyrillic
+      - AzeriLatin
+      - Bashkir
+      - Basque
+      - Belarusian
+      - Bemba
+      - Blackfoot
+      - Breton
+      - Bugotu
+      - Bulgarian
+      - Buryat
+      - Catalan
+      - Chamorro
+      - Chechen
+      - ChinesePRC
+      - ChineseTaiwan
+      - Chukcha
+      - Chuvash
+      - Corsican
+      - CrimeanTatar
+      - Croatian
+      - Crow
+      - Czech
+      - Danish
+      - Dargwa
+      - Dungan
+      - Dutch
+      - DutchBelgian
+      - English
+      - EskimoCyrillic
+      - EskimoLatin
+      - Esperanto
+      - Estonian
+      - Even
+      - Evenki
+      - Faeroese
+      - Fijian
+      - Finnish
+      - French
+      - Frisian
+      - Friulian
+      - GaelicScottish
+      - Gagauz
+      - Galician
+      - Ganda
+      - German
+      - GermanLuxembourg
+      - GermanNewSpelling
+      - Greek
+      - Guarani
+      - Hani
+      - Hausa
+      - Hawaiian
+      - Hebrew
+      - Hungarian
+      - Icelandic
+      - Ido
+      - Indonesian
+      - Ingush
+      - Interlingua
+      - Irish
+      - Italian
+      - Japanese
+      - Kabardian
+      - Kalmyk
+      - KarachayBalkar
+      - Karakalpak
+      - Kasub
+      - Kawa
+      - Kazakh
+      - Khakas
+      - Khanty
+      - Kikuyu
+      - Kirgiz
+      - Kongo
+      - Korean
+      - Koryak
+      - Kpelle
+      - Kumyk
+      - Kurdish
+      - Lak
+      - Lappish
+      - Latin
+      - Latvian
+      - LatvianGothic
+      - Lezgin
+      - Lithuanian
+      - Luba
+      - Macedonian
+      - Malagasy
+      - Malay
+      - Malinke
+      - Maltese
+      - Mansi
+      - Maori
+      - Mari
+      - Maya
+      - Miao
+      - Minankabaw
+      - Mohawk
+      - Mongol
+      - Mordvin
+      - Nahuatl
+      - Nenets
+      - Nivkh
+      - Nogay
+      - Norwegian
+      - NorwegianBokmal
+      - NorwegianNynorsk
+      - Nyanja
+      - Occidental
+      - Ojibway
+      - Ossetic
+      - Papiamento
+      - PidginEnglish
+      - Polish
+      - PortugueseBrazilian
+      - PortugueseStandard
+      - Provencal
+      - Quechua
+      - RhaetoRomanic
+      - Romanian
+      - RomanianMoldavia
+      - Romany
+      - Ruanda
+      - Rundi
+      - Russian
+      - RussianOldSpelling
+      - RussianWithAccent
+      - Samoan
+      - Selkup
+      - SerbianCyrillic
+      - SerbianLatin
+      - Shona
+      - Sioux
+      - Slovak
+      - Slovenian
+      - Somali
+      - Sorbian
+      - Sotho
+      - Spanish
+      - Sunda
+      - Swahili
+      - Swazi
+      - Swedish
+      - Tabassaran
+      - Tagalog
+      - Tahitian
+      - Tajik
+      - Tatar
+      - Thai
+      - Tinpo
+      - Tongan
+      - Tswana
+      - Tun
+      - Turkish
+      - Turkmen
+      - TurkmenLatin
+      - Tuvin
+      - Udmurt
+      - UighurCyrillic
+      - UighurLatin
+      - Ukrainian
+      - UzbekCyrillic
+      - UzbekLatin
+      - Vietnamese
+      - Visayan
+      - Welsh
+      - Wolof
+      - Xhosa
+      - Yakut
+      - Yiddish
+      - Zapotec
+      - Zulu
+    IngestibleTwitter:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: The access token of your twitter app. You can create a new app at https://apps.twitter.com and generate this if you don't have one already.
+        accessTokenSecret:
+          type: string
+          description: The access token secret of your twitter app. You can create a new app at https://apps.twitter.com and generate this if you don't have one already.
+        consumerKey:
+          type: string
+          description: The consumer key (API key) of your twitter app. You can create a new app at https://apps.twitter.com and generate this if you don't have one already.
+        consumerSecret:
+          type: string
+          description: The consumer secret (API secret) of your twitter app. You can create a new app at https://apps.twitter.com and generate this if you don't have one already.
+    ClusteredRestErrorResponse:
+      type: object
+      properties:
+        serverId:
+          type: string
+          description: The server ID of the server reporting the error.
+        developerMessage:
+          type: string
+          description: The technical description of the error.
+        userMessage:
+          type: string
+          description: The friendly error message.
+        additionalInfo:
+          type: object
+          description: Additional information about the error.
+          additionalProperties:
+            type: object
+            description: This is a map of additional properties.
+        errorCode:
+          type: string
+          description: The specific error code for the error from the list of available error codes.
+          enum:
+          - AUTHENTICATION_FAILED
+          - CASE_ACCESS_RESTRICTED
+          - CASE_LOCKED
+          - DELETE_DENIED
+          - DUPLICATE_CASES_DETECTED
+          - ENGINE_EXCEPTION
+          - FILE_TOO_LARGE
+          - INVALID_REQUEST_FORMAT
+          - INVALID_APPLICATION_RESPONSE
+          - INVALID_ARGUMENT
+          - ITEM_ACCESS_RESTRICTED
+          - LICENSE_EXCEPTION
+          - MEDIA_TYPE_NOT_SUPPORTED
+          - MEDIA_TYPE_NOT_ACCEPTABLE
+          - METHOD_NOT_ALLOWED
+          - NOT_IMPLEMENTED
+          - PRODUCTION_SET_FROZEN
+          - REQUIRED_ARGUMENT_MISSING
+          - RESOURCE_NOT_FOUND
+          - UNAUTHORISED
+          - UNKNOWN
+          - USER_SCRIPT_NOT_PROVIDED
+          - FOLDER_ALREADY_EXISTS
+          - CASE_LOCKED_BY_FUNCTION
+          - MISSING_THUMBNAIL
+          - ITEM_SET_ALREADY_EXISTS
+          - INVALID_LICENSE_TYPE_FOR_CASE
+          - SIMPLE_CASE_REQUIRED
+          - USER_ACCOUNT_LOCKED
+          - APPLICATION_NOT_REGISTERED
+          - INVALID_TEMPLATE
+          - DUPLICATE_RECORD
+          - CASE_MIGRATION_REQUIRED
+          - SERVICE_UNAVAILABLE
+          - RESPONSE_TOO_LARGE
+          - QUERY_PARSE_ERROR
+          - REMOTE_SYSTEM_ERROR
+          - FILE_SYSTEM_ERROR
+    ImagingOptions:
+      type: object
+      properties:
+        imageExcelSpreadsheets:
+          type: boolean
+          default: false
+          deprecated: true
+          description: Specifies whether to image Excel spreadsheets, instead of generating a slip sheet. Defaults to false. This is replaced with Imaging Profiles since Nuix 7.2.
+        slipSheetContainers:
+          type: boolean
+          default: false
+          deprecated: true
+          description: Deprecated - same as exportDescendantContainers in BatchExporter.setTraversalOptions(Map) since Nuix 7.2. Defaults to false
+        excelExportingEngine:
+          type: string
+          enum:
+          - INTERNAL
+          - MS_OFFICE
+          description: "Excel Exporting Engine:\n  * `MS_OFFICE` - Exports Excel documents using Microsoft.\n  * `INTERNAL` - Exports Excel documents using the built in exporter.\n"
+        excelPrintHiddenRows:
+          type: boolean
+          description: Optionally unhide all Excel rows.  Defaults to null which uses the settings present in the document
+        excelPrintHiddenColumns:
+          type: boolean
+          description: Optionally unhide all Excel columns. Defaults to null which uses the settings present in the document
+        excelPrintHiddenWorksheets:
+          type: string
+          default: SHEET_VERY_HIDDEN
+          enum:
+          - SHEET_HIDDEN
+          - SHEET_VERY_HIDDEN
+          - PRINT_IN_PLACE
+          - PRINT_NO_COMMENTS
+          - PRINT_SHEETEND
+          description: "Excel Print Hidden Worksheets:\n  * `SHEET_HIDDEN` - Show hidden worksheets.\n  * `SHEET_VERY_HIDDEN` - Show hidden and very hidden worksheets.\n"
+        excelPrintComments:
+          type: string
+          enum:
+          - PRINT_IN_PLACE
+          - PRINT_NO_COMMENTS
+          - PRINT_SHEETEND
+          description: "Print Comments:\n  * `PRINT_IN_PLACE` - Print in original location.\n  * `PRINT_NO_COMMENTS` - Do not print.\n  * `PRINT_SHEETEND` - Print as end notes.\n"
+        excelPrintNotes:
+          type: boolean
+          description: Optionally set for Excel cell notes to be printed as end notes with the sheet. Defaults to null which uses the settings present in the document.
+        excelPaperSize:
+          type: string
+          description: "Excel Paper Size:\n  * `PAPER_10x14` - 10 in. x 14 in.\n  * `PAPER_11x17` - 11 in. x 17 in.\n  * `PAPER_A3` - A3 (297 mm x 420 mm)\n  * `PAPER_A4` - A4 (210 mm x 297 mm)\n  * `PAPER_A4Small` - A4 Small (210 mm x 297 mm)\n  * `PAPER_A5` - A5 (148 mm x 210 mm)\n  * `PAPER_B4` - B4 (250 mm x 354 mm)\n  * `PAPER_B5` - A5 (148 mm x 210 mm)\n  * `PAPER_Csheet` - C size sheet\n  * `PAPER_Dsheet` - D size sheet\n  * `PAPER_Envelope10` - Envelope 10 (4-1/8 in. x 9-1/2 in.)\n  * `PAPER_Envelope11` - Envelope 11 (4-1/2 in. x 10-3/8 in.)\n  * `PAPER_Envelope12` - Envelope 12 (4-1/2 in. x 11 in.)\n  * `PAPER_Envelope14` - Envelope 14 (5 in. x 11-1/2 in.)\n  * `PAPER_Envelope9` - Envelope 9 (3-7/8 in. x 8-7/8 in.)\n  * `PAPER_EnvelopeB4` - Envelope B4 (250 mm x 353 mm)\n  * `PAPER_EnvelopeB5` - Envelope B5 (176 mm x 250 mm)\n  * `PAPER_EnvelopeB6` - Envelope B6 (176 mm x 125 mm)\n  * `PAPER_EnvelopeC3` - Envelope C3 (324 mm x 458 mm)\n  * `PAPER_EnvelopeC4` - Envelope C4 (229 mm x 324 mm)\n  * `PAPER_EnvelopeC5` - Envelope C5 (162 mm x 229 mm)\n  * `PAPER_EnvelopeC6` - Envelope C6 (114 mm x 162 mm)\n  * `PAPER_EnvelopeC65` - Envelope C65 (114 mm x 229 mm)\n  * `PAPER_EnvelopeDL` - Envelope DL (110 mm x 220 mm)\n  * `PAPER_EnvelopeItaly` - Envelope (110 mm x 230 mm)\n  * `PAPER_EnvelopeMonarch` - Envelope Monarch (3-7/8 in. x 7-1/2 in.)\n  * `PAPER_EnvelopePersonal` - Envelope (3-5/8 in. x 6-1/2 in.)\n  * `PAPER_Esheet` - E size sheet\n  * `PAPER_Executive` - Executive (7-1/2 in. x 10-1/2 in.)\n  * `PAPER_FanfoldLegalGerman` - German Legal Fanfold (8-1/2 in. x 13 in.)\n  * `PAPER_FanfoldStdGerman` - German Legal Fanfold (8-1/2 in. x 13 in.)\n  * `PAPER_FanfoldUS` - U.S. Standard Fanfold (14-7/8 in. x 11 in.)\n  * `PAPER_Folio` - Folio (8-1/2 in. x 13 in.)\n  * `PAPER_Ledger` - Ledger (17 in. x 11 in.)\n  * `PAPER_Legal` - Legal (8-1/2 in. x 14 in.)\n  * `PAPER_Letter` - Letter (8-1/2 in. x 11 in.)\n  * `PAPER_LetterSmall` - Letter Small (8-1/2 in. x 11 in.)\n  * `PAPER_Note` - Note (8-1/2 in. x 11 in.)\n  * `PAPER_Quarto` - Quarto (215 mm x 275 mm)\n  * `PAPER_Statement` - Statement (5-1/2 in. x 8-1/2 in.)\n  * `PAPER_Tabloid` - Tabloid (11 in. x 17 in.)\n"
+          enum:
+          - PAPER_10x14
+          - PAPER_11x17
+          - PAPER_A3
+          - PAPER_A4
+          - PAPER_A4Small
+          - PAPER_A5
+          - PAPER_B4
+          - PAPER_B5
+          - PAPER_Csheet
+          - PAPER_Dsheet
+          - PAPER_Envelope10
+          - PAPER_Envelope11
+          - PAPER_Envelope12
+          - PAPER_Envelope14
+          - PAPER_Envelope9
+          - PAPER_EnvelopeB4
+          - PAPER_EnvelopeB5
+          - PAPER_EnvelopeB6
+          - PAPER_EnvelopeC3
+          - PAPER_EnvelopeC4
+          - PAPER_EnvelopeC5
+          - PAPER_EnvelopeC6
+          - PAPER_EnvelopeC65
+          - PAPER_EnvelopeDL
+          - PAPER_EnvelopeItaly
+          - PAPER_EnvelopeMonarch
+          - PAPER_EnvelopePersonal
+          - PAPER_Esheet
+          - PAPER_Executive
+          - PAPER_FanfoldLegalGerman
+          - PAPER_FanfoldStdGerman
+          - PAPER_FanfoldUS
+          - PAPER_Folio
+          - PAPER_Ledger
+          - PAPER_Legal
+          - PAPER_Letter
+          - PAPER_LetterSmall
+          - PAPER_Note
+          - PAPER_Quarto
+          - PAPER_Statement
+          - PAPER_Tabloid
+        excelPageOrientation:
+          type: string
+          enum:
+          - PORTRAIT
+          - LANDSCAPE
+          description: "Excel Page Orientation\n  * `PORTRAIT` - Portrait mode\n  * `LANDSCAPE` - Landscape mode\n"
+        excelPageZoom:
+          type: string
+          enum:
+          - PERCENT_10
+          - PERCENT_25
+          - PERCENT_50
+          - PERCENT_75
+          - PERCENT_100
+          - PERCENT_125
+          - PERCENT_150
+          - PERCENT_200
+          - PERCENT_400
+          description: "Excel Page Zoom:\n  * `PERCENT_10` - 10%\n  * `PERCENT_25` - 25%\n  * `PERCENT_50` - 50%\n  * `PERCENT_75` - 75%\n  * `PERCENT_100` - 100%\n  * `PERCENT_125` - 125%\n  * `PERCENT_150` - 150%\n  * `PERCENT_200` - 200%\n  * `PERCENT_400` - 400%\n"
+        excelFitToPagesTall:
+          type: integer
+          description: Optionally set for Excel the number of pages tall the worksheet will be scaled to when it's printed. Defaults to null which uses the settings present in the document
+          format: int32
+        excelFitToPagesWide:
+          type: integer
+          description: Optionally set for Excel the number of pages wide the worksheet will be scaled to when it's printed. Defaults to null which uses the settings present in the document
+          format: int32
+        excelWorksheetPrintArea:
+          type: string
+          description: Optionally set Excel print area for every worksheet.  Empty string for entire worksheet or standard excel range string (e.g., $A$1:$J$10). Defaults to empty string
+        excelPageNumberLimit:
+          type: integer
+          description: Optionally set the page number limit for Excel. The value must be a positive number. Defaults to null which uses the settings present in the document
+          format: int32
+        excelPrintGridlines:
+          type: boolean
+          default: true
+          description: Optionally force Excel gridlines to be always shown or hidden. Defaults to true
+        excelPrintHeadings:
+          type: boolean
+          default: true
+          description: Optionally force Excel headers to be hidden or shown. Defaults to true
+        wordExportingEngine:
+          type: string
+          default: INTERNAL
+          enum:
+          - MS_OFFICE
+          - INTERNAL
+          description: "Word Exporting Engine:\n  * `MS_OFFICE` - Export Word documents using Microsoft Office\n  * `INTERNAL` - Export Word documents using built in exporter\n"
+        wordShowMarkup:
+          type: boolean
+          description: Optionally force Word to show markup (such as track-changes) or hide it. Defaults to null which uses the settings present in the document
+        wordShowHiddenText:
+          type: boolean
+          description: Optionally force PowerPoint to show markup (such as track-changes or hidden text) or hide it. Defaults to null which uses the settings present in the document
+        powerpointExportEngine:
+          type: string
+          default: INTERNAL
+          enum:
+          - MS_OFFICE
+          - INTERNAL
+          description: "Powerpoint Exporting Engine:\n  * `MS_OFFICE` - Export Powerpoint documents using Microsoft Office\n  * `INTERNAL` - Export Powerpoint documents using built in exporter\n"
+        powerPointPrintOutputType:
+          type: string
+          default: PRINT_OUTPUT_SLIDES
+          enum:
+          - PRINT_OUTPUT_BUILD_SLIDES
+          - PRINT_OUTPUT_FOUR_SLIDE_HANDOUTS
+          - PRINT_OUTPUT_NINE_SLIDE_HANDOUTS
+          - PRINT_OUTPUT_NOTES_PAGES
+          - PRINT_OUTPUT_ONE_SLIDE_HANDOUTS
+          - PRINT_OUTPUT_OUTLINE
+          - PRINT_OUTPUT_SIX_SLIDE_HANDOUTS
+          - PRINT_OUTPUT_SLIDES
+          - PRINT_OUTPUT_THREE_SLIDE_HANDOUTS
+          - PRINT_OUTPUT_TWO_SLIDE_HANDOUTS
+          description: "Powerpoint Print Output Type:\n  * `PRINT_OUTPUT_BUILD_SLIDES` - Build Slides\n  * `PRINT_OUTPUT_FOUR_SLIDE_HANDOUTS` - Four Slide Handouts\n  * `PRINT_OUTPUT_NINE_SLIDE_HANDOUTS` - Nine Slide Handouts\n  * `PRINT_OUTPUT_NOTES_PAGES` - Notes Pages\n  * `PRINT_OUTPUT_ONE_SLIDE_HANDOUTS` - Single Slide Handouts\n  * `PRINT_OUTPUT_OUTLINE` - Outline\n  * `PRINT_OUTPUT_SIX_SLIDE_HANDOUTS` - Six Slide Handouts\n  * `PRINT_OUTPUT_SLIDES` - Slides\n  * `PRINT_OUTPUT_THREE_SLIDE_HANDOUTS` - Three Slide Handouts\n  * `PRINT_OUTPUT_TWO_SLIDE_HANDOUTS` - Two Slide Handouts\n"
+        slipSheetMetadataProfile:
+          type: string
+          description: Optionally insert values from a metadata profile into generated slip-sheets. Defaults to null which uses the settings present in the document
+    IngestibleCenteraCluster:
+      type: object
+      properties:
+        ipsFile:
+          type: string
+          description: Location of a file containing IP addresses separated by new-line characters. Both File and String instances are supported.
+        clipsFile:
+          type: string
+          description: Location of a file containing Centera Clip IDs separated by new-line characters. Both File and String instances are supported.
+    IngestibleSSH:
+      type: object
+      properties:
+        username:
+          type: string
+          description: The username needed to access the server account.
+        password:
+          type: string
+          description: The password needed to access the server account.
+        computer:
+          type: string
+          description: The hostname or IP address of the target server.
+        sudoPassword:
+          type: string
+          description: The password needed to access protected files when using SSH key based authentication.
+        keyFolder:
+          type: string
+          description: Points to a folder on the local system which holds the SSH authentication key pairs.
+        portNumber:
+          type: integer
+          description: The port number to connect on.
+          format: int32
+        hostFingerprint:
+          type: string
+          description: The expected host fingerprint for the host being connected to. If this value is not set then any host fingerpint will be allowed, leaving the possibility of a man in the middle attack on the connection.
+        remoteFolder:
+          type: string
+          description: This optional parameter limits the evidence to items underneath this starting folder.
+        accessingRemoteDisks:
+          type: boolean
+          description: When set to true remote disks (e.g. '/dev/sda1') will be exposed as evidence instead of the remote system's file system structure.
+        initialLocation:
+          type: string
+          description: Sets the location to use local disks with initial location.
+    EvidenceContainer:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Sets the name for the evidence container that is created during ingestion.
+        customMetadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: Sets a map of custom metadata for the evidence container.
+        encoding:
+          type: string
+          description: Sets the encoding for the evidence container. If the encoding is not set the default system encoding will be used.
+        custodian:
+          type: string
+          description: Sets the name of the initial custodian for the data.
+        timeZone:
+          type: string
+          description: Sets the time zone for the evidence container. If the time zone is not set the system's default time zone will be used.
+        description:
+          type: string
+          description: Sets the description for the evidence container.
+        locale:
+          type: string
+          description: Sets the locale for the evidence container. Some file types and named entities require a locale for them to be ingested accurately. If not set then the system's default locale will be used. Format is that required by IETF BCP 47 (e.g. 'en-US').
+    SingleContainerIngestionRequestIngestibleSplitFileList:
+      type: object
+      properties:
+        processorSettings:
+          $ref: '#/components/schemas/ProcessorSettings'
+        mimeTypeProcessorSettings:
+          type: array
+          description: Sets the processing settings for individual mime types.
+          items:
+            $ref: '#/components/schemas/MimeTypeProcessingSetting'
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+        keystoreKeyParameters:
+          type: array
+          description: Sets the settings used to apply a keystore file to the ingestion.
+          items:
+            $ref: '#/components/schemas/KeyStoreKeyParameters'
+        rescanEvidenceRepositories:
+          type: boolean
+          description: If true, the case's Evidence Repositories will be rescanned to discover new Evidence Containers within them and new files within existing Evidence Containers which are themselves within the cases's Evidence Repositories. Default is false.
+        rescanEvidenceRepositoriesSettings:
+          $ref: '#/components/schemas/RescanEvidenceRepositoriesSettings'
+        passwordDiscoverySettings:
+          $ref: '#/components/schemas/PasswordDiscoverySettings'
+        configurationProfile:
+          type: string
+          deprecated: true
+          description: Deprecated in favor of processingProfile. Configuration profile to use as base set of processor, parallel processing, and mime type settings.  Values present in processorSettings, parallelProcessingSettings, and mimeTypeProcessorSettings will override anything defined by this profile.
+        processingProfile:
+          type: string
+          description: The name of the Processing Profile to use. If you use this setting then do not use any other settings from processorSettings as everything will be overridden by the loaded Processing profile.
+        target:
+          $ref: '#/components/schemas/IngestibleSplitFileList'
+        container:
+          $ref: '#/components/schemas/EvidenceContainer'
+    PasswordDiscoverySettings:
+      type: object
+      properties:
+        mode:
+          type: string
+          description: Sets password discovery settings to use for encrypted items.
+          enum:
+          - none
+          - word_list
+        wordList:
+          type: string
+          description: The name of a word list accessible in the system. If the mode is set to "word-list", then this word-list will be used as the basis for password discovery
+    IngestibleEnterpriseVault:
+      type: object
+      properties:
+        computer:
+          type: string
+          description: The hostname or IP address of the target server.
+        from:
+          type: string
+          description: This optional parameter limits the evidence to a date range beginning from the specified date/time. It must be accompanied by the 'to' parameter. Accepted date formats are RFC-3339 or a simple date format (yyyy-MM-dd) which will use the default timezone of the server.
+          format: date-time
+        to:
+          type: string
+          description: This optional parameter limits the evidence to a date range ending at the specified date/time. It must be accompanied by the 'from' parameter.  Accepted date formats are RFC-3339 or a simple date format (yyyy-MM-dd) which will use the default timezone of the server.
+          format: date-time
+        vault:
+          type: string
+          description: This optional parameter limits the evidence to the specified Enterprise Vault vault.
+        archive:
+          type: string
+          description: This optional parameter limits the evidence to the specified Enterprise Vault archive.
+        custodian:
+          type: string
+          description: This optional parameter limits the evidence to the specified custodian or author.
+        keywords:
+          type: string
+          description: This optional parameter limits the evidence to results matching Enterprise Vault's query using the words in this string. Subject and message/document content are searched by Enterprise Vault and it will match any word in the string unless specified differently in the flag parameter.
+        flag:
+          type: string
+          description: This optional parameter specifies how keywords are combined and treated for keyword-based queries. It must be accompanied by the 'keywords' parameter but will default to any if it is omitted. A value from any, all, allnear, phrase, begins, beginany, exact, exactany, ends, endsany.
+    IngestibleMicrosoft365:
+      type: object
+      properties:
+        tenantId:
+          type: string
+          description: The tenant ID for the Azure Active Directory tenant.
+        clientId:
+          type: string
+          description: The client/application ID for an app that has been registered with your Azure Active Directory tenant and granted the necessary privileges.
+        clientSecret:
+          type: string
+          description: The client secret that has been configured for the clientId provided, for authentication.
+        username:
+          type: string
+          description: The optional username for a user that is a member of the Teams to be processed, only needed for ingesting Team Calendars.
+        password:
+          type: string
+          description: The password for the username if it is present.
+        certificateStorePath:
+          type: string
+          description: The path to a PKCS#12 certificate store, usable instead of clientSecret for authentication.
+        certificateStorePassword:
+          type: string
+          description: The password to the PKCS#12 certificate store.
+        from:
+          type: string
+          format: date-time
+          description: Sets the start date on the location. The start date and end date are both required, and if retrievals(Collection) includes USERS_CALENDARS or TEAMS_CALENDARS, then the date range cannot exceed five years.  Accepted date formats are RFC-3339 or a simple date format (yyyy-MM-dd) which will use the default timezone of the server.
+        to:
+          type: string
+          format: date-time
+          description: Sets the end date on the location. The start date and end date are both required, and if retrievals(Collection) includes USERS_CALENDARS or TEAMS_CALENDARS, then the date range cannot exceed five years.  Accepted date formats are RFC-3339 or a simple date format (yyyy-MM-dd) which will use the default timezone of the server.
+        retrievals:
+          type: array
+          description: Sets the content to be retrieved from Microsoft Graph. Available options are TEAMS_CHANNELS, TEAMS_CALENDARS, USERS_CHATS, USERS_CONTACTS, USERS_CALENDARS, USERS_EMAILS, ORG_CONTACTS, SHAREPOINT
+          items:
+            type: string
+            enum:
+            - TEAMS_CHANNELS
+            - TEAMS_CALENDARS
+            - USERS_CHATS
+            - USERS_CONTACTS
+            - USERS_CALENDARS
+            - USERS_EMAILS
+            - ORG_CONTACTS
+            - SHAREPOINT
+        mailFolderRetrievals:
+          type: array
+          description: Sets the mail folder retrieval areas for Exchange Online.
+          items:
+            type: string
+            enum:
+            - ALL
+            - MAILBOX_ALL
+            - RECOVERABLE_ITEMS_ALL
+            - ARCHIVE
+            - CLUTTER
+            - CONVERSATION_HISTORY
+            - DELETED_ITEMS
+            - DRAFTS
+            - INBOX
+            - JUNK
+            - OUTBOX
+            - SENT_ITEMS
+            - SYNC_ISSUES
+            - OTHER
+            - RECOVERABLE_ITEMS_DELETIONS
+            - RECOVERABLE_ITEMS_PURGES
+            - RECOVERABLE_ITEMS_DISCOVERY_HOLDS
+            - RECOVERABLE_ITEMS_SUBSTRATE_HOLDS
+            - RECOVERABLE_ITEMS_OTHER
+        mailboxRetrievals:
+          type: array
+          deprecated: true
+          description: list of possible areas to retrieve from. Defaults to [ "MAILBOX" ]. Possible values MAILBOX, ARCHIVE, PURGES, DELETIONS, RECOVERABLE_ITEMS, ARCHIVE_PURGES, ARCHIVE_DELETIONS, ARCHIVE_RECOVERABLE_ITEMS, PUBLIC_FOLDERS.
+          default:
+          - MAILBOX
+          items:
+            type: string
+            enum:
+            - MAILBOX
+            - ARCHIVE
+            - PURGES
+            - DELETIONS
+            - RECOVERABLE_ITEMS
+            - ARCHIVE_PURGES
+            - ARCHIVE_DELETIONS
+            - ARCHIVE_RECOVERABLE_ITEMS
+            - PUBLIC_FOLDERS
+        teamNames:
+          type: array
+          description: Sets the team names on the location.
+          items:
+            type: string
+        userPrincipalNames:
+          type: array
+          description: Sets the user principal names on the location.
+          items:
+            type: string
+        versionFilters:
+          $ref: '#/components/schemas/Microsoft365VersionFilterOptions'
+        licenseModel:
+          description: The payment models and licensing requirements for Microsoft Teams APIs in Microsoft Graph.  If not provided, evaluation mode will be used.  Model 'A' is restricted to applications performing a security or compliance function.  Model 'B' is restricted to applications that don't perform a security or compliance function.  Please see https://learn.microsoft.com/en-us/graph/teams-licenses for more information regarding Microsoft Teams APIs.
+          type: string
+          enum:
+          - A
+          - B
+      required:
+      - tenantId
+      - clientId
+      - from
+      - to
+    ReloadItemsIngestionRequest:
+      type: object
+      properties:
+        processorSettings:
+          $ref: '#/components/schemas/ProcessorSettings'
+        mimeTypeProcessorSettings:
+          type: array
+          description: Sets the processing settings for individual mime types.
+          items:
+            $ref: '#/components/schemas/MimeTypeProcessingSetting'
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+        keystoreKeyParameters:
+          type: array
+          description: Sets the settings used to apply a keystore file to the ingestion.
+          items:
+            $ref: '#/components/schemas/KeyStoreKeyParameters'
+        rescanEvidenceRepositories:
+          type: boolean
+          description: If true, the case's Evidence Repositories will be rescanned to discover new Evidence Containers within them and new files within existing Evidence Containers which are themselves within the cases's Evidence Repositories. Default is false.
+        rescanEvidenceRepositoriesSettings:
+          $ref: '#/components/schemas/RescanEvidenceRepositoriesSettings'
+        passwordDiscoverySettings:
+          $ref: '#/components/schemas/PasswordDiscoverySettings'
+        configurationProfile:
+          type: string
+          description: Deprecated in favor of processingProfile. Configuration profile to use as base set of processor, parallel processing, and mime type settings.  Values present in processorSettings, parallelProcessingSettings, and mimeTypeProcessorSettings will override anything defined by this profile.
+        processingProfile:
+          type: string
+          description: The name of the Processing Profile to use. If you use this setting then do not use any other settings from processorSettings as everything will be overridden by the loaded Processing profile.
+        query:
+          type: string
+          description: All items matching the query will be reloaded from source.
+    EvidenceRepository:
+      type: object
+      properties:
+        path:
+          type: string
+          description: The path of the evidence repository folder. Each folder or file immediately inside this path will become a new evidence container.
+        custodianLevel:
+          type: integer
+          description: If custodian names are present in the repository, this is a positive integer of the number of folder levels nesting inside the repository where custodians are defined. For example custodianLevel = 1 indicates that each folder immediately inside the repository folder is a custodian name, while custodianLevel = 2 indicates that each folder nested two levels inside the repository folder is a custodian name. If the repository does not contain custodian names then this parameter can be either omitted or set to -1.
+          default: -1
+          format: int32
+        evidenceContainerNaming:
+          type: string
+          enum:
+          - content
+          - numbered
+          default: content
+          description: If "content" then evidence containers created from folders or files in the evidence repository will take their name from those folders and files (this was the only behaviour prior to Nuix 6.2), if "numbered" then evidence containers will be given sequentially numbered names instead.
+        evidenceContainerNamingPrefix:
+          type: string
+          description: If not null then all evidence containers created will have the given prefix appended to the beginning of their name. For example to obtain Nuix's default evidence naming scheme of "Evidence 1", "Evidence 2", "Evidence 3", etc you would use evidenceContainerNamingPrefix="Evidence ",evidenceContainerNaming="numbered" (note the trailing space in the prefix string).
+        timeZone:
+          type: string
+          description: Sets the repository time zone.
+        charset:
+          type: string
+          description: Sets the repository character set.
+        language:
+          type: string
+          description: Sets the repository language.
+        countryCode:
+          type: string
+          description: Sets the repository country code.
+    IngestibleMailStore:
+      type: object
+      properties:
+        protocol:
+          type: string
+          description: 'Mailstore protocol, supported values: pop, pops, imap, imaps, gwta.'
+        host:
+          type: string
+          description: The host server IP or hostname.
+        port:
+          type: integer
+          description: The port number.
+          format: int32
+        username:
+          type: string
+          description: The username for the mail store.
+        password:
+          type: string
+          description: The password.
+    SingleContainerIngestionRequestIngestibleOracleServer:
+      type: object
+      properties:
+        processorSettings:
+          $ref: '#/components/schemas/ProcessorSettings'
+        mimeTypeProcessorSettings:
+          type: array
+          description: Sets the processing settings for individual mime types.
+          items:
+            $ref: '#/components/schemas/MimeTypeProcessingSetting'
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+        keystoreKeyParameters:
+          type: array
+          description: Sets the settings used to apply a keystore file to the ingestion.
+          items:
+            $ref: '#/components/schemas/KeyStoreKeyParameters'
+        rescanEvidenceRepositories:
+          type: boolean
+          description: If true, the case's Evidence Repositories will be rescanned to discover new Evidence Containers within them and new files within existing Evidence Containers which are themselves within the cases's Evidence Repositories. Default is false.
+        rescanEvidenceRepositoriesSettings:
+          $ref: '#/components/schemas/RescanEvidenceRepositoriesSettings'
+        passwordDiscoverySettings:
+          $ref: '#/components/schemas/PasswordDiscoverySettings'
+        configurationProfile:
+          type: string
+          deprecated: true
+          description: Deprecated in favor of processingProfile. Configuration profile to use as base set of processor, parallel processing, and mime type settings.  Values present in processorSettings, parallelProcessingSettings, and mimeTypeProcessorSettings will override anything defined by this profile.
+        processingProfile:
+          type: string
+          description: The name of the Processing Profile to use. If you use this setting then do not use any other settings from processorSettings as everything will be overridden by the loaded Processing profile.
+        target:
+          $ref: '#/components/schemas/IngestibleOracleServer'
+        container:
+          $ref: '#/components/schemas/EvidenceContainer'
+    SingleContainerIngestionRequestIngestibleSQLServer:
+      type: object
+      properties:
+        processorSettings:
+          $ref: '#/components/schemas/ProcessorSettings'
+        mimeTypeProcessorSettings:
+          type: array
+          description: Sets the processing settings for individual mime types.
+          items:
+            $ref: '#/components/schemas/MimeTypeProcessingSetting'
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+        keystoreKeyParameters:
+          type: array
+          description: Sets the settings used to apply a keystore file to the ingestion.
+          items:
+            $ref: '#/components/schemas/KeyStoreKeyParameters'
+        rescanEvidenceRepositories:
+          type: boolean
+          description: If true, the case's Evidence Repositories will be rescanned to discover new Evidence Containers within them and new files within existing Evidence Containers which are themselves within the cases's Evidence Repositories. Default is false.
+        rescanEvidenceRepositoriesSettings:
+          $ref: '#/components/schemas/RescanEvidenceRepositoriesSettings'
+        passwordDiscoverySettings:
+          $ref: '#/components/schemas/PasswordDiscoverySettings'
+        configurationProfile:
+          type: string
+          deprecated: true
+          description: Deprecated in favor of processingProfile. Configuration profile to use as base set of processor, parallel processing, and mime type settings.  Values present in processorSettings, parallelProcessingSettings, and mimeTypeProcessorSettings will override anything defined by this profile.
+        processingProfile:
+          type: string
+          description: The name of the Processing Profile to use. If you use this setting then do not use any other settings from processorSettings as everything will be overridden by the loaded Processing profile.
+        target:
+          $ref: '#/components/schemas/IngestibleSQLServer'
+        container:
+          $ref: '#/components/schemas/EvidenceContainer'
+    IngestibleSQLServer:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: This optional parameter defines the Windows networking domain of the server account.
+        username:
+          type: string
+          description: The username needed to access the server account.
+        password:
+          type: string
+          description: The password needed to access the server account.
+        computer:
+          type: string
+          description: The hostname or IP address of the target server.
+        instance:
+          type: string
+          description: This parameter specifies the database instance.
+        query:
+          type: string
+          description: This optional parameter specifies the SQL query used to filter the content.
+        maxRowsPerTable:
+          type: integer
+          description: The maximum number of rows to return from each table or query.  This parameter is optional. It can save time when processing tables or query results with very many rows. The selection of which rows will be returned should be considered arbitrary.
+    IngestibleSharepoint:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: This optional parameter defines the Windows networking domain of the server account.
+        username:
+          type: string
+          description: The username needed to access the server account.
+        password:
+          type: string
+          description: The password needed to access the server account.
+        uri:
+          type: string
+          description: Protocol, host, port and path can all be specified. For SharePoint the address is the site address.  It can be omitted to use auto-discovery based on site address.
+    IngestibleSplitFileList:
+      type: object
+      properties:
+        files:
+          type: array
+          description: The list of files to add. Absolute paths are recommended.
+          items:
+            type: string
+    SingleContainerIngestionRequestIngestibleSharepoint:
+      type: object
+      properties:
+        processorSettings:
+          $ref: '#/components/schemas/ProcessorSettings'
+        mimeTypeProcessorSettings:
+          type: array
+          description: Sets the processing settings for individual mime types.
+          items:
+            $ref: '#/components/schemas/MimeTypeProcessingSetting'
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+        keystoreKeyParameters:
+          type: array
+          description: Sets the settings used to apply a keystore file to the ingestion.
+          items:
+            $ref: '#/components/schemas/KeyStoreKeyParameters'
+        rescanEvidenceRepositories:
+          type: boolean
+          description: If true, the case's Evidence Repositories will be rescanned to discover new Evidence Containers within them and new files within existing Evidence Containers which are themselves within the cases's Evidence Repositories. Default is false.
+        rescanEvidenceRepositoriesSettings:
+          $ref: '#/components/schemas/RescanEvidenceRepositoriesSettings'
+        passwordDiscoverySettings:
+          $ref: '#/components/schemas/PasswordDiscoverySettings'
+        configurationProfile:
+          type: string
+          deprecated: true
+          description: Deprecated in favor of processingProfile. Configuration profile to use as base set of processor, parallel processing, and mime type settings.  Values present in processorSettings, parallelProcessingSettings, and mimeTypeProcessorSettings will override anything defined by this profile.
+        processingProfile:
+          type: string
+          description: The name of the Processing Profile to use. If you use this setting then do not use any other settings from processorSettings as everything will be overridden by the loaded Processing profile.
+        target:
+          $ref: '#/components/schemas/IngestibleSharepoint'
+        container:
+          $ref: '#/components/schemas/EvidenceContainer'
+    NamedEntity:
+      type: object
+      properties:
+        regularExpression:
+          type: string
+          description: Gets the regular expression used by the entity.
+        name:
+          type: string
+          description: Gets the name of the entity.
+    Microsoft365VersionFilterOptions:
+      type: object
+      description: The version filter options.
+      properties:
+        versionRetrievalEnabled:
+          type: boolean
+          description: True if all versions should be retrieved, false for current version only.
+          default: false
+        versionRetrievalLimit:
+          type: integer
+          description: Integer value limiting the number of versions retrieved if versionRetrievalEnabled is set to true.  -1 (all available versions)
+    IngestibleS3Bucket:
+      type: object
+      properties:
+        access:
+          type: string
+          description: This parameter specifies the access key ID for an Amazon Web Service account.
+        secret:
+          type: string
+          description: This parameter specifies the secret access key for an Amazon Web Service account.
+        bucket:
+          type: string
+          description: This optional parameter specifies a bucket and optionally a path to a folder within the bucket that contains the evidence to ingest. For example, 'com.nuix.mybucket/top folder/sub folder'. Omitting this parameter will cause all buckets to be added to evidence.
+        endpoint:
+          type: string
+          description: This optional parameter specifies a particular Amazon Web Service server endpoint. This can be used to connect to a particular regional server e.g., https://s3.amazonaws.com.
+        useCredentialDiscovery:
+          type: boolean
+          description: Use credential discovery instead of anonymous access.
+    SingleContainerIngestionRequestIngestibleDropbox:
+      type: object
+      properties:
+        processorSettings:
+          $ref: '#/components/schemas/ProcessorSettings'
+        mimeTypeProcessorSettings:
+          type: array
+          description: Sets the processing settings for individual mime types.
+          items:
+            $ref: '#/components/schemas/MimeTypeProcessingSetting'
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+        keystoreKeyParameters:
+          type: array
+          description: Sets the settings used to apply a keystore file to the ingestion.
+          items:
+            $ref: '#/components/schemas/KeyStoreKeyParameters'
+        rescanEvidenceRepositories:
+          type: boolean
+          description: If true, the case's Evidence Repositories will be rescanned to discover new Evidence Containers within them and new files within existing Evidence Containers which are themselves within the cases's Evidence Repositories. Default is false.
+        rescanEvidenceRepositoriesSettings:
+          $ref: '#/components/schemas/RescanEvidenceRepositoriesSettings'
+        passwordDiscoverySettings:
+          $ref: '#/components/schemas/PasswordDiscoverySettings'
+        configurationProfile:
+          type: string
+          deprecated: true
+          description: Deprecated in favor of processingProfile. Configuration profile to use as base set of processor, parallel processing, and mime type settings.  Values present in processorSettings, parallelProcessingSettings, and mimeTypeProcessorSettings will override anything defined by this profile.
+        processingProfile:
+          type: string
+          description: The name of the Processing Profile to use. If you use this setting then do not use any other settings from processorSettings as everything will be overridden by the loaded Processing profile.
+        target:
+          $ref: '#/components/schemas/IngestibleDropbox'
+        container:
+          $ref: '#/components/schemas/EvidenceContainer'
+    SingleContainerIngestionRequestIngestibleFile:
+      type: object
+      properties:
+        processorSettings:
+          $ref: '#/components/schemas/ProcessorSettings'
+        mimeTypeProcessorSettings:
+          type: array
+          description: Sets the processing settings for individual mime types.
+          items:
+            $ref: '#/components/schemas/MimeTypeProcessingSetting'
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+        keystoreKeyParameters:
+          type: array
+          description: Sets the settings used to apply a keystore file to the ingestion.
+          items:
+            $ref: '#/components/schemas/KeyStoreKeyParameters'
+        rescanEvidenceRepositories:
+          type: boolean
+          description: If true, the case's Evidence Repositories will be rescanned to discover new Evidence Containers within them and new files within existing Evidence Containers which are themselves within the cases's Evidence Repositories. Default is false.
+        rescanEvidenceRepositoriesSettings:
+          $ref: '#/components/schemas/RescanEvidenceRepositoriesSettings'
+        passwordDiscoverySettings:
+          $ref: '#/components/schemas/PasswordDiscoverySettings'
+        configurationProfile:
+          type: string
+          deprecated: true
+          description: Deprecated in favor of processingProfile. Configuration profile to use as base set of processor, parallel processing, and mime type settings.  Values present in processorSettings, parallelProcessingSettings, and mimeTypeProcessorSettings will override anything defined by this profile.
+        processingProfile:
+          type: string
+          description: The name of the Processing Profile to use. If you use this setting then do not use any other settings from processorSettings as everything will be overridden by the loaded Processing profile.
+        target:
+          $ref: '#/components/schemas/IngestibleFile'
+        container:
+          $ref: '#/components/schemas/EvidenceContainer'
+    SingleContainerIngestionRequestIngestibleSlack:
+      type: object
+      properties:
+        processorSettings:
+          $ref: '#/components/schemas/ProcessorSettings'
+        mimeTypeProcessorSettings:
+          type: array
+          description: Sets the processing settings for individual mime types.
+          items:
+            $ref: '#/components/schemas/MimeTypeProcessingSetting'
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+        keystoreKeyParameters:
+          type: array
+          description: Sets the settings used to apply a keystore file to the ingestion.
+          items:
+            $ref: '#/components/schemas/KeyStoreKeyParameters'
+        rescanEvidenceRepositories:
+          type: boolean
+          description: If true, the case's Evidence Repositories will be rescanned to discover new Evidence Containers within them and new files within existing Evidence Containers which are themselves within the cases's Evidence Repositories. Default is false.
+        rescanEvidenceRepositoriesSettings:
+          $ref: '#/components/schemas/RescanEvidenceRepositoriesSettings'
+        passwordDiscoverySettings:
+          $ref: '#/components/schemas/PasswordDiscoverySettings'
+        configurationProfile:
+          type: string
+          deprecated: true
+          description: Deprecated in favor of processingProfile. Configuration profile to use as base set of processor, parallel processing, and mime type settings.  Values present in processorSettings, parallelProcessingSettings, and mimeTypeProcessorSettings will override anything defined by this profile.
+        processingProfile:
+          type: string
+          description: The name of the Processing Profile to use. If you use this setting then do not use any other settings from processorSettings as everything will be overridden by the loaded Processing profile.
+        target:
+          $ref: '#/components/schemas/IngestibleSlack'
+        container:
+          $ref: '#/components/schemas/EvidenceContainer'
+    AsyncFunctionResponse:
+      type: object
+      properties:
+        functionKey:
+          type: string
+          description: The function key to use when querying status.
+        location:
+          type: string
+          description: The location URL for querying status.  (http://nuix-restful-service:8080/svc/v1/asyncFunctions/{functionKey})
+    IngestibleDocumentum:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: This optional parameter defines the Windows networking domain of the server account.
+        username:
+          type: string
+          description: The username needed to access the server account.
+        password:
+          type: string
+          description: The password needed to access the server account.
+        port:
+          type: integer
+          description: The port number
+          default: 1489
+        query:
+          type: string
+          description: This optional parameter specifies a DQL (documentum) query used to filter the content.
+        server:
+          type: string
+          description: This parameter specifies the Documentum server address.
+        docBase:
+          type: string
+          description: This parameter specifies the Documentum docbase repository.
+        propertyFile:
+          type: string
+          description: This optional parameter specifies the Documentum property file.
+    BulkIngestionRequest:
+      type: object
+      properties:
+        processorSettings:
+          $ref: '#/components/schemas/ProcessorSettings'
+        mimeTypeProcessorSettings:
+          type: array
+          description: Sets the processing settings for individual mime types.
+          items:
+            $ref: '#/components/schemas/MimeTypeProcessingSetting'
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+        keystoreKeyParameters:
+          type: array
+          description: Sets the settings used to apply a keystore file to the ingestion.
+          items:
+            $ref: '#/components/schemas/KeyStoreKeyParameters'
+        rescanEvidenceRepositories:
+          type: boolean
+          description: If true, the case's Evidence Repositories will be rescanned to discover new Evidence Containers within them and new files within existing Evidence Containers which are themselves within the cases's Evidence Repositories. Default is false.
+        rescanEvidenceRepositoriesSettings:
+          $ref: '#/components/schemas/RescanEvidenceRepositoriesSettings'
+        passwordDiscoverySettings:
+          $ref: '#/components/schemas/PasswordDiscoverySettings'
+        configurationProfile:
+          type: string
+          description: Deprecated in favor of processingProfile. Configuration profile to use as base set of processor, parallel processing, and mime type settings.  Values present in processorSettings, parallelProcessingSettings, and mimeTypeProcessorSettings will override anything defined by this profile.
+          deprecated: true
+        processingProfile:
+          type: string
+          description: The name of the Processing Profile to use. If you use this setting then do not use any other settings from processorSettings as everything will be overridden by the loaded Processing profile.
+        repositories:
+          type: array
+          description: The list of evidence repositories to create
+          items:
+            $ref: '#/components/schemas/EvidenceRepository'
+        containers:
+          type: array
+          description: The list of evidence containers to create
+          items:
+            $ref: '#/components/schemas/EvidenceContainerWithTargets'
+    IngestibleExchangeMailbox:
+      type: object
+      properties:
+        username:
+          type: string
+          description: The username needed to access the server account.
+        password:
+          type: string
+          description: The password needed to access the server account.
+        uri:
+          type: string
+          description: Protocol, host, port and path can all be specified. For SharePoint the address is the site address. For Exchange the address is the path to the Exchange Web Service (e.g., https://ex2010/ews/exchange.asmx) and it can be omitted to use auto-discovery based on the mailbox or username address.
+        domain:
+          type: string
+          description: This optional parameter defines the Windows networking domain of the server account.
+        to:
+          type: string
+          description: This optional parameter limits the evidence to a date range ending at the specified date/time. It must be accompanied by the 'from' parameter. Accepted date formats are RFC-3339 or a simple date format (yyyy-MM-dd) which will use the default timezone of the server.
+          format: date-time
+        from:
+          type: string
+          description: This optional parameter limits the evidence to a date range beginning from the specified date/time. It must be accompanied by the 'to' parameter. Accepted date formats are RFC-3339 or a simple date format (yyyy-MM-dd) which will use the default timezone of the server.
+          format: date-time
+        mailbox:
+          type: string
+          description: The mailbox (specified by email address) to ingest if it differs from the username.
+        impersonating:
+          type: boolean
+          description: Instructs Exchange to impersonate the mailbox user instead of delegating when the mailbox and username are different. Defaults to false.
+        mailboxRetrieval:
+          type: array
+          description: 'A list containing one or more of the following string values: mailbox, archive, purges, deletions, recoverable_items, archive_purges, archive_deletions, archive_recoverable_items, public_folders. Determines whether to extract from the user''s mailbox, archive, recoverable items.'
+          items:
+            type: string
+    IngestibleDropbox:
+      type: object
+      properties:
+        authCode:
+          type: string
+          description: A string retrieved via a webpage on Dropbox that enables access to an account. The account credentials are provided only to Dropbox. To get the URL pass dropbox without this parameter, then get the authCode by following the instructions at the URL provided in the MissingAccessTokenException and invoke this method again using the retrieved authCode parameter. These codes have an expiry time of the order of minutes.
+        team:
+          type: boolean
+          description: Whether or not a Dropbox team is being ingested.  This optional parameter should be present and set to true for all invocations when adding a Dropbox team to evidence. It can be omitted to add an individual Dropbox account.
+        accessToken:
+          type: string
+          description: A string retrieved using the authCode that enables access to an account. For dropbox, if the access token to an account is already known, provide it directly using this parameter instead of authCode. This code doesn't expire unless the account owner revokes access for Nuix.
+    IngestibleSlack:
+      type: object
+      properties:
+        tempAuthCode:
+          type: string
+          description: The temporary authorization code obtained from Slack's OAuth flow. Not required if storedCredentialName is provided.
+        storedCredentialName:
+          type: string
+          description: The name of the slack credentials stored in credentials store. Not required if tempAuthCode is provided.
+        from:
+          type: string
+          format: date-time
+          description: Sets the start date on the location. The start date and end date are both required, and if retrievals(Collection) includes USERS_CALENDARS or TEAMS_CALENDARS, then the date range cannot exceed five years.  Accepted date formats are RFC-3339 or a simple date format (yyyy-MM-dd) which will use the default timezone of the server.
+        to:
+          type: string
+          format: date-time
+          description: Sets the end date on the location. The start date and end date are both required, and if retrievals(Collection) includes USERS_CALENDARS or TEAMS_CALENDARS, then the date range cannot exceed five years.  Accepted date formats are RFC-3339 or a simple date format (yyyy-MM-dd) which will use the default timezone of the server.
+        userIds:
+          type: array
+          description: The Set of user IDs to filter Slack messages and files from.
+          items:
+            type: string
+    SingleContainerIngestionRequestIngestibleDocumentum:
+      type: object
+      properties:
+        processorSettings:
+          $ref: '#/components/schemas/ProcessorSettings'
+        mimeTypeProcessorSettings:
+          type: array
+          description: Sets the processing settings for individual mime types.
+          items:
+            $ref: '#/components/schemas/MimeTypeProcessingSetting'
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+        keystoreKeyParameters:
+          type: array
+          description: Sets the settings used to apply a keystore file to the ingestion.
+          items:
+            $ref: '#/components/schemas/KeyStoreKeyParameters'
+        rescanEvidenceRepositories:
+          type: boolean
+          description: If true, the case's Evidence Repositories will be rescanned to discover new Evidence Containers within them and new files within existing Evidence Containers which are themselves within the cases's Evidence Repositories. Default is false.
+        rescanEvidenceRepositoriesSettings:
+          $ref: '#/components/schemas/RescanEvidenceRepositoriesSettings'
+        passwordDiscoverySettings:
+          $ref: '#/components/schemas/PasswordDiscoverySettings'
+        configurationProfile:
+          type: string
+          deprecated: true
+          description: Deprecated in favor of processingProfile. Configuration profile to use as base set of processor, parallel processing, and mime type settings.  Values present in processorSettings, parallelProcessingSettings, and mimeTypeProcessorSettings will override anything defined by this profile.
+        processingProfile:
+          type: string
+          description: The name of the Processing Profile to use. If you use this setting then do not use any other settings from processorSettings as everything will be overridden by the loaded Processing profile.
+        target:
+          $ref: '#/components/schemas/IngestibleDocumentum'
+        container:
+          $ref: '#/components/schemas/EvidenceContainer'
+    Success:
+      type: object
+      description: A wrapper object for a boolean.
+      properties:
+        success:
+          type: boolean
+          description: A boolean value true or false.
+    ProcessorSettings:
+      type: object
+      properties:
+        processText:
+          type: boolean
+          description: If true, stores and indexes the text of data items.  Default is true.
+          default: true
+        traversalScope:
+          type: string
+          description: "Selects the traversal scope for ingestion.\n* `full_traversal` - Processes all items and their descendants during processing except where specific MIME type settings apply.\n* `loose_files` - Processes loose files but not their contents.\n* `loose_files_and_forensic_images` - Processes loose files and forensic images but not their contents. This can be used to 'explode' forensic\n  images without processing all the files inside. Note: `identifyPhysicalFiles` must be set to true to explode forensic images.\n"
+          enum:
+          - full_traversal
+          - loose_files
+          - loose_files_and_forensic_images
+        processLooseFileContents:
+          type: boolean
+          description: If true, the contents of loose files will be extracted and processed. If false metadata about loose files will be extracted but their contents will not be processed. Default is true. Deprecated in Nuix 7.0, eplaced with traversalScope.
+          deprecated: true
+          default: true
+        processForensicImages:
+          type: boolean
+          description: If true, the contents of forensic images will be exposed. If false metadata about forensic images will be extracted but their contents will not be processed. This settings can be used in combination with processLooseFileContents to explode forensic images but not process their contents. Default is true. Deprecated in Nuix 7.0, replaced with traversalScope.
+          deprecated: true
+          default: true
+        analysisLanguage:
+          type: string
+          description: 'Specifies the language to use for text analysis when indexing. A supported language code.  Example codes are: "en" - English, "ja" - Japanese. Default is "en".'
+          default: en
+        stopWords:
+          type: boolean
+          description: If true, removes English stop words ("a", "and", "the", etc.) from the text index. If false, no stop words are removed. Default is false.
+          default: false
+        stemming:
+          type: boolean
+          description: If true, stems words using English rules before indexing (e.g. "fishing" -> "fish".). If false, no stemming is performed. Default is false.
+          default: false
+        enableExactQueries:
+          type: boolean
+          description: If true, enables search using "exact" queries.  Default is false.
+          default: false
+        extractNamedEntities:
+          type: boolean
+          description: 'If true, extract named entities from the text of a document.  Default is false. NOTE: This is deprecated and will be removed in future release.  Deprecated in Nuix 6.0.'
+          deprecated: true
+          default: false
+        extractNamedEntitiesFromText:
+          type: boolean
+          description: If true, extracts named entities from the text of a document.  Default is false
+          default: false
+        extractNamedEntitiesFromProperties:
+          type: boolean
+          description: If true, extracts named entities from the properties of a document.  Default is false
+          default: false
+        extractNamedEntitiesFromTextStripped:
+          type: boolean
+          description: If true, extracts named entities from the text of text-stripped items, if and only if 'extractNamedEntitesFromText' is true. The 'extractNamedEntitiesFromProperties' setting is independent of this property.  Default is false
+          default: false
+        extractNamedEntitiesFromTextCommunications:
+          type: boolean
+          description: If true, extract named entities from the communication metadata of a document.  Default is false.
+          default: false
+        extractShingles:
+          type: boolean
+          description: If true, extract shingles from item text. Enabling this setting enables near deduplication.  Default is true.
+          default: true
+        processTextSummaries:
+          type: boolean
+          description: If true, process item text and summarise.  Default is true.
+          default: true
+        calculateSSDeepFuzzyHash:
+          type: boolean
+          description: If true, calculate SSDeep fuzzy hash values for item. Default is false.
+          default: false
+        calculatePhotoDNARobustHash:
+          type: boolean
+          description: If true, calculate PhotoDNA robust hash values for image items.
+          default: false
+        detectFaces:
+          type: boolean
+          description: If true, detect faces in photographic items. Default is false.
+          default: false
+        classifyImagesWithDeepLearning:
+          type: boolean
+          description: 'If true, classify images using Deep Learning. Requires additional following settings: imageClassificationModelUrl. Default is false.'
+          default: false
+        imageClassificationModelUrl:
+          type: string
+          description: URL pointing to Deep Learning model - can be a local file too, but in URL format (file://path/to/model).
+        extractFromSlackSpace:
+          type: boolean
+          description: If true, extract deleted data from mailbox file formats and slack space from the end of file records in file system disk images.  Default is false.
+          default: false
+        carveFileSystemUnallocatedSpace:
+          type: boolean
+          description: If true, carve data out of file system unallocated space for disk images.  Default is false.
+          default: false
+        carveUnidentifiedData:
+          type: boolean
+          description: If true, carve data out of unidentified data items.  Default is false.
+          default: false
+        carvingBlockSize:
+          type: integer
+          description: If null, the block size of the file system is used. Otherwise the given block size is used. File identification is attempted at start of each block, so the smaller the value the longer processing will take. Avoid values smaller than 512 bytes except in specific cases. Default is null.
+          format: int32
+        recoverDeletedFiles:
+          type: boolean
+          description: If true, recover deleted file records from disk images.  Default is true.
+          default: true
+        extractEndOfFileSlackSpace:
+          type: boolean
+          description: If true, extract the slack space from the end of file records in disk images.  Default is false.
+          default: false
+        smartProcessRegistry:
+          type: boolean
+          description: If true, only process sections of the Registry that have decoders of have been explicitly selected. Default is false
+          default: false
+        identifyPhysicalFiles:
+          type: boolean
+          description: If false, only file system metadata is extracted for physical files on disk.  Default is true.
+          default: true
+        createThumbnails:
+          type: boolean
+          description: If true, create and store thumbnails of image data items.  Default is true.
+          default: true
+        skinToneAnalysis:
+          type: boolean
+          description: If true, perform analysis on images to detect skintones.  Default is false.
+          default: false
+        calculateAuditedSize:
+          type: boolean
+          description: If true, calculates audited size.  Default is false.
+          default: false
+        storeBinary:
+          type: boolean
+          description: If true, store the binary of data items.  Default is false.
+          default: false
+        maxStoredBinarySize:
+          type: integer
+          description: Specifies the maximum size of binary which will be stored into the binary store, in bytes. Default is 250000000 (250 MB).
+          default: 250000000
+          format: int32
+        maxDigestSize:
+          type: integer
+          description: Specifies the maximum size of binary which will be digested, in bytes. Default is 250000000 (250 MB).
+          default: 250000000
+          format: int64
+        digests:
+          type: array
+          description: A list of digests to calculate.  Valid values "MD5", "SHA-1" or "SHA-256".  Default is [ "MD5" ].
+          default:
+          - MD5
+          items:
+            type: string
+        addBccToEmailDigests:
+          type: boolean
+          description: If true, adds the Bcc field when computing email digests. Using the Bcc field in email digests may prevent the sender and recipients digests from matching. This is because only the sender will have the Bcc field if it is present. Default is false.
+          default: false
+        addCommunicationDateToEmailDigests:
+          type: boolean
+          description: If true, adds the communication date when computing email digests. Using the communication date in the email digests may prevent the sender and recipients digests from matching. This is because the sender and recipients communication date / times can be slightly different for the same email. Default is false.
+          default: false
+        reuseEvidenceStores:
+          type: boolean
+          description: If true, existing evidence stores are used to add any additional data into.  Default is false.
+          default: false
+        processFamilyFields:
+          type: boolean
+          description: If true, top-level items will contain search fields containing text from their family.  Default is false.
+          default: false
+        hideEmbeddedImmaterialData:
+          type: boolean
+          description: If true, hides embedded immaterial data items such as embedded images in documents.  Default is false.
+          default: false
+        reportProcessingStatus:
+          type: string
+          description: If "physical_files", then the total evidence physical file size is calculated before processing starts. If "none", then no up-front calculation is performed. Non-file data will always be treated as "none". Default is none.
+          default: none
+        enableCustomProcessing:
+          type: array
+          description: Which aspects of the data to expose in the callback from whenItemProcessed(ItemProcessedCallback). They are accessible from ProcessedItem.getProperties(), ProcessedItem.getTextFile() and ProcessedItem.getBinaryFile() respectively. All other processing options will be skipped when this option is enabled.
+          items:
+            type: string
+            enum:
+            - properties
+            - binary
+            - text
+        workerItemCallback:
+          type: string
+          description: A string prefixed with "java:" followed by the name of a class with a no argument constructor which implements Consumer<WorkerItem>, or the name of a scripting engine followed by a colon character follow by the script to execute. Example scripting engine names include "ruby", "python" and "ecmascript".  For scripting languages, this string is the actual script code.
+        workerItemCallbacks:
+          type: array
+          description: A list of strings specifying worker scripts. See workerItemCallback for script details. Scripts are processed in list order.
+          items:
+            type: string
+        performOcr:
+          type: boolean
+          description: If true, performs the OCR on the items based on the selected OCR profile.  Default is false.
+          default: false
+        ocrProfileName:
+          type: string
+          description: This must be set to an OCR profile name that exists.
+          default: Default
+        createPrintedImage:
+          type: boolean
+          description: If true, creates a printed image for items based on an imaging profile.  Default is false.
+          default: false
+        imagingProfileName:
+          type: string
+          description: If createPrintedImage is set to true, this specifies the name of the imaging profile to use during processing. This must be set to the name of an existing imaging profile that can be reached within the current context.
+          default: Processing Default
+        exportMetadata:
+          type: boolean
+          description: If true, exports an item's metadata using a given metadata export profile.  Default is false.
+          default: false
+        metadataExportProfileName:
+          type: string
+          description: If exportMetadata is set to true, this specifies the name of the metadata export profile to use during processing. This must be set to the name of a metadata export profile that can be reached within the current context.
+        namedEntities:
+          type: array
+          description: Passes in the list of named entities to be used in processing. If null, the default named entity settings are used.
+          items:
+            $ref: '#/components/schemas/NamedEntity'
+    SingleContainerIngestionRequestIngestibleExchangeMailbox:
+      type: object
+      properties:
+        processorSettings:
+          $ref: '#/components/schemas/ProcessorSettings'
+        mimeTypeProcessorSettings:
+          type: array
+          description: Sets the processing settings for individual mime types.
+          items:
+            $ref: '#/components/schemas/MimeTypeProcessingSetting'
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+        keystoreKeyParameters:
+          type: array
+          description: Sets the settings used to apply a keystore file to the ingestion.
+          items:
+            $ref: '#/components/schemas/KeyStoreKeyParameters'
+        rescanEvidenceRepositories:
+          type: boolean
+          description: If true, the case's Evidence Repositories will be rescanned to discover new Evidence Containers within them and new files within existing Evidence Containers which are themselves within the cases's Evidence Repositories. Default is false.
+        rescanEvidenceRepositoriesSettings:
+          $ref: '#/components/schemas/RescanEvidenceRepositoriesSettings'
+        passwordDiscoverySettings:
+          $ref: '#/components/schemas/PasswordDiscoverySettings'
+        configurationProfile:
+          type: string
+          deprecated: true
+          description: Deprecated in favor of processingProfile. Configuration profile to use as base set of processor, parallel processing, and mime type settings.  Values present in processorSettings, parallelProcessingSettings, and mimeTypeProcessorSettings will override anything defined by this profile.
+        processingProfile:
+          type: string
+          description: The name of the Processing Profile to use. If you use this setting then do not use any other settings from processorSettings as everything will be overridden by the loaded Processing profile.
+        target:
+          $ref: '#/components/schemas/IngestibleExchangeMailbox'
+        container:
+          $ref: '#/components/schemas/EvidenceContainer'
+    OcrOptionsV2:
+      type: object
+      properties:
+        regeneratePdfs:
+          type: boolean
+          default: false
+          description: Specifies whether to regenerate PDFs before they are sent to the OCR processor. Defaults to false
+        updatePdf:
+          type: boolean
+          default: true
+          description: Specifies whether to update PDFs in the print store with the PDF created by the OCR processor. Defaults to true
+        updateText:
+          type: boolean
+          default: true
+          description: Specifies whether to update the item's text with the text extrated with the OCR processor. Defaults to true
+        textModification:
+          type: string
+          default: append
+          enum:
+          - append
+          - overwrite
+          description: Specifies whether to append or overwrite new text to the item's existing text. Ignored if 'updateText' is set to false. Defaults to append.
+        quality:
+          type: string
+          enum:
+          - default
+          - document_archiving_accuracy
+          - document_archiving_speed,
+          - book_archiving_accuracy
+          - book_archiving_speed
+          - document_conversion_accuracy
+          - document_conversion_speed
+          - text_extraction_accuracy
+          - text_extraction_speed
+          - field_level_recognition
+          - fast
+          - mid_range
+          - high_quality
+          description: "OCR Quality:\n  * `default` - will use default values which usually produce a good result in a reasonable time.\n  * `document_archiving_accuracy` - Is suitable for creating an electronic archive (e.g. PDF). Enables detection\n    of maximum text on an image, including text embedded into the image. Full synthesis of the logical structure\n    of a document is not performed.\n  * `document_archiving_speed` - Has an emphasis on speed rather than accuracy.  See document_archiving_accuracy.\n  * `book_archiving_accuracy` - Is suitable for creating an electronic library (e.g. PDF). Enables detection\n    of font styles and full synthesis of the logical structure of a document.\n  * `book_archiving_speed` - Has an emphasis on speed rather than accuracy.  See book_archiving_accuracy.\n  * `document_conversion_accuracy` - Is suitable for converting documents into an editable format (e.g. RTF,\n    DOCX). Enables detection of font styles and full synthesis of the logical structure of a document.\n  * `document_conversion_speed` - Has an emphasis on speed rather than accuracy.  See document_conversion_accuracy.\n  * `text_extraction_accuracy` - Is suitable for extracting text from a document. Enables detection of all text on an image,\n    including small text areas of low quality (pictures and tables are not detected). Full synthesis of the logical\n    structure of a document is not performed.\n  * `text_extraction_speed` - Has an emphasis on speed rather than accuracy.  See text_extraction_accuracy.\n  * `field_level_recognition` - Is suitable for recognizing short text fragments\n  * `fast` - Deprecated.  See default.\n  * `mid_range` - Deprecated.  See document_archiving_speed\n  * `high_quality` - Deprecated.  See document_archiving_accuracy\n"
+        rotation:
+          type: string
+          enum:
+          - auto
+          - no_rotation
+          - left
+          - right
+          - upside_down
+          default: auto
+          description: 'Specifies the page rotation to use on the images. This will
+
+            rotate the images before processing.
+
+            * `left` Indicates the top of the image is on the left side of the document i.e. it is rotated 90 degrees counter-clockwise.
+
+            * `right` - Indicates the top of the image is on the right side of the document i.e. it is rotate 90 degrees clockwise.
+
+            * `upside_down` - Indicates the document should be rotate 180 degrees before processing.
+
+            '
+        deskew:
+          type: boolean
+          default: true
+          description: Whether to deskew text. This will attempt to correct images where text is not level with the page. Defaults to true
+        clearOcrCache:
+          type: boolean
+          default: true
+          description: Specifies whether to clear OCR cache. By default the OCR cache will be deleted upon completion. The default location for this cache is under the case directory. See also 'outputDirectory' for customising the location of this cache. Defaults to true
+        outputDirectory:
+          type: string
+          description: Specifies the output directory. Defaults to the temporary directory
+        languages:
+          type: array
+          description: Specifies the languages to use during recognition. Defaults to English
+          items:
+            $ref: '#/components/schemas/Languages'
+        timeout:
+          type: integer
+          default: 90
+          description: The timeout duration in minutes for processing an item. Must be greater than 1 minute. Defaults to 90
+          format: int32
+        updateDuplicates:
+          type: boolean
+          default: false
+          description: Update all duplicate items in the case. Defaults to false
+        ocrProfileName:
+          type: string
+          description: The OCR profile name.
+    SingleContainerIngestionRequestIngestibleMicrosoft365:
+      type: object
+      properties:
+        processorSettings:
+          $ref: '#/components/schemas/ProcessorSettings'
+        mimeTypeProcessorSettings:
+          type: array
+          description: Sets the processing settings for individual mime types.
+          items:
+            $ref: '#/components/schemas/MimeTypeProcessingSetting'
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+        keystoreKeyParameters:
+          type: array
+          description: Sets the settings used to apply a keystore file to the ingestion.
+          items:
+            $ref: '#/components/schemas/KeyStoreKeyParameters'
+        rescanEvidenceRepositories:
+          type: boolean
+          description: If true, the case's Evidence Repositories will be rescanned to discover new Evidence Containers within them and new files within existing Evidence Containers which are themselves within the cases's Evidence Repositories. Default is false.
+        rescanEvidenceRepositoriesSettings:
+          $ref: '#/components/schemas/RescanEvidenceRepositoriesSettings'
+        passwordDiscoverySettings:
+          $ref: '#/components/schemas/PasswordDiscoverySettings'
+        configurationProfile:
+          type: string
+          deprecated: true
+          description: Deprecated in favor of processingProfile. Configuration profile to use as base set of processor, parallel processing, and mime type settings.  Values present in processorSettings, parallelProcessingSettings, and mimeTypeProcessorSettings will override anything defined by this profile.
+        processingProfile:
+          type: string
+          description: The name of the Processing Profile to use. If you use this setting then do not use any other settings from processorSettings as everything will be overridden by the loaded Processing profile.
+        target:
+          $ref: '#/components/schemas/IngestibleMicrosoft365'
+        container:
+          $ref: '#/components/schemas/EvidenceContainer'
+    SingleContainerIngestionRequestIngestibleSSH:
+      type: object
+      properties:
+        processorSettings:
+          $ref: '#/components/schemas/ProcessorSettings'
+        mimeTypeProcessorSettings:
+          type: array
+          description: Sets the processing settings for individual mime types.
+          items:
+            $ref: '#/components/schemas/MimeTypeProcessingSetting'
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+        keystoreKeyParameters:
+          type: array
+          description: Sets the settings used to apply a keystore file to the ingestion.
+          items:
+            $ref: '#/components/schemas/KeyStoreKeyParameters'
+        rescanEvidenceRepositories:
+          description: If true, the case's Evidence Repositories will be rescanned to discover new Evidence Containers within them and new files within existing Evidence Containers which are themselves within the cases's Evidence Repositories. Default is false.
+          type: boolean
+        rescanEvidenceRepositoriesSettings:
+          $ref: '#/components/schemas/RescanEvidenceRepositoriesSettings'
+        passwordDiscoverySettings:
+          $ref: '#/components/schemas/PasswordDiscoverySettings'
+        configurationProfile:
+          type: string
+          deprecated: true
+          description: Deprecated in favor of processingProfile. Configuration profile to use as base set of processor, parallel processing, and mime type settings.  Values present in processorSettings, parallelProcessingSettings, and mimeTypeProcessorSettings will override anything defined by this profile.
+        processingProfile:
+          type: string
+          description: The name of the Processing Profile to use. If you use this setting then do not use any other settings from processorSettings as everything will be overridden by the loaded Processing profile.
+        target:
+          $ref: '#/components/schemas/IngestibleSSH'
+        container:
+          $ref: '#/components/schemas/EvidenceContainer'
+    RescanEvidenceRepositoriesSettings:
+      type: object
+      description: Settings when rescanning the case's evidence repositories.
+      properties:
+        depth:
+          type: integer
+          description: Maximum depth of directories to be rescanned.
+          format: int32
+    SingleContainerIngestionRequestIngestibleMailStore:
+      type: object
+      properties:
+        processorSettings:
+          $ref: '#/components/schemas/ProcessorSettings'
+        mimeTypeProcessorSettings:
+          type: array
+          description: Sets the processing settings for individual mime types.
+          items:
+            $ref: '#/components/schemas/MimeTypeProcessingSetting'
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+        keystoreKeyParameters:
+          type: array
+          description: Sets the settings used to apply a keystore file to the ingestion.
+          items:
+            $ref: '#/components/schemas/KeyStoreKeyParameters'
+        rescanEvidenceRepositories:
+          type: boolean
+          description: If true, the case's Evidence Repositories will be rescanned to discover new Evidence Containers within them and new files within existing Evidence Containers which are themselves within the cases's Evidence Repositories. Default is false.
+        rescanEvidenceRepositoriesSettings:
+          $ref: '#/components/schemas/RescanEvidenceRepositoriesSettings'
+        passwordDiscoverySettings:
+          $ref: '#/components/schemas/PasswordDiscoverySettings'
+        configurationProfile:
+          type: string
+          deprecated: true
+          description: Deprecated in favor of processingProfile. Configuration profile to use as base set of processor, parallel processing, and mime type settings.  Values present in processorSettings, parallelProcessingSettings, and mimeTypeProcessorSettings will override anything defined by this profile.
+        processingProfile:
+          type: string
+          description: The name of the Processing Profile to use. If you use this setting then do not use any other settings from processorSettings as everything will be overridden by the loaded Processing profile.
+        target:
+          $ref: '#/components/schemas/IngestibleMailStore'
+        container:
+          $ref: '#/components/schemas/EvidenceContainer'
+    SingleContainerIngestionRequestIngestibleEnterpriseVault:
+      type: object
+      properties:
+        processorSettings:
+          $ref: '#/components/schemas/ProcessorSettings'
+        mimeTypeProcessorSettings:
+          type: array
+          description: Sets the processing settings for individual mime types.
+          items:
+            $ref: '#/components/schemas/MimeTypeProcessingSetting'
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+        keystoreKeyParameters:
+          type: array
+          description: Sets the settings used to apply a keystore file to the ingestion.
+          items:
+            $ref: '#/components/schemas/KeyStoreKeyParameters'
+        rescanEvidenceRepositories:
+          type: boolean
+          description: If true, the case's Evidence Repositories will be rescanned to discover new Evidence Containers within them and new files within existing Evidence Containers which are themselves within the cases's Evidence Repositories. Default is false.
+        rescanEvidenceRepositoriesSettings:
+          $ref: '#/components/schemas/RescanEvidenceRepositoriesSettings'
+        passwordDiscoverySettings:
+          $ref: '#/components/schemas/PasswordDiscoverySettings'
+        configurationProfile:
+          type: string
+          deprecated: true
+          description: Deprecated in favor of processingProfile. Configuration profile to use as base set of processor, parallel processing, and mime type settings.  Values present in processorSettings, parallelProcessingSettings, and mimeTypeProcessorSettings will override anything defined by this profile.
+        processingProfile:
+          type: string
+          description: The name of the Processing Profile to use. If you use this setting then do not use any other settings from processorSettings as everything will be overridden by the loaded Processing profile.
+        target:
+          $ref: '#/components/schemas/IngestibleEnterpriseVault'
+        container:
+          $ref: '#/components/schemas/EvidenceContainer'
+    OcrRequestV2:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Query items that should be included. If a query is not supplied it defaults to an empty string, which returns everything.
+        ocrOptions:
+          $ref: '#/components/schemas/OcrOptionsV2'
+        ocrImagingOptions:
+          $ref: '#/components/schemas/ImagingOptions'
+        ocrProfile:
+          type: string
+          description: The name of the OCR Profile to use. If you use this setting then do not use any other settings to perform OCR from ocrOptions as everything will be overridden by the loaded OCR profile.
+        imagingProfile:
+          type: string
+          description: The name of the Imaging Profile to use. If you use this setting then do not use any settings from ocrImagingOptions as those settings will be overridden by the ones from the profile.
+        tags:
+          type: object
+          description: a map of tags to apply to the items.  The map must contain keys 'add' or 'remove' and the value is the tag to apply or delete.
+          additionalProperties:
+            type: string
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+    ParallelProcessingSettings:
+      type: object
+      properties:
+        workerCount:
+          type: integer
+          description: Number of worker processes to use. This defaults to number of CPU cores on the machine. This value is also limited by settings in the current licence / session.
+          format: int32
+        workerMemory:
+          type: integer
+          description: Maximum amount of memory to allocate to each worker process in megabytes. The provided value must be >= 768. Default is calculated based on the number of workers and available machine memory.
+          format: int32
+        workerTemp:
+          type: string
+          description: Base directory that workers will use to store temporary files generated during process. Can be a string file path, File, Path or URI. The default is a directory under the case directory.
+        embedBroker:
+          type: boolean
+          description: If true, the JMS broker will be run within the current process,otherwise it will be run in a new process. Default is true.
+          default: true
+        brokerMemory:
+          type: integer
+          description: Amount of memory to allocate to the JMS broker when it is run in a separate process. The provided value must be &gt;= 768. Default is 4096.
+          format: int32
+          default: 4096
+        workerBrokerAddress:
+          type: string
+          description: 'Worker broker address in the format host:port. '
+        useRemoteWorkers:
+          description: True to use remote workers when possible, false otherwise.
+          type: boolean
+          default: false
+    OcrRequest:
+      type: object
+      deprecated: true
+      properties:
+        query:
+          type: string
+          description: Query items that should be included. If a query is not supplied it defaults to an empty string, which returns everything.
+        ocrOptions:
+          $ref: '#/components/schemas/OcrOptions'
+        ocrImagingOptions:
+          $ref: '#/components/schemas/ImagingOptions'
+        tags:
+          type: object
+          description: a map of tags to apply to the items.  The map must contain keys 'add' or 'remove' and the value is the tag to apply or delete.
+          additionalProperties:
+            type: string
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+    SingleContainerIngestionRequestIngestibleLoadFile:
+      type: object
+      properties:
+        processorSettings:
+          $ref: '#/components/schemas/ProcessorSettings'
+        mimeTypeProcessorSettings:
+          type: array
+          description: Sets the processing settings for individual mime types.
+          items:
+            $ref: '#/components/schemas/MimeTypeProcessingSetting'
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+        keystoreKeyParameters:
+          type: array
+          description: Sets the settings used to apply a keystore file to the ingestion.
+          items:
+            $ref: '#/components/schemas/KeyStoreKeyParameters'
+        rescanEvidenceRepositories:
+          type: boolean
+          description: If true, the case's Evidence Repositories will be rescanned to discover new Evidence Containers within them and new files within existing Evidence Containers which are themselves within the cases's Evidence Repositories. Default is false.
+        rescanEvidenceRepositoriesSettings:
+          $ref: '#/components/schemas/RescanEvidenceRepositoriesSettings'
+        passwordDiscoverySettings:
+          $ref: '#/components/schemas/PasswordDiscoverySettings'
+        configurationProfile:
+          type: string
+          deprecated: true
+          description: Deprecated in favor of processingProfile. Configuration profile to use as base set of processor, parallel processing, and mime type settings.  Values present in processorSettings, parallelProcessingSettings, and mimeTypeProcessorSettings will override anything defined by this profile.
+        processingProfile:
+          type: string
+          description: The name of the Processing Profile to use. If you use this setting then do not use any other settings from processorSettings as everything will be overridden by the loaded Processing profile.
+        target:
+          $ref: '#/components/schemas/IngestibleLoadFile'
+        container:
+          $ref: '#/components/schemas/EvidenceContainer'
+    MimeTypeSpecificProcessingSettings:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Controls whether items matching this MIME type, and their embedded descendants, will be processed.  Default is true
+        processEmbedded:
+          type: boolean
+          description: Controls whether embedded descendants matching this MIME type will be processed.  Default is true
+        processText:
+          type: boolean
+          description: Controls whether items matching this MIME type will have their text processed.  This setting takes precedence over 'textStrip' if both are set to true.  Set this and 'textStrip' to false in order to skip text processing.  Default is true
+        textStrip:
+          type: boolean
+          description: Controls whether items matching this MIME type will have their binary data text stripped.  Set this and 'processText' to false in order to skip text processing.  Default is false
+        processNamedEntities:
+          type: boolean
+          description: Controls whether items matching this MIME type will have their named entities processed. This setting only takes effect if either 'extractNamedEntitiesFromText' or 'extractNamedEntitiesFromProperties' is enabled in 'ProcessorSettings'. Default is true
+        processImages:
+          type: boolean
+          description: Controls whether items matching this MIME type will have their image data processed. This setting only takes effect if 'createThumbnails' is enabled in 'ProcessorSettings'.  Default is true
+        storeBinary:
+          type: boolean
+          description: Controls whether items matching this MIME type will have their binary data stored.  This setting only takes effect if 'storeBinary' is enabled in 'ProcessorSettings'.  Default is true
+    EvidenceContainerWithTargets:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Sets the name for the evidence container that is created during ingestion.
+        customMetadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: Sets a map of custom metadata for the evidence container.
+        encoding:
+          type: string
+          description: Sets the encoding for the evidence container. If the encoding is not set the default system encoding will be used.
+        custodian:
+          type: string
+          description: Sets the name of the initial custodian for the data.
+        timeZone:
+          type: string
+          description: Sets the time zone for the evidence container. If the time zone is not set the system's default time zone will be used.
+        description:
+          type: string
+          description: Sets the description for the evidence container.
+        locale:
+          type: string
+          description: Sets the locale for the evidence container. Some file types and named entities require a locale for them to be ingested accurately. If not set then the system's default locale will be used. Format is that required by IETF BCP 47 (e.g. 'en-US').
+        files:
+          type: array
+          description: A list of ingestible files to ingest.
+          items:
+            $ref: '#/components/schemas/IngestibleFile'
+        exchangeMailboxes:
+          type: array
+          description: A list of ingestible exchange mailboxes to ingest.
+          items:
+            $ref: '#/components/schemas/IngestibleExchangeMailbox'
+        s3Buckets:
+          type: array
+          description: A list of ingestible S3 buckets to ingest.
+          items:
+            $ref: '#/components/schemas/IngestibleS3Bucket'
+        sqlServers:
+          type: array
+          description: A list of ingestible SQL servers to ingest.
+          items:
+            $ref: '#/components/schemas/IngestibleSQLServer'
+        oracleServers:
+          type: array
+          description: A list of ingestible Oracle servers to ingest.
+          items:
+            $ref: '#/components/schemas/IngestibleOracleServer'
+        enterpriseVaults:
+          type: array
+          description: A list of ingestible enterprise vaults to ingest.
+          items:
+            $ref: '#/components/schemas/IngestibleEnterpriseVault'
+        sharepointSites:
+          type: array
+          description: A list of ingestible sharepoint sites to ingest.
+          items:
+            $ref: '#/components/schemas/IngestibleSharepoint'
+        mailStores:
+          type: array
+          description: A list of ingestible mail stores to ingest.
+          items:
+            $ref: '#/components/schemas/IngestibleMailStore'
+        loadFiles:
+          type: array
+          description: A list of ingestible load files to ingest.
+          items:
+            $ref: '#/components/schemas/IngestibleLoadFile'
+        centeraClusters:
+          type: array
+          description: A list of ingestible centera clusters to ingest.
+          items:
+            $ref: '#/components/schemas/IngestibleCenteraCluster'
+        splitFiles:
+          type: array
+          description: A list of ingestible split files to ingest.
+          items:
+            $ref: '#/components/schemas/IngestibleSplitFileList'
+        dropboxes:
+          type: array
+          description: A list of ingestible Dropbox accounts to ingest.
+          items:
+            $ref: '#/components/schemas/IngestibleDropbox'
+        sshServers:
+          type: array
+          description: A list of SSH-based servers to ingest.
+          items:
+            $ref: '#/components/schemas/IngestibleSSH'
+        twitterLocations:
+          type: array
+          description: A list of historical twitter locations to ingest.
+          items:
+            $ref: '#/components/schemas/IngestibleTwitter'
+        documentumServers:
+          type: array
+          description: A list of documentum servers to ingest.
+          items:
+            $ref: '#/components/schemas/IngestibleDocumentum'
+        ms365Locations:
+          type: array
+          description: A list of Microsoft 365 locations to ingest.
+          items:
+            $ref: '#/components/schemas/IngestibleMicrosoft365'
+        slackLocations:
+          type: array
+          description: A list of slack locations to ingest.
+          items:
+            $ref: '#/components/schemas/IngestibleSlack'
+    IngestibleFile:
+      type: object
+      properties:
+        path:
+          type: string
+          description: Absolute path to the directory or file to be ingested.
+      required:
+      - path
+    IngestibleLoadFile:
+      type: object
+      properties:
+        csvFile:
+          type: string
+          description: Location of a UTF-8 encoded CSV file containing an ITEMPATH column with values containing relative paths to the native items. Currently all other columns become metadata for that item. Not used if missing, but one load file type is required.
+        idxFile:
+          type: string
+          description: Location of a UTF-8 encoded IDX file. Not used if missing, but one load file type is required.
+    MimeTypeProcessingSetting:
+      type: object
+      properties:
+        mimeType:
+          type: string
+          description: Sets the MIME type
+        settings:
+          $ref: '#/components/schemas/MimeTypeSpecificProcessingSettings'
+    OcrOptions:
+      type: object
+      properties:
+        regeneratePdfs:
+          type: boolean
+          default: false
+          description: Specifies whether to regenerate PDFs before they are sent to the OCR processor. Defaults to false
+        updatePdf:
+          type: boolean
+          default: true
+          description: Specifies whether to update PDFs in the print store with the PDF created by the OCR processor. Defaults to true
+        updateText:
+          type: boolean
+          default: true
+          description: Specifies whether to update the item's text with the text extrated with the OCR processor. Defaults to true
+        textModification:
+          type: string
+          default: append
+          enum:
+          - append
+          - overwrite
+          description: Specifies whether to append or overwrite new text to the item's existing text. Ignored if 'updateText' is set to false. Defaults to append.
+        quality:
+          type: string
+          default: document_archiving_accuracy
+          enum:
+          - default
+          - document_archiving_accuracy
+          - document_archiving_speed,
+          - book_archiving_accuracy
+          - book_archiving_speed
+          - document_conversion_accuracy
+          - document_conversion_speed
+          - text_extraction_accuracy
+          - text_extraction_speed
+          - field_level_recognition
+          - fast
+          - mid_range
+          - high_quality
+          description: "OCR Quality:\n  * `default` - will use default values which usually produce a good result in a reasonable time.\n  * `document_archiving_accuracy` - Is suitable for creating an electronic archive (e.g. PDF). Enables detection\n    of maximum text on an image, including text embedded into the image. Full synthesis of the logical structure\n    of a document is not performed.\n  * `document_archiving_speed` - Has an emphasis on speed rather than accuracy.  See document_archiving_accuracy.\n  * `book_archiving_accuracy` - Is suitable for creating an electronic library (e.g. PDF). Enables detection\n    of font styles and full synthesis of the logical structure of a document.\n  * `book_archiving_speed` - Has an emphasis on speed rather than accuracy.  See book_archiving_accuracy.\n  * `document_conversion_accuracy` - Is suitable for converting documents into an editable format (e.g. RTF,\n    DOCX). Enables detection of font styles and full synthesis of the logical structure of a document.\n  * `document_conversion_speed` - Has an emphasis on speed rather than accuracy.  See document_conversion_accuracy.\n  * `text_extraction_accuracy` - Is suitable for extracting text from a document. Enables detection of all text on an image,\n    including small text areas of low quality (pictures and tables are not detected). Full synthesis of the logical\n    structure of a document is not performed.\n  * `text_extraction_speed` - Has an emphasis on speed rather than accuracy.  See text_extraction_accuracy.\n  * `field_level_recognition` - Is suitable for recognizing short text fragments\n  * `fast` - Deprecated.  See default.\n  * `mid_range` - Deprecated.  See document_archiving_speed\n  * `high_quality` - Deprecated.  See document_archiving_accuracy\n"
+        rotation:
+          type: string
+          enum:
+          - auto
+          - no_rotation
+          - left
+          - right
+          - upside_down
+          default: auto
+          description: 'Specifies the page rotation to use on the images. This will
+
+            rotate the images before processing.
+
+            * `left` Indicates the top of the image is on the left side of the document i.e. it is rotated 90 degrees counter-clockwise.
+
+            * `right` - Indicates the top of the image is on the right side of the document i.e. it is rotate 90 degrees clockwise.
+
+            * `upside_down` - Indicates the document should be rotate 180 degrees before processing.
+
+            '
+        deskew:
+          type: boolean
+          default: true
+          description: Whether to deskew text. This will attempt to correct images where text is not level with the page. Defaults to true
+        clearOcrCache:
+          type: boolean
+          default: true
+          description: Specifies whether to clear OCR cache. By default the OCR cache will be deleted upon completion. The default location for this cache is under the case directory. See also 'outputDirectory' for customising the location of this cache. Defaults to true
+        outputDirectory:
+          type: string
+          description: Specifies the output directory. Defaults to the temporary directory
+        languages:
+          type: string
+          default: English
+          description: Specifies the language to use during recognition. Defaults to English
+        timeout:
+          type: integer
+          default: 90
+          description: The timeout duration in minutes for processing an item. Must be greater than 1 minute. Defaults to 90
+          format: int32
+        updateDuplicates:
+          type: boolean
+          default: false
+          description: Update all duplicate items in the case. Defaults to false
+    IngestibleOracleServer:
+      type: object
+      properties:
+        username:
+          type: string
+          description: The username needed to access the server account.
+        password:
+          type: string
+          description: The password needed to access the server account.
+        database:
+          type: string
+          description: The hostname or IP address of the database server.
+        query:
+          type: string
+          description: This optional parameter specifies the SQL query used to filter the content.
+        driverType:
+          type: string
+          description: This parameter specifies the driver type. See www.oracle.com
+          enum:
+          - thin
+          - oci
+          - kprb
+        role:
+          type: string
+          description: A string representation of the role to login as, such as SYSDBA or SYSOPER.  For normal logins, this should be blank.
+        maxRowsPerTable:
+          type: integer
+          description: The maximum number of rows to return from each table or query.  This parameter is optional. It can save time when processing tables or query results with very many rows. The selection of which rows will be returned should be considered arbitrary.
+          format: int32
+    KeyStoreKeyParameters:
+      type: object
+      properties:
+        filePassword:
+          type: string
+          description: Specifies the password protecting the file (e.g. for PKCS#12)
+        keyPasswords:
+          type: object
+          additionalProperties:
+            type: string
+          description: Specifies the passwords protecting individual keys when extracting multiple password-protected keys from a single file.
+        target:
+          type: string
+          description: For Lotus Notes ID files, this value should contain the file name of the NSF file protected by this key.
+        keystoreName:
+          type: string
+          description: The name of the keystore file being used.
+    SingleContainerIngestionRequestIngestibleCenteraCluster:
+      type: object
+      properties:
+        processorSettings:
+          $ref: '#/components/schemas/ProcessorSettings'
+        mimeTypeProcessorSettings:
+          type: array
+          description: Sets the processing settings for individual mime types.
+          items:
+            $ref: '#/components/schemas/MimeTypeProcessingSetting'
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+        keystoreKeyParameters:
+          type: array
+          description: Sets the settings used to apply a keystore file to the ingestion.
+          items:
+            $ref: '#/components/schemas/KeyStoreKeyParameters'
+        rescanEvidenceRepositories:
+          type: boolean
+          description: If true, the case's Evidence Repositories will be rescanned to discover new Evidence Containers within them and new files within existing Evidence Containers which are themselves within the cases's Evidence Repositories. Default is false.
+        rescanEvidenceRepositoriesSettings:
+          $ref: '#/components/schemas/RescanEvidenceRepositoriesSettings'
+        passwordDiscoverySettings:
+          $ref: '#/components/schemas/PasswordDiscoverySettings'
+        configurationProfile:
+          type: string
+          deprecated: true
+          description: Deprecated in favor of processingProfile. Configuration profile to use as base set of processor, parallel processing, and mime type settings.  Values present in processorSettings, parallelProcessingSettings, and mimeTypeProcessorSettings will override anything defined by this profile.
+        processingProfile:
+          type: string
+          description: The name of the Processing Profile to use. If you use this setting then do not use any other settings from processorSettings as everything will be overridden by the loaded Processing profile.
+        target:
+          $ref: '#/components/schemas/IngestibleCenteraCluster'
+        container:
+          $ref: '#/components/schemas/EvidenceContainer'
+    SingleContainerIngestionRequestIngestibleTwitter:
+      type: object
+      properties:
+        processorSettings:
+          $ref: '#/components/schemas/ProcessorSettings'
+        mimeTypeProcessorSettings:
+          type: array
+          description: Sets the processing settings for individual mime types.
+          items:
+            $ref: '#/components/schemas/MimeTypeProcessingSetting'
+        parallelProcessingSettings:
+          $ref: '#/components/schemas/ParallelProcessingSettings'
+        keystoreKeyParameters:
+          type: array
+          description: Sets the settings used to apply a keystore file to the ingestion.
+          items:
+            $ref: '#/components/schemas/KeyStoreKeyParameters'
+        rescanEvidenceRepositories:
+          type: boolean
+          description: If true, the case's Evidence Repositories will be rescanned to discover new Evidence Containers within them and new files within existing Evidence Containers which are themselves within the cases's Evidence Repositories. Default is false.
+        rescanEvidenceRepositoriesSettings:
+          $ref: '#/components/schemas/RescanEvidenceRepositoriesSettings'
+        passwordDiscoverySettings:
+          $ref: '#/components/schemas/PasswordDiscoverySettings'
+        configurationProfile:
+          type: string
+          deprecated: true
+          description: Deprecated in favor of processingProfile. Configuration profile to use as base set of processor, parallel processing, and mime type settings.  Values present in processorSettings, parallelProcessingSettings, and mimeTypeProcessorSettings will override anything defined by this profile.
+        processingProfile:
+          type: string
+          description: The name of the Processing Profile to use. If you use this setting then do not use any other settings from processorSettings as everything will be overridden by the loaded Processing profile.
+        target:
+          $ref: '#/components/schemas/IngestibleTwitter'
+        container:
+          $ref: '#/components/schemas/EvidenceContainer'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: nuix-auth-token
+      in: header
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

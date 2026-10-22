@@ -1,0 +1,503 @@
+openapi: 3.2.0
+info:
+  title: Nuix REST-API Reference Scripting API
+  description: 'Welcome to the Nuix REST API documentation. From here you can access all available REST APIs and execute queries against your running REST instance.
+
+
+    # Authentication Changes
+
+
+    The `nuix-auth-token` header is being deprecated in favor of standard JWT. The header will be removed in a
+
+    future release. Until the removal of the header, the Nuix REST API will accept the JWT in either the
+
+    `nuix-auth-token` header field or the `Authorization` header field prefixed by `Bearer`.'
+  contact:
+    name: Nuix
+    url: http://forums.nuix.com/
+  license:
+    name: Licence
+    url: https://www.nuix.com/sites/default/files/2023-03/End%20User%20License%20Agreement%20%28Effective%20December%2014%2C%202022%29_1.pdf
+  version: ${customer.version}
+servers:
+- url: /nuix-restful-service/svc
+- url: http://localhost:8080/svc
+security:
+- ApiKeyAuth: []
+- bearerAuth: []
+tags:
+- name: Scripting
+paths:
+  /cases/{caseId}/userScripts:
+    put:
+      tags:
+      - Scripting
+      summary: Executes a user script on a case
+      description: 'Use this operation to execute a script that is in the user scripts
+
+        directory. This is useful for extending the Nuix REST API to fit your needs.
+
+
+        Each script is injected with several common local variables, all of which are available both
+
+        with and without a leading dollar sign (**$**):
+
+
+        * **current_case** (also as **currentCase**): This is the Java nuix.Case object. It is only
+
+        available in the case-specific endpoint.x
+
+
+        * **utilities**: This is the Java nuix.Utilities object for the current environment.
+
+
+        * **request**: This is the Java HttpServletRequest object. It is only available in version 1 of the endpoint.
+
+        This variable is not available in version 2 of the endpoint. Use custom_arguments instead.
+
+
+        * **response**: This provides methods for customising the object that is returned from the server.
+
+        These methods are:
+
+        * **setStatus(int httpStatusCode)**: This sets the HTTP status code.
+
+        * **addHeader(String headerName, String headerValue)**: This adds a header to the actual HTTP response that comes back from the server.
+
+        * **setBody(Object body)**: This sets the payload of the response.
+
+
+        * **progress** : This provides methods for updating the progress of the script when run in an asynchronous
+
+        manner. These methods are:
+
+
+        * **setStatus(String status)**: This sets an arbitrary status value. This will be reflected
+
+        in the ''''status'''' variable in the AsyncFunctionStatus response.
+
+        * **setEstimatedFinalValue(long value))**: This sets an estimate for the final progress value. This will
+
+        be reflected in the ''''total'''' variable in the AsyncFunctionStatus response,
+
+        and will be used as the denominator when calculating percent complete.
+
+        * **setCurrentValue(long value)**: This sets the current progress value. This will be reflected in
+
+        the ''''progress'''' variable in the AsyncFunctionStatus response, and will be
+
+        used as the numerator when calculating percent complete.
+
+        * **custom_arguments** (also as **customArguments**): This is the map of provided custom arguments.
+
+
+        For scripts run asynchronously, the following JSON variables will be available
+
+        in the *result* section when retrieving function status:
+
+
+        * **status**: This is the HTTP status code as set by **response.setStatus(httpStatusCode)**
+
+        (see above), or 200 if not explicitly set.
+
+
+        * **headers**: These are HTTP headers as set by **response.addHeader(headerName, headerValue)**(see above).
+
+
+        * **body**: This is the payload as set by **response.setBody(body)**
+
+        (see above).
+
+
+        * **output**: This is the result of any print statement (or equivalent) executed by the script. Newlines will most likely be encoded.
+
+
+        * **result**: This is the return value from the script, if any.
+
+
+        For scripts run synchronously, the HTTP response code, headers, and body will reflect the use of the **response** variable. Version 1 of the
+
+        endpoint is not able to run in a cluster.
+
+
+        *NOTE: Version 2 endpoints are always asynchronous and can run in a cluster. *'
+      operationId: executeUserScriptFunctionForCase
+      parameters:
+      - name: caseId
+        in: path
+        description: Case identification token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.nuix.v2+json:
+            schema:
+              $ref: '#/components/schemas/UserScriptRequestV2'
+            examples:
+              Ruby:
+                value:
+                  description: Ruby User Script
+                  name: Ruby User Script
+                  script: '$response.setStatus(200)
+
+                    $response.setBody("result":"hello world")'
+                  language: RUBY
+              Python:
+                value:
+                  description: Python User Script
+                  name: Python User Script
+                  script: 'response.setStatus(200)
+
+                    response.setBody({"result":"hello world"})'
+                  language: PYTHON
+              Javascript:
+                value:
+                  description: Javascript User Script
+                  name: Javascript User Script
+                  script: 'response.setStatus(200)
+
+                    response.setBody({"result":"hello world"})'
+                  language: JAVASCRIPT
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/UserScriptRequest'
+            examples:
+              Ruby:
+                value:
+                  async: false
+                  description: Ruby User Script
+                  name: Ruby User Script
+                  script: '$response.setStatus(200)
+
+                    $response.setBody("result":"hello world")'
+                  language: RUBY
+              Python:
+                value:
+                  async: false
+                  description: Python User Script
+                  name: Python User Script
+                  script: 'response.setStatus(200)
+
+                    response.setBody({"result":"hello world"})'
+                  language: PYTHON
+              Javascript:
+                value:
+                  async: false
+                  description: Javascript User Script
+                  name: Javascript User Script
+                  script: 'response.setStatus(200)
+
+                    response.setBody({"result":"hello world"})'
+                  language: JAVASCRIPT
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v2+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+              example:
+                functionKey: c2b5a20b-3cd1-4eb3-b600-6fa909ba0949
+                location: http://localhost:8080/svc/v1/asyncFunctions/c2b5a20b-3cd1-4eb3-b600-6fa909ba0949
+            application/vnd.nuix.v1+json:
+              schema:
+                oneOf:
+                - type: object
+                - $ref: '#/components/schemas/AsyncFunctionResponse'
+              examples:
+                Synchronous Response:
+                  value:
+                    result: Hello World
+                Asynchronous Response:
+                  value:
+                    functionKey: c2b5a20b-3cd1-4eb3-b600-6fa909ba0949
+                    location: http://localhost:8080/svc/v1/asyncFunctions/c2b5a20b-3cd1-4eb3-b600-6fa909ba0949
+  /userScripts:
+    get:
+      tags:
+      - Scripting
+      summary: Retrieves the list of existing user scripts
+      description: Use this operation to view the list of existing user scripts.
+      operationId: fetchUserScripts
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v1+json:
+              schema:
+                type: array
+                items:
+                  type: string
+    put:
+      tags:
+      - Scripting
+      summary: Executes a user script
+      description: 'Use this operation to execute a script that is in the user scripts
+
+        directory. This is useful for extending the Nuix REST API to fit your needs.
+
+        Version 1 of this endpoint has been *deprecated*.
+
+
+        Each script is injected with several common local variables, all of which are available both
+
+        with and without a leading dollar sign (**$**):
+
+
+        * **current_case** (also as **currentCase**): This is the Java nuix.Case object. It is only
+
+        available in the case-specific endpoint.
+
+
+        * **utilities**: This is the Java nuix.Utilities object for the current environment.
+
+
+        * **request**: This is the Java HttpServletRequest object. It is only available in version 1 of the endpoint.
+
+        This variable is not available in version 2 of the endpoint. Use custom_arguments instead.
+
+
+        * **response**: This provides methods for customising the object that is returned from the server.
+
+        These methods are:
+
+        * **setStatus(inthttpStatusCode)**: This sets the HTTP status code.
+
+        * **addHeader(String headerName, String headerValue)**: This adds a header to the actual HTTP response that comes back from the server.
+
+        * **setBody(Object body)**: This sets the payload of the response.
+
+
+        * **progress** : This provides methods for updating the progress of the script when run in an asynchronous
+
+        manner. These methods are:
+
+
+        * **setStatus(String status)**: This sets an arbitrary status value. This will be reflected
+
+        in the ''''status'''' variable in the AsyncFunctionStatus response.
+
+        * **setEstimatedFinalValue(long value))**: This sets an estimate for the final progress value. This will
+
+        be reflected in the ''''total'''' variable in the AsyncFunctionStatus response,
+
+        and will be used as the denominator when calculating percent complete.
+
+        * **setCurrentValue(long value)**: This sets the current progress value. This will be reflected in
+
+        the ''''progress'''' variable in the AsyncFunctionStatus response, and will be
+
+        used as the numerator when calculating percent complete.
+
+        * **custom_arguments** (also as **customArguments**): This is the map of provided custom arguments.
+
+
+        For scripts run asynchronously, the following JSON variables will be available
+
+        in the *result* section when retrieving function status:
+
+
+        * **status**: This is the HTTP status code as set by **response.setStatus(httpStatusCode)**
+
+        (see above), or 200 if not explicitly set.
+
+
+        * **headers**: These are HTTP headers as set by **response.addHeader(headerName, headerValue)**(see above).
+
+
+        * **body**: This is the payload as set by **response.setBody(body)**
+
+        (see above).
+
+
+        * **output**: This is the result of any print statement (or equivalent) executed by the script. Newlines will most likely be encoded.
+
+
+        * **result**: This is the return value from the script, if any.
+
+
+        For scripts run synchronously, the HTTP response code, headers, and body will reflect the use of the **response** variable. Version 1 of the
+
+        endpoint is not able to run in a cluster.
+
+
+        *NOTE: Version 2 endpoints are always asynchronous and can run in a cluster.*'
+      operationId: executeUserScriptFunction
+      requestBody:
+        content:
+          application/vnd.nuix.v2+json:
+            schema:
+              $ref: '#/components/schemas/UserScriptRequestV2'
+            examples:
+              Ruby:
+                value:
+                  description: Ruby User Script
+                  name: Ruby User Script
+                  script: '$response.setStatus(200)
+
+                    $response.setBody("result":"hello world")'
+                  language: RUBY
+              Python:
+                value:
+                  description: Python User Script
+                  name: Python User Script
+                  script: 'response.setStatus(200)
+
+                    response.setBody({"result":"hello world"})'
+                  language: PYTHON
+              Javascript:
+                value:
+                  description: Javascript User Script
+                  name: Javascript User Script
+                  script: 'response.setStatus(200)
+
+                    response.setBody({"result":"hello world"})'
+                  language: JAVASCRIPT
+          application/vnd.nuix.v1+json:
+            schema:
+              $ref: '#/components/schemas/UserScriptRequest'
+            examples:
+              Ruby:
+                value:
+                  async: false
+                  description: Ruby User Script
+                  name: Ruby User Script
+                  script: '$response.setStatus(200)
+
+                    $response.setBody("result":"hello world")'
+                  language: RUBY
+              Python:
+                value:
+                  async: false
+                  description: Python User Script
+                  name: Python User Script
+                  script: 'response.setStatus(200)
+
+                    response.setBody({"result":"hello world"})'
+                  language: PYTHON
+              Javascript:
+                value:
+                  async: false
+                  description: Javascript User Script
+                  name: Javascript User Script
+                  script: 'response.setStatus(200)
+
+                    response.setBody({"result":"hello world"})'
+                  language: JAVASCRIPT
+      responses:
+        '200':
+          description: default response
+          content:
+            application/vnd.nuix.v2+json:
+              schema:
+                $ref: '#/components/schemas/AsyncFunctionResponse'
+              example:
+                functionKey: c2b5a20b-3cd1-4eb3-b600-6fa909ba0949
+                location: http://localhost:8080/svc/v1/asyncFunctions/c2b5a20b-3cd1-4eb3-b600-6fa909ba0949
+            application/vnd.nuix.v1+json:
+              schema:
+                oneOf:
+                - type: object
+                - $ref: '#/components/schemas/AsyncFunctionResponse'
+              examples:
+                Synchronous Response:
+                  value:
+                    result: Hello World
+                Asynchronous Response:
+                  value:
+                    functionKey: c2b5a20b-3cd1-4eb3-b600-6fa909ba0949
+                    location: http://localhost:8080/svc/v1/asyncFunctions/c2b5a20b-3cd1-4eb3-b600-6fa909ba0949
+components:
+  schemas:
+    UserScriptRequestV2:
+      type: object
+      properties:
+        fileName:
+          type: string
+          description: The path location of a script file, relative to the 'userScriptsLocation' property. If this field has a value, it will be used and has priority over the "script" field.  The "fileName" field or "script" field is required for this request.
+        script:
+          type: string
+          description: A script to execute as a literal string.  If the "filename" property has a value, this field will be ignored and the script will be run from the provided file location instead. The "script" field or "filename" field is required for this request.
+        language:
+          type: string
+          description: Language that the script is written in.
+          enum:
+          - RUBY
+          - JAVASCRIPT
+          - PYTHON
+        name:
+          type: string
+          description: Sets the name of the script.
+        description:
+          type: string
+          description: A brief description of what the script does.
+        relativeOutputDirectory:
+          type: string
+          description: The script output directory relative to the case path.  Output is only written if the `writeOutputToFileSystem` property is true.
+        customArguments:
+          type: object
+          additionalProperties:
+            type: object
+          description: Used to map any arguments the user wants to add and reference later in the script.
+        writeOutputToFileSystem:
+          description: True to writes the script output to the file system, false otherwise.
+          type: boolean
+          default: false
+    AsyncFunctionResponse:
+      type: object
+      properties:
+        functionKey:
+          type: string
+          description: The function key to use when querying status.
+        location:
+          type: string
+          description: The location URL for querying status.  (http://nuix-restful-service:8080/svc/v1/asyncFunctions/{functionKey})
+    UserScriptRequest:
+      type: object
+      deprecated: true
+      properties:
+        fileName:
+          type: string
+          description: The path location of a script file, relative to the 'userScriptsLocation' property. If this field has a value, it will be used and has priority over the "script" field. The "fileName" field or "script" field is required for this request.
+        script:
+          type: string
+          description: A script to execute as a literal string.  If the "filename" property has a value, this field will be ignored and the script will be run from the provided file location instead.  The "script" field or "filename" field is required for this request.
+        language:
+          type: string
+          description: Language that the script is written in.
+          enum:
+          - RUBY
+          - JAVASCRIPT
+          - PYTHON
+        name:
+          type: string
+          description: Sets the name of the script.
+        description:
+          type: string
+          description: A brief description of what the script does.
+        relativeOutputDirectory:
+          type: string
+          description: The script output directory relative to the case path.  Output is only written if the `writeOutputToFileSystem` property is true.
+        async:
+          type: boolean
+          description: Specifies whether this script should run asynchronously.  Defaults to true.
+          default: true
+        customArguments:
+          type: object
+          additionalProperties:
+            type: object
+          description: Used to map any arguments the user wants to add and reference later in the script.
+        writeOutputToFileSystem:
+          description: True to writes the script output to the file system, false otherwise.
+          type: boolean
+          default: false
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: nuix-auth-token
+      in: header
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

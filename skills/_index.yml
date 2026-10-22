@@ -1,0 +1,34 @@
+name: Nuix agent skills
+generated: '2026-10-21'
+method: generated
+source: Generated from the Nuix OpenAPI files under openapi/; every operationId verified verbatim in the
+  named spec.
+skills:
+- file: nuix-ecc-collect-from-a-custodian.md
+  name: Collect data from a custodian with ECC
+  api: openapi/nuix-case-api-openapi.yml
+  operations:
+  - createCase
+  - createCustodian
+  - createTarget
+  - launchCaseCollection
+  - jobDetails
+  - listLogByJob
+- file: nuix-ingest-and-search-a-case.md
+  name: Ingest evidence and search a Nuix case
+  api: openapi/nuix-core-engine-rest-api-openapi.yml
+  operations:
+  - createCase
+  - bulkIngestionIntoSimpleCase
+  - getAsyncFunctionStatus
+  - searchNativeResult
+  - count
+- file: nuix-tag-and-export-items.md
+  name: Tag and export items from a Nuix case
+  api: openapi/nuix-core-engine-rest-api-openapi.yml
+  operations:
+  - openCase
+  - getTags
+  - bulkTag
+  - export
+  - getAsyncFunctionStatus

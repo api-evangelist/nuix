@@ -7,8 +7,17 @@ artifacts:
     method: generated
     evidence: declared in the artifact
   authentication/nuix-authentication.yml:
-    method: derived
+    method: searched
     evidence: declared in the artifact
+  changelog/nuix-changelog.yml:
+    method: searched
+    evidence: declared in the artifact
+  collections/nuix-access-api.postman_collection.json:
+    method: derived
+    evidence: openapi/nuix-access-api
+  collections/nuix-analysis-api.postman_collection.json:
+    method: derived
+    evidence: openapi/nuix-analysis-api
   collections/nuix-case-api.opencollection.json:
     method: derived
     evidence: openapi/nuix-case-api
@@ -39,33 +48,63 @@ artifacts:
   collections/nuix-computer-configuration-api.postman_collection.json:
     method: derived
     evidence: openapi/nuix-computer-configuration-api
+  collections/nuix-culling-api.postman_collection.json:
+    method: derived
+    evidence: openapi/nuix-culling-api
   collections/nuix-custodian-api.opencollection.json:
     method: derived
     evidence: openapi/nuix-custodian-api
   collections/nuix-custodian-api.postman_collection.json:
     method: derived
     evidence: openapi/nuix-custodian-api
+  collections/nuix-export-api.postman_collection.json:
+    method: derived
+    evidence: openapi/nuix-export-api
   collections/nuix-group-api.opencollection.json:
     method: derived
     evidence: openapi/nuix-group-api
   collections/nuix-group-api.postman_collection.json:
     method: derived
     evidence: openapi/nuix-group-api
+  collections/nuix-inventory-api.postman_collection.json:
+    method: derived
+    evidence: openapi/nuix-inventory-api
   collections/nuix-job-api.opencollection.json:
     method: derived
     evidence: openapi/nuix-job-api
   collections/nuix-job-api.postman_collection.json:
     method: derived
     evidence: openapi/nuix-job-api
+  collections/nuix-licensing-api.postman_collection.json:
+    method: derived
+    evidence: openapi/nuix-licensing-api
   collections/nuix-log-api.opencollection.json:
     method: derived
     evidence: openapi/nuix-log-api
   collections/nuix-log-api.postman_collection.json:
     method: derived
     evidence: openapi/nuix-log-api
+  collections/nuix-monitoring-api.postman_collection.json:
+    method: derived
+    evidence: openapi/nuix-monitoring-api
   collections/nuix-nuix-core-engine-rest-api.postman_collection.json:
     method: unknown
     evidence: no authorship recorded
+  collections/nuix-processing-api.postman_collection.json:
+    method: derived
+    evidence: openapi/nuix-processing-api
+  collections/nuix-resources-api.postman_collection.json:
+    method: derived
+    evidence: openapi/nuix-resources-api
+  collections/nuix-scripting-api.postman_collection.json:
+    method: derived
+    evidence: openapi/nuix-scripting-api
+  collections/nuix-search-api.postman_collection.json:
+    method: derived
+    evidence: openapi/nuix-search-api
+  collections/nuix-system-api.postman_collection.json:
+    method: derived
+    evidence: openapi/nuix-system-api
   collections/nuix-target-api.opencollection.json:
     method: derived
     evidence: openapi/nuix-target-api
@@ -78,6 +117,18 @@ artifacts:
   collections/nuix-utility-api.postman_collection.json:
     method: derived
     evidence: openapi/nuix-utility-api
+  conformance/nuix-conformance.yml:
+    method: searched
+    evidence: declared in the artifact
+  conventions/nuix-conventions.yml:
+    method: searched
+    evidence: declared in the artifact
+  data-model/nuix-data-model.yml:
+    method: derived
+    evidence: declared in the artifact
+  errors/nuix-problem-types.yml:
+    method: derived
+    evidence: declared in the artifact
   examples/nuix-rest-asyncFunctions-key-status-put-Cancel-a-Function.json:
     method: unknown
     evidence: no authorship recorded
@@ -337,8 +388,8 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   finops/nuix-finops.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: generated
+    evidence: declared in the artifact
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
@@ -348,7 +399,55 @@ artifacts:
   graphql/nuix-schema.graphql:
     method: unknown
     evidence: no authorship recorded
+  hosts/nuix-hosts.yml:
+    method: derived
+    evidence: declared in the artifact
+  integrations/_index.yml:
+    method: generated
+    evidence: carries an API Evangelist house phrase
+  integrations/nuix-integration-edges.yml:
+    method: searched
+    evidence: declared in the artifact
+  integrations/nuix-keycloak-grant-ecc-api-access.yml:
+    method: generated
+    evidence: declared in the artifact
   json-ld/nuix-context.jsonld:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-async-function-status-object-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-async-function-status-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-bulk-apply-item-tag-list-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-bulk-production-set-with-profiles-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-bulk-searcher-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-computer-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-create-case-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-create-configuration-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-create-configuration-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-create-custodian-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-create-group-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-create-target-request-schema.json:
     method: unknown
     evidence: no authorship recorded
   json-schema/nuix-ecc-case.json:
@@ -502,6 +601,69 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   json-schema/nuix-ecc-tasktocreate.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-job-action-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-job-detail-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-job-list-detail-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-launch-case-collection-by-configuration-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-launch-case-collection-by-configuration-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-launch-case-collection-by-path-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-launch-case-collection-by-target-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-launch-case-collection-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-launch-case-collection-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-license-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-list-cases-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-list-computer-conf-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-list-computer-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-list-configurations-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-list-custodian-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-list-groups-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-list-job-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-list-targets-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-log-entry-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-modify-case-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-modify-group-request-schema.json:
     method: unknown
     evidence: no authorship recorded
   json-schema/nuix-rest-aboutresponse.json:
@@ -1092,127 +1254,16 @@ artifacts:
   json-schema/nuix-rest-wordcountsresponse.json:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-24T161608.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T125852.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T133943.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T143147.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T154045.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-26T215308.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T094438.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T103455.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T123021.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T132314.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T140727.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-28T221322.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T213958.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T230545.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T203505.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T220315.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-31T223420.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T063623.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T210448.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T222808.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T224043.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T161828.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T174231.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T062714.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T212454.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T224856.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T055819.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T072335.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T144739.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T195450.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T211839.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T011047.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T224210.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T200636.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T213054.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T214843.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T232836.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T204815.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T222408.yml:
+  json-schema/nuix-search-native-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-standard-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/nuix-system-info-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  kin/checks-2026-10-11T110117.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-12T062655.yml:
@@ -1296,10 +1347,47 @@ artifacts:
   kin/score-2026-09-24T161608.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T210408.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T232841.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T000835.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T024842.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-11T110117.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  lifecycle/nuix-lifecycle.yml:
+    method: searched
+    evidence: declared in the artifact
+  llms/nuix-llms-provenance.yml:
+    method: unknown
+    evidence: no authorship recorded
+  llms/nuix-llms.txt:
+    method: unknown
+    evidence: no authorship recorded
+  mcp/nuix-mcp.yml:
+    method: derived
+    evidence: declared in the artifact
+  openapi/_original/nuix-core-engine-rest-api-openapi.yml:
+    method: harvested
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/_original/nuix-nuix-ecc-rest-api-openapi.yml:
     method: harvested
     evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
       to the provider's source is unverified
+  openapi/nuix-access-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/nuix-analysis-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/nuix-case-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
@@ -1315,16 +1403,46 @@ artifacts:
   openapi/nuix-computer-configuration-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/nuix-culling-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/nuix-custodian-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/nuix-export-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/nuix-group-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/nuix-inventory-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/nuix-job-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/nuix-licensing-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/nuix-log-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/nuix-monitoring-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/nuix-processing-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/nuix-resources-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/nuix-scripting-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/nuix-search-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/nuix-system-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/nuix-target-api-openapi.yml:
@@ -1333,14 +1451,62 @@ artifacts:
   openapi/nuix-utility-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  overlays/nuix-case-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/nuix-collection-and-survey-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/nuix-collection-configuration-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/nuix-computer-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/nuix-computer-configuration-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/nuix-core-engine-rest-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/nuix-custodian-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/nuix-group-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/nuix-job-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/nuix-log-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/nuix-target-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/nuix-utility-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  packages/nuix-packages.yml:
+    method: searched
+    evidence: declared in the artifact
   plans/nuix-plans-pricing.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: searched
+    evidence: declared in the artifact
   rate-limits/nuix-rate-limits.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: searched
+    evidence: declared in the artifact
+  regulatory/nuix-regulatory-posture.yml:
+    method: searched
+    evidence: declared in the artifact
   rules/nuix-jsonschema-spectral-rules.yml:
     method: generated
+    evidence: declared in the artifact
+  rules/nuix-rules.yml:
+    method: generated
+    evidence: declared in the artifact
+  scopes/nuix-scopes.yml:
+    method: searched
     evidence: declared in the artifact
   security/nuix-domain-security.yml:
     method: unknown
@@ -1348,9 +1514,45 @@ artifacts:
   security/nuix-vulnerability-disclosure.yml:
     method: searched
     evidence: declared in the artifact
+  skills/_index.yml:
+    method: generated
+    evidence: declared in the artifact
+  skills/nuix-ecc-collect-from-a-custodian.md:
+    method: generated
+    evidence: declared in the artifact
+  skills/nuix-ingest-and-search-a-case.md:
+    method: generated
+    evidence: declared in the artifact
+  skills/nuix-tag-and-export-items.md:
+    method: generated
+    evidence: declared in the artifact
+  vendors/nuix-vendors.yml:
+    method: unknown
+    evidence: no authorship recorded
   vocabulary/nuix-ecc-api-vocabulary.json:
     method: unknown
     evidence: no authorship recorded
   vocabulary/nuix-rest-api-vocabulary.json:
+    method: unknown
+    evidence: no authorship recorded
+  vocabulary/nuix-vocabulary.yml:
+    method: derived
+    evidence: declared in the artifact
+  well-known/nuix-careers-api-catalog.json:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/nuix-dev-security.txt:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/nuix-security.txt:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/nuix-status-security.txt:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/nuix-trustcenter-oauth-protected-resource.json:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/nuix-well-known.yml:
     method: unknown
     evidence: no authorship recorded
